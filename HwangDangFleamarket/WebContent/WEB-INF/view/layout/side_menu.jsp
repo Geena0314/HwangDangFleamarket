@@ -14,10 +14,12 @@ a{
 
 a:HOVER {
 	text-decoration: underline;
-	color: white;
+	color: silver;
 }
 
-
+table ,tr{
+	border: 3px solid lightgray;
+}
 </style>
 <div id="sideMenu">
    		<a href="#">듀토리얼</a><br>

@@ -25,13 +25,14 @@ public class ProductServiceImpl implements ProductService
 
 	@Override
 	//상품 리스트 조회.
-	public HashMap<String, Object> selectAllProduct(int page)
+	public HashMap<String, Object> selectAllProduct(int page, int sellerStoreNo)
 	{
 		// TODO Auto-generated method stub
 		HashMap<String, Object> map = new HashMap<>();
-		PagingBean bean = new PagingBean(dao.selectCountProduct(), page);
+		PagingBean bean = new PagingBean(dao.selectCountProductByNo(sellerStoreNo), page);
 		map.put("itemPerPage", 6);//한 페이지에 표시할 갯수.
 		map.put("page", page);//현재 페이지.
+		map.put("sellerStoreNo", sellerStoreNo);
 		map.put("productList", dao.selectAllProduct(map));
 		map.put("bean", bean);
 		

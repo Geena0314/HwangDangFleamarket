@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
 	<!-- 트랜잭션처리 -->
 	<bean name="txmanager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
 		p:dataSource-ref="dataSource" />
-
+	<tx:annotation-driven transaction-manager="txmanager"/>
+	
 	<!-- Spring, Mybatis 연동. -->
 	<!-- BasicDataSource Bean으로 등록. -->
 	<bean name="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
@@ -35,7 +40,7 @@
 		base-package="com.hwangdang.serviceimpl, com.hwangdang.controller, com.hwangdang.daoimpl" />
 
 	<mvc:annotation-driven />
-
+	
 	<!-- 메인페이지 설정. -->
 	<mvc:view-controller path="/main.go" view-name="main.tiles" />
 	<!-- 관리자 게시만 view-controller 설정 -->
@@ -58,10 +63,9 @@
 	<!-- View Resolver bean으로 등록 -->
 	<!-- handler가 리턴한 View Name으로 등록된 bean을 view로 찾아주는 viewResolver 따라서 등록 순서를 
 		아래와 같에 해야함 -->
-	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
-	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="1" />
+	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" p:order="2"/>
 	<!-- 마지막 필수. -->
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="3" />
 
 </beans>
