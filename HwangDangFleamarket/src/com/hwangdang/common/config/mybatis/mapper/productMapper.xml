@@ -19,6 +19,16 @@
 		<result column="seller_store_no" property="sellerStoreNo"/>
 	</resultMap>
 	
+	<!-- 상품 옵션 resultMap -->
+	<resultMap type="productOption" id="productOption-basic-resultMap">
+		<id column="option_id" property="optionId"/>
+		<result column="option_name" property="optionName"/>
+		<result column="option_sub_name" property="optionSubName"/>
+		<result column="option_stock" property="optionStock"/>
+		<result column="option_add_price" property="optionAddPrice"/>
+		<result column="product_id" property="productId"/>
+	</resultMap>
+	
 	<!-- 상품 전체 조회. (추천 순, Paging, sellerStoreNo로 조회.)-->
 	<select id="selectAll" resultMap="product-basic-resultMap" parameterType="map">
 		select <include refid="product-columns"/> 
@@ -36,5 +46,30 @@
 	<!-- sellerStoreNo로 등록된 상품 갯수 조회. -->
 	<select id="selectCountByNo" resultType="_int" parameterType="_int">
 		select count(product_id) from product where seller_store_no=#{sellerStoreNo}
+	</select>
+	
+	<!-- 상품 id로 상품 조회. -->
+	<select id="selectProductById" resultMap="product-basic-resultMap" parameterType="string">
+		select <include refid="product-columns"/> from product where product_id=#{productId}
+	</select>
+	
+	<!-- 상품ID로 상품옵션 조회. -->
+	<select id="selectOptionById" resultMap="productOption-basic-resultMap" parameterType="string">
+		select option_id, option_name, option_sub_name, option_stock, option_add_price, product_id
+		from product_option
+		where product_id = #{productId}
+		order by option_sub_name asc
+	</select>
+	
+	<!-- 옵션이름으로 재고량, 추가가격 조회. -->
+	<select id="selectOptionStockByName" resultMap="productOption-basic-resultMap" parameterType="string">
+		select option_id, option_name, option_sub_name, option_stock, option_add_price, product_id
+		from product_option
+		where option_sub_name = #{optionName}
+	</select>
+	
+	<!-- 상품 ID로 상세이미지 조회. -->
+	<select id="selectDetailImageById" resultType="string" parameterType="string">
+		select image_path from product_detail_image where product_id = #{productId}
 	</select>
 </mapper>

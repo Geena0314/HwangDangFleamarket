@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.hwangdang.dao.ProductDao;
 import com.hwangdang.vo.Product;
+import com.hwangdang.vo.ProductOption;
 
 @Repository
 public class ProductDaoImpl implements ProductDao
@@ -40,5 +41,33 @@ public class ProductDaoImpl implements ProductDao
 	{
 		// TODO Auto-generated method stub
 		return session.selectOne("productMapper.selectCountByNo", sellerStoreNo);
+	}
+
+	@Override
+	public Product selectProductDetailById(String productId)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectProductById", productId);
+	}
+
+	@Override
+	public List<ProductOption> selectOptionById(String productId)
+	{
+		// TODO Auto-generated method stub
+		return session.selectList("productMapper.selectOptionById", productId);
+	}
+
+	@Override
+	public ProductOption selectOptionStockByName(String optionName)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectOptionStockByName", optionName);
+	}
+
+	@Override
+	public String selectDetailImageById(String productId)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectDetailImageById", productId);
 	}
 }
