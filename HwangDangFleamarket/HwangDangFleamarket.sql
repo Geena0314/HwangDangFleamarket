@@ -246,6 +246,9 @@ CREATE TABLE notice (
 drop sequence notice_no_seq
 create sequence notice_no_seq nocache;
 
+insert into notice values (notice_no_seq.nextval, '오픈 기념 소실글', '황당 플리마켓을 오픈하였습니다.', '20160621', 0);
+select * from notice
+
 /* 관리자QnA vvvvvvv*/
 CREATE TABLE admin_QnA (
 	admin_qna_no NUMBER primary key, /* 관리자QnA no */

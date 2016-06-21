@@ -9,7 +9,7 @@
 		SELECT <include refid="adminNotice-columns"/> FROM notice
 	</sql>
 	
-	<resultMap type="com.hwangdang.vo.Notice" id="notice-basic-resultmap">
+	<resultMap type="notice" id="notice-basic-resultmap">
 		<id column="notice_no" property="noticeNo"/>
 		<result column="notice_title" property="noticeTitle"/>
 		<result column="notice_content" property="noticeContent"/>
@@ -17,15 +17,35 @@
 		<result column="notice_hit" property="noticeHit"/>
 	</resultMap>
 	
-	<insert id="insertNotice">
-	
+	<insert id="insertNotice" parameterType="notice">
+		<selectKey keyProperty="noticeNo" resultType="_int" order="BEFORE">
+			select notice_no_seq.nextval from dual
+		</selectKey>
+		insert into notice values(#{noticeNo},#{noticeTitle},#{noticeContent},#{noticeDate},#{noticeHit})
 	</insert>
 	
+	<update id="updateNotice" parameterType="notice">
+		update notice
+		set    notice_title = #{noticeTitle},
+			   notice_content = #{noticeContent},
+		where  notice_no = #{noticeNo}
+	</update>
+	
+	<delete id="deleteNoticeByNoticeNo" parameterType="_int">
+		delete from notice where notice_no = #{value}
+	</delete>
+	
+	<select id="selectCountNotice" resultType="_int">
+		select count(notice_no) from notice
+	</select>
 	
 	<select id="selectAllNotice"  resultMap="notice-basic-resultmap">
 		<include refid="select-basic"/> 
 		ORDER BY notice_no_seq DESC
 	</select> 
-
-
+	
+	<select id="selectNoticeByNoticeNo" parameterType="_int" resultMap="notice-basic-resultmap">
+		<include refid="select-basic"/>
+		where notice_no = #{value}		
+	</select>
 </mapper>
