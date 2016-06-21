@@ -275,7 +275,7 @@ admin_qna_no ,
 		admin_qna_writer ,
 		admin_qna_date ,
 		admin_qna_hit ,
-		admin_qna_published 
+		admin_qna_published ,page
 FROM (
 SELECT  admin_qna_no , 
 	    admin_qna_title , 
@@ -284,7 +284,7 @@ SELECT  admin_qna_no ,
 		admin_qna_date ,
 		admin_qna_hit ,
 		admin_qna_published  , 
-		ceil(rownum / 3 ) page
+		ceil(rownum / 10 ) page
 FROM  ADMIN_QNA
 ORDER BY  admin_qna_no DESC
 )WHERE page = 3
@@ -327,6 +327,8 @@ CREATE TABLE product_detail_image (
 	product_id VARCHAR2(30) not null, /* 상품ID */
 	foreign key(product_id) references product(product_id) on delete cascade
 );
+
+
 
 /* 스토어QnA댓글 vvvvvv */
 drop table store_QnA_reply
