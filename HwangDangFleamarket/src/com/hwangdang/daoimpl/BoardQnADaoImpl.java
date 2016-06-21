@@ -13,14 +13,13 @@ public class BoardQnADaoImpl implements Dao {
 
 	@Autowired
 	private SqlSessionTemplate session;
-	
-/*	public BoardQnADaoImpl(SqlSessionTemplate session){
-		this.session = session;
-	}*/
-	
+
 	//QnA게시판 전체 조회
 	public List selectAllQnABoard(){
 		return session.selectList("boardQnA.select-list");
+	}
+	public int selectTotalItems(){
+		return session.selectOne("boardQnA.select-list-count");
 	}
 	
 }

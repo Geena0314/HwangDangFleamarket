@@ -31,6 +31,35 @@
 		ORDER BY admin_qna_no DESC
 	</select> 
 	
+	<select id="select-list-count" resultType="int">
+		SELECT count(*) FROM  admin_qna
+	</select>
+	
+	<!-- 페이징처리를 위한 쿼리문  -->
+	<select id="select-list-paging" parameterType="int"  resultMap="resultmap-basic-list">
+		SELECT 
+					admin_qna_no , 
+					admin_qna_title , 
+				    admin_qna_content ,
+					admin_qna_writer ,
+					admin_qna_date ,
+					admin_qna_hit ,
+					admin_qna_published 
+		FROM (
+		SELECT  admin_qna_no , 
+			    admin_qna_title , 
+			    admin_qna_content ,
+				admin_qna_writer ,
+				admin_qna_date ,
+				admin_qna_hit ,
+				admin_qna_published  , 
+				ceil(rownum / 3 ) page
+		FROM  ADMIN_QNA
+		ORDER BY  admin_qna_no DESC
+		)WHERE page = 3
+				
+	</select>
+	
 	
 	<insert id="admin-notice-insert">
 		INSERT INTO  

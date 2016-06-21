@@ -259,6 +259,36 @@ CREATE TABLE admin_QnA (
 drop sequence admin_qna_no_seq
 create sequence admin_qna_no_seq nocache;
 
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12',0 , 't');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목3'  ,'임시글내용ABC123' ,'scott123','2015-02-04',0 , 'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목4'  ,'임시글내용ABC1234' ,'scott124','2015-02-02',0 , 't');
+
+-- 페이징처리 쿼리 테스트
+SELECT 
+admin_qna_no , 
+	    admin_qna_title , 
+	    admin_qna_content ,
+		admin_qna_writer ,
+		admin_qna_date ,
+		admin_qna_hit ,
+		admin_qna_published 
+FROM (
+SELECT  admin_qna_no , 
+	    admin_qna_title , 
+	    admin_qna_content ,
+		admin_qna_writer ,
+		admin_qna_date ,
+		admin_qna_hit ,
+		admin_qna_published  , 
+		ceil(rownum / 3 ) page
+FROM  ADMIN_QNA
+ORDER BY  admin_qna_no DESC
+)WHERE page = 3
+
+
+
+
 /* 관리자QnA댓글 vvvvvvv*/
 CREATE TABLE admin_QnA_reply (
 	admin_reply_no NUMBER primary key, /* 댓글번호 */
