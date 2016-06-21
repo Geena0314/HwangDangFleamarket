@@ -1,6 +1,7 @@
 package com.hwangdang.serviceimpl;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,12 +17,8 @@ public class BoardQnAServiceImpl implements Service {
 	@Autowired
 	private BoardQnADaoImpl adminDao;
 	
-	public HashMap getBoardList(){
-		HashMap<String ,Object> map = new HashMap<>();
-		PagingBean pasingBean = new PagingBean(getTotalItems() ,Constants.ITEMS_PER_PAGE);
-		map.put("list", adminDao.selectAllQnABoard());
-		map.put("pasingBean", pasingBean);
-		return map;
+	public List getBoardList(int page){
+		return adminDao.selectAllQnABoard(page);
 	}
 	public int getTotalItems(){
 		return adminDao.selectTotalItems();

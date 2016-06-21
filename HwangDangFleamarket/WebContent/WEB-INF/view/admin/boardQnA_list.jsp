@@ -2,7 +2,6 @@
 <%@taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt"   uri="http://java.sun.com/jsp/jstl/fmt" %>
 <h1>황당 플리마켓 QnA</h1>
-${requestScope.pasingBean }
 	<table>
 		<thead>
 			<tr>
@@ -33,6 +32,41 @@ ${requestScope.pasingBean }
 					</c:choose>
 				</tr>
 				</c:forEach>
-			
 		</tbody>
 	</table>
+	<!-- ◀버튼처리 -->  
+	<c:choose>
+		<c:when test="${requestScope.pasingBean.previousPageGroup }">
+			<a href="/HwangDangFleamarket/admin/boardQnAList.go?page=${requestScope.pasingBean.beginPage-1}">
+			◀
+			</a>
+		</c:when>
+		<c:otherwise>
+		 	◁	  
+		</c:otherwise>
+	</c:choose>
+	
+		<!-- 페이징처리 -->
+		<c:forEach begin="${requestScope.pasingBean.beginPage }" end="${requestScope.pasingBean.endPage }" var="page">
+			<c:choose>
+				<c:when test="${requestScope.pasingBean.page == page }">
+					[ ${page} ]
+				</c:when>
+				<c:otherwise>
+					<a href="/HwangDangFleamarket/admin/boardQnAList.go?page=${page }">${page}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+	
+		<!-- ▶버튼 처리  -->
+	<c:choose>
+		<c:when test="${requestScope.pasingBean.nextPageGroup}">
+				<a href="/HwangDangFleamarket/admin/boardQnAList.go?page=${requestScope.pasingBean.endPage +1 }">▶ </a>
+		</c:when>
+		<c:otherwise>
+			▷	  
+		</c:otherwise>
+	</c:choose>
+	
+	
+	
