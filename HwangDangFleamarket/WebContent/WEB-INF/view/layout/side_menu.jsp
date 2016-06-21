@@ -7,10 +7,21 @@ padding: 5px;
 margin-bottom: 50px;
 margin-left: 25px;
 }
+a{
+	text-decoration: none;
+	color: black;
+}
+
+a:HOVER {
+	text-decoration: underline;
+	color: white;
+}
+
+
 </style>
 <div id="sideMenu">
-   		<button>듀토리얼</button><br>
-    	<button>스토어 둘러보기</button><br>
-    	<button>소식통</button><br>
-    	<button>QnA게시판</button>
+   		<a href="#">듀토리얼</a><br>
+    	<a href="#">스토어 둘러보기</a><br>
+    	<a href="#">소식통</a><br>
+    	<a href="/HwangDangFleamarket/admin/boardQnAList.go">QnA게시판</a>
 </div>

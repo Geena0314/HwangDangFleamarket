@@ -7,6 +7,10 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
+	<!-- 트랜잭션처리 -->
+	<bean name="txmanager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource" />
+
 	<!-- Spring, Mybatis 연동. -->
 	<!-- BasicDataSource Bean으로 등록. -->
 	<bean name="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
