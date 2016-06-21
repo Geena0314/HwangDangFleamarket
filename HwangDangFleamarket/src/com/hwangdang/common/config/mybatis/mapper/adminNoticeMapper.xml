@@ -35,14 +35,20 @@
 		delete from notice where notice_no = #{value}
 	</delete>
 	
+	<select id="selectNoticePaging" parameterType="map"   resultMap="notice-basic-resultmap">
+		select <include refid="adminNotice-columns"/> from (
+			select <include refid="adminNotice-columns"/> , ceil(rownum / #{itemPerPage}) page from notice
+				order by notice_no DESC) where page = #{page}
+	</select>
+	
 	<select id="selectCountNotice" resultType="_int">
 		select count(notice_no) from notice
 	</select>
 	
-	<select id="selectAllNotice"  resultMap="notice-basic-resultmap">
+	<!-- <select id="selectAllNotice"  resultMap="notice-basic-resultmap">
 		<include refid="select-basic"/> 
 		ORDER BY notice_no_seq DESC
-	</select> 
+	</select> paging처리 해줘야함 -->
 	
 	<select id="selectNoticeByNoticeNo" parameterType="_int" resultMap="notice-basic-resultmap">
 		<include refid="select-basic"/>

@@ -24,7 +24,7 @@ table ,tr{
 <div id="sideMenu">
    		<a href="#">듀토리얼</a><br>
     	<a href="#">스토어 둘러보기</a><br>
-    	<a href="adminNotice.go">소식통</a><br>
+    	<a href="/HwangDangFleamarket/admin/adminNotice.go?page=1">소식통</a><br>
     	<a href="/HwangDangFleamarket/admin/boardQnAList.go">QnA게시판</a>
     	<a href="/HwangDangFleamarket/admin/boardQnAList.go?page=1">QnA게시판</a>
 </div>

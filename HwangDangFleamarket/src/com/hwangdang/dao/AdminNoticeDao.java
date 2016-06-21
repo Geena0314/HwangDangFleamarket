@@ -1,6 +1,5 @@
 package com.hwangdang.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.hwangdang.vo.Notice;
@@ -15,7 +14,7 @@ public interface AdminNoticeDao {
 
 	int selectCountNotice();
 	
-	List<Notice> selectAllNotice(HashMap<String, Object> map);
+	List<Notice> selectAllNotice(int page);
 	
 	Notice selectNoticeByNoticeNo(int noticeNo);
 	

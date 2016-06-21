@@ -1,9 +1,12 @@
 package com.hwangdang.service;
 
-import java.util.HashMap;
+import java.util.List;
 
 public interface AdminNoticeService {
 	
-	HashMap<String, Object> selectAllNotice();
+	public List getAllNotice(int page);
+	
+	public int getCountNotice();
+	
 
 }
