@@ -36,14 +36,6 @@ c. extends : 기존 definition 태그의 내용을 상속받아 사용할때 사
 	<definition name="*.tiles"  extends="template">
 		<put-attribute name="body"  value="/WEB-INF/view/{1}.jsp" />
 	</definition>
-
-<!-- 	 <definition name="member/join_form.tiles"  extends="template">
-		<put-attribute name="body"  value="/WEB-INF/view/body/member/join_form.jsp" />
-	</definition>
-	
-	<definition name="main.tiles" extends="template" >
-		<put-attribute name="body"  value="/WEB-INF/view/body/main.jsp" />
-	</definition> -->
 	
 </tiles-definitions>
 

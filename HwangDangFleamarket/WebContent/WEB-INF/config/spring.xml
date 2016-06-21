@@ -38,6 +38,8 @@
 
 	<!-- 메인페이지 설정. -->
 	<mvc:view-controller path="/main.go" view-name="main.tiles" />
+	<!-- 관리자 게시만 view-controller 설정 -->
+	<mvc:view-controller path="/adminNotice.go" view-name="admin/adminNotice.tiles"/>
 	
 	<bean name="tilesConfig" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminNoticeMapper">
+	<sql id="adminNotice-columns">
+		notice_no, notice_title, notice_content, notice_date, notice_hit
+	</sql>
+	
+	<sql id="select-basic">
+		SELECT <include refid="adminNotice-columns"/> FROM notice
+	</sql>
+	
+	<resultMap type="com.hwangdang.vo.Notice" id="notice-basic-resultmap">
+		<id column="notice_no" property="noticeNo"/>
+		<result column="notice_title" property="noticeTitle"/>
+		<result column="notice_content" property="noticeContent"/>
+		<result column="notice_date" property="noticeDate"/>
+		<result column="notice_hit" property="noticeHit"/>
+	</resultMap>
+	
+	<insert id="insertNotice" rewu>
+	
+	</insert>
+	
+	
+	<select id="selectAllNotice"  resultMap="notice-basic-resultmap">
+		<include refid="select-basic"/> 
+		ORDER BY notice_no_seq DESC
+	</select> 
+
+
+</mapper>
