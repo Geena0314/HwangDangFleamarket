@@ -4,10 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>소시쿠통구</title>
+<title>소식통</title>
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	$("#registerBtn").on("click", function(){
+		
+		
+	
+	});
+	
 	
 	
 	
@@ -28,7 +34,7 @@ $(document).ready(function(){
  	</thead>
  	<tbody id="tbody"></tbody>
  </table>
- <button ></button>
+ <input type="button" value="소식글등록" id="registerBtn">
  
 </body>
 </html>
