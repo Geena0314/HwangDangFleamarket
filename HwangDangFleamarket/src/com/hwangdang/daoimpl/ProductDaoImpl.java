@@ -34,4 +34,11 @@ public class ProductDaoImpl implements ProductDao
 	{
 		return session.selectOne("productMapper.selectCount");
 	}
+
+	@Override
+	public int selectCountProductByNo(int sellerStoreNo)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectCountByNo", sellerStoreNo);
+	}
 }

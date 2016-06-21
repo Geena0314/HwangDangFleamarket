@@ -10,4 +10,5 @@ public interface ProductDao
 	//상품 리스트 조회.  페이징 처리.
 	List<Product> selectAllProduct(HashMap<String, Object> map);
 	int selectCountProduct();
+	int selectCountProductByNo(int sellerStoreNo);
 }

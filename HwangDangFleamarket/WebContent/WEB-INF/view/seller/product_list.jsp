@@ -1,10 +1,5 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-<%@ taglib prefix="lee" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Insert title here</title>
+<%@ taglib prefix="lee"  uri="http://java.sun.com/jsp/jstl/core"%>
 		<style type="text/css">
 			div#main
 			{
@@ -78,10 +73,8 @@
 				text-align: center;
 			}
 		</style>
-	</head>
-
-	<body>
-		<h2>상품 리스트 보기</h2>
+	
+		<h2 align="center">상품 리스트 보기</h2>
 		<div id="main">
 			<lee:forEach items="${ requestScope.productList }" var="list" varStatus="no">
 				<div id="product${ no.count }">
@@ -98,7 +91,7 @@
 					-->
 					<lee:choose>
 						<lee:when test="${ requestScope.bean.previousPageGroup }">
-							<a href = "/HwangDangFleamarket/product/list.go?page=${ requestScope.bean.beginPage-1 }">◁</a>
+							<a href = "/HwangDangFleamarket/product/list.go?page=${ requestScope.bean.beginPage-1 }&sellerStoreNo=${param.sellerStoreNo}">◁</a>
 						</lee:when>
 						<lee:otherwise>
 							<font color="#47C83E">◁</font>
@@ -113,7 +106,7 @@
 					<lee:forEach begin="${ requestScope.bean.beginPage }" end="${ requestScope.bean.endPage }" var="page">
 						<lee:choose>
 							<lee:when test="${ page != requestScope.bean.page }">
-								<a href = "/HwangDangFleamarket/product/list.go?page=${ page }">${ page }</a>
+								<a href = "/HwangDangFleamarket/product/list.go?page=${ page }&sellerStoreNo=${param.sellerStoreNo}">${ page }</a>
 							</lee:when>
 							<lee:otherwise>
 								<font color="#47C83E">${ page }</font>
@@ -127,7 +120,7 @@
 					-->
 					<lee:choose>
 						<lee:when test="${ requestScope.bean.nextPageGroup }">
-							<a href = "/HwangDangFleamarket/product/list.go?page=${ requestScope.bean.endPage+1 }">▷</a>
+							<a href = "/HwangDangFleamarket/product/list.go?page=${ requestScope.bean.endPage+1 }&sellerStoreNo=${param.sellerStoreNo}">▷</a>
 						</lee:when>
 						<lee:otherwise>
 							<font color="#47C83E">▷</font>
@@ -135,5 +128,3 @@
 					</lee:choose>
 				</div>
 		</div>
-	</body>
-</html>
