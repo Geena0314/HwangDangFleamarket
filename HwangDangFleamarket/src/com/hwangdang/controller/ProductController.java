@@ -18,9 +18,9 @@ public class ProductController
 	
 	@RequestMapping("list")
 	//상품 리스트 조회.
-	public ModelAndView productList(int page)
+	public ModelAndView productList(int page, int sellerStoreNo)
 	{
-		HashMap<String, Object> map = service.selectAllProduct(page);
-		return new ModelAndView("/WEB-INF/view/seller/product_list.jsp", map);
+		HashMap<String, Object> map = service.selectAllProduct(page, sellerStoreNo);
+		return new ModelAndView("seller/product_list.tiles", map);
 	}
 }

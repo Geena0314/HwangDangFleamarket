@@ -136,13 +136,13 @@ CREATE TABLE product (
 --연습용 시퀀스
 drop sequence product_id_seq
 create sequence product_id_seq nocache;
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes1.jpg', '상품정보클롭', 1, 1);
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes1.jpg', '상품정보클롭', 1, 1);
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes1.jpg', '상품정보클롭', 1, 1);
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes1.jpg', '상품정보클롭', 1, 1);
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes1.jpg', '상품정보클롭', 1, 1);
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes1.jpg', '상품정보클롭', 1, 1);
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes1.jpg', '상품정보클롭', 1, 1);
+insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes1.jpg', '상품정보클롭', 1, 3);
+insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes3.jpg', '상품정보클롭', 3, 3);
+insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes2.jpg', '상품정보클롭', 2, 3);
+insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes4.jpg', '상품정보클롭', 6, 3);
+insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes6.jpg', '상품정보클롭', 7, 3);
+insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes7.jpg', '상품정보클롭', 2, 3);
+insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes8.jpg', '상품정보클롭', 11, 3);
 
 insert into product values ('상품id2', '상품명', 40000, 2222, 'shoes2.jpg', '상품정보클롭', 2, 1);
 insert into product values ('상품id3', '상품명', 3000, 3333, 'shoes3.jpg', '상품정보클롭', 3, 1);
@@ -341,3 +341,12 @@ insert into category values (category_id_seq.nextval, '남성의류', 1, 'second
 insert into category values (category_id_seq.nextval, '도자기', 2, 'second');
 insert into category values (category_id_seq.nextval, '여성의류', 1, 'second');
 insert into category values (category_id_seq.nextval, '팔찌', 2, 'second');
+
+select product_Id, product_name, product_price, product_stock, product_main_image, product_info, product_like, seller_store_no       
+from (select ceil(rownum/6) page,        product_Id, product_name, product_price, product_stock, product_main_image, product_info, product_like, seller_store_no     
+		from (select     product_Id, product_name, product_price, product_stock, product_main_image, product_info, product_like, seller_store_no         
+				from product where seller_store_no=1
+				order by product_like desc))   
+where page = 7
+
+select count(product_id) from product where seller_store_no=1
