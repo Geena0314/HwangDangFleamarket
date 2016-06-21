@@ -34,12 +34,7 @@
 	 	<result column="admin_qna_published"  property="adminQnaPublished" />
 	</resultMap> 
 	
-	 <!-- 게시판글 전체 조회  리턴 : List-->
-	<select id="select-list"  resultMap="resultmap-basic-list">
-		<include refid="select-basic"/> 
-		ORDER BY admin_qna_no DESC
-	</select> 
-	
+	 <!-- 게시판의 글수 조회 -->
 	<select id="select-list-count" resultType="int">
 		SELECT count(*) FROM  admin_qna
 	</select>
@@ -58,6 +53,26 @@
 				
 	</select>
 	
+	<!-- 공지글한개 조회하기 : 세부페이지 보기 -->
+	<select id="select-one-detail" parameterType="_int" resultMap="resultmap-basic-list">
+		SELECT <include refid="slect-basic-column"/>
+		FROM  ADMIN_QNA
+		WHERE admin_qna_no = #{no}
+	</select>
+	
+	
+	<!-- 공지글 hit ++1 -->
+	<update id="update-hit" parameterType="_int">
+		UPDATE admin_qna
+		SET admin_qna_hit = admin_qna_hit+1
+		WHERE admin_qna_no = #{no}
+	</update>
+	
+	<!-- 공지글 삭제 -->
+	<delete id="delete-no"  parameterType="_int">
+		DELETE FROM admin_qna
+		WHERE admin_qna_no = #{no}
+	</delete>
 	
 	<insert id="admin-notice-insert">
 		INSERT INTO  

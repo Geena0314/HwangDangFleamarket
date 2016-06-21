@@ -325,6 +325,8 @@ CREATE TABLE product_detail_image (
 	foreign key(product_id) references product(product_id) on delete cascade
 );
 
+
+
 /* 스토어QnA댓글 vvvvvv */
 drop table store_QnA_reply
 CREATE TABLE store_QnA_reply (

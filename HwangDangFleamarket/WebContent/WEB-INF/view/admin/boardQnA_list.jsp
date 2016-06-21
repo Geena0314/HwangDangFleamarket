@@ -2,6 +2,7 @@
 <%@taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt"   uri="http://java.sun.com/jsp/jstl/fmt" %>
 <h1>황당 플리마켓 QnA</h1>
+
 	<table>
 		<thead>
 			<tr>
@@ -18,7 +19,7 @@
 				<c:forEach var="list" items="${requestScope.list }" >
 				<tr>
 					<td>${list.adminQnaNo }</td>
-					<td><a href="#">${list.adminQnaTitle }</a></td>
+					<td><a href="/HwangDangFleamarket/admin/boardQnADetail.go?page=${requestScope.pasingBean.page }&no=${list.adminQnaNo }">${list.adminQnaTitle }</a></td>
 					<td>${list.adminQnaWriter }</td>
 					<td><fmt:formatDate value="${list.adminQnaDate }" pattern="yyyy년MM월dd일"/></td>
 					<td>${list.adminQnaHit }</td>
