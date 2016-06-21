@@ -26,7 +26,7 @@ public class QnABoardController {
 	@Transactional
 	@RequestMapping("/boardQnAList.go")
 	public String noticeQnAList(Model model, int page){
-		
+		System.out.println("page: " + page);
 		PagingBean pasingBean = new PagingBean(service.getTotalItems() ,page);
 		ArrayList<AdminQnA> list = (ArrayList<AdminQnA>) service.getBoardList(page);
 		model.addAttribute("list", list);
@@ -62,7 +62,7 @@ public class QnABoardController {
 	@RequestMapping("/boardQnARemove.go")
 	public String boardQnARemove( int no , int page , Model model){
 		service.removeAdminQnAByNo(no);
-	return "admin/boardQnA_list.tiles?page="+page;
+		return "/admin/boardQnAList.go";
 	}
 	
 	/**

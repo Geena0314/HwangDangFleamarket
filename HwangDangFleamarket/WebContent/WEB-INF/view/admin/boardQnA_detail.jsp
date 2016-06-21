@@ -46,10 +46,9 @@ padding: 10px;
 </section>
 <p>
 <!-- 관리자일경우만 댓글달기 가능  -->
-<a href="/HwangDangFleamarket/admin/boardQnAReply.go&no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">댓글달기</a>
+<a href="/HwangDangFleamarket/admin/boardQnAReply.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">댓글달기</a>
 
 <!-- 작성자만 수정 삭제가능  -->
-<a href="/HwangDangFleamarket/admin/boardQnASet.go&no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">수정하기</a>&nbsp;&nbsp;&nbsp;
-<a href="/HwangDangFleamarket/admin/boardQnARemove.go&no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">삭제하기</a>
-
+<a href="/HwangDangFleamarket/admin/boardQnASet.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">수정하기</a>&nbsp;&nbsp;&nbsp;
+<a href="/HwangDangFleamarket/admin/boardQnARemove.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">삭제하기</a>
 </p>

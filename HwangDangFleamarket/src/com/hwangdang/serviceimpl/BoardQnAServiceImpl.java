@@ -30,8 +30,10 @@ public class BoardQnAServiceImpl implements Service {
 	//글번호로 글삭제
 		public void removeAdminQnAByNo(int no){
 			int cnt = adminDao.deleteByNo(no);
-			System.out.println("삭제" + cnt);
+			/*if(cnt ==1){
+				System.out.println("삭제성공");
+			}*/
 		}
 		
-	
+	  
 }
