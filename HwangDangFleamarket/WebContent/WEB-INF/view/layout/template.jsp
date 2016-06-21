@@ -1,12 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<!-- tiles 설정을 호출할 태그를 제공하는 태그 라이브러리 -->
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Template</title>
+<title>황당마켓</title>
 <style type="text/css">
 header{
 	background-color:pink;
@@ -21,7 +20,7 @@ nav{
 	height:500px;
 	width:200px;
 	float:left;
-}
+} 
 section{
 	padding: 15px;
 	min-height:400px;
