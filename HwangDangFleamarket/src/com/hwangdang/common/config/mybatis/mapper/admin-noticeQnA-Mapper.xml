@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardQnA">
+	
+	<sql id="select-basic">
+		SELECT  admin_qna_no ,
+				admin_qna_title ,
+				admin_qna_content ,
+				admin_qna_writer ,
+				admin_qna_date ,
+				admin_qna_hit ,
+				admin_qna_published
+				
+		FROM  admin_qna
+	</sql>
+	
+	 <!-- 게시판글 전체 조회 -->
+	 <resultMap type="com.hwangdang.vo.AdminQnA" id="resultmap-basic-list">
+		<id column="admin_qna_no"  property="adminQnaNo"/>
+	 	<result column="admin_qna_title"  property="adminQnaTitle" />
+	 	<result column="admin_qna_content"  property="adminQnaContent" />
+	 	<result column="admin_qna_writer"  property="adminQnaWriter" />
+	 	<result column="admin_qna_date"  property="adminQnaDate" />
+	 	<result column="admin_qna_hit"  property="adminQnaHit" />
+	 	<result column="admin_qna_published"  property="adminQnaPublished" />
+	</resultMap> 
+	
+	 <!-- 게시판글 전체 조회  리턴 : List-->
+	<select id="select-list"  resultMap="resultmap-basic-list">
+		<include refid="select-basic"/> 
+		ORDER BY admin_qna_no DESC
+	</select> 
+	
+	
+	<insert id="admin-notice-insert">
+		INSERT INTO  
+	</insert>
+</mapper>

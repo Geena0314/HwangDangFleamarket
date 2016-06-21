@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC 
+		"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+		"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<!-- Definitions for Tiles documentation  
+	속성 
+a. name : controller handler에게 리턴할 View name을 설정. 
+b. template : 틀이 되는 레이아웃 jsp파일의 위치 지정.
+c. extends : 기존 definition 태그의 내용을 상속받아 사용할때 사용받을 definition태그의 name 속성사용 
+
+ 하위태그 
+	<put-attribute>   : template을 구성할 요소 페이지를 지정하는 태그 
+	속성 : name :template 페이지에서 호출할 이름(id) 
+	value : 요소페이지의 경로
+	
+ -->
+<tiles-definitions>
+
+	<definition name="template" template="/WEB-INF/view/layout/template.jsp" >
+		<put-attribute name="header" value="/WEB-INF/view/layout/header.jsp" />
+		<put-attribute name="nav"  value="/WEB-INF/view/layout/side_menu.jsp" />
+		<put-attribute name="footer"  value="/WEB-INF/view/layout/footer.jsp" />
+	</definition>
+	
+	
+
+	<!-- wild cart(*)를 이용한 설정방식 
+		name의 * 는 핸들러메소드의 리턴타입 String문자열로 view-name을 이용하여 만듬 
+		return "member/join_form.tiles";  라면 
+		1번 * : membe   , 2번 * : join_form 문자열로 대체됨 
+	-->
+	<definition name="*/*.tiles"  extends="template">
+		<put-attribute name="body"  value="/WEB-INF/view/{1}/{2}.jsp" />
+	</definition>
+	
+	<definition name="*.tiles"  extends="template">
+		<put-attribute name="body"  value="/WEB-INF/view/{1}.jsp" />
+	</definition>
+
+<!-- 	 <definition name="member/join_form.tiles"  extends="template">
+		<put-attribute name="body"  value="/WEB-INF/view/body/member/join_form.jsp" />
+	</definition>
+	
+	<definition name="main.tiles" extends="template" >
+		<put-attribute name="body"  value="/WEB-INF/view/body/main.jsp" />
+	</definition> -->
+	
+</tiles-definitions>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,51 @@
+<!-- spring MVC -->
+	<artifactId>spring-webmvc</artifactId>
+<!-- jstl -->
+	<artifactId>jstl</artifactId>
+<!-- tiles-jsp -->
+	<artifactId>tiles-jsp</artifactId>
+<!-- tiles-core -->
+	<artifactId>tiles-core</artifactId>
+
+<!-- 
+	File upload 처리를 위한 API
+	CommonsMultipartResolver가 파일 업로드 처리를 위해 사용하는 API
+ -->
+	<artifactId>commons-fileupload</artifactId>
+
+<!-- 유효성검사 @valid -->
+	<artifactId>hibernate-validator</artifactId>
+
+<!-- JSON처리 -->
+	<artifactId>jackson-core</artifactId>
+	<artifactId>jackson-databind</artifactId>
+
+<!-- Mybatis 연동. -->
+	<artifactId>spring-context</artifactId>
+	<artifactId>spring-jdbc</artifactId>
+	<artifactId>mybatis</artifactId>
+	<artifactId>mybatis-spring</artifactId>
+<!--(+) BasicDataSource -->
+	<artifactId>commons-dbcp2</artifactId>
+
+등록 API
+Spring MVC, jstl, tiles-jsp, tiles-core, fileUpload, valid(유효성검사), JSON
+Mybatis 연동(spring-context, spring-jdbc, mybatis, mybatis-spring, commons-dbcp2)
+6.17
+기본 프로젝트 틀 완성.
+(+) DB테이블 생성 1차완료.
+(+) vo생성 1차완료.
+
+6.18
+pom.xml에 Mybatis 관련 api 5가지 추가.
+mybatis-config.xml추가
+spring.xml에 mybatis관련 설정.(Dao Impl추가해서 사용하기..)
+
+6.18저녁
+디비 회원과 판매자 1:1관계설정에 따른 DB수정과 VO수정,
+수정과맛나겠다...
+무튼 교환, 환불 과 주문과의 1:1관계설정에 따른 DB, VO 수정.
+
+6.19오전
+디비 회원, 판매자 기존설정대로 돌리기... DB, VO수정.
+교환 환불과 주문과의 관계도 기존 설정대로 돌리기.

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="member">
+	<sql id="member-columns">
+			member_id, member_password, member_name, member_phone, member_zipcode, member_address, member_sub_address, member_assign
+	</sql>
+	<sql id="select-basic">
+		SELECT <include refid="member-columns"/> FROM member 
+	</sql>
+	<insert id="insert" parameterType="member">
+		INSERT INTO member VALUES (#{member_id},#{member_password},#{member_name},#{member_phone},#{member_zipcode},#{member_address},#{member_sub_address}, #{member_assign})
+	</insert>
+	<update id="update" parameterType="member">
+		UPDATE member 
+		SET 	member_password=#{member_password},
+			   	member_name=#{member_name},
+			   	member_phone=#{member_phone},
+			   	member_zipcode=#{member_zipcode},
+			   	member_address=#{member_address},
+			   	member_sub_address=#{member_sub_address},
+			   	member_assign=#{member_assign}
+		WHERE member_id=#{member_id}
+	</update>
+	<delete id="deleteById" parameterType="string">
+		DELETE FROM member WHERE member_id=#{member_id}
+	</delete>
+	
+	<!-- select -->
+	<select id="selectById" parameterType="string" resultType="member">
+		<include refid="select-basic"/>
+		WHERE member_id = #{member_id}
+	</select>
+	<!-- 전체 회원 select -->
+	<select id="selectAll" resultType="member">
+		<include refid="select-basic"/>
+	</select>
+	
+	<!-- Select 페이징 처리 -->
+	<select id="selectList" parameterType="map" resultType="member">
+		SELECT <include refid="member-columns"/> 
+		FROM(SELECT CEIL(rownum/#{itemPerPage}) page, <include refid="member-columns"/> 
+			     FROM(SELECT <include refid="member-columns"/> 
+					     FROM member order by id desc
+					     )
+				 )
+		WHERE page = #{page}
+	</select>
+	
+	<select id="selectMemberCount" resultType="_int">
+		SELECT count(member_id) FROM member
+	</select>
+	<!-- 등록시 중복검사에서 사용해서 추가. -->
+	<select id="selectCountById" parameterType="string" resultType="_int">
+		SELECT count(member_id) FROM member WHERE member_id=#{member_id}
+	</select>
+
+
+</mapper>
