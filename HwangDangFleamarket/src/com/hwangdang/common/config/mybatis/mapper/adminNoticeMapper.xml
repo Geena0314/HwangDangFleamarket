@@ -17,7 +17,7 @@
 		<result column="notice_hit" property="noticeHit"/>
 	</resultMap>
 	
-	<insert id="insertNotice" rewu>
+	<insert id="insertNotice">
 	
 	</insert>
 	
