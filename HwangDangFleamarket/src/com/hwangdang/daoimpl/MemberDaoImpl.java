@@ -10,12 +10,11 @@ import com.hwangdang.vo.Member;
 public class MemberDaoImpl implements MemberDao{
 
 	private SqlSessionTemplate session;
-	
+
 	
 	public MemberDaoImpl(SqlSessionTemplate session) {
 		this.session = session;
 	}
-
 	@Override
 	public int insert(Member member) {
 		// TODO Auto-generated method stub

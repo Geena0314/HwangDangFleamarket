@@ -18,7 +18,7 @@
 	<h2>황당 플리마켓</h2>
 	<div id="navBar">
 		<div id="home">
-			<a href="#">메인</a>
+			<a href="/HwangDangFleamarket/main.go">메인</a>
 		</div>
 		<div id="menuLinks">
 			<a href="#">로그인</a>&nbsp;&nbsp;
