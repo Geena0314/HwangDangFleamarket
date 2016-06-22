@@ -29,7 +29,7 @@ public class AdminNoticeController{
 		ArrayList list = (ArrayList) service.getAllNotice(page);
 		map.put("list", list);
 		map.put("pagingBean",pagingBean);
-		return new ModelAndView("admin/adminNotice.tiles", map);
+		return new ModelAndView("admin/admin_notice_list.tiles", map);
 	}
 	
 	@RequestMapping("/adminNoticeDetail")
@@ -38,12 +38,12 @@ public class AdminNoticeController{
 		HashMap map = new HashMap<>();
 		map.put("notice", notice);
 		map.put("page", page);
-		return new ModelAndView("admin/adminNoticeDetail.tiles", map);
+		return new ModelAndView("admin/admin_notice_detail.tiles", map);
 	}
 	
 	@RequestMapping("/adminRegisterForm")
 	public String registerForm(){
-		return "admin/adminRegisterNotice.tiles";
+		return "admin/admin_register_notice.tiles";
 	}
 	
 	@RequestMapping("/adminRegisterNotice")
@@ -52,7 +52,7 @@ public class AdminNoticeController{
 		service.adminRegisterNotice(notice);
 		HashMap map = new HashMap<>();
 		map.put("page", page);
-		return new ModelAndView("admin/adminNoticeDetail.tiles", map);
+		return new ModelAndView("admin/admin_notice_detail.tiles", map);
 	}
 	
 	@RequestMapping("/adminEditForm")
@@ -61,7 +61,7 @@ public class AdminNoticeController{
 		HashMap map = new HashMap<>();
 		map.put("notice", notice);
 		map.put("page", page);
-		return new ModelAndView("admin/adminEditNotice.tiles", map);
+		return new ModelAndView("admin/admin_edit_notice.tiles", map);
 	}
 
 	@RequestMapping("/adminEditNotice")
@@ -71,7 +71,7 @@ public class AdminNoticeController{
 		HashMap map = new HashMap<>();
 		map.put("notice", notice);
 		map.put("page", page);
-		return new ModelAndView("admin/adminNoticeDetail.tiles", map);
+		return new ModelAndView("admin/admin_notice_detail.tiles", map);
 	}
 	
 	@RequestMapping("/adminRemoveNotice")
@@ -82,6 +82,6 @@ public class AdminNoticeController{
 		ArrayList list = (ArrayList) service.getAllNotice(page);
 		map.put("list", list);
 		map.put("pagingBean",pagingBean);
-		return new ModelAndView("admin/adminNotice.tiles", map);
+		return new ModelAndView("admin/admin_notice_list.tiles", map);
 	}
 }

@@ -15,6 +15,8 @@ public class MemberDaoImpl implements MemberDao{
 	@Autowired
 	private SqlSessionTemplate session;
 
+	public MemberDaoImpl() {
+	}
 	
 	public MemberDaoImpl(SqlSessionTemplate session) {
 		this.session = session;
