@@ -10,6 +10,8 @@ public interface AdminNoticeDao {
 	
 	int updateNotice(Notice notice);
 	
+	int updateNoticeHit(int noticeNo);
+	
 	int deleteNotice(int noticeNo);
 
 	int selectCountNotice();

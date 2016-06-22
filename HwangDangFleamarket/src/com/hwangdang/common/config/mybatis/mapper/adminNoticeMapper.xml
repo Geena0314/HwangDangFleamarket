@@ -27,18 +27,25 @@
 	<update id="updateNotice" parameterType="notice">
 		update notice
 		set    notice_title = #{noticeTitle},
-			   notice_content = #{noticeContent},
+			   notice_content = #{noticeContent}
 		where  notice_no = #{noticeNo}
+	</update>
+	
+	<update id="updateNoticeHit" parameterType="_int">
+		update notice
+		set	   notice_hit = notice_hit + 1
+		where  notice_no = #{value}
 	</update>
 	
 	<delete id="deleteNoticeByNoticeNo" parameterType="_int">
 		delete from notice where notice_no = #{value}
 	</delete>
 	
-	<select id="selectNoticePaging" parameterType="map"   resultMap="notice-basic-resultmap">
-		select <include refid="adminNotice-columns"/> from (
-			select <include refid="adminNotice-columns"/> , ceil(rownum / #{itemPerPage}) page from notice
-				order by notice_no DESC) where page = #{page}
+	<select id="selectNoticePaging" parameterType="map" resultMap="notice-basic-resultmap">
+		select <include refid="adminNotice-columns"/> from(
+			select ceil(rownum /#{itemsPerPage})page, <include refid="adminNotice-columns"/> from(
+				select <include refid="adminNotice-columns"/> from notice order by notice_no DESC) 
+				) where page = #{page}
 	</select>
 	
 	<select id="selectCountNotice" resultType="_int">

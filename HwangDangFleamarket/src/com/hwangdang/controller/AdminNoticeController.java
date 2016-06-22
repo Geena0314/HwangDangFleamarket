@@ -1,17 +1,19 @@
 package com.hwangdang.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.service.AdminNoticeService;
+import com.hwangdang.vo.Notice;
 
 @Controller
 @RequestMapping("/admin")
@@ -20,14 +22,66 @@ public class AdminNoticeController{
 	@Autowired
 	private AdminNoticeService service;
 	
-	@Transactional
 	@RequestMapping("/adminNotice")
-	public ModelAndView noticeList(Model model, int page){
+	public ModelAndView noticeList(int page){
 		HashMap map = new HashMap<>();
-		PagingBean pasingBean = new PagingBean(service.getCountNotice() ,page);
+		PagingBean pagingBean = new PagingBean(service.getCountNotice(),page);
 		ArrayList list = (ArrayList) service.getAllNotice(page);
 		map.put("list", list);
-		map.put("pasingBean",pasingBean);
+		map.put("pagingBean",pagingBean);
+		return new ModelAndView("admin/adminNotice.tiles", map);
+	}
+	
+	@RequestMapping("/adminNoticeDetail")
+	public ModelAndView noticeDetail(int page, int noticeNo){
+		Notice notice = service.getNoticeByNoticeNo(noticeNo);
+		HashMap map = new HashMap<>();
+		map.put("notice", notice);
+		map.put("page", page);
+		return new ModelAndView("admin/adminNoticeDetail.tiles", map);
+	}
+	
+	@RequestMapping("/adminRegisterForm")
+	public String registerForm(){
+		return "admin/adminRegisterNotice.tiles";
+	}
+	
+	@RequestMapping("/adminRegisterNotice")
+	public ModelAndView registerNotice(Notice notice, int page){
+		notice.setNoticeDate(new Date());
+		service.adminRegisterNotice(notice);
+		HashMap map = new HashMap<>();
+		map.put("page", page);
+		return new ModelAndView("admin/adminNoticeDetail.tiles", map);
+	}
+	
+	@RequestMapping("/adminEditForm")
+	public ModelAndView editForm(int page, int noticeNo){
+		Notice notice = service.getNoticeByNoticeNo(noticeNo);
+		HashMap map = new HashMap<>();
+		map.put("notice", notice);
+		map.put("page", page);
+		return new ModelAndView("admin/adminEditNotice.tiles", map);
+	}
+
+	@RequestMapping("/adminEditNotice")
+	public ModelAndView editNotice(int page, Notice notice){
+		notice.setNoticeDate(new Date());
+		service.adminEditNotice(notice);
+		HashMap map = new HashMap<>();
+		map.put("notice", notice);
+		map.put("page", page);
+		return new ModelAndView("admin/adminNoticeDetail.tiles", map);
+	}
+	
+	@RequestMapping("/adminRemoveNotice")
+	public ModelAndView removeNotice(int page, int noticeNo){
+		service.removNotice(noticeNo);
+		HashMap map = new HashMap<>();
+		PagingBean pagingBean = new PagingBean(service.getCountNotice(),page);
+		ArrayList list = (ArrayList) service.getAllNotice(page);
+		map.put("list", list);
+		map.put("pagingBean",pagingBean);
 		return new ModelAndView("admin/adminNotice.tiles", map);
 	}
 }

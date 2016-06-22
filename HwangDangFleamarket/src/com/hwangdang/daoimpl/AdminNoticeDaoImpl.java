@@ -28,6 +28,11 @@ public class AdminNoticeDaoImpl implements AdminNoticeDao{
 	}
 
 	@Override
+	public int updateNoticeHit(int noticeNo) {
+		return session.update("adminNoticeMapper.updateNoticeHit", noticeNo);
+	}
+
+	@Override
 	public int deleteNotice(int noticeNo) {
 		return session.delete("adminNoticeMapper.deleteNoticeByNoticeNo", noticeNo);
 	}
@@ -42,7 +47,7 @@ public class AdminNoticeDaoImpl implements AdminNoticeDao{
 	public List<Notice> selectAllNotice(int page) {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("page", page);
-		map.put("itemPerPage", Constants.ITEMS_PER_PAGE);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
 		return session.selectList("adminNoticeMapper.selectNoticePaging", map);
 	}
 
