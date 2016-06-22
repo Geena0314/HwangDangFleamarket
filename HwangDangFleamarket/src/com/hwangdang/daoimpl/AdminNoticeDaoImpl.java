@@ -16,7 +16,7 @@ public class AdminNoticeDaoImpl implements AdminNoticeDao{
 	
 	@Autowired
 	private SqlSessionTemplate session;
-
+	
 	@Override
 	public int insertNotice(Notice notice) {
 		return session.insert("adminNoticeMapper.insertNotice", notice);
