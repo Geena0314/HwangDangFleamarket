@@ -4,12 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.hwangdang.dao.MemberDao;
 import com.hwangdang.vo.Member;
 
+@Repository
 public class MemberDaoImpl implements MemberDao{
-
+	@Autowired
 	private SqlSessionTemplate session;
 
 	
@@ -28,25 +31,21 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public int deleteById(String memberId) {
-		// TODO Auto-generated method stub
 		return session.delete("member-Mapper.deleteById", memberId);
 	}
 
 	@Override
 	public Member selectById(String memberId) {
-		// TODO Auto-generated method stub
 		return session.selectOne("memberMapper.selectById", memberId);
 	}
 
 	@Override
 	public List selectList() {
-		// TODO Auto-generated method stub
 		return session.selectList("memberMapper.selectAll");
 	}
 
 	@Override
 	public List selectList(int page) {
-		// TODO Auto-generated method stub
 		HashMap param = new HashMap();
 		param.put("itemPerPage", 10);
 		param.put("page", page);
@@ -55,18 +54,13 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public int selectCountById(String memberId) {
-		// TODO Auto-generated method stub
 		return session.selectOne("memberMapper.selectCountById", memberId);
 	}
 
 	@Override
 	public int selectMemberCount() {
-		// TODO Auto-generated method stub
 		return session.selectOne("memberMapper.selectMemberCount");
 	}
-
-	
-
 }
 
 
