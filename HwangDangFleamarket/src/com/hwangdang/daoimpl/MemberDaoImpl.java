@@ -1,69 +1,68 @@
 package com.hwangdang.daoimpl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.hwangdang.dao.MemberDao;
 import com.hwangdang.vo.Member;
 
+@Repository
 public class MemberDaoImpl implements MemberDao{
-
+	@Autowired
 	private SqlSessionTemplate session;
-	
+
 	
 	public MemberDaoImpl(SqlSessionTemplate session) {
 		this.session = session;
 	}
-
 	@Override
 	public int insert(Member member) {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.insert("member-Mapper.insert", member);
 	}
 
 	@Override
 	public int update(Member member) {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.update("membe-Mapper.update", member);
 	}
 
 	@Override
-	public int deleteById(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteById(String memberId) {
+		return session.delete("member-Mapper.deleteById", memberId);
 	}
 
 	@Override
-	public Member selectById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Member selectById(String memberId) {
+		return session.selectOne("memberMapper.selectById", memberId);
 	}
 
 	@Override
 	public List selectList() {
-		// TODO Auto-generated method stub
-		return null;
+		return session.selectList("memberMapper.selectAll");
 	}
 
 	@Override
 	public List selectList(int page) {
-		// TODO Auto-generated method stub
-		return null;
+		HashMap param = new HashMap();
+		param.put("itemPerPage", 10);
+		param.put("page", page);
+		return session.selectList("memberMapper.selectList", param);
 	}
 
 	@Override
-	public int selectCountById(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int selectCountById(String memberId) {
+		return session.selectOne("memberMapper.selectCountById", memberId);
 	}
 
 	@Override
 	public int selectMemberCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.selectOne("memberMapper.selectMemberCount");
 	}
-
-	
-
 }
+
+
+
+
