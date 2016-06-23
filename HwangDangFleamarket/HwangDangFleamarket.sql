@@ -151,6 +151,9 @@ insert into product values ('상품id1143', '상품명', 40000, 2222, 'shoes5', 
 insert into product values ('상품id1154', '상품명', 3000, 3333, 'shoes6', '상품정보클롭', 6, 1);
 insert into product values ('상품id1165', '상품명', 40000, 2222, 'shoes7', '상품정보클롭', 7, 1);
 insert into product values ('상품id1176', '상품명', 3000, 3333, 'shoes8', '상품정보클롭', 8, 1);
+
+insert into product values ('상품id29', '상품명', 3000, 3333, 'shoes8', '상품정보클롭', 12, 1);
+
 select * from PRODUCT order by product_like desc
 
 /* 리뷰 vvvvvv*/
