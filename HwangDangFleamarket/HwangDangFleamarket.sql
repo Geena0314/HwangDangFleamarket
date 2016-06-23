@@ -270,6 +270,19 @@ CREATE TABLE notice (
 drop sequence notice_no_seq
 create sequence notice_no_seq nocache;
 
+insert into notice values (notice_no_seq.nextval, '오픈 기념 소실글', '황당 플리마켓을 오픈하였습니다.', '20160621', 0);
+insert into notice values (notice_no_seq.nextval, '오픈 할인 행사', '오픈 기념 할인 행사 이벤트를 진행할 예정입니다.', '20160622',0);
+insert into notice values (notice_no_seq.nextval, '오픈 기념 소실글2', '황당 플리마켓을 오픈하였습니다.', '20160622', 0);
+insert into notice values (notice_no_seq.nextval, '오픈 기념 소실글3', '황당 플리마켓을 오픈하였습니다.', '20160622', 0);
+insert into notice values (notice_no_seq.nextval, '오픈 기념 소실글4', '황당 플리마켓을 오픈하였습니다.', '20160622', 0);
+insert into notice values (notice_no_seq.nextval, '오픈 기념 소실글5', '황당 플리마켓을 오픈하였습니다.', '20160622', 0);
+insert into notice values (notice_no_seq.nextval, '오픈 기념 소실글6', '황당 플리마켓을 오픈하였습니다.', '20160622', 0);
+insert into notice values (notice_no_seq.nextval, '오픈 기념 소실글7', '황당 플리마켓을 오픈하였습니다.', '20160622', 0);
+insert into notice values (notice_no_seq.nextval, '오픈 기념 소실글8', '황당 플리마켓을 오픈하였습니다.', '20160622', 0);
+insert into notice values (notice_no_seq.nextval, '오픈 기념 소실글9', '황당 플리마켓을 오픈하였습니다.', '20160622', 0);
+
+select * from notice
+
 /* 관리자QnA vvvvvvv*/
 CREATE TABLE admin_QnA (
 	admin_qna_no NUMBER primary key, /* 관리자QnA no */
