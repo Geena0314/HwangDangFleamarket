@@ -136,21 +136,21 @@ CREATE TABLE product (
 --연습용 시퀀스
 drop sequence product_id_seq
 create sequence product_id_seq nocache;
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes1.jpg', '상품정보클롭', 1, 3);
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes3.jpg', '상품정보클롭', 3, 3);
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes2.jpg', '상품정보클롭', 2, 3);
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes4.jpg', '상품정보클롭', 6, 3);
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes6.jpg', '상품정보클롭', 7, 3);
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes7.jpg', '상품정보클롭', 2, 3);
-insert into product values (to_char(product_id_seq.nextval,'0000'), '상품명', 50000, 4444, 'shoes8.jpg', '상품정보클롭', 11, 3);
+insert into product values ('상품id135', '상품명', 50000, 20, 'shoes1', '상품정보클롭8', 1, 1);
+insert into product values ('상품id134', '상품명', 60000, 20, 'shoes3', '상품정보클롭9', 3, 1);
+insert into product values ('상품id133', '상품명', 70000, 20, 'shoes2', '상품정보클롭10', 2, 1);
+insert into product values ('상품id132', '상품명', 80000, 20, 'shoes4', '상품정보클롭11', 6, 1);
+insert into product values ('상품id131', '상품명', 30000, 20, 'shoes6', '상품정보클롭12', 7, 1);
+insert into product values ('상품id130', '상품명', 20000, 20, 'shoes7', '상품정보클롭13', 2, 1);
+insert into product values ('상품id129', '상품명', 10000, 20, 'shoes8', '상품정보클롭14', 11, 1);
 
-insert into product values ('상품id2', '상품명', 40000, 2222, 'shoes2.jpg', '상품정보클롭', 2, 1);
-insert into product values ('상품id3', '상품명', 3000, 3333, 'shoes3.jpg', '상품정보클롭', 3, 1);
-insert into product values ('상품id4', '상품명', 50000, 4444, 'shoes4.jpg', '상품정보클롭', 4, 1);
-insert into product values ('상품id5', '상품명', 40000, 2222, 'shoes5.jpg', '상품정보클롭', 5, 1);
-insert into product values ('상품id6', '상품명', 3000, 3333, 'shoes6.jpg', '상품정보클롭', 6, 1);
-insert into product values ('상품id7', '상품명', 40000, 2222, 'shoes7.jpg', '상품정보클롭', 7, 1);
-insert into product values ('상품id8', '상품명', 3000, 3333, 'shoes8.jpg', '상품정보클롭', 8, 1);
+insert into product values ('상품id119', '상품명', 40000, 2222, 'shoes2', '상품정보클롭', 2, 1);
+insert into product values ('상품id1121', '상품명', 3000, 3333, 'shoes3', '상품정보클롭', 3, 1);
+insert into product values ('상품id1132', '상품명', 50000, 4444, 'shoes4', '상품정보클롭', 4, 1);
+insert into product values ('상품id1143', '상품명', 40000, 2222, 'shoes5', '상품정보클롭', 5, 1);
+insert into product values ('상품id1154', '상품명', 3000, 3333, 'shoes6', '상품정보클롭', 6, 1);
+insert into product values ('상품id1165', '상품명', 40000, 2222, 'shoes7', '상품정보클롭', 7, 1);
+insert into product values ('상품id1176', '상품명', 3000, 3333, 'shoes8', '상품정보클롭', 8, 1);
 select * from PRODUCT order by product_like desc
 
 /* 리뷰 vvvvvv*/
@@ -164,10 +164,22 @@ CREATE TABLE review (
 );
 drop sequence review_no_seq
 create sequence review_no_seq nocache;
-insert into review values (review_no_seq.nextval, '리뷰내용', '19901126', '작성자', '상품id');
-insert into review values (review_no_seq.nextval, '리뷰내용1', '19911126', '작성자1', '상품id2');
-insert into review values (review_no_seq.nextval, '리뷰내용2', '19921126', '작성자2', '상품id3');
+insert into review values (review_no_seq.nextval, '리뷰내용', sysdate, '작성자', '상품id29');
+insert into review values (review_no_seq.nextval, '리뷰내용1', sysdate, '작성자1', '상품id29');
+insert into review values (review_no_seq.nextval, '리뷰내용2', sysdate, '작성자2', '상품id29');
+insert into review values (review_no_seq.nextval, '리뷰내용', sysdate, '작성자', '상품id29');
+insert into review values (review_no_seq.nextval, '리뷰내용1', sysdate, '작성자1', '상품id29');
+insert into review values (review_no_seq.nextval, '리뷰내용2', sysdate, '작성자2', '상품id29');
+insert into review values (review_no_seq.nextval, '리뷰내용', sysdate, '작성자', '상품id29');
+insert into review values (review_no_seq.nextval, '리뷰내용1', sysdate, '작성자1', '상품id29');
+insert into review values (review_no_seq.nextval, '리뷰내용2', sysdate, '작성자2', '상품id29');
 
+select count(REVIEW_no) from REVIEW
+select count(review_no) from review where review_writer = 'isj4216' and product_id='상품id5'
+update 	product
+		set			product_like = product_like+-1
+		where		product_id = '상품id29'
+delete from review where review_writer = 'isj4216'
 
 /* 스토어QnA vvvvvvvv*/
 drop table store_QnA
@@ -217,6 +229,14 @@ CREATE TABLE orders (
 	foreign key(member_id) references member(member_id)
 );
 
+insert into orders values ('a', '받는사람1', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 'ㅈㅁㅎㅎ', 'isj4216');
+insert into orders values ('b', '받는사람2', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 'ㅈㅁㅎㅎ', 'isj4216');
+insert into orders values ('c', '받는사람3', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 'ㅈㅁㅎㅎ', 'isj4216');
+insert into orders values ('d', '받는사람4', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 'ㅈㅁㅎㅎ', 'isj4216');
+insert into orders values ('e', '받는사람5', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 'ㅈㅁㅎㅎ', 'isj4216');
+insert into orders values ('f', '받는사람6', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 'ㅈㅁㅎㅎ', 'isj4216');
+
+
 /* 상품옵션vvvvvvvv */
 drop table product_option
 CREATE TABLE product_option (
@@ -231,9 +251,13 @@ CREATE TABLE product_option (
 drop sequence option_id_seq
 create sequence option_id_seq nocache;
 
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '250/흰색', 10, 1000, '상품id');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '240/검정색', 20, 5000, '상품id');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '230/흰색', 110, 4000, '상품id');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '250/흰색', 10, 0, '상품id29');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '240/검정색', 5, 0, '상품id29');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '230/흰색', 10, 0, '상품id29');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '220/흰색', 10, 0, '상품id29');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '210/검정색', 5, 0, '상품id29');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '260/흰색', 10, 2000, '상품id29');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '270/흰색', 10, 3000, '상품id29');
 
 /* 소식통(관리자) vvvvvvvv*/
 CREATE TABLE notice (
@@ -338,7 +362,7 @@ CREATE TABLE product_detail_image (
 	foreign key(product_id) references product(product_id) on delete cascade
 );
 
-
+insert into PRODUCT_DETAIL_IMAGE values ('nike/nike1/nike2', '상품id29')
 
 /* 스토어QnA댓글 vvvvvv */
 drop table store_QnA_reply
@@ -364,6 +388,19 @@ CREATE TABLE order_product (
 	foreign key(product_id) references product(product_id),
 	foreign key(option_id) references product_option(option_id) on delete set null
 );
+
+insert into order_product values (5, 'a', '상품id29', 2);
+insert into order_product values (4, 'e', '상품id29', 2);
+insert into order_product values (1, 'f', '상품id29', 3);
+insert into order_product values (2, 'b', '상품id29', 4);
+insert into order_product values (1, 'c', '상품id29', 5);
+insert into order_product values (1, 'd', '상품id29', 6);
+select count(orders_no)
+		from order_product
+		where orders_no='a'
+select orders_no from orders
+		where member_id = 'isj4216'
+		and payment_status = 1
 
 /* 코드 vvvvvvvv*/
 CREATE TABLE code (

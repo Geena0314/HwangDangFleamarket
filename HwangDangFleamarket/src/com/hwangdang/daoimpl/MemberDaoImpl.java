@@ -23,17 +23,17 @@ public class MemberDaoImpl implements MemberDao{
 	}
 	@Override
 	public int insert(Member member) {
-		return session.insert("member-Mapper.insert", member);
+		return session.insert("memberMapper.insert", member);
 	}
 
 	@Override
 	public int update(Member member) {
-		return session.update("membe-Mapper.update", member);
+		return session.update("membeMapper.update", member);
 	}
 
 	@Override
 	public int deleteById(String memberId) {
-		return session.delete("member-Mapper.deleteById", memberId);
+		return session.delete("memberMapper.deleteById", memberId);
 	}
 
 	@Override
@@ -64,7 +64,3 @@ public class MemberDaoImpl implements MemberDao{
 		return session.selectOne("memberMapper.selectMemberCount");
 	}
 }
-
-
-
-

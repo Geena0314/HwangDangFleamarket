@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.hwangdang.dao.ProductDao;
 import com.hwangdang.vo.Product;
+import com.hwangdang.vo.ProductOption;
+import com.hwangdang.vo.Review;
 
 @Repository
 public class ProductDaoImpl implements ProductDao
@@ -40,5 +42,96 @@ public class ProductDaoImpl implements ProductDao
 	{
 		// TODO Auto-generated method stub
 		return session.selectOne("productMapper.selectCountByNo", sellerStoreNo);
+	}
+
+	@Override
+	public Product selectProductDetailById(String productId)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectProductById", productId);
+	}
+
+	@Override
+	public List<ProductOption> selectOptionById(String productId)
+	{
+		// TODO Auto-generated method stub
+		return session.selectList("productMapper.selectOptionById", productId);
+	}
+
+	@Override
+	public ProductOption selectOptionStockByName(String optionName)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectOptionStockByName", optionName);
+	}
+
+	@Override
+	public String selectDetailImageById(String productId)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectDetailImageById", productId);
+	}
+
+	@Override
+	public int selectCountById(String productId)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectCountById", productId);
+	}
+
+	@Override
+	public List<Review> selectReviewById(HashMap<String, Object> map)
+	{
+		// TODO Auto-generated method stub
+		return session.selectList("productMapper.selectReviewById", map);
+	}
+
+	@Override
+	public List<String> selectOrderNo(String memberId)
+	{
+		// TODO Auto-generated method stub
+		return session.selectList("productMapper.selectOrderNo", memberId);
+	}
+
+	@Override
+	public int selectOrderProduct(String ordersNo)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectOrderProduct", ordersNo);
+	}
+
+	@Override
+	public int insertReview(Review review)
+	{
+		// TODO Auto-generated method stub
+		return session.insert("productMapper.insertReview", review);
+	}
+
+	@Override
+	public int reviewRegisterCheck(HashMap<String, Object> map)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.reviewRegisterCheck", map);
+	}
+
+	@Override
+	public int updateProductLikes(HashMap<String, Object> map)
+	{
+		// TODO Auto-generated method stub
+		return session.update("productMapper.updateProductLikes", map);
+	}
+
+	@Override
+	public int selectProductLike(String productId)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectProductLike", productId);
+	}
+
+	@Override
+	public int deleteReview(HashMap<String, Object> map)
+	{
+		// TODO Auto-generated method stub
+		return session.delete("productMapper.deleteReview", map);
 	}
 }
