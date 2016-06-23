@@ -14,6 +14,8 @@ public class StoreQnA implements Serializable
 	private Date storeQnADate;
 	private String productId;
 
+	private StoreQnAReply storeQnAReply;
+	
 	public StoreQnA()
 	{
 		// TODO Auto-generated constructor stub
@@ -31,6 +33,32 @@ public class StoreQnA implements Serializable
 		this.storeQnAWriter = storeQnAWriter;
 		this.storeQnADate = storeQnADate;
 		this.productId = productId;
+	}
+
+	public StoreQnA(int storeQnANo, String storeQnATitle, String storeQnAContent, int storeQnAHit,
+			int storeQnAPublished, String storeQnAWriter, Date storeQnADate, String productId,
+			StoreQnAReply storeQnAReply)
+	{
+		super();
+		this.storeQnANo = storeQnANo;
+		this.storeQnATitle = storeQnATitle;
+		this.storeQnAContent = storeQnAContent;
+		this.storeQnAHit = storeQnAHit;
+		this.storeQnAPublished = storeQnAPublished;
+		this.storeQnAWriter = storeQnAWriter;
+		this.storeQnADate = storeQnADate;
+		this.productId = productId;
+		this.storeQnAReply = storeQnAReply;
+	}
+
+	public StoreQnAReply getStoreQnAReply()
+	{
+		return storeQnAReply;
+	}
+
+	public void setStoreQnAReply(StoreQnAReply storeQnAReply)
+	{
+		this.storeQnAReply = storeQnAReply;
 	}
 
 	public int getStoreQnANo()
@@ -124,6 +152,7 @@ public class StoreQnA implements Serializable
 		result = prime * result + storeQnAHit;
 		result = prime * result + storeQnANo;
 		result = prime * result + storeQnAPublished;
+		result = prime * result + ((storeQnAReply == null) ? 0 : storeQnAReply.hashCode());
 		result = prime * result + ((storeQnATitle == null) ? 0 : storeQnATitle.hashCode());
 		result = prime * result + ((storeQnAWriter == null) ? 0 : storeQnAWriter.hashCode());
 		return result;
@@ -163,6 +192,12 @@ public class StoreQnA implements Serializable
 			return false;
 		if (storeQnAPublished != other.storeQnAPublished)
 			return false;
+		if (storeQnAReply == null)
+		{
+			if (other.storeQnAReply != null)
+				return false;
+		} else if (!storeQnAReply.equals(other.storeQnAReply))
+			return false;
 		if (storeQnATitle == null)
 		{
 			if (other.storeQnATitle != null)
@@ -184,6 +219,6 @@ public class StoreQnA implements Serializable
 		return "StoreQnA [storeQnANo=" + storeQnANo + ", storeQnATitle=" + storeQnATitle + ", storeQnAContent="
 				+ storeQnAContent + ", storeQnAHit=" + storeQnAHit + ", storeQnAPublished=" + storeQnAPublished
 				+ ", storeQnAWriter=" + storeQnAWriter + ", storeQnADate=" + storeQnADate + ", productId=" + productId
-				+ "]";
+				+ ", storeQnAReply=" + storeQnAReply + "]";
 	}
 }

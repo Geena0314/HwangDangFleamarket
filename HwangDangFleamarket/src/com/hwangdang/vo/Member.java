@@ -10,7 +10,7 @@ public class Member implements Serializable
 	private String memberPhone;
 	private String memberZipcode;
 	private String memberAddress;
-	private String memberSubAdress;
+	private String memberSubAddress;
 	private int memberAssign;
 	
 	public Member()
@@ -19,7 +19,7 @@ public class Member implements Serializable
 	}
 
 	public Member(String memberId, String memberPassword, String memberName, String memberPhone, String memberZipcode,
-			String memberAddress, String memberSubAdress, int memberAssign)
+			String memberAddress, String memberSubAddress, int memberAssign)
 	{
 		super();
 		this.memberId = memberId;
@@ -28,7 +28,7 @@ public class Member implements Serializable
 		this.memberPhone = memberPhone;
 		this.memberZipcode = memberZipcode;
 		this.memberAddress = memberAddress;
-		this.memberSubAdress = memberSubAdress;
+		this.memberSubAddress = memberSubAddress;
 		this.memberAssign = memberAssign;
 	}
 
@@ -92,14 +92,14 @@ public class Member implements Serializable
 		this.memberAddress = memberAddress;
 	}
 
-	public String getMemberSubAdress()
+	public String getmemberSubAddress()
 	{
-		return memberSubAdress;
+		return memberSubAddress;
 	}
 
-	public void setMemberSubAdress(String memberSubAdress)
+	public void setmemberSubAddress(String memberSubAddress)
 	{
-		this.memberSubAdress = memberSubAdress;
+		this.memberSubAddress = memberSubAddress;
 	}
 
 	public int getMemberAssign()
@@ -123,7 +123,7 @@ public class Member implements Serializable
 		result = prime * result + ((memberName == null) ? 0 : memberName.hashCode());
 		result = prime * result + ((memberPassword == null) ? 0 : memberPassword.hashCode());
 		result = prime * result + ((memberPhone == null) ? 0 : memberPhone.hashCode());
-		result = prime * result + ((memberSubAdress == null) ? 0 : memberSubAdress.hashCode());
+		result = prime * result + ((memberSubAddress == null) ? 0 : memberSubAddress.hashCode());
 		result = prime * result + ((memberZipcode == null) ? 0 : memberZipcode.hashCode());
 		return result;
 	}
@@ -170,11 +170,11 @@ public class Member implements Serializable
 				return false;
 		} else if (!memberPhone.equals(other.memberPhone))
 			return false;
-		if (memberSubAdress == null)
+		if (memberSubAddress == null)
 		{
-			if (other.memberSubAdress != null)
+			if (other.memberSubAddress != null)
 				return false;
-		} else if (!memberSubAdress.equals(other.memberSubAdress))
+		} else if (!memberSubAddress.equals(other.memberSubAddress))
 			return false;
 		if (memberZipcode == null)
 		{
@@ -190,6 +190,6 @@ public class Member implements Serializable
 	{
 		return "Member [memberId=" + memberId + ", memberPassword=" + memberPassword + ", memberName=" + memberName
 				+ ", memberPhone=" + memberPhone + ", memberZipcode=" + memberZipcode + ", memberAddress="
-				+ memberAddress + ", memberSubAdress=" + memberSubAdress + ", memberAssign=" + memberAssign + "]";
+				+ memberAddress + ", memberSubAddress=" + memberSubAddress + ", memberAssign=" + memberAssign + "]";
 	}
 }

@@ -12,6 +12,7 @@ import com.hwangdang.dao.ProductDao;
 import com.hwangdang.service.ProductService;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.Review;
+import com.hwangdang.vo.StoreQnA;
 
 @Service
 public class ProductServiceImpl implements ProductService
@@ -66,6 +67,9 @@ public class ProductServiceImpl implements ProductService
 		map.put("productId", productId);
 		map.put("reviewList", dao.selectReviewById(map));
 		map.put("bean", bean);
+		
+		//Store_QnA조회 및 페이징.
+		map.put("qnaMap", selectStoreQnAPaging(page, productId));
 		return map;
 	}
 
@@ -87,6 +91,20 @@ public class ProductServiceImpl implements ProductService
 		map.put("productId", productId);
 		map.put("review", dao.selectReviewById(map));
 		map.put("bean", bean);
+		return map;
+	}
+	
+	@Override
+	public HashMap<String, Object> selectStoreQnAPaging(int page, String productId)
+	{
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<>();
+		PagingBean qnaBean = new PagingBean(dao.selectQnACountById(productId), page);
+		map.put("itemPerPage", 6);
+		map.put("page", page);
+		map.put("productId", productId);
+		map.put("qna", dao.selectQnAById(map));
+		map.put("qnaBean", qnaBean);
 		return map;
 	}
 
@@ -129,5 +147,19 @@ public class ProductServiceImpl implements ProductService
 		map.put("memberId", memberId);
 		map.put("productId", productId);
 		return dao.deleteReview(map);
+	}
+
+	@Override
+	public StoreQnA selectQnAByNo(int storeQnANo)
+	{
+		// TODO Auto-generated method stub
+		return dao.selectQnAByNo(storeQnANo);
+	}
+
+	@Override
+	public StoreQnA selectQnAJoin(int storeQnANo)
+	{
+		// TODO Auto-generated method stub
+		return dao.selectQnAJoin(storeQnANo);
 	}
 }

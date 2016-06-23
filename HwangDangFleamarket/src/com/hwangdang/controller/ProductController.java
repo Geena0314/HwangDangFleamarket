@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hwangdang.service.ProductService;
 import com.hwangdang.vo.ProductOption;
+import com.hwangdang.vo.StoreQnA;
 
 @Controller
 @RequestMapping("/product/")
@@ -77,5 +78,32 @@ public class ProductController
 		HashMap<String, Object> map = reviewPaging(1, productId);
 		map.put("reviewDelete", reviewDelete);
 		return map;
+	}
+	
+	@RequestMapping("qnaPaging")
+	@ResponseBody
+	public HashMap<String, Object> qnaPaging(int page, String productId)
+	{
+		return service.selectStoreQnAPaging(page, productId);
+	}
+	
+	/*@RequestMapping("qnaShow")
+	@ResponseBody
+	public StoreQnA qnaShow(int storeQnANo)
+	{
+		return service.selectQnAByNo(storeQnANo);
+	}*/
+	
+	@RequestMapping("qnaShow")
+	@ResponseBody
+	public StoreQnA qnaShow(int storeQnANo)
+	{
+		StoreQnA qna = service.selectQnAJoin(storeQnANo);
+		System.out.println(qna);
+		if(qna == null)
+		{
+			return service.selectQnAByNo(storeQnANo);
+		}
+		return qna;
 	}
 }
