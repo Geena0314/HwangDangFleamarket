@@ -1,7 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="sellerMapper">
-	<sql id="seller_columns">
-	
+	<sql id="seller-columns">
+		seller_store_no, seller_store_name, seller_tax_id, seller_industry, 
+		seller_sub_industry, seller_zipcode, seller_address, seller_sub_address, 
+		seller_store_image, seller_product1, seller_product2, seller_product3, 
+		seller_introduction, member_id
 	</sql>
+	
+	<sql id="select-basic">
+		SELECT <include refid="seller-columns"/> FROM seller
+	</sql>
+	
+	<resultMap type="seller" id="seller-basic-resultmap">
+		<id column="seller_store_no" property="sellerStoreNo"/>
+		<result column="seller_store_name" property="sellerStoreName"/>
+		<result column="seller_tax_id" property="sellerTaxId"/>
+		<result column="seller_industry" property="sellerIndustry"/>
+		<result column="seller_sub_industry" property="sellerSubIndustry"/>
+		<result column="seller_zipcode" property="sellerZipcode"/>
+		<result column="seller_address" property="sellerAddress"/>
+		<result column="seller_sub_address" property="sellerSubAddress"/>
+		<result column="seller_store_image" property="sellerStoreImage"/>
+		<result column="seller_product1" property="sellerProduct1"/>
+		<result column="seller_product2" property="sellerProduct2"/>
+		<result column="seller_product3" property="sellerProduct3"/>
+		<result column="seller_introduction" property="sellerIntroduction"/>
+		<result column="member_id" property="memberId"/>
+	</resultMap>
+	
+	<!-- 판매자 전체조회 (+페이징) -->
+	<select id="selectSellerPaging" parameterType="map" resultMap="seller-basic-resultmap">
+		select <include refid="seller-columns"/> from(
+			select ceil(rownum /#{itemsPerPage})page, <include refid="seller-columns"/> from(
+				select <include refid="seller-columns"/> from seller order by seller_store_no DESC) 
+				) where page = #{page}
+	</select>
+	
+	<!-- 판매자 스토어 번호로 판매자 조회 -->
+	<select id="selectCountSeller" resultType="_int">
+		select count(seller_store_no) from seller
+	</select>
+	
 </mapper>
