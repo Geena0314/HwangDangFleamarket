@@ -3,18 +3,21 @@ package com.hwangdang.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Notice implements Serializable
 {
 	private int noticeNo;
+	@NotEmpty(message="제목을 입력하세요.")
+	@Length(min=1, max=10, message="제목은 10글자 이하로 입력 가능합니다.")
 	private String noticeTitle;
+	@NotEmpty(message="내용을 입력하세요.")
 	private String noticeContent;
 	private Date noticeDate;
 	private int noticeHit;
 	
-	public Notice()
-	{
-		// TODO Auto-generated constructor stub
-	}
+	public Notice(){}
 
 	public Notice(int noticeNo, String noticeTitle, String noticeContent, Date noticeDate, int noticeHit)
 	{
