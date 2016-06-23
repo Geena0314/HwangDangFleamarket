@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core" %>
-<form method="post" action="/registered.do" name="register">
+<form method="post" action="/HwangDangFleamarket/member/registered.go" name="register">
 <h1 align="center">회원가입</h1>
 	<table width='600'>
 		<tr>
@@ -26,6 +26,10 @@
 		<tr>
 			<td>전화번호</td>
 			<td>
+			<input type="text" id="memberPhone" name="memberPhone">
+			</td>
+			<!-- <td>전화번호</td>
+			<td>
 				<select id="hp1" name="hp1">
     	        <option value="010" selected>010</option>
     	        <option value="011">011</option>
@@ -40,14 +44,16 @@
 				-
 				<input type="text" name="hp3" size="10">
 				<input type="hidden" id="memberPhone" name="memberPhone">
-			</td>
+			</td> -->
 		</tr>
 		<tr>
 			<td> 주          소 </td>
 			<td>
+				집코드<input type="text" name="memberZipcode" size="30">
 				<input type="text" name="memberAddress" size="60">
 				<br>
-				<input type="text2" name="memberSubAddress" size="60">
+				<input type="text" name="memberSubAddress" size="60">
+				<input type="text" name="memberAssign" size="20">
 			</td>
 		<tr>
 			<td colspan="2" align="center">

@@ -69,7 +69,7 @@ DROP TABLE code
 /* 카테고리 */
 DROP TABLE category 
 	CASCADE CONSTRAINTS;
-
+select * from member;
 /* 회원vvvvvvvvvvvv*/
 CREATE TABLE member (
 	member_id VARCHAR2(30) primary key, /* 아이디 */
@@ -78,7 +78,7 @@ CREATE TABLE member (
 	member_phone CHAR(13) NOT NULL, /* 전화번호 */
 	member_zipcode VARCHAR2(7) NOT NULL, /* 우편번호 */
 	member_address VARCHAR2(180) NOT NULL, /* 주소 */
-	member_sub_adress VARCHAR2(90) NOT NULL, /* 세부주소 */
+	member_sub_address VARCHAR2(90) NOT NULL, /* 세부주소 */
 	member_assign NUMBER(1) NOT NULL /* 판매자등록여부 */
 );
 
