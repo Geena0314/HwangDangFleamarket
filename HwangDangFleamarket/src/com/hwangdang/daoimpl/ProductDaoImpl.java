@@ -11,6 +11,7 @@ import com.hwangdang.dao.ProductDao;
 import com.hwangdang.vo.Product;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.Review;
+import com.hwangdang.vo.StoreQnA;
 
 @Repository
 public class ProductDaoImpl implements ProductDao
@@ -133,5 +134,33 @@ public class ProductDaoImpl implements ProductDao
 	{
 		// TODO Auto-generated method stub
 		return session.delete("productMapper.deleteReview", map);
+	}
+
+	@Override
+	public List<StoreQnA> selectQnAById(HashMap<String, Object> map)
+	{
+		// TODO Auto-generated method stub
+		return session.selectList("productMapper.selectQnAById", map);
+	}
+
+	@Override
+	public int selectQnACountById(String productId)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectQnACountById", productId);
+	}
+
+	@Override
+	public StoreQnA selectQnAByNo(int storeQnANo)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectQnAByNo", storeQnANo);
+	}
+
+	@Override
+	public StoreQnA selectQnAJoin(int storeQnANo)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectQnAJoin", storeQnANo);
 	}
 }

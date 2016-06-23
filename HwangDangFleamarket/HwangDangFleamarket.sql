@@ -203,7 +203,22 @@ insert into store_qna values (storeQnA_no_seq.nextval, '문의 제목', '문의 
 insert into store_qna values (storeQnA_no_seq.nextval, '문의 제목2', '문의 내용임2', 1, 1, 'isj4216', sysdate, '상품id29');
 insert into store_qna values (storeQnA_no_seq.nextval, '문의 제목3', '문의 내용임3', 21, 1, 'lsj4216', sysdate, '상품id29');
 
+select storeQnA_no, storeQnA_title, storeQnA_content, storeQnA_hit, storeQnA_published, storeQnA_writer, storeQnA_date, product_id
+		from (select ceil(rownum/6) page, storeQnA_no, storeQnA_title, storeQnA_content, storeQnA_hit, storeQnA_published, storeQnA_writer, storeQnA_date, product_id
+				from (select storeQnA_no, storeQnA_title, storeQnA_content, storeQnA_hit, storeQnA_published, storeQnA_writer, storeQnA_date, product_id
+						from store_QnA where product_id='상품id29' order by storeQnA_no desc))
+		where page = 1
 
+select 	storeQnA_no, storeQnA_title, storeQnA_content, storeQnA_hit, storeQnA_published, storeQnA_writer, storeQnA_date, product_id
+		from		store_QnA
+		where 	storeQnA_no=1
+
+select 	q.storeQnA_no, q.storeQnA_title, q.storeQnA_content, q.storeQnA_hit, q.storeQnA_published, q.storeQnA_writer, q.storeQnA_date, q.product_id,
+			r.store_reply_writer, r.store_reply_content, r.store_reply_date, r.storeQnA_no
+from 		store_QnA q, store_QnA_reply r
+where 	q.storeQnA_no = 30
+and 		r.storeQnA_no = q.storeQnA_no
+		
 /* 장바구니vvvvvvv */
 CREATE TABLE cart (
 	cart_product_amount NUMBER(4) NOT NULL, /* 장바구니 상품수량 */
@@ -370,15 +385,12 @@ insert into PRODUCT_DETAIL_IMAGE values ('nike/nike1/nike2', '상품id29')
 /* 스토어QnA댓글 vvvvvv */
 drop table store_QnA_reply
 CREATE TABLE store_QnA_reply (
-	store_reply_no NUMBER NOT NULL, /* 댓글번호 */
 	store_reply_writer VARCHAR2(30) NOT NULL, /* 작성자 */
 	store_reply_content varchar2(4000) NOT NULL, /* 내용 */
 	store_reply_date DATE NOT NULL, /* 작성일 */
-	storeQnA_no NUMBER not null /* QnA번호 */,
+	storeQnA_no NUMBER primary key /* QnA번호 */,
 	foreign key(storeQnA_no) references store_qna(storeQnA_no) on delete cascade
 );
-drop sequence store_reply_no_seq
-create sequence store_reply_no_seq nocache;
 
 /* 주문상품 vvvvvvv*/
 drop table order_product

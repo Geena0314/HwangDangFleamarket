@@ -3,6 +3,7 @@ package com.hwangdang.service;
 import java.util.HashMap;
 
 import com.hwangdang.vo.ProductOption;
+import com.hwangdang.vo.StoreQnA;
 
 public interface ProductService 
 {
@@ -26,4 +27,13 @@ public interface ProductService
 	
 	//리뷰 삭제하기.
 	int deleteReview(String memberId, String productId);
+	
+	//스토어QnA 페이징.
+	HashMap<String, Object> selectStoreQnAPaging(int page, String productId);
+	
+	//QnA번호로 QnA조회.
+	StoreQnA selectQnAByNo(int storeQnANo);
+	
+	//QnA Join
+	StoreQnA selectQnAJoin(int storeQnANo);
 }

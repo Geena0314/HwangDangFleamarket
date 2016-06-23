@@ -6,6 +6,7 @@ import java.util.List;
 import com.hwangdang.vo.Product;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.Review;
+import com.hwangdang.vo.StoreQnA;
 
 public interface ProductDao 
 {
@@ -55,4 +56,16 @@ public interface ProductDao
 	
 	//리뷰 삭제.
 	int deleteReview(HashMap<String, Object> map);
+	
+	//상품 ID로 스토어QnA조회.
+	List<StoreQnA> selectQnAById(HashMap<String, Object> map);
+	
+	//상품ID로 등록된 QnA갯수 조회.
+	int selectQnACountById(String productId);
+	
+	//QnA번호로 QnA조회.
+	StoreQnA selectQnAByNo(int storeQnANo);
+	
+	//QnA Join
+	StoreQnA selectQnAJoin(int storeQnANo);
 }

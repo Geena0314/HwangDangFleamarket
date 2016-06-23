@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class StoreQnAReply implements Serializable
 {
-	private int storeReplyNo;
 	private String storeReplyWriter;
 	private String storeReplyContent;
 	private Date storeReplyDate;
@@ -16,27 +15,15 @@ public class StoreQnAReply implements Serializable
 		// TODO Auto-generated constructor stub
 	}
 
-	public StoreQnAReply(int storeReplyNo, String storeReplyWriter, String storeReplyContent, Date storeReplyDate,
+	public StoreQnAReply(String storeReplyWriter, String storeReplyContent, Date storeReplyDate,
 			int storeQnANo)
 	{
 		super();
-		this.storeReplyNo = storeReplyNo;
 		this.storeReplyWriter = storeReplyWriter;
 		this.storeReplyContent = storeReplyContent;
 		this.storeReplyDate = storeReplyDate;
 		this.storeQnANo = storeQnANo;
 	}
-
-	public int getStoreReplyNo()
-	{
-		return storeReplyNo;
-	}
-
-	public void setStoreReplyNo(int storeReplyNo)
-	{
-		this.storeReplyNo = storeReplyNo;
-	}
-
 	public String getStoreReplyWriter()
 	{
 		return storeReplyWriter;
@@ -85,7 +72,6 @@ public class StoreQnAReply implements Serializable
 		result = prime * result + storeQnANo;
 		result = prime * result + ((storeReplyContent == null) ? 0 : storeReplyContent.hashCode());
 		result = prime * result + ((storeReplyDate == null) ? 0 : storeReplyDate.hashCode());
-		result = prime * result + storeReplyNo;
 		result = prime * result + ((storeReplyWriter == null) ? 0 : storeReplyWriter.hashCode());
 		return result;
 	}
@@ -114,8 +100,6 @@ public class StoreQnAReply implements Serializable
 				return false;
 		} else if (!storeReplyDate.equals(other.storeReplyDate))
 			return false;
-		if (storeReplyNo != other.storeReplyNo)
-			return false;
 		if (storeReplyWriter == null)
 		{
 			if (other.storeReplyWriter != null)
@@ -128,8 +112,7 @@ public class StoreQnAReply implements Serializable
 	@Override
 	public String toString()
 	{
-		return "StoreQnAReply [storeReplyNo=" + storeReplyNo + ", storeReplyWriter=" + storeReplyWriter
-				+ ", storeReplyContent=" + storeReplyContent + ", storeReplyDate=" + storeReplyDate + ", storeQnANo="
-				+ storeQnANo + "]";
+		return "StoreQnAReply [storeReplyWriter=" + storeReplyWriter + ", storeReplyContent=" + storeReplyContent
+				+ ", storeReplyDate=" + storeReplyDate + ", storeQnANo=" + storeQnANo + "]";
 	}
 }

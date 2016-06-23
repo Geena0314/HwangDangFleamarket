@@ -48,7 +48,7 @@
 				width : 582.73px;
 				min-height : 235.46px;
 			}
-			#QnATable
+			#qnaTable
 			{
 				width : 582.73px;
 				min-height : 235.46px;
@@ -58,6 +58,7 @@
 		<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
 		<script type="text/javascript">
 			var currentPage;
+			var qnaCurrentPage;
 			$(document).ready(function()
 			{  
 				$("#optionName").on("change", function()
@@ -432,13 +433,214 @@
 						"error" : error
 					});
 				});
+				//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+				$("#qnaPaging").on("click", "a.qnaPreviousPage",function()
+				{
+					//에이잭스 페이징 처리. 이전페이지 눌렀을 때.
+					window.qnaCurrentPage = parseInt($("#qnaPaging").children().first().next().text())-1;
+					$.ajax(
+					{
+						"url" : "/HwangDangFleamarket/product/qnaPaging.go",
+						"type" : "POST",
+						"data" : {"page" : window.qnaCurrentPage, "productId" : $("#productId").text()},
+						"dataType" : "JSON",
+						"success" : function(json)
+						{
+							$("#qnaContent").remove();
+							$(".qnaTrs").remove();
+							$("#qnaPaging").empty();
+							for(var i=0; i<json.qna.length; i++)
+							{
+								$("#qnaTr").before("<tr align='center' class='qnaTrs' id=" + json.qna[i].storeQnANo 
+										+"><td width='30'>"+ json.qna[i].storeQnANo 
+										+ "</td><td align='center'>" + json.qna[i].storeQnATitle + "</td><td align='center'>" 
+										+ json.qna[i].storeQnAWriter + "</td>");
+							}
+							var endPage = json.qnaBean.endPage
+							for(var i=json.qnaBean.beginPage; i<json.qnaBean.endPage+1; i++)
+							{
+								if(!json.qnaBean.page == i)
+								{
+									$("#qnaPaging").prepend("<a id='qnaCurrentPage'>" + endPage + "</a>");
+									endPage--;
+								}
+								else
+								{
+									$("#qnaPaging").prepend("<a class='qnaMovePage'>" + endPage + "</a>");
+									endPage--;
+								}
+							}
+							if(!json.qnaBean.previousPageGroup)
+							{
+								$("#qnaPaging").prepend("◁");
+							}
+							else
+							{
+								$("#qnaPaging").prepend("<a class='qnaPreviousPage'>◁</a>");
+							}
+							if(!json.qnaBean.nextPageGroup)
+							{
+								$("#qnaPaging").append("▷");
+							}
+							else
+							{
+								$("#qnaPaging").append("<a class='qnaNextPage'>▷</a>");
+							}
+						},
+						"error" : error
+					});
+				});
 				
+				$("#qnaPaging").on("click", "a.qnaNextPage",function()
+				{
+					//에이잭스 페이징 처리. 다음페이지 눌렀을 때.
+					window.qnaCurrentPage = parseInt($("#qnaPaging").children().last().prev().text())+1;
+					$.ajax(
+					{
+						"url" : "/HwangDangFleamarket/product/qnaPaging.go",
+						"type" : "POST",
+						"data" : {"page" : window.qnaCurrentPage, "productId" : $("#productId").text()},
+						"dataType" : "JSON",
+						"success" : function(json)
+						{
+							$("#qnaContent").remove();
+							$(".qnaTrs").remove();
+							$("#qnaPaging").empty();
+							for(var i=0; i<json.qna.length; i++)
+							{
+								$("#qnaTr").before("<tr align='center' class='qnaTrs' id=" + json.qna[i].storeQnANo 
+										+"><td width='30'>"+ json.qna[i].storeQnANo 
+										+ "</td><td align='center'>" + json.qna[i].storeQnATitle + "</td><td align='center'>" 
+										+ json.qna[i].storeQnAWriter + "</td>");
+							}
+							var endPage = json.qnaBean.endPage;
+							for(var i=json.qnaBean.beginPage; i<json.qnaBean.endPage+1; i++)
+							{
+								if(!json.qnaBean.page == i)
+								{
+									$("#qnaPaging").prepend("<a id='qnaCurrentPage'>" + endPage + "</a>");
+									endPage--;
+								}
+								else
+								{
+									$("#qnaPaging").prepend("<a class='qnaMovePage'>" + endPage + "</a>");
+									endPage--;
+								}
+							}
+							if(!json.qnaBean.previousPageGroup)
+							{
+								$("#qnaPaging").prepend("◁");
+							}
+							else
+							{
+								$("#qnaPaging").prepend("<a class='qnaPreviousPage'>◁</a>");
+							}
+							if(!json.qnaBean.nextPageGroup)
+							{
+								$("#qnaPaging").append("▷");
+							}
+							else
+							{
+								$("#qnaPaging").append("<a class='qnaNextPage'>▷</a>");
+							}
+						},
+						"error" : error
+					});
+				});
+				
+				$("#qnaPaging").on("click", "a.qnaMovePage",function()
+				{
+					//에이잭스 페이징 처리. 다른페이지 눌렀을 때.
+					window.qnaCurrentPage = this.text;
+					$.ajax(
+					{
+						"url" : "/HwangDangFleamarket/product/qnaPaging.go",
+						"type" : "POST",
+						"data" : {"page" : window.qnaCurrentPage, "productId" : $("#productId").text()},
+						"dataType" : "JSON",
+						"success" : function(json)
+						{
+							$("#qnaContent").remove();
+							$(".qnaTrs").remove();
+							$("#qnaPaging").empty();
+							for(var i=0; i<json.qna.length; i++)
+							{
+								$("#qnaTr").before("<tr align='center' class='qnaTrs' id=" + json.qna[i].storeQnANo 
+										+"><td width='30'>"+ json.qna[i].storeQnANo 
+										+ "</td><td align='center'>" + json.qna[i].storeQnATitle + "</td><td align='center'>" 
+										+ json.qna[i].storeQnAWriter + "</td>");
+							}
+							var endPage = json.qnaBean.endPage;
+							for(var i=json.qnaBean.beginPage; i<json.qnaBean.endPage+1; i++)
+							{
+								if(!json.qnaBean.page == i)
+								{
+									$("#qnaPaging").prepend("<a id='qnaCurrentPage'>" + endPage + "</a>");
+									endPage--;
+								}
+								else
+								{
+									$("#qnaPaging").prepend("<a class='qnaMovePage'>" + endPage + "</a>");
+									endPage--;
+								}
+							}
+							if(!json.qnaBean.previousPageGroup)
+							{
+								$("#qnaPaging").prepend("◁");
+							}
+							else
+							{
+								$("#qnaPaging").prepend("<a class='qnaPreviousPage'>◁</a>");
+							}
+							if(!json.qnaBean.nextPageGroup)
+							{
+								$("#qnaPaging").append("▷");
+							}
+							else
+							{
+								$("#qnaPaging").append("<a class='qnaNextPage'>▷</a>");
+							}
+						},
+						"error" : error
+					});
+				});
+				
+				$("#qnaTable").on("click", "tr.qnaTrs", function()
+				{
+					$("#qnaTable tr").css("background-color", "white");
+					$(this).css("background-color", "#FFFED7");
+					var no = $(this).children().first().text();
+					$.ajax(
+					{
+						"url" : "/HwangDangFleamarket/product/qnaShow.go",
+						"type" : "POST",
+						"data" : {"storeQnANo" : no, "productId" : $("#productId").text()},
+						"dataType" : "JSON",
+						"beforeSend" : function()
+						{
+							$("#qnaContent").remove();
+						},
+						"success" : function(json)
+						{
+							if(!json.storeQnAReply)
+							{
+								//댓글이 달려있지 않은 경우.
+								$("#"+no).after("<tr id='qnaContent'><td></td><td colspan='2'>문의 내용 : " + json.storeQnAContent 
+										+  "<br><br><input type='text' id='qnaReply' size='65'><input type='button' id='qnaReplyRegister' value='답변하기.'></td></tr>");
+							}
+							//댓글 달려있는 경우.
+							$("#"+no).after("<tr id='qnaContent'><td></td><td colspan='2'>문의 내용 : " + json.storeQnAContent 
+									+  "<br><hr>문의 답변 : " + json.storeQnAReply.storeReplyContent + "</td></tr>");
+						},
+						"error" : error
+					});
+				});
 				
 			});
 			
-			function error()
+			function error(xhr, status, err)
 			{
-				
+				alert(status+", "+xhr.readyState+" "+err);
 			}
 		</script>
 		
@@ -586,16 +788,64 @@
 				</tr>
 			</table>
 			<hr><hr>
-			<table border=1 id="QnATable">
-				<tr><td colspan="2" align="left">QnA</td></tr>
+			<table id="qnaTable">
+				<tr><td colspan="3" align="center">QnA</td></tr>
 				<tr>
-					<td>Q.문의제목.</td>
-					<td>작성자</td>
+					<td width="30"></td><td width="410" align="center">Q.문의제목.</td>
+					<td align="center">작성자</td>
 				</tr>
-				<tr><td width="400">제목이랑</td><td>작성자</td></tr>
-				<tr><td colspan="2">페이징</td></tr>
+				
+				<lee:forEach items="${ requestScope.qnaMap.qna }" var="qna">
+					<tr align="center" class="qnaTrs" id="${ qna.storeQnANo }"><td width="30">${ qna.storeQnANo }</td><td align="center"> ${ qna.storeQnATitle }</td><td align="center">${qna.storeQnAWriter}</td>
+				</lee:forEach>
+				
+				<tr id="qnaTr">
+					<td></td><td align="center" id="qnaPaging">
+						<!-- 
+							이전 페이지 그룹 처리.
+							만약, 이전페이지 그룹이 있으면 링크처리하고 없으면 화살표만 나오도록 처리. 
+						-->
+						<lee:choose>
+							<lee:when test="${ requestScope.qnaMap.qnaBean.previousPageGroup }">
+								<a class="qnaPreviousPage">◁</a>
+							</lee:when>
+							<lee:otherwise>
+								<font color="#47C83E">◁</font>
+							</lee:otherwise>
+						</lee:choose>
+						
+						<!-- 
+							현재 페이지가 속한 페이지 그룹내의 페이지들 링크.
+							현재 페이지그룹의 시작페이지~ 끝페이지
+						 -->
+						 <!-- 만약 page가 현재페이지라면 링크 처리를 하지않고, 현재 페이지가 아니라면 링크처리. -->
+						<lee:forEach begin="${ requestScope.qnaMap.qnaBean.beginPage }" end="${ requestScope.qnaMap.qnaBean.endPage }" var="page" varStatus="no">
+							<lee:choose>
+								<lee:when test="${ page != requestScope.qnaMap.qnaBean.page }">
+									<a class="qnaMovePage">${ page }</a>
+								</lee:when>
+								<lee:otherwise>
+									<a id="qnaCurrentPage" ><font color="#47C83E">${ page }</font></a>
+								</lee:otherwise>
+							</lee:choose>
+						</lee:forEach>
+						
+						<!-- 
+							다음 페이지 그룹 처리.
+							만약, 다음페이지 그룹이 있으면 링크처리하고 없으면 화살표만 나오도록 처리. 
+						-->
+						<lee:choose>
+							<lee:when test="${ requestScope.qnaMap.qnaBean.nextPageGroup }">
+								<a class="qnaNextPage">▷</a>
+							</lee:when>
+							<lee:otherwise>
+								<font color="#47C83E">▷</font>
+							</lee:otherwise>
+						</lee:choose>
+					</td><td></td>
+				</tr>
 				<tr>
-					<td colspan = "2" align=""><input type="button" id="QnARegister" value="문의 하기." ></td>
+					<td colspan = "3" align="right"><input type="button" id="QnARegister" value="문의 하기." ></td>
 				</tr>
 			</table>
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
