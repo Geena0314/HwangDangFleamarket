@@ -53,7 +53,7 @@
 				<input type="text" name="memberAddress" size="60">
 				<br>
 				<input type="text" name="memberSubAddress" size="60">
-				판매자냐 아니냐<input type="text" name="memberAssign" size="20">
+				<input type="text" name="memberAssign" size="20">-판매자냐 아니냐(1,0)
 			</td>
 		<tr>
 			<td colspan="2" align="center">
