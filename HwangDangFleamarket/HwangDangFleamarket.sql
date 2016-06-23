@@ -196,9 +196,12 @@ CREATE TABLE store_QnA (
 );
 drop sequence storeQnA_no_seq
 create sequence storeQnA_no_seq nocache;
-insert into store_qna values (storeQnA_no_seq.nextval, '문의 제목', '문의 내용임', 11, 0, '작성자', '19901126', '상품id');
-insert into store_qna values (storeQnA_no_seq.nextval, '문의 제목2', '문의 내용임2', 1, 1, '작성자2', '19911126', '상품id2');
-insert into store_qna values (storeQnA_no_seq.nextval, '문의 제목3', '문의 내용임3', 21, 1, '작성자3', '19921126', '상품id3');
+insert into store_qna values (storeQnA_no_seq.nextval, '문의 제목', '문의 내용임', 11, 0, 'isj4216', sysdate, '상품id29');
+insert into store_qna values (storeQnA_no_seq.nextval, '문의 제목2', '문의 내용임2', 1, 1, 'isj4216', sysdate, '상품id29');
+insert into store_qna values (storeQnA_no_seq.nextval, '문의 제목3', '문의 내용임3', 21, 1, 'lsj4216', sysdate, '상품id29');
+insert into store_qna values (storeQnA_no_seq.nextval, '문의 제목', '문의 내용임', 11, 0, 'isj4216', sysdate, '상품id29');
+insert into store_qna values (storeQnA_no_seq.nextval, '문의 제목2', '문의 내용임2', 1, 1, 'isj4216', sysdate, '상품id29');
+insert into store_qna values (storeQnA_no_seq.nextval, '문의 제목3', '문의 내용임3', 21, 1, 'lsj4216', sysdate, '상품id29');
 
 
 /* 장바구니vvvvvvv */

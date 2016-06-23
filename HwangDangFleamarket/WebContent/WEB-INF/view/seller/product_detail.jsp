@@ -43,6 +43,16 @@
 				text-align: left;
 				float: left;
 			}
+			#reviewTable
+			{
+				width : 582.73px;
+				min-height : 235.46px;
+			}
+			#QnATable
+			{
+				width : 582.73px;
+				min-height : 235.46px;
+			}
 		</style>
 		
 		<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
@@ -496,7 +506,7 @@
 			상세정보입니다상세정보입니다상세정보입니다상세정보입니다상세정보입니다상세정보입니다상세정보입니다상세정보입니다
 			<br><br><br><br><br><br><br><br><br><br>(br 위아래로 10개.)<br><br><br><br><br><br><br><br><br><br>
 			
-			<table>
+			<table id="reviewTable">
 				<tr>
 					<td width="400">Review</td>
 					<td align="right">
@@ -575,9 +585,21 @@
 					</td>
 				</tr>
 			</table>
-			<table>
-				<tr></tr>
+			<hr><hr>
+			<table border=1 id="QnATable">
+				<tr><td colspan="2" align="left">QnA</td></tr>
+				<tr>
+					<td>Q.문의제목.</td>
+					<td>작성자</td>
+				</tr>
+				<tr><td width="400">제목이랑</td><td>작성자</td></tr>
+				<tr><td colspan="2">페이징</td></tr>
+				<tr>
+					<td colspan = "2" align=""><input type="button" id="QnARegister" value="문의 하기." ></td>
+				</tr>
 			</table>
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		</div>
 	</body>
 </html>

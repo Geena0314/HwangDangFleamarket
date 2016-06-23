@@ -49,8 +49,15 @@ public class ProductServiceImpl implements ProductService
 		map.put("product", dao.selectProductDetailById(productId));
 		map.put("optionList", dao.selectOptionById(productId));
 		String image = dao.selectDetailImageById(productId);
-		String[] detailImage = image.split("/");
-		map.put("detailimage", detailImage);
+		try
+		{
+			String[] detailImage = image.split("/");
+			map.put("detailimage", detailImage);
+		}
+		catch (Exception e)
+		{
+			
+		}
 		
 		//Review조회 및 페이징.
 		PagingBean bean = new PagingBean(dao.selectCountById(productId), page);
