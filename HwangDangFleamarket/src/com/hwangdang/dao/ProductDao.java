@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.hwangdang.vo.Product;
 import com.hwangdang.vo.ProductOption;
+import com.hwangdang.vo.Review;
 
 public interface ProductDao 
 {
@@ -27,4 +28,31 @@ public interface ProductDao
 	
 	//옵션 상세 이름으로 추가가격과, 재고량 조회.
 	ProductOption selectOptionStockByName(String optionName);
+	
+	//상품ID로 등록된 리뷰갯수 조회.
+	int selectCountById(String productId);
+	
+	//상품ID로 등록된 리뷰 조회.
+	List<Review> selectReviewById(HashMap<String, Object> map);
+	
+	//(리뷰, 상품QnA 등록시 구매한 회원인지 확인)
+	//회원 id로 주문내역 검색.(주문번호조회.)
+	List<String> selectOrderNo(String memberId);
+	//주문번호로 주문상품 여부확인(상품id 비교.)
+	int selectOrderProduct(String ordersNo);
+	
+	//리뷰 등록.
+	int insertReview(Review review);
+	
+	//리뷰 등록시 이미 리뷰를 등록한 아이디인지 확인.(아이디와 상품ID)
+	int reviewRegisterCheck(HashMap<String, Object> map);
+	
+	//리뷰 등록시 추천, 비추천 반영.
+	int updateProductLikes(HashMap<String, Object> map);
+	
+	//추천반영 후 추천수 조회.
+	int selectProductLike(String productId);
+	
+	//리뷰 삭제.
+	int deleteReview(HashMap<String, Object> map);
 }

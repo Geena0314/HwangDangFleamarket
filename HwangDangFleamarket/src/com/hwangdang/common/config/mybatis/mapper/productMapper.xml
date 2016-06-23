@@ -29,6 +29,15 @@
 		<result column="product_id" property="productId"/>
 	</resultMap>
 	
+	<!-- 리뷰 resultMap -->
+	<resultMap type="review" id="review-basic-resultMap">
+		<id column="review_no" property="reviewNo"/>
+		<result column="review_content" property="reviewContent"/>
+		<result column="review_date" property="reviewDate"/>
+		<result column="review_writer" property="reviewWriter"/>
+		<result column="product_id" property="productId"/>
+	</resultMap>
+	
 	<!-- 상품 전체 조회. (추천 순, Paging, sellerStoreNo로 조회.)-->
 	<select id="selectAll" resultMap="product-basic-resultMap" parameterType="map">
 		select <include refid="product-columns"/> 
@@ -72,4 +81,62 @@
 	<select id="selectDetailImageById" resultType="string" parameterType="string">
 		select image_path from product_detail_image where product_id = #{productId}
 	</select>
+	
+	<!-- productId로 등록된 리뷰 갯수 조회. -->
+	<select id="selectCountById" resultType="_int" parameterType="string">
+		select count(review_no) from review where product_id=#{productId}
+	</select>
+	
+	<!-- 상품 ID로 Review 조회. ( + Paging............)-->
+	<select id="selectReviewById" resultMap="review-basic-resultMap" parameterType="map">
+		select review_no, review_content, review_date, review_writer, product_id
+		from (select ceil(rownum/#{itemPerPage}) page, review_no, review_content, review_date, review_writer, product_id
+				from (select review_no, review_content, review_date, review_writer, product_id
+						from review where product_id=#{productId} order by review_no desc))
+		where page = #{page}
+	</select>
+	
+	<!-- (리뷰, 상품QnA 등록시 구매한 회원인지 확인) -->
+	<!-- 회원 id로 주문내역 검색.(주문번호) -->
+	<select id="selectOrderNo" resultType="string" parameterType="string">
+		select orders_no from orders
+		where member_id = #{memberId}
+		and payment_status = 1
+	</select>
+	<!-- 주문번호로 주문상품 여부확인(상품id 비교.) -->
+	<select id="selectOrderProduct" resultType="_int" parameterType="string">
+		select count(orders_no)
+		from order_product
+		where orders_no=#{orders_no}
+	</select>
+	
+	<!-- 리뷰 등록하기. -->
+	<insert id="insertReview" parameterType="review">
+		<selectKey keyProperty="reviewNo" resultType="_int" order="BEFORE">
+			select review_no_seq.nextval from dual
+		</selectKey>
+		insert into review values (#{reviewNo}, #{reviewContent}, sysdate, #{reviewWriter}, #{productId})
+	</insert>
+	
+	<!-- 리뷰 등록 전 이미 등록했는지 여부 확인.(product Id와 memberId로...) -->
+	<select id="reviewRegisterCheck" parameterType="map" resultType="_int">
+		select count(review_no) from review where review_writer = #{memberId} and product_id=#{productId}
+	</select>
+	
+	<!-- 리뷰 등록시 추천기능(productId로 검색.) -->
+	<update id="updateProductLikes" parameterType="map">
+		update 	product
+		set			product_like = product_like+#{productLike}
+		where		product_id = #{productId}
+	</update>
+	
+	<!-- 추천기능 적용후 추천수 조회 및 리턴. -->
+	<select id="selectProductLike" parameterType="string" resultType="_int">
+		select product_like from product where product_id=#{productId}
+	</select>
+	
+	<!-- 리뷰 삭제.(멤버아이디와 상품아이디로) -->
+	<delete id="deleteReview" parameterType="map">
+		delete from review where review_Writer = #{memberId} and product_id=#{productId}
+	</delete>
 </mapper>
