@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -46,7 +49,10 @@ public class AdminNoticeController{
 	}
 	
 	@RequestMapping("/adminRegisterNotice")
-	public ModelAndView registerNotice(Notice notice, int page){
+	public ModelAndView registerNotice(@ModelAttribute @Valid Notice notice,  BindingResult errors, int page){
+		if(errors.hasErrors()){
+			return new ModelAndView("admin/admin_register_notice.tiles");
+		}
 		notice.setNoticeDate(new Date());
 		service.adminRegisterNotice(notice);
 		HashMap map = new HashMap<>();
@@ -64,11 +70,14 @@ public class AdminNoticeController{
 	}
 
 	@RequestMapping("/adminEditNotice")
-	public ModelAndView editNotice(int page, Notice notice){
+	public ModelAndView editNotice(@ModelAttribute @Valid Notice notice, BindingResult errors, int page){
+		if(errors.hasErrors()){
+			return new ModelAndView("admin/admin_edit_notice.tiles");
+		}
 		notice.setNoticeDate(new Date());
 		service.adminEditNotice(notice);
 		HashMap map = new HashMap<>();
-		map.put("notice", notice);
+		//map.put("notice", notice);
 		map.put("page", page);
 		return new ModelAndView("admin/admin_notice_detail.tiles", map);
 	}

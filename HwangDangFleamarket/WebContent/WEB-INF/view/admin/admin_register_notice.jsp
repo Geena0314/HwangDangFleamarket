@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <style type="text/css">
 table, td {
 	border: 1px solid gray;
@@ -12,7 +14,7 @@ table {
 	width: 650px;
 }
 
-td {
+span, td {
 	padding: 5px;
 	height: auto;
 }
@@ -22,8 +24,13 @@ input {
 textarea {
 	border: none;
 }
+span{
+	font-size: 9pt;
+	color: red;
+}
 </style>
-<form action="/HwangDangFleamarket/admin/adminRegisterNotice.go?page=1" method="post">
+<form action="/HwangDangFleamarket/admin/adminRegisterNotice.go" method="post">
+	<input type="hidden" name='page' value="1">
 	<table>
 		<thead>
 			<tr>
@@ -32,11 +39,21 @@ textarea {
 					<input type="text" name="noticeTitle" size="70" placeholder="제목을 입력하세요.">
 				</td>
 			</tr>
+			<tr>
+				<td colspan="2" class="error">
+					<form:errors path="notice.noticeTitle" delimiter=" & "/>
+				</td>
+			</tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td colspan="2">
 					<textarea rows="30" cols="60" name="noticeContent"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="error">
+					<form:errors path="notice.noticeContent"/>
 				</td>
 			</tr>
 		</tbody>

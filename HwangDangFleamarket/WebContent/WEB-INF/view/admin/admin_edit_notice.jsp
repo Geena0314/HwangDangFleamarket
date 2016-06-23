@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <style type="text/css">
 table, td {
 	border: 1px solid gray;
@@ -12,7 +14,7 @@ table {
 	width: 650px;
 }
 
-td {
+span, td {
 	padding: 5px;
 	height: auto;
 }
@@ -22,8 +24,14 @@ input {
 textarea {
 	border: none;
 }
+span{
+	font-size: 11pt;
+	color: red;
+}
 </style>
-<form action="/HwangDangFleamarket/admin/adminEditNotice.go?page=${page}&noticeNo=${requestScope.notice.noticeNo}" method="post">
+<form action="/HwangDangFleamarket/admin/adminEditNotice.go" method="post">
+	<input type="hidden" name="page" value="${param.page}">
+	<input type="hidden" name="noticeNo" value="${requestScope.notice.noticeNo}">
 	<table>
 		<thead>
 			<tr>
@@ -32,11 +40,21 @@ textarea {
 					<input type="text" name="noticeTitle" size="70" value="${requestScope.notice.noticeTitle}">
 				</td>
 			</tr>
+			<tr>
+				<td colspan="2" class="error">
+					<form:errors path="notice.noticeTitle" delimiter=" & "/>
+				</td>
+			</tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td colspan="2">
 					<textarea rows="30" cols="70" name="noticeContent">${requestScope.notice.noticeContent}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="error">
+					<form:errors path="notice.noticeContent"/>
 				</td>
 			</tr>
 		</tbody>
