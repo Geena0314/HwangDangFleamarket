@@ -1,4 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style type="text/css">
 #home
 {
@@ -15,7 +16,14 @@
 	height:20px;
 }
 </style>
-	<h2>황당 플리마켓</h2>
+	<c:choose>
+		<c:when test="${requestScope.seller.sellerStoreName==null}">
+			<h2>황당 플리마켓</h2>
+		</c:when>
+		<c:otherwise>
+			<h2>${requestScope.seller.sellerStoreName}</h2>
+		</c:otherwise>
+	</c:choose>
 	<div id="navBar">
 		<div id="home">
 			<a href="/HwangDangFleamarket/main.go">메인</a>

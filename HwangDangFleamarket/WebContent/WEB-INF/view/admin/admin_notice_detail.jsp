@@ -22,9 +22,9 @@ td {
 }
 </style>
 <p align="right">
-<input type="button" value="목록" onclick="window.location='/HwangDangFleamarket/admin/adminNotice.go?page=${page}'">&nbsp;&nbsp;
-<input type="button" value="공지수정" onclick="window.location='/HwangDangFleamarket/admin/adminEditForm.go?page=${page}&noticeNo=${requestScope.notice.noticeNo}'">&nbsp;&nbsp;
-<input type="button" value="공지삭제" onclick="window.location='/HwangDangFleamarket/admin/adminRemoveNotice.go?page=${page}&noticeNo=${requestScope.notice.noticeNo}'">
+	<input type="button" value="목록" onclick="window.location='/HwangDangFleamarket/admin/adminNotice.go?page=${page}'">&nbsp;&nbsp;
+	<input type="button" value="공지수정" onclick="window.location='/HwangDangFleamarket/admin/adminEditForm.go?page=${page}&noticeNo=${requestScope.notice.noticeNo}'">&nbsp;&nbsp;
+	<input type="button" value="공지삭제" onclick="window.location='/HwangDangFleamarket/admin/adminRemoveNotice.go?page=${page}&noticeNo=${requestScope.notice.noticeNo}'">
 </P>
 <table>
 	<thead>

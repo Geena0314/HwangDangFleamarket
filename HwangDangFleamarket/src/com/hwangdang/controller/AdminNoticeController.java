@@ -49,7 +49,7 @@ public class AdminNoticeController{
 	}
 	
 	@RequestMapping("/adminRegisterNotice")
-	public ModelAndView registerNotice(@ModelAttribute @Valid Notice notice,  BindingResult errors, int page){
+	public ModelAndView registerNotice(@ModelAttribute @Valid Notice notice, BindingResult errors, int page){
 		if(errors.hasErrors()){
 			return new ModelAndView("admin/admin_register_notice.tiles");
 		}
