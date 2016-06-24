@@ -737,7 +737,7 @@
 						</tr>
 						<tr>
 							<td><input type="submit" value="바로구매"></td>
-							<td><input type="button" value="리스트로 돌아가기." onclick="window.location='/HwangDangFleamarket/product/list.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}'"></td>
+							<td><input type="button" value="리스트로 돌아가기." onclick="window.location='/HwangDangFleamarket/product/list.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }'"></td>
 						</tr>
 					</table>
 				</form>
