@@ -38,7 +38,6 @@ public class AdminNoticeServiceImpl implements AdminNoticeService{
 		return dao.selectCountNotice();
 	}
 
-	@Transactional
 	@Override
 	public Notice getNoticeByNoticeNo(int noticeNo){
 		Notice notice = dao.selectNoticeByNoticeNo(noticeNo);

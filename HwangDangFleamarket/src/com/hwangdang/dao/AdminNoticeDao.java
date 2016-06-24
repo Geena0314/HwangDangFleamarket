@@ -19,6 +19,4 @@ public interface AdminNoticeDao {
 	List<Notice> selectAllNotice(int page);
 	
 	Notice selectNoticeByNoticeNo(int noticeNo);
-	
-	
 }

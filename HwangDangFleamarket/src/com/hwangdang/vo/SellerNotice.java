@@ -3,9 +3,13 @@ package com.hwangdang.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class SellerNotice implements Serializable{
 	private int sellerNoticeNo;
+	@NotEmpty(message="제목을 입력하세요.")
 	private String sellerNoticeTitle;
+	@NotEmpty(message="내용을 입력하세요.")
 	private String sellerNoticeContent;
 	private Date sellerNoticeDate;
 	private int sellerNoticeHit;

@@ -478,3 +478,6 @@ CREATE TABLE seller_notice (
 	seller_notice_date DATE NOT NULL, /* 소식글 작성일 */
 	seller_notice_hit NUMBER NOT NULL /* 소식글 조회수 */
 );
+
+drop sequence seller_notice_no_seq
+create sequence seller_notice_no_seq nocache;
