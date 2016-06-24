@@ -71,7 +71,7 @@ DROP TABLE category
 	CASCADE CONSTRAINTS;
 	
 /* 스토어 게시판 */	
-DROP TABLE store_notice 
+DROP TABLE seller_notice 
 	CASCADE CONSTRAINTS;
 	
 select * from member;
@@ -471,10 +471,10 @@ where page = 7
 select count(product_id) from product where seller_store_no=1
 
 /* 소식통(판매자) */
-CREATE TABLE store_notice (
-	store_notice_no NUMBER NOT NULL, /* 소식글 no */
-	store_notice_title VARCHAR2(300) NOT NULL, /* 소식글 제목 */
-	store_notice_content CLOB NOT NULL, /* 소식글 내용 */
-	store_notice_date DATE NOT NULL, /* 소식글 작성일 */
-	store_notice_hit NUMBER NOT NULL /* 소식글 조회수 */
+CREATE TABLE seller_notice (
+	seller_notice_no NUMBER NOT NULL, /* 소식글 no */
+	seller_notice_title VARCHAR2(300) NOT NULL, /* 소식글 제목 */
+	seller_notice_content CLOB NOT NULL, /* 소식글 내용 */
+	seller_notice_date DATE NOT NULL, /* 소식글 작성일 */
+	seller_notice_hit NUMBER NOT NULL /* 소식글 조회수 */
 );

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sellerNoticeMapper">
+	<sql id="sellerNotice-columns">
+		seller_notice_no, seller_notice_title, seller_notice_content, seller_notice_date, seller_notice_hit
+	</sql>
+	
+	<sql id="select-basic">
+		SELECT <include refid="sellerNotice-columns"/> FROM seller_notice
+	</sql>
+
+
+</mapper>
