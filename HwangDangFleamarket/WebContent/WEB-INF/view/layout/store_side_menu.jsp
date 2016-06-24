@@ -44,11 +44,11 @@ table ,tr{
 </style>
 <div class="sideMenu2">
 	<div class="store_img">
-		<a href="#"><img src="../image_storage/${requestScope.seller.sellerStoreImage}.jpg"></a>
+		<a href="#"><img src="../image_storage/${param.sellerStoreImage}.jpg"></a>
 	</div>
 	<div class="buttons">
 		<input type="button" value="스토어 소개">
 		<input type="button" value="상품 목록">
-		<input type="button" value="스토어 소식" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=1'">
+		<input type="button" value="스토어 소식" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=1&sellerStoreImage=${param.sellerStoreImage}'">
 	</div>
 </div>
