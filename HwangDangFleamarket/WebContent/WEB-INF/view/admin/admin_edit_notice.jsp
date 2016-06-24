@@ -18,12 +18,15 @@ span, td {
 	padding: 5px;
 	height: auto;
 }
+
 input {
 	border: none;
 }
+
 textarea {
 	border: none;
 }
+
 span{
 	font-size: 11pt;
 	color: red;

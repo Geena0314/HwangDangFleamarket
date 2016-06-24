@@ -75,7 +75,7 @@ img{
 				</div>
 				<ul class="store_info">
 					<li>
-						<a href="#">${list.sellerStoreName}</a>
+						<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${list.sellerStoreNo}&sellerStoreImage=${list.sellerStoreImage}">${list.sellerStoreName}</a>
 					</li><br>
 					<li class="introduction">
 						${list.sellerIntroduction}

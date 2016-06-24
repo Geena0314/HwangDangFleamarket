@@ -155,13 +155,13 @@ CREATE TABLE product (
 --연습용 시퀀스
 drop sequence product_id_seq
 create sequence product_id_seq nocache;
-insert into product values ('상품id135', '상품명', 50000, 20, 'shoes1', '상품정보클롭8', 1, 1);
-insert into product values ('상품id134', '상품명', 60000, 20, 'shoes3', '상품정보클롭9', 3, 1);
-insert into product values ('상품id133', '상품명', 70000, 20, 'shoes2', '상품정보클롭10', 2, 1);
-insert into product values ('상품id132', '상품명', 80000, 20, 'shoes4', '상품정보클롭11', 6, 1);
-insert into product values ('상품id131', '상품명', 30000, 20, 'shoes6', '상품정보클롭12', 7, 1);
-insert into product values ('상품id130', '상품명', 20000, 20, 'shoes7', '상품정보클롭13', 2, 1);
-insert into product values ('상품id129', '상품명', 10000, 20, 'shoes8', '상품정보클롭14', 11, 1);
+insert into product values ('상품id135', '상품명', 50000, 20, 'shoes1', '상품정보클롭8', 1, 8);
+insert into product values ('상품id134', '상품명', 60000, 20, 'shoes3', '상품정보클롭9', 3, 8);
+insert into product values ('상품id133', '상품명', 70000, 20, 'shoes2', '상품정보클롭10', 2, 8);
+insert into product values ('상품id132', '상품명', 80000, 20, 'shoes4', '상품정보클롭11', 6, 8);
+insert into product values ('상품id131', '상품명', 30000, 20, 'shoes6', '상품정보클롭12', 7, 8);
+insert into product values ('상품id130', '상품명', 20000, 20, 'shoes7', '상품정보클롭13', 2, 8);
+insert into product values ('상품id129', '상품명', 10000, 20, 'shoes8', '상품정보클롭14', 11, 8);
 
 insert into product values ('상품id119', '상품명', 40000, 2222, 'shoes2', '상품정보클롭', 2, 1);
 insert into product values ('상품id1121', '상품명', 3000, 3333, 'shoes3', '상품정보클롭', 3, 1);
