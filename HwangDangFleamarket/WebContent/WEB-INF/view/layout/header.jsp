@@ -27,7 +27,6 @@
 	<div id="navBar">
 		<div id="home">
 			<a href="/HwangDangFleamarket/main.go">메인</a>
-
 		</div>
 		<div id="menuLinks">
 			<a href="#">로그인</a>&nbsp;&nbsp;

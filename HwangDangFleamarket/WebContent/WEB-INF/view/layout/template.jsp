@@ -11,26 +11,24 @@ header{
 	background-color:pink;
 	text-align:center;
 	padding: 5px;
-	position: fixed;
 }
 nav{
 	line-height: 50px;
 	padding: 15px;
 	padding-top: 50px;
-	min-height:500px;
-	height: auto;
+	min-height:600px;
 	width:200px;
 	float:left;
 } 
 section{
 	padding: 15px;
-	min-height:400px;
+	min-height:500px;
 	float:left;
 }
 footer{
-	margin-bottom:50px;
+	margin-bottom:10px;
 	text-align:center;
-	height:30px;
+	height:20px;
 	clear:both;
 }
 </style>
