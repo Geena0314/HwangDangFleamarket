@@ -194,4 +194,14 @@
 		where 	q.storeQnA_no = #{1}
 		and		r.storeQnA_no = q.storeQnA_no
 	</select>
+	
+	<!-- QnA댓글 등록 (작성자(스토어번호로 판매자 조회.), 내용, 스토어QnA번호.)-->
+	<insert id="insertQnAReply" parameterType="map">
+		insert into store_QnA_reply values (#{storeReplyWriter}, #{storeReplyContent}, sysdate, #{storeQnANo})
+	</insert>
+	
+	<!-- 스토어 번호로 판매자 조회. -->
+	<select id="selectSellerByNo" parameterType="_int" resultType="string">
+		select member_id from seller where seller_store_no=#{sellerStoreNo}
+	</select>
 </mapper>

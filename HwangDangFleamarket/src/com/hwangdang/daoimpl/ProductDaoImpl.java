@@ -163,4 +163,18 @@ public class ProductDaoImpl implements ProductDao
 		// TODO Auto-generated method stub
 		return session.selectOne("productMapper.selectQnAJoin", storeQnANo);
 	}
+
+	@Override
+	public int insertQnAReply(HashMap<String, Object> map)
+	{
+		// TODO Auto-generated method stub
+		return session.insert("productMapper.insertQnAReply", map);
+	}
+
+	@Override
+	public String selectSellerByNo(int storeQnANo)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectSellerByNo", storeQnANo);
+	}
 }

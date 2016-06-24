@@ -28,10 +28,9 @@ b {
 }
 </style>
 <p align="right">
-	<b>황당 플리마켓 소식통</b>&nbsp;&nbsp;
-	<input type="button" value="소식글등록" onclick="window.location='/HwangDangFleamarket/admin/adminRegisterForm.go'">
+	<b>스토어 소식통</b>
+	<input type="button" id="rgstBtn" value="소식글등록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRegisterNoticeForm.go'">
 </p>
-
 <table>
 	<thead>
 		<tr>
@@ -44,14 +43,14 @@ b {
 	<tbody>
 		<c:forEach var="list" items="${requestScope.list}">
 			<tr>
-				<td>${list.noticeNo}</td>
+				<td>${list.sellerNoticeNo}</td>
 				<td>
-					<a href="/HwangDangFleamarket/admin/adminNoticeDetail.go?page=${requestScope.pagingBean.page}&noticeNo=${list.noticeNo}">
-						${list.noticeTitle}
+					<a href="/HwangDangFleamarket/sellerNotice/sellerNoticeDetail.go?page=${requestScope.pagingBean.page}&sellerNoticeNo=${list.sellerNoticeNo}">
+						${list.sellerNoticeTitle}
 					</a>
 				</td>
-				<td><fmt:formatDate value="${list.noticeDate}" pattern="yyyy-MM-dd" /></td>
-				<td>${list.noticeHit}</td>
+				<td><fmt:formatDate value="${list.sellerNoticeDate}" pattern="yyyy-MM-dd" /></td>
+				<td>${list.sellerNoticeHit}</td>
 			</tr>
 		</c:forEach>
 	</tbody>
@@ -62,7 +61,7 @@ b {
 	<%-- ◀이전 페이지 그룹 처리 --%>
 <c:choose>
 	<c:when test="${requestScope.pagingBean.previousPageGroup}">
-		<a href="/HwangDangFleamarket/admin/adminNotice.go?page=${requestScope.pagingBean.beginPage-1}">
+		<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${requestScope.pagingBean.beginPage-1}">
 			◀ 
 		</a>
 	</c:when>
@@ -77,7 +76,7 @@ b {
   				<b>${page}</b>
  			</c:when>
 		<c:otherwise>
-			<a href="/HwangDangFleamarket/admin/adminNotice.go?page=${page}">
+			<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${page}">
 				${page} 
 			</a>
 		</c:otherwise>
@@ -87,7 +86,7 @@ b {
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.pagingBean.nextPageGroup}">
-			<a href="/HwangDangFleamarket/admin/adminNotice.go?page=${requestScope.pagingBean.endPage+1}">
+			<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${requestScope.pagingBean.endPage+1}">
 				▶
 			</a>
 		</c:when>

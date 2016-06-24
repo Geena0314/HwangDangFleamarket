@@ -14,22 +14,21 @@ header{
 }
 nav{
 	line-height: 50px;
-	background-color:lightgray;
 	padding: 15px;
-	padding-top: 90px;
-	height:500px;
+	padding-top: 50px;
+	min-height:600px;
 	width:200px;
 	float:left;
 } 
 section{
 	padding: 15px;
-	min-height:400px;
+	min-height:500px;
 	float:left;
 }
 footer{
-	margin-bottom:50px;
+	margin-bottom:10px;
 	text-align:center;
-	height:30px;
+	height:20px;
 	clear:both;
 }
 </style>

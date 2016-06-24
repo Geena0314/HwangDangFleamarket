@@ -69,6 +69,11 @@ DROP TABLE code
 /* 카테고리 */
 DROP TABLE category 
 	CASCADE CONSTRAINTS;
+	
+/* 스토어 게시판 */	
+DROP TABLE seller_notice 
+	CASCADE CONSTRAINTS;
+	
 select * from member;
 /* 회원vvvvvvvvvvvv*/
 CREATE TABLE member (
@@ -87,11 +92,15 @@ insert into member values ('isj4216', '52545856', '이성준', '010-9977-2905', 
 insert into member values ('lsj4216', '52545856', '판매자', '010-9977-2905', '123-456',
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', 1);
 insert into member values ('hwang', 'dang', '황경희매니저', '010-9977-2905', '123-456',
-   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 0);
+   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1);
 insert into member values ('lsj42167', '52545856', '판매자', '010-9977-2905', '123-456',
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', 1);
 insert into member values ('lsj421678', 'dang', '황경희매니저', '010-9977-2905', '123-456',
-   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1);   			  										
+   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1); 
+insert into member values ('hwanghwang', 'dang', '황경희매니저', '010-9977-2905', '123-466',
+   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 1);
+delete from member where member_id = 'hwang'					
+select * from member
 
 /* 판매자vvvvvvvvvvv */
 CREATE TABLE seller (
@@ -118,7 +127,17 @@ insert into seller values (seller_store_no_seq.nextval, '황당마켓1', '123456
 insert into seller values (seller_store_no_seq.nextval, '황당마켓2', '12345678901', '업종임', '업종소분류', '123-456',
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '사진임', '판매물품1', '판매물품2', '판매물품3', '소개글', 'lsj42167');
 insert into seller values (seller_store_no_seq.nextval, '황당마켓3', '12345678901', '업종임', '업종소분류', '123-456',
-   										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '사진임', '판매물품1', '판매물품2', '판매물품3', '소개글', 'lsj421678');   										   
+   										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '사진임', '판매물품1', '판매물품2', '판매물품3', '소개글', 'lsj421678');   
+
+insert into seller values(seller_store_no_seq.nextval, '해물나라', '12345-67890', '대분류업종', '소분류업종', '123-456', 
+							'경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '해물찜', '#전복', '#냉동문어', '#낙지', 
+							'아주아주 싱싱하고 맛있는 해산물을 산지직송해드립니다.', 'hwang');
+insert into seller values(seller_store_no_seq.nextval, '통영대표꿀빵', '12345-66789', '대분류업종', '소분류업종', '123-654', 
+							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵', '#원조꿀빵', '#유자꿀빵', '#고구마꿀빵', 
+							'넘나 맛있는 꿀빵을 만드는 꿀빵집입니다.', 'hwanghwang');  		
+   										  
+select * from seller
+delete from seller where member_id = 'hwanghwang'
 
 /* 상품vvvvvvvvv */
 drop table product
@@ -136,13 +155,13 @@ CREATE TABLE product (
 --연습용 시퀀스
 drop sequence product_id_seq
 create sequence product_id_seq nocache;
-insert into product values ('상품id135', '상품명', 50000, 20, 'shoes1', '상품정보클롭8', 1, 1);
-insert into product values ('상품id134', '상품명', 60000, 20, 'shoes3', '상품정보클롭9', 3, 1);
-insert into product values ('상품id133', '상품명', 70000, 20, 'shoes2', '상품정보클롭10', 2, 1);
-insert into product values ('상품id132', '상품명', 80000, 20, 'shoes4', '상품정보클롭11', 6, 1);
-insert into product values ('상품id131', '상품명', 30000, 20, 'shoes6', '상품정보클롭12', 7, 1);
-insert into product values ('상품id130', '상품명', 20000, 20, 'shoes7', '상품정보클롭13', 2, 1);
-insert into product values ('상품id129', '상품명', 10000, 20, 'shoes8', '상품정보클롭14', 11, 1);
+insert into product values ('상품id135', '상품명', 50000, 20, 'shoes1', '상품정보클롭8', 1, 8);
+insert into product values ('상품id134', '상품명', 60000, 20, 'shoes3', '상품정보클롭9', 3, 8);
+insert into product values ('상품id133', '상품명', 70000, 20, 'shoes2', '상품정보클롭10', 2, 8);
+insert into product values ('상품id132', '상품명', 80000, 20, 'shoes4', '상품정보클롭11', 6, 8);
+insert into product values ('상품id131', '상품명', 30000, 20, 'shoes6', '상품정보클롭12', 7, 8);
+insert into product values ('상품id130', '상품명', 20000, 20, 'shoes7', '상품정보클롭13', 2, 8);
+insert into product values ('상품id129', '상품명', 10000, 20, 'shoes8', '상품정보클롭14', 11, 8);
 
 insert into product values ('상품id119', '상품명', 40000, 2222, 'shoes2', '상품정보클롭', 2, 1);
 insert into product values ('상품id1121', '상품명', 3000, 3333, 'shoes3', '상품정보클롭', 3, 1);
@@ -151,6 +170,9 @@ insert into product values ('상품id1143', '상품명', 40000, 2222, 'shoes5', 
 insert into product values ('상품id1154', '상품명', 3000, 3333, 'shoes6', '상품정보클롭', 6, 1);
 insert into product values ('상품id1165', '상품명', 40000, 2222, 'shoes7', '상품정보클롭', 7, 1);
 insert into product values ('상품id1176', '상품명', 3000, 3333, 'shoes8', '상품정보클롭', 8, 1);
+
+insert into product values ('상품id29', '상품명', 3000, 3333, 'shoes8', '상품정보클롭', 12, 1);
+
 select * from PRODUCT order by product_like desc
 
 /* 리뷰 vvvvvv*/
@@ -392,6 +414,8 @@ CREATE TABLE store_QnA_reply (
 	foreign key(storeQnA_no) references store_qna(storeQnA_no) on delete cascade
 );
 
+select member_id from seller where seller_store_no = 1
+
 /* 주문상품 vvvvvvv*/
 drop table order_product
 CREATE TABLE order_product (
@@ -447,3 +471,15 @@ from (select ceil(rownum/6) page,        product_Id, product_name, product_price
 where page = 7
 
 select count(product_id) from product where seller_store_no=1
+
+/* 소식통(판매자) */
+CREATE TABLE seller_notice (
+	seller_notice_no NUMBER NOT NULL, /* 소식글 no */
+	seller_notice_title VARCHAR2(300) NOT NULL, /* 소식글 제목 */
+	seller_notice_content CLOB NOT NULL, /* 소식글 내용 */
+	seller_notice_date DATE NOT NULL, /* 소식글 작성일 */
+	seller_notice_hit NUMBER NOT NULL /* 소식글 조회수 */
+);
+
+drop sequence seller_notice_no_seq
+create sequence seller_notice_no_seq nocache;

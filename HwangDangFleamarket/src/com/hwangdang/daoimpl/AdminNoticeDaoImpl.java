@@ -53,7 +53,6 @@ public class AdminNoticeDaoImpl implements AdminNoticeDao{
 
 	@Override
 	public Notice selectNoticeByNoticeNo(int noticeNo) {
-		// 조회수 올려줘야함
 		return session.selectOne("adminNoticeMapper.selectNoticeByNoticeNo", noticeNo);
 	}
 }

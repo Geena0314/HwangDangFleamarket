@@ -18,46 +18,43 @@ span, td {
 	padding: 5px;
 	height: auto;
 }
-
 input {
 	border: none;
 }
-
 textarea {
 	border: none;
 }
-
 span{
 	font-size: 11pt;
 	color: red;
 }
 </style>
-<form action="/HwangDangFleamarket/admin/adminEditNotice.go" method="post">
+<form action="/HwangDangFleamarket/sellerNotice/sellerEditNotice.go" method="post">
 	<input type="hidden" name="page" value="${param.page}">
-	<input type="hidden" name="noticeNo" value="${requestScope.notice.noticeNo}">
+	<input type="hidden" name="sellerNoticeNo" value="${requestScope.sellerNotice.sellerNoticeNo}">
 	<table>
 		<thead>
 			<tr>
 				<td width="70px">제목</td>
 				<td>
-					<input type="text" name="noticeTitle" size="70" value="${requestScope.notice.noticeTitle}">
+					<input type="text" name="sellerNoticeTitle" size="70" value="${requestScope.sellerNotice.sellerNoticeTitle}">
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2" class="error">
-					<form:errors path="notice.noticeTitle" delimiter=" & "/>
+					<form:errors path="sellerNotice.sellerNoticeTitle"/>
 				</td>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td colspan="2">
-					<textarea rows="30" cols="70" name="noticeContent">${requestScope.notice.noticeContent}</textarea>
+					<textarea rows="30" cols="70" name="sellerNoticeContent">${requestScope.sellerNotice.sellerNoticeContent}</textarea>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2" class="error">
-					<form:errors path="notice.noticeContent"/>
+					<form:errors path="sellerNotice.sellerNoticeContent"/>
 				</td>
 			</tr>
 		</tbody>

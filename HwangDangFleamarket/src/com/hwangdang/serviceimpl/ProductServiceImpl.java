@@ -162,4 +162,20 @@ public class ProductServiceImpl implements ProductService
 		// TODO Auto-generated method stub
 		return dao.selectQnAJoin(storeQnANo);
 	}
+
+	@Override
+	public int insertQnAReply(int sellerStoreNo, String storeReplyContent, int storeQnANo)
+	{
+		// TODO Auto-generated method stub
+		//스토어 판매자 아이디 조회
+		String memberId = dao.selectSellerByNo(sellerStoreNo);
+		/*
+		 * 세션에 등록되어있는(로그인한) 아이디와 조회한 아이디 비교 후 맞으면 등록해줌.(판매자만등록)
+		 */
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("storeReplyWriter", memberId);
+		map.put("storeReplyContent", storeReplyContent);
+		map.put("storeQnANo", storeQnANo);
+		return dao.insertQnAReply(map);
+	}
 }
