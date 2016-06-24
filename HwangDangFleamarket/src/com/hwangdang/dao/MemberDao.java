@@ -18,13 +18,13 @@ public interface MemberDao {
 	/**
 	 * ID로 회원 delete
 	 */
-	int deleteById(String id);
+	int deleteById(String memberId);
 
 	/**
 	 * Id로 회원 select
 	 */
 	
-	Member selectById(String id);
+	Member selectById(String memberId);
 
 	/**
 	 */
@@ -33,7 +33,7 @@ public interface MemberDao {
 	List selectList(int page);
 	
 
-	int selectCountById(String id);
+	int selectCountById(String memberId);
 
 	int selectMemberCount();
 }

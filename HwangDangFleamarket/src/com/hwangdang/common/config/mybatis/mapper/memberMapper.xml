@@ -7,6 +7,20 @@
 	<sql id="select-basic">
 		SELECT <include refid="member-columns"/> FROM MEMBER
 	</sql>
+	
+	<resultMap type="member" id="member-basic-resultMap">
+		<id column="member_Id" property="memberId"/>
+		<result column="member_password" property="memberPassword"/>
+		<result column="member_name" property="memberName"/>
+		<result column="member_phone" property="memberPhone"/>
+		<result column="member_zipcode" property="memberZipcode"/>
+		<result column="member_address" property="memberAddress"/>
+		<result column="member_sub_address" property="memberSubAddress"/>
+		<result column="member_assign" property="memberAssign"/>
+	</resultMap>
+
+	
+	
 	<insert id="insert" parameterType="member">
 		INSERT INTO MEMBER VALUES (#{memberId},#{memberPassword},#{memberName},#{memberPhone},#{memberZipcode},#{memberAddress},#{memberSubAddress},#{memberAssign})
 	</insert>
@@ -26,8 +40,9 @@
 	</delete>
 	
 	<!-- select -->
-	<select id="selectById" parameterType="string" resultType="member">
+	<select id="selectById" parameterType="string" resultMap="member-basic-resultMap">
 		<include refid="select-basic"/>
+	
 		WHERE member_id = #{memberId}
 	</select>
 	<!-- 전체 회원 select -->

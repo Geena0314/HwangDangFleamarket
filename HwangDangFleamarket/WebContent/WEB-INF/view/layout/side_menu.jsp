@@ -18,7 +18,7 @@ a:HOVER {
 }
 
 table ,tr{
-	border: 3px solid lightgray;
+	border: 2px solid lightgray;
 }
 </style>
 <div id="sideMenu">
