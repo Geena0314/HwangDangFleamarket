@@ -18,7 +18,7 @@ div.seller_listing li#list_block{
 	float: left;
 	overflow: hidden;
 	position: relative;
-	height: 130px;
+	height: 150px;
 	min-width: 800px;
 	padding: 15px 15px 15px 15px;
 }
@@ -33,18 +33,18 @@ div{
 .thmb{
 	float: left;
 	width: 150px;
-	height: 130px;
+	height: 150px;
 }
 .store_info{
 	float: left;
 	width: 400px;
-	height: 130px;
+	height: 150px;
 	border-right: 1px solid gray;
 }
 .store_products{
 	float: left;
 	width: 150px;
-	height: 130px;
+	height: 150px;
 
 }
 p{
@@ -55,7 +55,11 @@ b{
 }
 img{
 	width: 150px;
-	height: 130px;
+	height: 150px;
+}
+.store_img{
+	border-radius: 30px;
+	overflow: hidden;
 }
 
 </style>
@@ -66,7 +70,7 @@ img{
 			<li id="list_block">
 				<div class="thmb">
 					<div class="store_img">
-						<a href="#"><img src="../image_storage/${list.sellerStoreImage}.jpg"></a>
+						<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${list.sellerStoreNo}"><img src="../image_storage/${list.sellerStoreImage}.jpg"></a>
 					</div>
 				</div>
 				<ul class="store_info">

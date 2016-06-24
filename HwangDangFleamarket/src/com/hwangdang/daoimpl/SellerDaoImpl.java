@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.hwangdang.common.util.Constants;
 import com.hwangdang.dao.SellerDao;
 import com.hwangdang.vo.Notice;
+import com.hwangdang.vo.Seller;
 
 @Repository
 public class SellerDaoImpl implements SellerDao{
@@ -22,6 +23,11 @@ public class SellerDaoImpl implements SellerDao{
 	@Override
 	public int selectCountSeller() {
 		return session.selectOne("sellerMapper.selectCountSeller");
+	}
+	
+	@Override
+	public Seller selectSellerBySellerStoreNo(int sellerStoreNo) {
+		return session.selectOne("sellerMapper.selectSellerBySellerStoreNo", sellerStoreNo);
 	}
 
 	@Override

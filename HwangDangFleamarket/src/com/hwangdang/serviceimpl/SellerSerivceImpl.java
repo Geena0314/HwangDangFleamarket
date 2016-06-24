@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.hwangdang.dao.SellerDao;
 import com.hwangdang.service.SellerService;
+import com.hwangdang.vo.Seller;
 
 @Service
 public class SellerSerivceImpl implements SellerService{
@@ -23,5 +24,10 @@ public class SellerSerivceImpl implements SellerService{
 	public List getAllSeller(int page) {
 		return dao.selectAllSeller(page);
 	}
-	
+
+	@Override
+	public Seller getSellerBySellerStoreNo(int sellerStoreNo) {
+		Seller seller =  dao.selectSellerBySellerStoreNo(sellerStoreNo);
+		return seller;
+	}
 }

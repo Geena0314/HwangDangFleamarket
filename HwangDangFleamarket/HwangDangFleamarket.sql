@@ -69,6 +69,11 @@ DROP TABLE code
 /* 카테고리 */
 DROP TABLE category 
 	CASCADE CONSTRAINTS;
+	
+/* 스토어 게시판 */	
+DROP TABLE store_notice 
+	CASCADE CONSTRAINTS;
+	
 select * from member;
 /* 회원vvvvvvvvvvvv*/
 CREATE TABLE member (
@@ -87,14 +92,15 @@ insert into member values ('isj4216', '52545856', '이성준', '010-9977-2905', 
 insert into member values ('lsj4216', '52545856', '판매자', '010-9977-2905', '123-456',
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', 1);
 insert into member values ('hwang', 'dang', '황경희매니저', '010-9977-2905', '123-456',
-   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 0);
+   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1);
 insert into member values ('lsj42167', '52545856', '판매자', '010-9977-2905', '123-456',
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', 1);
 insert into member values ('lsj421678', 'dang', '황경희매니저', '010-9977-2905', '123-456',
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1); 
 insert into member values ('hwanghwang', 'dang', '황경희매니저', '010-9977-2905', '123-466',
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 1);
-   										   
+delete from member where member_id = 'hwang'					
+select * from member
 
 /* 판매자vvvvvvvvvvv */
 CREATE TABLE seller (
@@ -124,14 +130,14 @@ insert into seller values (seller_store_no_seq.nextval, '황당마켓3', '123456
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '사진임', '판매물품1', '판매물품2', '판매물품3', '소개글', 'lsj421678');   
 
 insert into seller values(seller_store_no_seq.nextval, '해물나라', '12345-67890', '대분류업종', '소분류업종', '123-456', 
-							'경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '해물찜', '전복', '냉동문어', '낙지', 
+							'경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '해물찜', '#전복', '#냉동문어', '#낙지', 
 							'아주아주 싱싱하고 맛있는 해산물을 산지직송해드립니다.', 'hwang');
 insert into seller values(seller_store_no_seq.nextval, '통영대표꿀빵', '12345-66789', '대분류업종', '소분류업종', '123-654', 
-							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵', '원조꿀빵', '유자꿀빵', '고구마꿀빵', 
+							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵', '#원조꿀빵', '#유자꿀빵', '#고구마꿀빵', 
 							'넘나 맛있는 꿀빵을 만드는 꿀빵집입니다.', 'hwanghwang');  		
    										  
 select * from seller
-delete from seller
+delete from seller where member_id = 'hwanghwang'
 
 /* 상품vvvvvvvvv */
 drop table product
@@ -463,3 +469,12 @@ from (select ceil(rownum/6) page,        product_Id, product_name, product_price
 where page = 7
 
 select count(product_id) from product where seller_store_no=1
+
+/* 소식통(판매자) */
+CREATE TABLE store_notice (
+	store_notice_no NUMBER NOT NULL, /* 소식글 no */
+	store_notice_title VARCHAR2(300) NOT NULL, /* 소식글 제목 */
+	store_notice_content CLOB NOT NULL, /* 소식글 내용 */
+	store_notice_date DATE NOT NULL, /* 소식글 작성일 */
+	store_notice_hit NUMBER NOT NULL /* 소식글 조회수 */
+);

@@ -42,4 +42,9 @@
 		select count(seller_store_no) from seller
 	</select>
 	
+	<select id="selectSellerBySellerStoreNo" parameterType="_int" resultMap="seller-basic-resultmap">
+		<include refid="select-basic"/>
+		where seller_store_no = #{value}		
+	</select>
+	
 </mapper>

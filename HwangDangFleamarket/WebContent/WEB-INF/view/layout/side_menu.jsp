@@ -1,4 +1,5 @@
-<%@page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style type="text/css">
 button{
 width: 150px;
@@ -11,12 +12,10 @@ a{
 	text-decoration: none;
 	color: black;
 }
-
 a:HOVER {
 	text-decoration: underline;
 	color: silver;
 }
-
 table ,tr{
 	border: 3px solid lightgray;
 }
@@ -28,3 +27,4 @@ table ,tr{
     	<a href="/HwangDangFleamarket/admin/boardQnAList.go">QnA게시판</a>
     	<a href="/HwangDangFleamarket/admin/boardQnAList.go?page=1">QnA게시판</a>
 </div>
+

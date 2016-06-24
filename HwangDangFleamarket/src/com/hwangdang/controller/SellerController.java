@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.service.SellerService;
+import com.hwangdang.vo.Seller;
 
 
 @Controller
@@ -28,5 +29,12 @@ public class SellerController {
 		map.put("pagingBean", pagingBean);
 		return new ModelAndView("seller/seller_list.tiles", map);
 	}
-
+	
+	@RequestMapping("sellerStore")
+	public ModelAndView sellerStore(int sellerStoreNo){
+		Seller seller = service.getSellerBySellerStoreNo(sellerStoreNo);
+		HashMap map = new HashMap<>();
+		map.put("seller", seller);
+		return new ModelAndView("seller/seller/seller_store_main.tiles", map);
+	}
 }

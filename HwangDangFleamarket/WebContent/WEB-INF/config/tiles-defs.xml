@@ -20,8 +20,6 @@ c. extends : 기존 definition 태그의 내용을 상속받아 사용할때 사
 		<put-attribute name="nav"  value="/WEB-INF/view/layout/side_menu.jsp" />
 		<put-attribute name="footer"  value="/WEB-INF/view/layout/footer.jsp" />
 	</definition>
-	
-	
 
 	<!-- wild cart(*)를 이용한 설정방식 
 		name의 * 는 핸들러메소드의 리턴타입 String문자열로 view-name을 이용하여 만듬 
@@ -30,6 +28,11 @@ c. extends : 기존 definition 태그의 내용을 상속받아 사용할때 사
 	-->
 
 	<definition name="*/*.tiles"  extends="template">
+		<put-attribute name="body"  value="/WEB-INF/view/{1}/{2}.jsp" />
+	</definition>
+	
+	<definition name="seller/*/*.tiles"  extends="template">
+		<put-attribute name="nav"  value="/WEB-INF/view/layout/store_side_menu.jsp" />
 		<put-attribute name="body"  value="/WEB-INF/view/{1}/{2}.jsp" />
 	</definition>
 	
@@ -46,17 +49,4 @@ c. extends : 기존 definition 태그의 내용을 상속받아 사용할때 사
 	</definition> -->
 	
 </tiles-definitions>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
