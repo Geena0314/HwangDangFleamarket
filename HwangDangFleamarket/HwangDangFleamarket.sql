@@ -86,6 +86,7 @@ CREATE TABLE member (
 	member_sub_address VARCHAR2(90) NOT NULL, /* 세부주소 */
 	member_assign NUMBER(1) NOT NULL /* 판매자등록여부 */
 );
+ALTER TABLE member RENAME COLUMN member_sub_adress to member_sub_address;
 
 insert into member values ('isj4216', '52545856', '이성준', '010-9977-2905', '123-456',
 										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 A동 513호', 0);

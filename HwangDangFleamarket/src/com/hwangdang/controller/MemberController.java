@@ -1,6 +1,5 @@
 package com.hwangdang.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,24 +39,26 @@ public class MemberController {
 		return "member/login_form.tiles";
 	}
 	
-	@RequestMapping("/loginresult") //로그인 후 화면
-	public ModelAndView loginresult(String memberId, String memberPassword, HttpSession session){
-		System.out.println(memberId);
-		System.out.println(memberPassword);
+	@RequestMapping("/loginResult") //로그인 후 화면
+	public ModelAndView loginResult(String memberId, String memberPassword, HttpSession session){
 		Member member = service.findById(memberId);
-		System.out.println(member);
 		if(member!=null){
-			
+			//아이디가 존재함.
 			if(memberPassword.equals(member.getMemberPassword())){ //아이디와 패스워드가 맞는 경우
 				session.setAttribute("login_info", member);
 				return new ModelAndView("main.tiles");
 			}else{//패스워드가 틀린 경우
-				return new ModelAndView("member/login_form.tiles");
+				return new ModelAndView("member/login_form.tiles", "passwordError", "패스워드가 일치하지 않습니다.");
 			}
 		}else{//id가 없는 경우
-			return new ModelAndView("member/login_form.tiles");
+			return new ModelAndView("member/login_form.tiles", "idError", "아이디가 존재하지 않습니다.");
+		}
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session)
+	{
+		session.invalidate();
+		return "main.tiles";
 	}
 }
-}
-
-

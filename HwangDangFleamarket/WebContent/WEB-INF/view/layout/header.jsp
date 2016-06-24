@@ -29,8 +29,15 @@
 			<a href="/HwangDangFleamarket/main.go">메인</a>
 		</div>
 		<div id="menuLinks">
-			<a href="/HwangDangFleamarket/member/login.go">로그인</a>&nbsp;&nbsp;
-			<a href="/HwangDangFleamarket/member/register.go">회원가입</a>&nbsp;&nbsp;
+		<c:choose>
+			<c:when test="${not empty sessionScope.login_info }">
+				<a href="/HwangDangFleamarket/member/logout.go" onclick="return confirm('로그아웃할꺼?')">로그아웃</a>&nbsp;&nbsp;
+			</c:when>
+			<c:otherwise>
+				<a href="/HwangDangFleamarket/member/login.go">로그인</a>&nbsp;&nbsp;
+				<a href="/HwangDangFleamarket/member/register.go">회원가입</a>&nbsp;&nbsp;
+			</c:otherwise>
+		</c:choose>
 			<a href="#">my page</a>&nbsp;&nbsp;
 			<a href="#">나의주문</a>&nbsp;&nbsp;
 			<a href="#">장바구니</a>&nbsp;&nbsp;
