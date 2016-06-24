@@ -23,7 +23,7 @@ public class MemberController {
 		return "member/register.tiles";
 	}
 	
-	@RequestMapping("/registered") //DB에 내용을 기입하고 회원가입을 완료함
+	@RequestMapping("/registered") //DB에 내용을 기입하 고 회원가입을 완료함
 	public ModelAndView member(Member member, HttpSession session) throws Exception{
 		System.out.println(member);
 		ModelAndView mv=new ModelAndView();

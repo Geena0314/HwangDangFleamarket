@@ -24,6 +24,7 @@ public class StoreQnAReply implements Serializable
 		this.storeReplyDate = storeReplyDate;
 		this.storeQnANo = storeQnANo;
 	}
+
 	public String getStoreReplyWriter()
 	{
 		return storeReplyWriter;

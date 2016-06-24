@@ -68,4 +68,10 @@ public interface ProductDao
 	
 	//QnA Join
 	StoreQnA selectQnAJoin(int storeQnANo);
+	
+	//QnA댓글등록
+	int insertQnAReply(HashMap<String, Object> map);
+	
+	//스토어번호로 판매자 조회.(QnA 댓글 등록.)
+	String selectSellerByNo(int storeQnANo);
 }

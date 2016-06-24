@@ -392,6 +392,8 @@ CREATE TABLE store_QnA_reply (
 	foreign key(storeQnA_no) references store_qna(storeQnA_no) on delete cascade
 );
 
+select member_id from seller where seller_store_no = 1
+
 /* 주문상품 vvvvvvv*/
 drop table order_product
 CREATE TABLE order_product (

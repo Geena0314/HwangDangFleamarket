@@ -36,4 +36,7 @@ public interface ProductService
 	
 	//QnA Join
 	StoreQnA selectQnAJoin(int storeQnANo);
+	
+	//QnA댓글 등록하기.
+	int insertQnAReply(int sellerStoreNo, String storeReplyContent, int storeQnANo);
 }

@@ -605,6 +605,7 @@
 					});
 				});
 				
+				//문의 클릭했을 경우.
 				$("#qnaTable").on("click", "tr.qnaTrs", function()
 				{
 					$("#qnaTable tr").css("background-color", "white");
@@ -622,15 +623,60 @@
 						},
 						"success" : function(json)
 						{
-							if(!json.storeQnAReply)
+							if(json.storeQnAPublished == 3)
 							{
-								//댓글이 달려있지 않은 경우.
-								$("#"+no).after("<tr id='qnaContent'><td></td><td colspan='2'>문의 내용 : " + json.storeQnAContent 
-										+  "<br><br><input type='text' id='qnaReply' size='65'><input type='button' id='qnaReplyRegister' value='답변하기.'></td></tr>");
+								//비공개인 경우.
+								$("#"+no).after("<tr id='qnaContent'><td></td><td colspan='2'>비공개 문의 입니다.</td></tr>");
+								return false;
 							}
-							//댓글 달려있는 경우.
-							$("#"+no).after("<tr id='qnaContent'><td></td><td colspan='2'>문의 내용 : " + json.storeQnAContent 
-									+  "<br><hr>문의 답변 : " + json.storeQnAReply.storeReplyContent + "</td></tr>");
+							else
+							{
+								//공개인 경우.
+								if(!json.storeQnAReply)
+								{
+									//댓글이 달려있지 않은 경우.
+									$("#"+no).after("<tr id='qnaContent'><td></td><td colspan='2'>문의 내용 : " + json.storeQnAContent 
+											+  "<br><br><input type='text' id='qnaReply' size='65'><input type='button' id='qnaReplyRegister' value='답변하기.'></td></tr>");
+									//답변하기 버튼클릭.
+									$("#qnaReplyRegister").on("click", function()
+									{
+										$.ajax(
+										{
+											"url" : "/HwangDangFleamarket/product/qnaReplyRegister.go",
+											"type" : "POST",
+											"data" : {"sellerStoreNo" : ${param.sellerStoreNo}, "storeReplyContent" : $("#qnaReply").val(), "storeQnANo" : no},
+											"dataType" : "JSON",
+											"beforeSend" : function()
+											{
+												if($("#qnaReply").val() == null || $("#qnaReply").val().trim().length < 3)
+												{
+													$("#qnaReply").val("3글자 이상 입력해 주세요.").focus();
+													return false;
+												}
+											},
+											"success" : function(jsons)
+											{
+												alert("문의답변이 완료되었습니다.");
+												$("#qnaContent").empty();
+												$("#qnaContent").append("<td></td><td>문의 내용 : " + jsons.storeQnAContent 
+														+  "<br><hr>문의 답변 : " + jsons.storeQnAReply.storeReplyContent + "</td>"
+														+ "<td align='center'><input type='button' id='qnaReplyRemove' value='삭제하기'></td>");
+												return false;
+											},
+											"error" : function()
+											{
+												$("#qnaReply").val("해당상품 판매자만 입력 가능합니다.").blur();
+											}
+										});
+									});
+								}
+								else
+								{
+									//댓글 달려있는 경우.
+									$("#"+no).after("<tr id='qnaContent'><td></td><td>문의 내용 : " + json.storeQnAContent 
+											+  "<br><hr>문의 답변 : " + json.storeQnAReply.storeReplyContent + "</td><td align='center'><input type='button' id='qnaReplyRemove' value='삭제하기'></td></tr>");
+								}
+							}
 						},
 						"error" : error
 					});
@@ -845,7 +891,7 @@
 					</td><td></td>
 				</tr>
 				<tr>
-					<td colspan = "3" align="right"><input type="button" id="QnARegister" value="문의 하기." ></td>
+					<td colspan = "3" align="right"><input type="button" id="qnaRegister" value="문의 하기." onClick="window.open('/HwangDangFleamarket/storeQnA/storeQnARegisterForm.go?productId=${param.productId}&memberId=isj4216','문의하기','resizable=no width=600 height=600')"></td>
 				</tr>
 			</table>
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
