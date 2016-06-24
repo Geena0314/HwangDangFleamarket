@@ -2,6 +2,8 @@ package com.hwangdang.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.hwangdang.vo.SellerNotice;
 
 public interface SellerNoticeService {
@@ -11,9 +13,12 @@ public interface SellerNoticeService {
 
 	public SellerNotice getSellerNoticeByNoticeNo(int sellerNoticeNo);
 
+	@Transactional
 	public int sellerRegisterNotice(SellerNotice sellerNotice);
 
+	@Transactional
 	public int sellerEditNotice(SellerNotice sellerNotice);
 
+	@Transactional
 	public int removeSellerNotice(int sellerNoticeNo);
 }

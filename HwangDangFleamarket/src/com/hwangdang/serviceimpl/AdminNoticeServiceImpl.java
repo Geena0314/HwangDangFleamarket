@@ -16,13 +16,11 @@ public class AdminNoticeServiceImpl implements AdminNoticeService{
 	@Autowired
 	private AdminNoticeDao dao;
 
-	@Transactional
 	@Override
 	public int adminRegisterNotice(Notice notice) {
 		return dao.insertNotice(notice);
 	}
 
-	@Transactional
 	@Override
 	public int adminEditNotice(Notice notice) {
 		return dao.updateNotice(notice);
@@ -47,7 +45,6 @@ public class AdminNoticeServiceImpl implements AdminNoticeService{
 		return notice;
 	}
 
-	@Transactional
 	@Override
 	public int removNotice(int noticeNo) {
 		return dao.deleteNotice(noticeNo);
