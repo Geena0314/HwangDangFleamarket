@@ -79,7 +79,7 @@
 			<lee:forEach items="${ requestScope.productList }" var="list" varStatus="no">
 				<div id="product${ no.count }">
 					<div style='height: 170px; width: 200px'>
-						<a href="/HwangDangFleamarket/product/detail.go?page=${ param.page }&productId=${ list.productId }&sellerStoreNo=${ param.sellerStoreNo }">
+						<a href="/HwangDangFleamarket/product/detail.go?page=${ param.page }&productId=${ list.productId }&sellerStoreNo=${ param.sellerStoreNo }&sellerStoreImage=${ param.sellerStoreImage }">
 							<img src="../image_storage/${ list.productMainImage }.jpg"  style="width:200px;height:170px;">
 						</a>
 					</div>
@@ -93,7 +93,7 @@
 					-->
 					<lee:choose>
 						<lee:when test="${ requestScope.bean.previousPageGroup }">
-							<a href = "/HwangDangFleamarket/product/list.go?page=${ requestScope.bean.beginPage-1 }&sellerStoreNo=${param.sellerStoreNo}">◁</a>
+							<a href = "/HwangDangFleamarket/product/list.go?page=${ requestScope.bean.beginPage-1 }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }">◁</a>
 						</lee:when>
 						<lee:otherwise>
 							<font color="#47C83E">◁</font>
@@ -108,7 +108,7 @@
 					<lee:forEach begin="${ requestScope.bean.beginPage }" end="${ requestScope.bean.endPage }" var="page">
 						<lee:choose>
 							<lee:when test="${ page != requestScope.bean.page }">
-								<a href = "/HwangDangFleamarket/product/list.go?page=${ page }&sellerStoreNo=${param.sellerStoreNo}">${ page }</a>
+								<a href = "/HwangDangFleamarket/product/list.go?page=${ page }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }">${ page }</a>
 							</lee:when>
 							<lee:otherwise>
 								<font color="#47C83E">${ page }</font>
@@ -122,7 +122,7 @@
 					-->
 					<lee:choose>
 						<lee:when test="${ requestScope.bean.nextPageGroup }">
-							<a href = "/HwangDangFleamarket/product/list.go?page=${ requestScope.bean.endPage+1 }&sellerStoreNo=${param.sellerStoreNo}">▷</a>
+							<a href = "/HwangDangFleamarket/product/list.go?page=${ requestScope.bean.endPage+1 }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }">▷</a>
 						</lee:when>
 						<lee:otherwise>
 							<font color="#47C83E">▷</font>

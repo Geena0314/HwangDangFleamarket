@@ -1,6 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style type="text/css">
+.sideMenu2{
+	position: fixed;
+	width: 200px;
+}
 .store_img{
 	float: left;
 	position: absolute;
@@ -48,7 +52,7 @@ table ,tr{
 	</div>
 	<div class="buttons">
 		<input type="button" value="스토어 소개">
-		<input type="button" value="상품 목록">
+		<input type="button" value="상품 목록" onclick="window.location='/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
 		<input type="button" value="스토어 소식" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=1&sellerStoreImage=${param.sellerStoreImage}'">
 	</div>
 </div>

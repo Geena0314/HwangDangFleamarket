@@ -11,10 +11,10 @@ header{
 	background-color:pink;
 	text-align:center;
 	padding: 5px;
+	position: fixed;
 }
 nav{
 	line-height: 50px;
-	background-color:lightgray;
 	padding: 15px;
 	padding-top: 50px;
 	min-height:500px;

@@ -34,13 +34,13 @@ public class ProductController
 	public ModelAndView productList(int page, int sellerStoreNo)
 	{
 		HashMap<String, Object> map = service.selectAllProduct(page, sellerStoreNo);
-		return new ModelAndView("seller/product_list.tiles", map);
+		return new ModelAndView("seller/seller/product_list.tiles", map);
 	}
 	
 	@RequestMapping("detail")
 	public ModelAndView productDetail(int page, String productId)
 	{
-		return new ModelAndView("/WEB-INF/view/seller/product_detail.jsp", service.selectProductDetailById(page, productId));
+		return new ModelAndView("seller/seller/product_detail.tiles", service.selectProductDetailById(page, productId));
 	}
 	
 	@RequestMapping("optionStock")
