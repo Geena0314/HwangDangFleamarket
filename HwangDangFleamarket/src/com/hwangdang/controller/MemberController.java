@@ -45,8 +45,13 @@ public class MemberController {
 		if(member!=null){
 			//아이디가 존재함.
 			if(memberPassword.equals(member.getMemberPassword())){ //아이디와 패스워드가 맞는 경우
+				if(member.getMemberAssign() == 1)
+				{
+					System.out.println(service.selectSellerById(memberId));
+					session.setAttribute("seller", service.selectSellerById(memberId));
+				}
 				session.setAttribute("login_info", member);
-				return new ModelAndView("main.tiles");
+				return new ModelAndView("member/login_success.tiles");
 			}else{//패스워드가 틀린 경우
 				return new ModelAndView("member/login_form.tiles", "passwordError", "패스워드가 일치하지 않습니다.");
 			}
@@ -59,6 +64,6 @@ public class MemberController {
 	public String logout(HttpSession session)
 	{
 		session.invalidate();
-		return "main.tiles";
+		return "redirect:/main.go";
 	}
 }

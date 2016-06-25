@@ -2,15 +2,17 @@ package com.hwangdang.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hwangdang.service.ProductService;
 import com.hwangdang.service.StoreQnAService;
+import com.hwangdang.vo.Member;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.StoreQnA;
 
@@ -59,8 +61,9 @@ public class ProductController
 	
 	@RequestMapping("reviewWriteCheck")
 	@ResponseBody
-	public boolean reviewWriteCheck(String memberId)
+	public boolean reviewWriteCheck(String memberId, HttpSession session)
 	{
+		memberId = ((Member)session.getAttribute("login_info")).getMemberId();
 		return service.reviewWriteCheck(memberId);
 	}
 	

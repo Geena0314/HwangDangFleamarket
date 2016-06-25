@@ -3,6 +3,7 @@ package com.hwangdang.dao;
 import java.util.List;
 
 import com.hwangdang.vo.Member;
+import com.hwangdang.vo.Seller;
 
 public interface MemberDao {
 	/**
@@ -36,4 +37,7 @@ public interface MemberDao {
 	int selectCountById(String memberId);
 
 	int selectMemberCount();
+	
+	//멤버id로 셀러정보찾기.
+	Seller selectSellerById(String memberId);
 }

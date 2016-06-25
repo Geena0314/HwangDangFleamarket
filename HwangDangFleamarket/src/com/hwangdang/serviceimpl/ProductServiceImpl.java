@@ -112,6 +112,7 @@ public class ProductServiceImpl implements ProductService
 	public boolean reviewWriteCheck(String memberId)
 	{
 		// TODO Auto-generated method stub
+		System.out.println(memberId);
 		List<String> list = dao.selectOrderNo(memberId);
 		for(int i = 0; i < list.size(); i++)
 		{
