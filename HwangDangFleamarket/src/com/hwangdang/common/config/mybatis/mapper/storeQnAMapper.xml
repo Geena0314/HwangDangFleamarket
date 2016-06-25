@@ -26,4 +26,15 @@
 	<select id="selectQnAPublished" resultType="_int" parameterType="_int">
 		select storeQnA_published from store_QnA where storeQnA_no=#{1}
 	</select>
+	
+	<!-- 스토어QnA번호로 작성자 조회. -->
+	<select id="selectQnAWriterByNo" resultType="string" parameterType="_int">
+		select 	storeQnA_writer
+		from		store_QnA
+		where 	storeQnA_no=#{storeQnANo} 
+	</select>
+	
+	<delete id="deleteQnAByno" parameterType="_int">
+		delete from store_QnA where storeQnA_no = #{storeQnANo}
+	</delete>
 </mapper>

@@ -27,7 +27,6 @@ public class MemberController {
 	
 	@RequestMapping("/registerresult") //DB에 내용을 기입하고 회원가입을 완료함
 	public ModelAndView member(Member member, HttpSession session) throws Exception{
-		System.out.println(member);
 		ModelAndView mv=new ModelAndView();
 		dao.insert(member);
 		//mv.setViewName("/member/registerResult.go");

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.dao.ProductDao;
 import com.hwangdang.service.ProductService;
+import com.hwangdang.vo.Product;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.Review;
 import com.hwangdang.vo.StoreQnA;
@@ -47,7 +48,13 @@ public class ProductServiceImpl implements ProductService
 	{
 		// TODO Auto-generated method stub
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("product", dao.selectProductDetailById(productId));
+		Product product = dao.selectProductDetailById(productId);
+		product.setProductInfo(product.getProductInfo().replaceAll(">", "&gt;"));
+		product.setProductInfo(product.getProductInfo().replaceAll("<", "&lt;"));
+		product.setProductInfo(product.getProductInfo().replaceAll("\n", "<br>"));
+		product.setProductInfo(product.getProductInfo().replaceAll(" ", "&nbsp;"));
+		
+		map.put("product", product);
 		map.put("optionList", dao.selectOptionById(productId));
 		String image = dao.selectDetailImageById(productId);
 		try
@@ -112,7 +119,6 @@ public class ProductServiceImpl implements ProductService
 	public boolean reviewWriteCheck(String memberId)
 	{
 		// TODO Auto-generated method stub
-		System.out.println(memberId);
 		List<String> list = dao.selectOrderNo(memberId);
 		for(int i = 0; i < list.size(); i++)
 		{
@@ -154,6 +160,11 @@ public class ProductServiceImpl implements ProductService
 	public StoreQnA selectQnAByNo(int storeQnANo)
 	{
 		// TODO Auto-generated method stub
+		StoreQnA qna = dao.selectQnAByNo(storeQnANo);
+		/* qna.setStoreQnAContent(qna.getStoreQnAContent().replace(">", "&gt;"));
+		qna.setStoreQnAContent(qna.getStoreQnAContent().replace("<", "&lt;"));
+		qna.setStoreQnAContent(qna.getStoreQnAContent().replace("\n", "<br>"));
+		qna.setStoreQnAContent(qna.getStoreQnAContent().replace(" ", "&nbsp;"));*/
 		return dao.selectQnAByNo(storeQnANo);
 	}
 

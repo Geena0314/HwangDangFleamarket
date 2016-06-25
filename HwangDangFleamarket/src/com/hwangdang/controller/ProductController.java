@@ -69,9 +69,10 @@ public class ProductController
 	
 	@RequestMapping("reviewRegister")
 	@ResponseBody
-	public HashMap<String, Object> reviewRegister(String memberId, String reviewContent, String productId, int productLike)
+	public HashMap<String, Object> reviewRegister(String memberId, String reviewContent, String productId, int productLike, HttpSession session)
 	{
 		//session에서 로그인한 회원의 정보를 가져옴.(멤버객체 or 멤버아이디 보내주기.(작성자));
+		memberId = ((Member)session.getAttribute("login_info")).getMemberId();
 		if(reviewContent == null || reviewContent.trim().length() < 3 || reviewContent.length() > 20)
 		{
 			return null;
@@ -84,8 +85,9 @@ public class ProductController
 	
 	@RequestMapping("reviewDelete")
 	@ResponseBody
-	public HashMap<String, Object> reviewDelete(String memberId, String productId)
+	public HashMap<String, Object> reviewDelete(String memberId, String productId, HttpSession session)
 	{
+		memberId = ((Member)session.getAttribute("login_info")).getMemberId();
 		int reviewDelete = service.deleteReview(memberId, productId);
 		HashMap<String, Object> map = reviewPaging(1, productId);
 		map.put("reviewDelete", reviewDelete);
@@ -108,16 +110,42 @@ public class ProductController
 	
 	@RequestMapping("qnaShow")
 	@ResponseBody
-	public StoreQnA qnaShow(int storeQnANo)
+	public StoreQnA qnaShow(int storeQnANo, int sellerStoreNo, HttpSession session)
 	{
 		//공개여부 체크.
 		if(qnaService.selectQnAPublished(storeQnANo) == 0)
 		{
-			//비공개인경우. 스토어넘버로 조회해서 얻은 판매자 아이디와
-			//						로그인한 회원의 아이디가 같으면 보여줌.
-			StoreQnA qna = service.selectQnAByNo(storeQnANo);
-			qna.setStoreQnAPublished(3);
-			return qna;
+			//비공개인경우.
+			try
+			{
+				if(((Member)session.getAttribute("login_info")).getMemberId().equals(qnaService.selectSellerByNo(sellerStoreNo)) || 
+						((Member)session.getAttribute("login_info")).getMemberId().equals(qnaService.selectQnAWriterByNo(storeQnANo)))
+				{
+					//스토어넘버로 조회해서 얻은 판매자 아이디와 내아이디가 같은경우(판매자인경우.)
+					//						로그인한 회원의 아이디와 작성자가 같은경우.
+					StoreQnA qna = service.selectQnAJoin(storeQnANo);
+					if(qna == null)
+					{
+						return service.selectQnAByNo(storeQnANo);
+					}
+					return qna;
+				}
+				else
+				{
+					//아이디가 다른경우(판매자가 아니거나... 등록한회원이 아닌경우.)
+					StoreQnA qna = service.selectQnAByNo(storeQnANo);
+					qna.setStoreQnAPublished(3);
+					return qna;
+				}
+			}
+			catch(Exception e)
+			{
+				//로그인 안한경우.
+				//아이디가 다른경우(판매자가 아니거나... 등록한회원이 아닌경우.)
+				StoreQnA qna = service.selectQnAByNo(storeQnANo);
+				qna.setStoreQnAPublished(3);
+				return qna;
+			}
 		}
 		else
 		{
@@ -132,13 +160,27 @@ public class ProductController
 	
 	@RequestMapping("qnaReplyRegister")
 	@ResponseBody
-	public StoreQnA qnaReplyRegister(int sellerStoreNo, String storeReplyContent, int storeQnANo)
+	public StoreQnA qnaReplyRegister(int sellerStoreNo, String storeReplyContent, int storeQnANo, HttpSession session)
 	{
-		int result = service.insertQnAReply(sellerStoreNo, storeReplyContent, storeQnANo);
-		if(result == 0)
+		try
+		{
+			if(((Member)session.getAttribute("login_info")).getMemberId().equals(qnaService.selectSellerByNo(sellerStoreNo)))
+			{
+				int result = service.insertQnAReply(sellerStoreNo, storeReplyContent, storeQnANo);
+				if(result == 0)
+				{
+					return null;
+				}
+				return service.selectQnAJoin(storeQnANo);
+			}
+			else
+			{
+				return null;
+			}
+		}
+		catch (Exception e)
 		{
 			return null;
 		}
-		return service.selectQnAJoin(storeQnANo);
 	}
 }
