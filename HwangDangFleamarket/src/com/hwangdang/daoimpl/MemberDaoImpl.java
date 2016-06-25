@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.hwangdang.dao.MemberDao;
 import com.hwangdang.vo.Member;
+import com.hwangdang.vo.Seller;
 
 @Repository
 public class MemberDaoImpl implements MemberDao{
@@ -62,5 +63,12 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public int selectMemberCount() {
 		return session.selectOne("memberMapper.selectMemberCount");
+	}
+
+	@Override
+	public Seller selectSellerById(String memberId)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("memberMapper.selectSellerById", memberId);
 	}
 }

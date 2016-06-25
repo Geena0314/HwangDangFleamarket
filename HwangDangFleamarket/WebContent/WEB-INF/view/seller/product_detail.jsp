@@ -268,12 +268,19 @@
 				
 				$("#reviewWrite").on("focus", function()
 				{
+					if(${empty sessionScope.login_info.memberId})
+					{
+						$("#reviewError").empty();
+						$("#reviewError").append("로그인 한 회원만 입력 가능합니다.");
+						$("#reviewWrite").blur();	
+						return false;
+					}
 					//구매한 상품인지 확인. (+)memberId 세션에서 가져오기
 					$.ajax(
 					{
 						"url" : "/HwangDangFleamarket/product/reviewWriteCheck.go",
 						"type" : "POST",
-						"data" : "memberId=" + "isj4216",
+						"data" : "memberId=" + "xx",
 						"success" : function(text)
 						{
 							if(!text)

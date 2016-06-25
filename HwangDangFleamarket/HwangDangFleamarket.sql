@@ -147,6 +147,11 @@ insert into seller values(seller_store_no_seq.nextval, '통영대표꿀빵', '12
 select * from seller
 delete from seller where member_id = 'hwanghwang'
 
+select 	seller_store_no, seller_store_name, seller_tax_id, seller_industry, seller_sub_industry, seller_zipcode, seller_address, seller_sub_address,
+				 	seller_store_image, seller_product1, seller_product2, seller_product3, seller_introduction, member_id
+from		seller
+where		member_id='lsj4216'
+
 /* 상품vvvvvvvvv */
 drop table product
 CREATE TABLE product (

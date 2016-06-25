@@ -32,14 +32,20 @@
 		<c:choose>
 			<c:when test="${not empty sessionScope.login_info }">
 				<a href="/HwangDangFleamarket/member/logout.go" onclick="return confirm('로그아웃할꺼?')">로그아웃</a>&nbsp;&nbsp;
+				<a href="#">my page</a>&nbsp;&nbsp;
+				<a href="#">나의주문</a>&nbsp;&nbsp;
+				<a href="#">장바구니</a>&nbsp;&nbsp;
 			</c:when>
 			<c:otherwise>
-				<a href="/HwangDangFleamarket/member/login.go">로그인</a>&nbsp;&nbsp;
+				<a href="#" onClick="window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');">로그인</a>&nbsp;&nbsp;
 				<a href="/HwangDangFleamarket/member/register.go">회원가입</a>&nbsp;&nbsp;
+				<a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');}; ">my page</a>&nbsp;&nbsp;
+				<a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');};">나의주문</a>&nbsp;&nbsp;
+				<a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');};">장바구니</a>&nbsp;&nbsp;
 			</c:otherwise>
 		</c:choose>
-			<a href="#">my page</a>&nbsp;&nbsp;
-			<a href="#">나의주문</a>&nbsp;&nbsp;
-			<a href="#">장바구니</a>&nbsp;&nbsp;
+		<c:if test="${ sessionScope.login_info.memberAssign == 1}">
+			<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${sessionScope.seller.sellerStoreNo}&sellerStoreImage=${sessionScope.seller.sellerStoreImage}">내 스토어</a>
+		</c:if>
 		</div>
 	</div>
