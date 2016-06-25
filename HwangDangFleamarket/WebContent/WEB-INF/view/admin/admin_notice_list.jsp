@@ -29,7 +29,9 @@ b {
 </style>
 <p align="right">
 	<b>황당 플리마켓 소식통</b>&nbsp;&nbsp;
-	<input type="button" value="소식글등록" onclick="window.location='/HwangDangFleamarket/admin/adminRegisterForm.go'">
+	<c:if test="${sessionScope.login_info.memberId == 'kinghwang'}">
+		<input type="button" value="소식글등록" onclick="window.location='/HwangDangFleamarket/admin/adminRegisterForm.go'">
+	</c:if>
 </p>
 
 <table>
