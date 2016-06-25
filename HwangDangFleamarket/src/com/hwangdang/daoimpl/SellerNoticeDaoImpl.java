@@ -39,15 +39,16 @@ public class SellerNoticeDaoImpl implements SellerNoticeDao{
 	}
 
 	@Override
-	public int selectCountSellerNotice() {
-		return session.selectOne("sellerNoticeMapper.selectCountSellerNotice");
+	public int selectCountSellerNotice(int sellerStoreNo) {
+		return session.selectOne("sellerNoticeMapper.selectCountSellerNotice", sellerStoreNo);
 	}
 
 	@Override
-	public List<SellerNotice> selectAllSellerNotice(int page) {
+	public List<SellerNotice> selectAllSellerNotice(int page, int sellerStoreNo) {
 		HashMap map = new HashMap<>();
 		map.put("page", page);
 		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		map.put("sellerStoreNo", sellerStoreNo);
 		return session.selectList("sellerNoticeMapper.selectSellerNoticePaging", map);
 	}
 

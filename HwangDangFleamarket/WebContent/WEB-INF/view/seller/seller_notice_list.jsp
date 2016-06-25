@@ -27,14 +27,16 @@ b {
 	font-size: 15pt;
 }
 </style>
+<script type="text/javascript">
+
+</script>
 <p align="right">
 	<b>스토어 소식통</b>
-	<input type="button" id="rgstBtn" value="소식글등록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRegisterNoticeForm.go'">
+	<input type="button" id="rgstBtn" value="소식글등록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRegisterNoticeForm.go?sellerStoreNo=${requestScope.sellerStoreNo}'">
 </p>
 <table>
 	<thead>
 		<tr>
-			<td>번호</td>
 			<td>제목</td>
 			<td>등록일</td>
 			<td>조회수</td>
@@ -43,7 +45,6 @@ b {
 	<tbody>
 		<c:forEach var="list" items="${requestScope.list}">
 			<tr>
-				<td>${list.sellerNoticeNo}</td>
 				<td>
 					<a href="/HwangDangFleamarket/sellerNotice/sellerNoticeDetail.go?page=${requestScope.pagingBean.page}&sellerNoticeNo=${list.sellerNoticeNo}">
 						${list.sellerNoticeTitle}

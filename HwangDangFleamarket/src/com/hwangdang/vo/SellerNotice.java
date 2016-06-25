@@ -13,17 +13,19 @@ public class SellerNotice implements Serializable{
 	private String sellerNoticeContent;
 	private Date sellerNoticeDate;
 	private int sellerNoticeHit;
+	private int sellerStoreNo;
 	
 	public SellerNotice() {}
 
 	public SellerNotice(int sellerNoticeNo, String sellerNoticeTitle, String sellerNoticeContent, Date sellerNoticeDate,
-			int sellerNoticeHit) {
+			int sellerNoticeHit, int sellerStoreNo) {
 		super();
 		this.sellerNoticeNo = sellerNoticeNo;
 		this.sellerNoticeTitle = sellerNoticeTitle;
 		this.sellerNoticeContent = sellerNoticeContent;
 		this.sellerNoticeDate = sellerNoticeDate;
 		this.sellerNoticeHit = sellerNoticeHit;
+		this.sellerStoreNo = sellerStoreNo;
 	}
 
 	public int getSellerNoticeNo() {
@@ -66,6 +68,14 @@ public class SellerNotice implements Serializable{
 		this.sellerNoticeHit = sellerNoticeHit;
 	}
 
+	public int getSellerStoreNo() {
+		return sellerStoreNo;
+	}
+
+	public void setSellerStoreNo(int sellerStoreNo) {
+		this.sellerStoreNo = sellerStoreNo;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -75,6 +85,7 @@ public class SellerNotice implements Serializable{
 		result = prime * result + sellerNoticeHit;
 		result = prime * result + sellerNoticeNo;
 		result = prime * result + ((sellerNoticeTitle == null) ? 0 : sellerNoticeTitle.hashCode());
+		result = prime * result + sellerStoreNo;
 		return result;
 	}
 
@@ -106,6 +117,8 @@ public class SellerNotice implements Serializable{
 				return false;
 		} else if (!sellerNoticeTitle.equals(other.sellerNoticeTitle))
 			return false;
+		if (sellerStoreNo != other.sellerStoreNo)
+			return false;
 		return true;
 	}
 
@@ -113,6 +126,6 @@ public class SellerNotice implements Serializable{
 	public String toString() {
 		return "SellerNotice [sellerNoticeNo=" + sellerNoticeNo + ", sellerNoticeTitle=" + sellerNoticeTitle
 				+ ", sellerNoticeContent=" + sellerNoticeContent + ", sellerNoticeDate=" + sellerNoticeDate
-				+ ", sellerNoticeHit=" + sellerNoticeHit + "]";
+				+ ", sellerNoticeHit=" + sellerNoticeHit + ", sellerStoreNo=" + sellerStoreNo + "]";
 	}
 }

@@ -13,9 +13,9 @@ public interface SellerNoticeDao {
 
 	int deleteSellerNotice(int sellerNoticeNo);
 
-	int selectCountSellerNotice();
+	int selectCountSellerNotice(int sellerStoreNo);
 
-	List<SellerNotice> selectAllSellerNotice(int page);
+	List<SellerNotice> selectAllSellerNotice(int page, int sellerStoreNo);
 
 	SellerNotice selectSellerNoticeByNoticeNo(int sellerNoticeNo);
 }

@@ -32,6 +32,7 @@ span{
 <form action="/HwangDangFleamarket/sellerNotice/sellerEditNotice.go" method="post">
 	<input type="hidden" name="page" value="${param.page}">
 	<input type="hidden" name="sellerNoticeNo" value="${requestScope.sellerNotice.sellerNoticeNo}">
+	<input type="hidden" name="sellerStoreNo" value="${requestScope.sellerNotice.sellerStoreNo}">
 	<table>
 		<thead>
 			<tr>

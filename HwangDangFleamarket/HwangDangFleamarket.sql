@@ -100,7 +100,14 @@ insert into member values ('lsj421678', 'dang', '황경희매니저', '010-9977-
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1); 
 insert into member values ('hwanghwang', 'dang', '황경희매니저', '010-9977-2905', '123-466',
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 1);
-delete from member where member_id = 'hwang'					
+   										   
+insert into member values ('hwang@naver.com','dangdang', '황경희', '010-2387-0073','456-888','경기도 안산시 상록구','어디동 21번지',1) 
+
+insert into member values ('kinghwang', 'kingdang', '퐝경', '010-9977-2905', '123-466',
+   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 0);
+
+
+delete from member where member_id = 'kinghwang'					
 select * from member
 
 /* 판매자vvvvvvvvvvv */
@@ -479,8 +486,17 @@ CREATE TABLE seller_notice (
 	seller_notice_title VARCHAR2(300) NOT NULL, /* 소식글 제목 */
 	seller_notice_content CLOB NOT NULL, /* 소식글 내용 */
 	seller_notice_date DATE NOT NULL, /* 소식글 작성일 */
-	seller_notice_hit NUMBER NOT NULL /* 소식글 조회수 */
+	seller_notice_hit NUMBER NOT NULL, /* 소식글 조회수 */
+	seller_store_no number not null,/* 판매자 스토어 번호 */
+	foreign key (seller_store_no) references seller(seller_store_no) on delete cascade
 );
+drop table SELLER_NOTICE
+
+delete SELLER_NOTICE where seller_notice_no = 12
+
+select * from SELLER_NOTICE
 
 drop sequence seller_notice_no_seq
 create sequence seller_notice_no_seq nocache;
+
+insert into seller_notice values(seller_notice_no_seq.nextval,'aaa','aaa',sysdate,0,1)

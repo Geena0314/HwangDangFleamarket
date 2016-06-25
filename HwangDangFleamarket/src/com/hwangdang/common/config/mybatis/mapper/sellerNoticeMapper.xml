@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="sellerNoticeMapper">
 	<sql id="sellerNotice-columns">
-		seller_notice_no, seller_notice_title, seller_notice_content, seller_notice_date, seller_notice_hit
+		seller_notice_no, seller_notice_title, seller_notice_content, seller_notice_date, seller_notice_hit, seller_store_no
 	</sql>
 	
 	<sql id="select-basic">
@@ -15,13 +15,15 @@
 		<result column="seller_notice_content" property="sellerNoticeContent"/>
 		<result column="seller_notice_date" property="sellerNoticeDate"/>
 		<result column="seller_notice_hit" property="sellerNoticeHit"/>
+		<result column="seller_store_no" property="sellerStoreNo"/>
 	</resultMap>
 	
 	<insert id="insertSellerNotice" parameterType="sellerNotice">
 		<selectKey keyProperty="sellerNoticeNo" resultType="_int" order="BEFORE">
 			select seller_notice_no_seq.nextval from dual
 		</selectKey>
-		insert into seller_notice values(#{sellerNoticeNo},#{sellerNoticeTitle},#{sellerNoticeContent},#{sellerNoticeDate},#{sellerNoticeHit})
+		insert into seller_notice values(#{sellerNoticeNo},#{sellerNoticeTitle},#{sellerNoticeContent},
+										 #{sellerNoticeDate},#{sellerNoticeHit},#{sellerStoreNo})
 	</insert>
 	
 	<update id="updateSellerNotice" parameterType="sellerNotice">
@@ -44,12 +46,12 @@
 	<select id="selectSellerNoticePaging" parameterType="map" resultMap="sellerNotice-basic-resultmap">
 		select <include refid="sellerNotice-columns"/> from(
 			select ceil(rownum /#{itemsPerPage})page, <include refid="sellerNotice-columns"/> from(
-				select <include refid="sellerNotice-columns"/> from seller_notice order by seller_notice_no DESC) 
+				select <include refid="sellerNotice-columns"/> from seller_notice where seller_store_no=#{sellerStoreNo} order by seller_notice_no DESC) 
 				) where page = #{page}
 	</select>
 	
 	<select id="selectCountSellerNotice" resultType="_int">
-		select count(seller_notice_no) from seller_notice
+		select count(seller_notice_no) from seller_notice where seller_store_no = #{sellerStoreNo}
 	</select>
 	
 	<select id="selectSellerNoticeByNoticeNo" parameterType="_int" resultMap="sellerNotice-basic-resultmap">

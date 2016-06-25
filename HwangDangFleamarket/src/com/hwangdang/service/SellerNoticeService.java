@@ -7,9 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hwangdang.vo.SellerNotice;
 
 public interface SellerNoticeService {
-	public List getAllSellerNotice(int page);
+	public List getAllSellerNotice(int page, int sellerStoreNo);
 
-	public int getCountSellerNotice();
+	public int getCountSellerNotice(int sellerStoreNo);
 
 	public SellerNotice getSellerNoticeByNoticeNo(int sellerNoticeNo);
 

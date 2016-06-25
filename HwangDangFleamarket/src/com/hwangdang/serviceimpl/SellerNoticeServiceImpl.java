@@ -17,13 +17,13 @@ public class SellerNoticeServiceImpl implements SellerNoticeService{
 	private SellerNoticeDao dao;
 
 	@Override
-	public List getAllSellerNotice(int page) {
-		return dao.selectAllSellerNotice(page);
+	public List getAllSellerNotice(int page, int sellerStoreNo) {
+		return dao.selectAllSellerNotice(page, sellerStoreNo);
 	}
 
 	@Override
-	public int getCountSellerNotice() {
-		return dao.selectCountSellerNotice();
+	public int getCountSellerNotice(int sellerStoreNo) {
+		return dao.selectCountSellerNotice(sellerStoreNo);
 	}
 
 	@Override
