@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.dao.ProductDao;
 import com.hwangdang.service.ProductService;
+import com.hwangdang.vo.Category;
 import com.hwangdang.vo.Product;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.Review;
@@ -189,5 +190,19 @@ public class ProductServiceImpl implements ProductService
 		map.put("storeReplyContent", storeReplyContent);
 		map.put("storeQnANo", storeQnANo);
 		return dao.insertQnAReply(map);
+	}
+
+	@Override
+	public List<Category> selectFirstCategory()
+	{
+		// TODO Auto-generated method stub
+		return dao.selectFirstCategory();
+	}
+
+	@Override
+	public List<Category> selectSecondCategory(String categoryIdRef)
+	{
+		// TODO Auto-generated method stub
+		return dao.selectSecondCategory(categoryIdRef);
 	}
 }

@@ -6,7 +6,7 @@ public class Category implements Serializable
 {
 	private int categoryId;
 	private String categoryName;
-	private int categoryIdRef;
+	private String categoryIdRef;
 	private String categoryType;
 	
 	public Category()
@@ -14,7 +14,7 @@ public class Category implements Serializable
 		// TODO Auto-generated constructor stub
 	}
 
-	public Category(int categoryId, String categoryName, int categoryIdRef, String categoryType)
+	public Category(int categoryId, String categoryName, String categoryIdRef, String categoryType)
 	{
 		super();
 		this.categoryId = categoryId;
@@ -43,12 +43,12 @@ public class Category implements Serializable
 		this.categoryName = categoryName;
 	}
 
-	public int getCategoryIdRef()
+	public String getCategoryIdRef()
 	{
 		return categoryIdRef;
 	}
 
-	public void setCategoryIdRef(int categoryIdRef)
+	public void setCategoryIdRef(String categoryIdRef)
 	{
 		this.categoryIdRef = categoryIdRef;
 	}
@@ -69,7 +69,7 @@ public class Category implements Serializable
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + categoryId;
-		result = prime * result + categoryIdRef;
+		result = prime * result + ((categoryIdRef == null) ? 0 : categoryIdRef.hashCode());
 		result = prime * result + ((categoryName == null) ? 0 : categoryName.hashCode());
 		result = prime * result + ((categoryType == null) ? 0 : categoryType.hashCode());
 		return result;
@@ -87,7 +87,11 @@ public class Category implements Serializable
 		Category other = (Category) obj;
 		if (categoryId != other.categoryId)
 			return false;
-		if (categoryIdRef != other.categoryIdRef)
+		if (categoryIdRef == null)
+		{
+			if (other.categoryIdRef != null)
+				return false;
+		} else if (!categoryIdRef.equals(other.categoryIdRef))
 			return false;
 		if (categoryName == null)
 		{

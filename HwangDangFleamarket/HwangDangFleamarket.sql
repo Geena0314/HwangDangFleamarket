@@ -152,6 +152,8 @@ select 	seller_store_no, seller_store_name, seller_tax_id, seller_industry, sell
 from		seller
 where		member_id='lsj4216'
 
+select count(seller_store_name) from seller where seller_store_name = '황당마켓1'
+
 /* 상품vvvvvvvvv */
 drop table product
 CREATE TABLE product (
@@ -463,17 +465,19 @@ CREATE TABLE code (
 CREATE TABLE category (
 	category_id NUMBER primary key, /* 카테고리아이디 */
 	category_name VARCHAR2(30) NOT NULL, /* 카테고리명 */
-	category_id_ref NUMBER NOT NULL, /* 참조아이디 */
+	category_id_ref varchar2(30) NOT NULL, /* 참조아이디 */
 	category_type VARCHAR2(6) NOT NULL /* 분류 */
 );
 drop sequence category_id_seq
 create sequence category_id_seq nocache;
-insert into category values (category_id_seq.nextval, '의류', 0, 'first');
-insert into category values (category_id_seq.nextval, '공예', 0, 'first');
-insert into category values (category_id_seq.nextval, '남성의류', 1, 'second');
-insert into category values (category_id_seq.nextval, '도자기', 2, 'second');
-insert into category values (category_id_seq.nextval, '여성의류', 1, 'second');
-insert into category values (category_id_seq.nextval, '팔찌', 2, 'second');
+insert into category values (category_id_seq.nextval, '의류', '0', 'first');
+insert into category values (category_id_seq.nextval, '공예', '0', 'first');
+insert into category values (category_id_seq.nextval, '남성의류', '의류', 'second');
+insert into category values (category_id_seq.nextval, '도자기', '공예', 'second');
+insert into category values (category_id_seq.nextval, '여성의류', '의류', 'second');
+insert into category values (category_id_seq.nextval, '팔찌', '공예', 'second');
+
+select category_id, category_name, category_id_ref, category_type from category where category_id_ref = '의류'
 
 select product_Id, product_name, product_price, product_stock, product_main_image, product_info, product_like, seller_store_no       
 from (select ceil(rownum/6) page,        product_Id, product_name, product_price, product_stock, product_main_image, product_info, product_like, seller_store_no     
@@ -481,6 +485,8 @@ from (select ceil(rownum/6) page,        product_Id, product_name, product_price
 				from product where seller_store_no=1
 				order by product_like desc))   
 where page = 7
+
+select category_id, category_name, category_id_ref, category_type from category where category_type = 'first'
 
 select count(product_id) from product where seller_store_no=1
 

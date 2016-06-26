@@ -5,10 +5,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hwangdang.dao.MemberDao;
 import com.hwangdang.service.MemberService;
+import com.hwangdang.service.ProductService;
 import com.hwangdang.vo.Member;
 
 
@@ -19,6 +21,9 @@ public class MemberController {
 	private MemberDao dao;
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private ProductService productService;
 	
 	@RequestMapping("/register") //회원가입 창이 나오게 함
 	public String register(){
@@ -81,8 +86,16 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/sellerRegister")
-	public String sellerRegister()
+	public ModelAndView sellerRegister()
 	{
-		return "member/seller_register.tiles";
+		//여기서 업종카테고리 가지고가기.
+		return new ModelAndView("member/seller_register.tiles", "firstCategory", productService.selectFirstCategory());
+	}
+	
+	@RequestMapping("/sellerStoreNameCheck")
+	@ResponseBody
+	public int sellerStoreNameCheck(String sellerStoreName)
+	{
+		return service.selectSellerStoreName(sellerStoreName);
 	}
 }

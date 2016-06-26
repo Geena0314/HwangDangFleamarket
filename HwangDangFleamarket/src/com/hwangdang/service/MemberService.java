@@ -9,5 +9,8 @@ public interface MemberService {
 
 	//멤버 아이디로 셀러정보찾기.
 	Seller selectSellerById(String memberId);
+	
+	//스토어 이름으로 중복체크
+	int selectSellerStoreName(String sellerStoreName);
 }
 

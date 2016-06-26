@@ -91,4 +91,9 @@
 	 	from		seller
 	 	where		member_id=#{memberId}
 	</select>
+	
+	<!-- 판매자 등록 시 상호명 중복체크. -->
+	<select id="selectSellerStoreName" parameterType="string" resultType="_int">
+		select count(seller_store_name) from seller where seller_store_name = #{sellerStoreName}
+	</select>
 </mapper>

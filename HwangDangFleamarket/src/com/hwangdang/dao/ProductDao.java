@@ -3,6 +3,7 @@ package com.hwangdang.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import com.hwangdang.vo.Category;
 import com.hwangdang.vo.Product;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.Review;
@@ -74,4 +75,10 @@ public interface ProductDao
 	
 	//스토어번호로 판매자 조회.(QnA 댓글 등록.)
 	String selectSellerByNo(int storeQnANo);
+	
+	//first 카테고리(업종) 조회
+	List<Category> selectFirstCategory();
+	
+	//second 카테고리조회.
+	List<Category> selectSecondCategory(String categoryIdRef);
 }

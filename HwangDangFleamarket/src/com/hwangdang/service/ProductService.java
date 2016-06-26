@@ -1,7 +1,9 @@
 package com.hwangdang.service;
 
 import java.util.HashMap;
+import java.util.List;
 
+import com.hwangdang.vo.Category;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.StoreQnA;
 
@@ -39,4 +41,10 @@ public interface ProductService
 	
 	//QnA댓글 등록하기.
 	int insertQnAReply(int sellerStoreNo, String storeReplyContent, int storeQnANo);
+	
+	//first 카테고리(업종) 조회
+	List<Category> selectFirstCategory();
+	
+	//second 카테고리조회.
+	List<Category> selectSecondCategory(String categoryIdRef);
 }
