@@ -31,4 +31,25 @@ public class StoreQnAServiceImpl implements StoreQnAService
 		// TODO Auto-generated method stub
 		return dao.selectQnAPublished(storeQnANo);
 	}
+
+	@Override
+	public String selectSellerByNo(int sellerStoreNo)
+	{
+		// TODO Auto-generated method stub
+		return dao.selectSellerByNo(sellerStoreNo);
+	}
+
+	@Override
+	public String selectQnAWriterByNo(int storeQnANo)
+	{
+		// TODO Auto-generated method stub
+		return dao.selectQnAWriterByNo(storeQnANo);
+	}
+
+	@Override
+	public int deleteQnAByno(int storeQnANo)
+	{
+		// TODO Auto-generated method stub
+		return dao.deleteQnAByno(storeQnANo);
+	}
 }

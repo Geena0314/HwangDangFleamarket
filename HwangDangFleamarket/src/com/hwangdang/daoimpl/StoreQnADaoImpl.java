@@ -31,4 +31,25 @@ public class StoreQnADaoImpl implements StoreQnADao
 		// TODO Auto-generated method stub
 		return session.selectOne("storeQnAMapper.selectQnAPublished", storeQnANo);
 	}
+
+	@Override
+	public String selectSellerByNo(int sellerStoreNo)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectSellerByNo", sellerStoreNo);
+	}
+
+	@Override
+	public String selectQnAWriterByNo(int storeQnANo)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("storeQnAMapper.selectQnAWriterByNo", storeQnANo);
+	}
+
+	@Override
+	public int deleteQnAByno(int storeQnANo)
+	{
+		// TODO Auto-generated method stub
+		return session.delete("storeQnAMapper.deleteQnAByno", storeQnANo);
+	}
 }

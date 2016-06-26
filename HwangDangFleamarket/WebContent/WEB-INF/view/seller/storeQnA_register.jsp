@@ -9,6 +9,12 @@
 		<script type="text/javascript">
 			$(document).ready(function()
 			{
+				if(!$("#storeQnAWriter").val())
+				{
+					alert("로그인이 필요합니다.");
+					opener.parent.location.reload();
+					window.close();
+				}
 				$("#submit").on("click", function()
 				{
 					$("#titleError").empty();
@@ -60,7 +66,7 @@
 				</tr>
 				<tr><td id="contentError" align="center" colspan="2"></td></tr>
 				<tr>
-					<td>작성자</td><td><input type="text" size="15" name="storeQnAWriter" value="${param.memberId}" readonly></td>
+					<td>작성자</td><td><input type="text" size="15" name="storeQnAWriter" id="storeQnAWriter" value="${param.memberId}" readonly></td>
 				</tr>
 				<tr>
 					<td>공개여부</td>

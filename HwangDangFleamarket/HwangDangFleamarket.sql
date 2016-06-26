@@ -426,7 +426,6 @@ CREATE TABLE store_QnA_reply (
 	storeQnA_no NUMBER primary key /* QnA번호 */,
 	foreign key(storeQnA_no) references store_qna(storeQnA_no) on delete cascade
 );
-
 select member_id from seller where seller_store_no = 1
 
 /* 주문상품 vvvvvvv*/

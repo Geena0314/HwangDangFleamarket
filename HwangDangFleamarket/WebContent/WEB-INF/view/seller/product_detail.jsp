@@ -304,7 +304,7 @@
 					{
 						"url" : "/HwangDangFleamarket/product/reviewRegister.go",
 						"type" : "POST",
-						"data" : { "memberId" : "isj4216", "reviewContent" : $("#reviewWrite").val(), 
+						"data" : { "memberId" : "xx", "reviewContent" : $("#reviewWrite").val(), 
 									 "productId" : $("#productId").text(), "productLike" : $("input:checked").val()},
 						"dataType" : "JSON",
 						"beforeSend" : function()
@@ -381,7 +381,7 @@
 					{
 						"url" : "/HwangDangFleamarket/product/reviewDelete.go",
 						"type" : "POST",
-						"data" : "memberId=isj4216&productId=" + $("#productId").text(),
+						"data" : "memberId=xx&productId=" + $("#productId").text(),
 						"dataType" : "JSON",
 						"beforeSend" : function()
 						{
@@ -437,7 +437,10 @@
 								$("#paging").append("<a class='nextPage'>▷</a>");
 							}
 						},
-						"error" : error
+						"error" : function()
+						{
+							$("#reviewError").append("로그인한 회원만 가능합니다.");
+						}
 					});
 				});
 				//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -622,7 +625,7 @@
 					{
 						"url" : "/HwangDangFleamarket/product/qnaShow.go",
 						"type" : "POST",
-						"data" : {"storeQnANo" : no, "productId" : $("#productId").text()},
+						"data" : {"storeQnANo" : no, "sellerStoreNo" : ${param.sellerStoreNo}},
 						"dataType" : "JSON",
 						"beforeSend" : function()
 						{
@@ -642,7 +645,18 @@
 								if(!json.storeQnAReply)
 								{
 									//댓글이 달려있지 않은 경우.
-									$("#"+no).after("<tr id='qnaContent'><td></td><td colspan='2'>문의 내용 : " + json.storeQnAContent 
+									var content = json.storeQnAContent;
+									for(var i = 0; i < content.length; i++)
+									{
+										content = content.replace(">", "&gt;");
+										content = content.replace("<", "&lt;");
+									}
+									for(var i = 0; i < content.length; i++)
+									{
+										content = content.replace("\n", "<br>");
+										content = content.replace(" ", "&nbsp;");
+									}
+									$("#"+no).after("<tr id='qnaContent'><td></td><td colspan='2'>문의 내용 : " + content 
 											+  "<br><br><input type='text' id='qnaReply' size='65'><input type='button' id='qnaReplyRegister' value='답변하기.'></td></tr>");
 									//답변하기 버튼클릭.
 									$("#qnaReplyRegister").on("click", function()
@@ -663,10 +677,32 @@
 											},
 											"success" : function(jsons)
 											{
+												var content = jsons.storeQnAContent;
+												for(var i = 0; i < content.length; i++)
+												{
+													content = content.replace(">", "&gt;");
+													content = content.replace("<", "&lt;");
+												}
+												for(var i = 0; i < content.length; i++)
+												{
+													content = content.replace("\n", "<br>");
+													content = content.replace(" ", "&nbsp;");
+												}
+												var replyContent = jsons.storeQnAReply.storeReplyContent;
+												for(var i = 0; i < replyContent.length; i++)
+												{
+													replyContent = replyContent.replace(">", "&gt;");
+													replyContent = replyContent.replace("<", "&lt;");
+												}
+												for(var i = 0; i < replyContent.length; i++)
+												{
+													replyContent = replyContent.replace("\n", "<br>");
+													replyContent = replyContent.replace(" ", "&nbsp;");
+												}
 												alert("문의답변이 완료되었습니다.");
 												$("#qnaContent").empty();
-												$("#qnaContent").append("<td></td><td>문의 내용 : " + jsons.storeQnAContent 
-														+  "<br><hr>문의 답변 : " + jsons.storeQnAReply.storeReplyContent + "</td>"
+												$("#qnaContent").append("<td></td><td>문의 내용 : " + content 
+														+  "<br><hr>문의 답변 : " + replyContent + "</td>"
 														+ "<td align='center'><input type='button' id='qnaReplyRemove' value='삭제하기'></td>");
 												return false;
 											},
@@ -680,12 +716,106 @@
 								else
 								{
 									//댓글 달려있는 경우.
-									$("#"+no).after("<tr id='qnaContent'><td></td><td>문의 내용 : " + json.storeQnAContent 
-											+  "<br><hr>문의 답변 : " + json.storeQnAReply.storeReplyContent + "</td><td align='center'><input type='button' id='qnaReplyRemove' value='삭제하기'></td></tr>");
+									var content = json.storeQnAContent;
+									var replyContent = json.storeQnAReply.storeReplyContent;
+									for(var i = 0; i < content.length; i++)
+									{
+										replyContent = replyContent.replace(">", "&gt;");
+										replyContent = replyContent.replace("<", "&lt;");
+									}
+									for(var i = 0; i < content.length; i++)
+									{
+										content = content.replace("\n", "<br>");
+										content = content.replace(" ", "&nbsp;");
+									}
+									for(var i = 0; i < replyContent.length; i++)
+									{
+										replyContent = replyContent.replace(">", "&gt;");
+										replyContent = replyContent.replace("<", "&lt;");
+									}
+									for(var i = 0; i < replyContent.length; i++)
+									{
+										replyContent = replyContent.replace("\n", "<br>");
+										replyContent = replyContent.replace(" ", "&nbsp;");
+									}
+									$("#"+no).after("<tr id='qnaContent'><td></td><td>문의 내용 : " + content 
+											+  "<br><hr>문의 답변 : " + replyContent + "</td><td align='center'><input type='button' id='qnaRemove' value='삭제하기'></td></tr>");
+									$("#qnaRemove").on("click", function()
+									{
+										$.ajax(
+										{
+											//삭제하기 버튼 클릭시...
+											"url" : "/HwangDangFleamarket/storeQnA/storeQnARemove.go",
+											"type" : "POST",
+											"data" : {"sellerStoreNo" : ${param.sellerStoreNo}, "storeQnANo" : no, "memberId" : "xx", "productId" : $("#productId").text()},
+											"dataType" : "JSON",
+											"beforeSend" : function()
+											{
+												$("#qnaError").empty();
+											},
+											"success" : function(json)
+											{
+												if(json.result != null)
+													alert("삭제가 완료되었습니다.");
+												else
+												{
+													$("#qnaError").append("작성자와 판매자만 삭제 가능합니다.");
+													return false;
+												}
+												$("#qnaContent").remove();
+												$(".qnaTrs").remove();
+												$("#qnaPaging").empty();
+												for(var i=0; i<json.qna.length; i++)
+												{
+													$("#qnaTr").before("<tr align='center' class='qnaTrs' id=" + json.qna[i].storeQnANo 
+															+"><td width='30'>"+ json.qna[i].storeQnANo 
+															+ "</td><td align='center'>" + json.qna[i].storeQnATitle + "</td><td align='center'>" 
+															+ json.qna[i].storeQnAWriter + "</td>");
+												}
+												var endPage = json.qnaBean.endPage;
+												for(var i=json.qnaBean.beginPage; i<json.qnaBean.endPage+1; i++)
+												{
+													if(!json.qnaBean.page == i)
+													{
+														$("#qnaPaging").prepend("<a id='qnaCurrentPage'>" + endPage + "</a>");
+														endPage--;
+													}
+													else
+													{
+														$("#qnaPaging").prepend("<a class='qnaMovePage'>" + endPage + "</a>");
+														endPage--;
+													}
+												}
+												if(!json.qnaBean.previousPageGroup)
+												{
+													$("#qnaPaging").prepend("◁");
+												}
+												else
+												{
+													$("#qnaPaging").prepend("<a class='qnaPreviousPage'>◁</a>");
+												}
+												if(!json.qnaBean.nextPageGroup)
+												{
+													$("#qnaPaging").append("▷");
+												}
+												else
+												{
+													$("#qnaPaging").append("<a class='qnaNextPage'>▷</a>");
+												}
+											},
+											"error" : function()
+											{
+												$("#qnaError").append("로그인이 필요한 서비스입니다.");
+											}
+										});
+									});
 								}
 							}
 						},
-						"error" : error
+						"error" : function()
+						{
+							$("#"+no).after("<tr id='qnaContent'><td></td><td colspan='2'>로그인이 필요합니다.</td></tr>");
+						}
 					});
 				});
 				
@@ -756,7 +886,8 @@
 			<lee:forEach items="${ requestScope.detailimage }" var="image">
 				<img src="../image_storage/${ image }.jpg"  style="width:300px;height:200px;"><br>
 			</lee:forEach>
-		
+			
+			${ requestScope.product.productInfo }<br>
 			상세정보입니다상세정보입니다상세정보입니다상세정보입니다상세정보입니다상세정보입니다상세정보입니다
 			상세정보입니다상세정보입니다상세정보입니다상세정보입니다상세정보입니다상세정보입니다상세정보입니다상세정보입니다
 			<br><br><br><br><br><br><br><br><br><br>(br 위아래로 10개.)<br><br><br><br><br><br><br><br><br><br>
@@ -897,8 +1028,9 @@
 						</lee:choose>
 					</td><td></td>
 				</tr>
+				<tr><td colspan="2" id="qnaError"></td></tr>
 				<tr>
-					<td colspan = "3" align="right"><input type="button" id="qnaRegister" value="문의 하기." onClick="window.open('/HwangDangFleamarket/storeQnA/storeQnARegisterForm.go?productId=${param.productId}&memberId=isj4216','문의하기','resizable=no width=600 height=600')"></td>
+					<td colspan = "3" align="right"><input type="button" id="qnaRegister" value="문의 하기." onClick="window.open('/HwangDangFleamarket/storeQnA/storeQnARegisterForm.go?productId=${param.productId}&memberId=${ sessionScope.login_info.memberId }','문의하기','resizable=no width=600 height=600')"></td>
 				</tr>
 			</table>
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
