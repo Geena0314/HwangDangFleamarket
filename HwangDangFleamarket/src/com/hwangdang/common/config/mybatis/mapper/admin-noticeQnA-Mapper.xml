@@ -24,7 +24,7 @@
 	</sql>
 	
 	 <!-- 게시판글 전체 조회 -->
-	 <resultMap type="com.hwangdang.vo.AdminQnA" id="resultmap-basic-list">
+	 <resultMap type="adminQnA" id="resultmap-basic-list">
 		<id column="admin_qna_no"  property="adminQnaNo"/>
 	 	<result column="admin_qna_title"  property="adminQnaTitle" />
 	 	<result column="admin_qna_content"  property="adminQnaContent" />
