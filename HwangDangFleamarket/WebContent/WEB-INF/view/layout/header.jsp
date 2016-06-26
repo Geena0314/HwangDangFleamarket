@@ -34,7 +34,7 @@
 				<a href="/HwangDangFleamarket/member/logout.go" onclick="return confirm('로그아웃할꺼?')">로그아웃</a>&nbsp;&nbsp;
 				<a href="/HwangDangFleamarket/member/mypageCheck.go">my page</a>&nbsp;&nbsp;
 				<a href="#">나의주문</a>&nbsp;&nbsp;
-				<a href="#">장바구니</a>&nbsp;&nbsp;
+				<a href="/HwangDangFleamarket/cart/cartList.go">장바구니</a>&nbsp;&nbsp;
 			</c:when>
 			<c:otherwise>
 				<a href="#" onClick="window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');">로그인</a>&nbsp;&nbsp;
@@ -46,9 +46,6 @@
 		</c:choose>
 		<c:if test="${ sessionScope.login_info.memberAssign == 1}">
 			<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${sessionScope.seller.sellerStoreNo}&sellerStoreImage=${sessionScope.seller.sellerStoreImage}">내 스토어</a>
-		</c:if>
-		<c:if test='${ sessionScope.login_info.memberId eq "kinghwang"}'>
-			<a href="#">관리자 페이지</a>
 		</c:if>
 		</div>
 	</div>
