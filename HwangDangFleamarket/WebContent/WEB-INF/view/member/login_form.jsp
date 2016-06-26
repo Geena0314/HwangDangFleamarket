@@ -10,7 +10,7 @@
 			if($("#id").val() == null || ($("#id").val() + $("#email").val()).length > 29 || $("#id").val().trim().length == 0)
 			{
 				//id가 비었거나, 30글자보다 크거나, id값에 공백만 있는경우.
-				if($("#password").val() == null || $("#password").val().trim.length < 8 || $("#password").val().length > 20)
+				if($("#password").val() == null || $("#password").val().trim().length < 8 || $("#password").val().length > 20)
 				{
 					//패스워드가 널이거나, 8글자보다 작거나, 20글자보다 큰경우.
 					$("#idError").empty().append("아이디 오류");

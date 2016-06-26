@@ -46,7 +46,6 @@ public class MemberController {
 			if(memberPassword.equals(member.getMemberPassword())){ //아이디와 패스워드가 맞는 경우
 				if(member.getMemberAssign() == 1)
 				{
-					System.out.println(service.selectSellerById(memberId));
 					session.setAttribute("seller", service.selectSellerById(memberId));
 				}
 				session.setAttribute("login_info", member);
@@ -64,5 +63,26 @@ public class MemberController {
 	{
 		session.invalidate();
 		return "redirect:/main.go";
+	}
+	
+	@RequestMapping("/mypageCheck")
+	public String mypageCheck()
+	{
+		return "member/mypage_check.tiles";
+	}
+	
+	@RequestMapping("/mypage")
+	public ModelAndView mypage(String memberPassword, HttpSession session)
+	{
+		if(memberPassword.equals(((Member)session.getAttribute("login_info")).getMemberPassword()))
+			return new ModelAndView("member/mypage.tiles");
+		else
+			return new ModelAndView("member/mypage_check.tiles", "passwordError", "패스워드가 일치하지 않습니다.");
+	}
+	
+	@RequestMapping("/sellerRegister")
+	public String sellerRegister()
+	{
+		return "member/seller_register.tiles";
 	}
 }
