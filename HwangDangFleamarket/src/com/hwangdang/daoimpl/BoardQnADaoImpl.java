@@ -6,6 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hwangdang.common.util.Constants;
 import com.hwangdang.dao.Dao;
@@ -18,6 +19,7 @@ public class BoardQnADaoImpl implements Dao {
 	private SqlSessionTemplate session;
 
 	//QnA게시판 전체 조회 -페이징
+	
 	public List selectAllQnABoard(int page){
 		HashMap<String ,Object> map = new HashMap();
 		map.put("page", page);
