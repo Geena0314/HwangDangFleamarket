@@ -10,9 +10,10 @@
 				admin_qna_date ,
 				admin_qna_hit ,
 				admin_qna_published
-				
 		FROM  admin_qna
 	</sql>
+	
+	
 	<sql id="slect-basic-column">
 					admin_qna_no , 
 					admin_qna_title , 
@@ -22,6 +23,8 @@
 					admin_qna_hit ,
 					admin_qna_published 
 	</sql>
+	
+	
 	
 	 <!-- 게시판글 전체 조회 -->
 	 <resultMap type="adminQnA" id="resultmap-basic-list">
@@ -33,6 +36,26 @@
 	 	<result column="admin_qna_hit"  property="adminQnaHit" />
 	 	<result column="admin_qna_published"  property="adminQnaPublished" />
 	</resultMap> 
+		
+		
+	 <resultMap type="adminQnA" id="resultmap-qna-reply-join">
+		<id column="admin_qna_no"  property="adminQnaNo"/>
+	 	<result column="admin_qna_title"  property="adminQnaTitle" />
+	 	<result column="admin_qna_content"  property="adminQnaContent" />
+	 	<result column="admin_qna_writer"  property="adminQnaWriter" />
+	 	<result column="admin_qna_date"  property="adminQnaDate" />
+	 	<result column="admin_qna_hit"  property="adminQnaHit" />
+	 	<result column="admin_qna_published"  property="adminQnaPublished" />
+	 	  
+	 	<association property="reply" javaType="AdminQnAReply">
+		 	<result column="admin_reply_content"  property="adminReplyContent" />
+		 	<result column="admin_reply_date"  property="adminReplyDate" />
+		 	<result column="admin_reply_no"  property="adminReplyNo" />
+	 	</association>
+	 	
+	 	
+	</resultMap> 
+	
 	
 	 <!-- 게시판의 글수 조회 -->
 	<select id="select-list-count" resultType="int">
@@ -53,28 +76,81 @@
 				
 	</select>
 	
-	<!-- 공지글한개 조회하기 : 세부페이지 보기 -->
-	<select id="select-one-detail" parameterType="_int" resultMap="resultmap-basic-list">
-		SELECT <include refid="slect-basic-column"/>
-		FROM  ADMIN_QNA
-		WHERE admin_qna_no = #{no}
+	<!-- QnA 게시판 글  조회하기 : 세부글정보 보기 
+	 
+	--> 
+	<select id="select-one-detail" parameterType="_int" resultMap="resultmap-qna-reply-join">
+		SELECT  	
+			q.admin_qna_no ,
+			q.admin_qna_title ,
+			q.admin_qna_content ,
+			q.admin_qna_writer ,
+			q.admin_qna_date ,
+			q.admin_qna_hit ,
+			q.admin_qna_published, 
+			r.admin_reply_content ,
+			r.admin_reply_date , 
+			r.admin_reply_no
+			
+		FROM  ADMIN_QNA q  ,  admin_QnA_reply r
+		WHERE q.admin_qna_no = #{no}
+		AND  q.admin_qna_no =  r.admin_qna_no(+) 
+
 	</select>
 	
 	
-	<!-- 공지글 hit ++1 -->
+	<!-- QnA게시판 조회수  ++1 -->
 	<update id="update-hit" parameterType="_int">
 		UPDATE admin_qna
 		SET admin_qna_hit = admin_qna_hit+1
 		WHERE admin_qna_no = #{no}
 	</update>
 	
-	<!-- 공지글 삭제 -->
-	<delete id="delete-no"  parameterType="_int">
+	<!-- QnA게시판 글 삭제 -->
+	<delete id="delete-by-no"  parameterType="_int">
 		DELETE FROM admin_qna
 		WHERE admin_qna_no = #{no}
 	</delete>
 	
-	<insert id="admin-notice-insert">
-		INSERT INTO  
+	<!-- QnA게시판 글 수정 -->
+	<update id="update-by-no" parameterType="hashmap">
+	    UPDATE admin_qna
+		SET  admin_qna_content = #{content}  ,
+			 admin_qna_date = #{setDate} 
+		WHERE admin_qna_no = #{no}
+	</update>
+	  
+	<!--QnA게시판 관리자 댓글추가  
+	private int adminReplyNo;
+	private String adminReplyContent;
+	private Date adminReplyDate;
+	private String adminReplyWriter;
+	private int adminQnaNo;
+	
+	 -->
+	<insert id="insert-reply" parameterType="com.hwangdang.vo.AdminQnAReply">
+		INSERT INTO admin_QnA_reply
+		VALUES(
+			 admin_reply_no_seq.nextval , 
+			 #{adminReplyContent} , 
+			 #{adminReplyWriteDate } ,
+			 '관리자' ,
+			 #{adminQnaNo}  
+		)
 	</insert>
+	
+	<!-- 댓글삭제  -->
+	<delete id="delete-reply-by-no" parameterType="_int">
+		DELETE FROM admin_qna_reply 
+		WHERE admin_reply_no = #{no} 
+	</delete>
+
+	<!-- 댓글수정 -->
+	<update id="update-reply-by-no" parameterType="hashmap">
+		UPDATE admin_qna_reply 
+		SET	   admin_reply_content = #{replyTa} ,
+			   admin_reply_date = #{setDate} 
+		WHERE admin_reply_no = #{replyNo} 
+	</update>
+	
 </mapper>

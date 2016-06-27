@@ -1,3 +1,4 @@
+
 /* 회원 */
 DROP TABLE member 
 	CASCADE CONSTRAINTS;
@@ -348,6 +349,9 @@ CREATE TABLE admin_QnA (
 	admin_qna_hit NUMBER NOT NULL, /* 관리자QnA 조회수 */
 	admin_qna_published VARCHAR2(3) NOT NULL /* 관리자QnA 공개여부 */
 );
+
+
+
 drop sequence admin_qna_no_seq
 create sequence admin_qna_no_seq nocache;
 
@@ -390,6 +394,9 @@ CREATE TABLE admin_QnA_reply (
 	admin_qna_no NUMBER not null, /* 관리자QnA no */
 	foreign key(admin_qna_no) references admin_qna(admin_qna_no) on delete cascade
 );
+
+
+
 drop sequence admin_reply_no_seq
 create sequence admin_reply_no_seq nocache;
 
