@@ -5,11 +5,11 @@
 		seller_store_no, seller_store_name, seller_tax_id, seller_industry, 
 		seller_sub_industry, seller_zipcode, seller_address, seller_sub_address, 
 		seller_store_image, seller_product1, seller_product2, seller_product3, 
-		seller_introduction, member_id
+		seller_introduction, seller_assign, member_id
 	</sql>
 	
 	<sql id="select-basic">
-		SELECT <include refid="seller-columns"/> FROM seller
+		SELECT <include refid="seller-columns"/> FROM seller where seller_assign = 1
 	</sql>
 	
 	<resultMap type="seller" id="seller-basic-resultmap">
@@ -26,34 +26,26 @@
 		<result column="seller_product2" property="sellerProduct2"/>
 		<result column="seller_product3" property="sellerProduct3"/>
 		<result column="seller_introduction" property="sellerIntroduction"/>
+		<result column="seller_assign" property="sellerAssign"/>
 		<result column="member_id" property="memberId"/>
-	</resultMap>
-	
-	<resultMap type="seller" id="seller-member-resultmap" extends="seller-basic-resultmap">
-		<association property="member" javaType="member" resultMap="memberMapper.member-basic-resultMap"/>
 	</resultMap>
 	
 	<!-- 판매자 전체조회 (+페이징) -->
 	<select id="selectSellerPaging" parameterType="map" resultMap="seller-basic-resultmap">
 		select <include refid="seller-columns"/> from(
 			select ceil(rownum /#{itemsPerPage})page, <include refid="seller-columns"/> from(
-				select <include refid="seller-columns"/> from seller order by seller_store_no DESC) 
+				select <include refid="seller-columns"/> from seller where seller_assign = 1 order by seller_store_no DESC) 
 				) where page = #{page}
 	</select>
 	
 	<!-- 판매자 스토어 번호로 판매자 조회 -->
 	<select id="selectCountSeller" resultType="_int">
-		select count(seller_store_no) from seller
+		select count(seller_store_no) from seller where seller_assign = 1
 	</select>
 	
 	<select id="selectSellerBySellerStoreNo" parameterType="_int" resultMap="seller-basic-resultmap">
 		<include refid="select-basic"/>
-		where seller_store_no = #{value}		
-	</select>
-	
-	<select id="selectMemberByMemberId" resultMap="seller-member-resultmap"	parameterType="string">
-		<include refid="memberMapper.select-basic"/>
-		where member_id = #{value}
+		where seller_store_no = #{value}
 	</select>
 	
 </mapper>

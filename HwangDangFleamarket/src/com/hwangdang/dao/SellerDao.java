@@ -9,8 +9,6 @@ public interface SellerDao {
 
 	int selectCountSeller();
 	
-	String selectMemberByMemberId(String memberId);
-	
 	Seller selectSellerBySellerStoreNo(int sellerStoreNo);
 	
 	List<Notice> selectAllSeller(int page);
