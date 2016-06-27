@@ -17,10 +17,9 @@ public class Seller implements Serializable
 	private String sellerProduct2;
 	private String sellerProduct3;
 	private String sellerIntroduction;
+	private int sellerAssign;
 	private String memberId;
 	
-	private Member member;
-
 	public Seller()
 	{
 		// TODO Auto-generated constructor stub
@@ -29,7 +28,7 @@ public class Seller implements Serializable
 	public Seller(int sellerStoreNo, String sellerStoreName, String sellerTaxId, String sellerIndustry,
 			String sellerSubIndustry, String sellerZipcode, String sellerAddress, String sellerSubAddress,
 			String sellerStoreImage, String sellerProduct1, String sellerProduct2, String sellerProduct3,
-			String sellerIntroduction, String memberId, Member member) {
+			String sellerIntroduction, int sellerAssign, String memberId) {
 		super();
 		this.sellerStoreNo = sellerStoreNo;
 		this.sellerStoreName = sellerStoreName;
@@ -44,8 +43,8 @@ public class Seller implements Serializable
 		this.sellerProduct2 = sellerProduct2;
 		this.sellerProduct3 = sellerProduct3;
 		this.sellerIntroduction = sellerIntroduction;
+		this.sellerAssign = sellerAssign;
 		this.memberId = memberId;
-		this.member = member;
 	}
 
 	public int getSellerStoreNo() {
@@ -152,6 +151,14 @@ public class Seller implements Serializable
 		this.sellerIntroduction = sellerIntroduction;
 	}
 
+	public int getSellerAssign() {
+		return sellerAssign;
+	}
+
+	public void setSellerAssign(int sellerAssign) {
+		this.sellerAssign = sellerAssign;
+	}
+
 	public String getMemberId() {
 		return memberId;
 	}
@@ -160,21 +167,13 @@ public class Seller implements Serializable
 		this.memberId = memberId;
 	}
 
-	public Member getMember() {
-		return member;
-	}
-
-	public void setMember(Member member) {
-		this.member = member;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((member == null) ? 0 : member.hashCode());
 		result = prime * result + ((memberId == null) ? 0 : memberId.hashCode());
 		result = prime * result + ((sellerAddress == null) ? 0 : sellerAddress.hashCode());
+		result = prime * result + sellerAssign;
 		result = prime * result + ((sellerIndustry == null) ? 0 : sellerIndustry.hashCode());
 		result = prime * result + ((sellerIntroduction == null) ? 0 : sellerIntroduction.hashCode());
 		result = prime * result + ((sellerProduct1 == null) ? 0 : sellerProduct1.hashCode());
@@ -199,11 +198,6 @@ public class Seller implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		Seller other = (Seller) obj;
-		if (member == null) {
-			if (other.member != null)
-				return false;
-		} else if (!member.equals(other.member))
-			return false;
 		if (memberId == null) {
 			if (other.memberId != null)
 				return false;
@@ -213,6 +207,8 @@ public class Seller implements Serializable
 			if (other.sellerAddress != null)
 				return false;
 		} else if (!sellerAddress.equals(other.sellerAddress))
+			return false;
+		if (sellerAssign != other.sellerAssign)
 			return false;
 		if (sellerIndustry == null) {
 			if (other.sellerIndustry != null)
@@ -281,6 +277,6 @@ public class Seller implements Serializable
 				+ ", sellerZipcode=" + sellerZipcode + ", sellerAddress=" + sellerAddress + ", sellerSubAddress="
 				+ sellerSubAddress + ", sellerStoreImage=" + sellerStoreImage + ", sellerProduct1=" + sellerProduct1
 				+ ", sellerProduct2=" + sellerProduct2 + ", sellerProduct3=" + sellerProduct3 + ", sellerIntroduction="
-				+ sellerIntroduction + ", memberId=" + memberId + ", member=" + member + "]";
+				+ sellerIntroduction + ", sellerAssign=" + sellerAssign + ", memberId=" + memberId + "]";
 	}
 }
