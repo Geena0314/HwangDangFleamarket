@@ -45,7 +45,7 @@
 	
 	<select id="selectSellerBySellerStoreNo" parameterType="_int" resultMap="seller-basic-resultmap">
 		<include refid="select-basic"/>
-		where seller_store_no = #{value}		
+		and seller_store_no = #{value}		
 	</select>
 
 	<insert id="insertSeller" parameterType="seller">
