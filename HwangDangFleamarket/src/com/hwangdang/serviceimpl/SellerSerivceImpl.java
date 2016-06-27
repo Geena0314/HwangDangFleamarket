@@ -21,11 +21,6 @@ public class SellerSerivceImpl implements SellerService{
 	}
 
 	@Override
-	public String getMemberByMemberId(String memberId) {
-		return dao.selectMemberByMemberId(memberId);
-	}
-
-	@Override
 	public List getAllSeller(int page) {
 		return dao.selectAllSeller(page);
 	}
