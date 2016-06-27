@@ -26,6 +26,11 @@ public class SellerDaoImpl implements SellerDao{
 	}
 	
 	@Override
+	public String selectMemberByMemberId(String memberId) {
+		return session.selectOne("sellerMapper.selectMemberByMemberId", memberId);
+	}
+
+	@Override
 	public Seller selectSellerBySellerStoreNo(int sellerStoreNo) {
 		return session.selectOne("sellerMapper.selectSellerBySellerStoreNo", sellerStoreNo);
 	}
