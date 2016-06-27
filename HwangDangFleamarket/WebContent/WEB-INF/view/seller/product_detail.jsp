@@ -833,7 +833,7 @@
 		<div id="main" align="center">
 			<h2>상품 상세 정보 보기.</h2>
 			<div id="mainImage">
-				<img src="../image_storage/${ requestScope.product.productMainImage }.jpg"  style="width:300px;height:200px;">
+				<img src="../image_storage/${ requestScope.product.productMainImage }"  style="width:300px;height:200px;">
 			</div>
 			<div id="table">
 				<form method="POST" action="#">
@@ -884,7 +884,7 @@
 		<div id="info" align="center">
 			<h2>상세정보 보기</h2>
 			<lee:forEach items="${ requestScope.detailimage }" var="image">
-				<img src="../image_storage/${ image }.jpg"  style="width:300px;height:200px;"><br>
+				<img src="../image_storage/${ image }"  style="width:300px;height:200px;"><br>
 			</lee:forEach>
 			
 			${ requestScope.product.productInfo }<br>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cartMapper">
+	<sql id="cart-columns">
+		cart_no, cart_product_amount, cart_product_option, product_id, member_id
+	</sql>
+	
+	<sql id="select-basic">
+		select <include refid="cart-columns"/> from cart
+	</sql>
+	
+	<resultMap type="cart" id="cart-basic-resultmap">
+		<id column="cart_no" property="cartNo"/>
+		<result column="cart_product_amount" property="cartProductAmount"/>
+		<result column="cart_product_option" property="cartProductOption"/>
+		<result column="product_id" property="productId"/>
+		<result column="member_id" property="memberId"/>
+	</resultMap>
+
+	<insert id="insertCart" parameterType="cart">
+		<selectKey keyProperty="cartNo" resultType="_int" order="BEFORE">
+			select cart_no_seq.nextval from dual
+		</selectKey>
+		insert into cart values(#{cartNo},#{cartProductAmount},#{cartProductOption},#{productId},#{memberId})
+	</insert>
+	
+	<delete id="deleteCart" parameterType="_int">
+		delete from cart where cart_no = #{value}
+	</delete>
+	
+	<select id="selectCartPaging" parameterType="map" resultMap="cart-basic-resultmap">
+		
+	</select>
+	
+	
+	
+	
+</mapper>

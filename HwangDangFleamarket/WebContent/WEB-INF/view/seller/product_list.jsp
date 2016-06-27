@@ -80,7 +80,7 @@
 				<div id="product${ no.count }">
 					<div style='height: 170px; width: 200px'>
 						<a href="/HwangDangFleamarket/product/detail.go?page=${ param.page }&productId=${ list.productId }&sellerStoreNo=${ param.sellerStoreNo }&sellerStoreImage=${ param.sellerStoreImage }">
-							<img src="../image_storage/${ list.productMainImage }.jpg"  style="width:200px;height:170px;">
+							<img src="../image_storage/${ list.productMainImage }"  style="width:200px;height:170px;">
 						</a>
 					</div>
 					<div style='height: 30px; width: 200px'>상품 명 : ${ list.productName }<br>상품 가격 : ${ list.productPrice }</div>

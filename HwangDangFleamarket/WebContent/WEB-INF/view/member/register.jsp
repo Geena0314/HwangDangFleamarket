@@ -63,7 +63,9 @@
 		<tr>
 			<td align='center'> 판매자 여부 </td>
 			<td>
-			<input type="text" name="memberAssign" size="20">
+			<!-- <input type="text" name="memberAssign" size="20"> -->
+				<input type="checkbox" name="memberAssign" value="1">
+				판매자 등록에 동의합니다
 			</td>
 		</tr>
 		<tr>
