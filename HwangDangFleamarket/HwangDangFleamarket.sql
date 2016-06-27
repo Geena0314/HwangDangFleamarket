@@ -256,6 +256,7 @@ and 		r.storeQnA_no = q.storeQnA_no
 		
 /* 장바구니vvvvvvv */
 CREATE TABLE cart (
+	cart_no NUMBER primary key,/* 장바구니 번호 */
 	cart_product_amount NUMBER(4) NOT NULL, /* 장바구니 상품수량 */
 	cart_product_option VARCHAR2(100) NOT NULL, /* 장바구니 선택옵션 */
 	product_id VARCHAR2(30) NOT NULL, /* 상품ID */
@@ -263,6 +264,8 @@ CREATE TABLE cart (
 	foreign key(product_id) references product(product_id),
 	foreign key(member_id) references member(member_id)
 );
+
+create sequence cart_no_seq nocache;
 
 /* 주문vvvvvvvvvvvvvv */
 drop table orders
