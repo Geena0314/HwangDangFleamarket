@@ -37,4 +37,12 @@ public class SellerDaoImpl implements SellerDao{
 		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
 		return session.selectList("sellerMapper.selectSellerPaging", map);
 	}
+
+	@Override
+	public int insertSeller(Seller seller)
+	{
+		// TODO Auto-generated method stub
+		return session.insert("sellerMapper.insertSeller", seller);
+	}
+
 }

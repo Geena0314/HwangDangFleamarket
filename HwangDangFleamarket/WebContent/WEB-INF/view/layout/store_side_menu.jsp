@@ -48,7 +48,7 @@ table ,tr{
 </style>
 <div class="sideMenu2">
 	<div class="store_img">
-		<a href="#"><img src="../image_storage/${param.sellerStoreImage}.jpg"></a>
+		<a href="#"><img src="../image_storage/${param.sellerStoreImage}"></a>
 	</div>
 	<div class="buttons">
 		<input type="button" value="스토어 소개">
