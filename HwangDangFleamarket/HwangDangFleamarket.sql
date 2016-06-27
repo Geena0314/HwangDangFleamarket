@@ -128,6 +128,7 @@ CREATE TABLE seller (
 	seller_product2 VARCHAR2(30), /* 판매물품2 */
 	seller_product3 VARCHAR2(30), /* 판매물품3 */
 	seller_introduction VARCHAR2(4000) NOT NULL, /* 소개글 */
+	seller_assign number(1) not null,
 	member_id varchar2(30) not null,
 	foreign key(member_id) references member(member_id) on delete cascade
 );
