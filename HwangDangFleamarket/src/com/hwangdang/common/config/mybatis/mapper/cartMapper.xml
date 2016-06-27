@@ -25,7 +25,7 @@
 	</insert>
 	
 	<delete id="deleteCart" parameterType="_int">
-	
+		
 	</delete>
 	
 	<select id="selectCartPaging" parameterType="map" resultMap="cart-basic-resultmap">
