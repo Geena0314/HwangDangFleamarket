@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hwangdang.dao.MemberDao;
 import com.hwangdang.service.MemberService;
 import com.hwangdang.service.ProductService;
 import com.hwangdang.vo.Member;
@@ -17,8 +16,6 @@ import com.hwangdang.vo.Member;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-	@Autowired
-	private MemberDao dao;
 	@Autowired
 	private MemberService service;
 	
@@ -32,8 +29,7 @@ public class MemberController {
 	
 	@RequestMapping("/registerresult") //DB에 내용을 기입하고 회원가입을 완료함
 	public ModelAndView member(Member member, HttpSession session) throws Exception{
-		ModelAndView mv=new ModelAndView();
-		dao.insert(member);
+		service.add(member);
 		//mv.setViewName("/member/registerResult.go");
 		return new ModelAndView("member/registerResult.tiles");
 	}

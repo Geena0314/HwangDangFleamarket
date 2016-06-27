@@ -14,6 +14,8 @@ public class MemberServiceImpl implements MemberService{
 	
 	public MemberServiceImpl(){}
 	
+	
+	
 	@Override
 	public Member findById(String memberId) {
 		// TODO Auto-generated method stub
@@ -32,5 +34,11 @@ public class MemberServiceImpl implements MemberService{
 	{
 		// TODO Auto-generated method stub
 		return dao.selectSellerStoreName(sellerStoreName);
+	}
+
+	@Override
+	public void add(Member member) {
+		// TODO Auto-generated method stub
+		dao.insert(member);
 	}
 }
