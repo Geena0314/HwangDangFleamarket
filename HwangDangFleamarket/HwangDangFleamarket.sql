@@ -1,7 +1,7 @@
 /* 회원 */
 DROP TABLE member 
 	CASCADE CONSTRAINTS;
-select * from member;
+
 /* 판매자 */
 DROP TABLE seller 
 	CASCADE CONSTRAINTS;
