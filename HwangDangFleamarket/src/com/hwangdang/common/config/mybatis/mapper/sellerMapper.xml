@@ -29,6 +29,10 @@
 		<result column="member_id" property="memberId"/>
 	</resultMap>
 	
+	<resultMap type="seller" id="seller-member-resultmap" extends="seller-basic-resultmap">
+		<association property="member" javaType="member" resultMap="memberMapper.member-basic-resultMap"/>
+	</resultMap>
+	
 	<!-- 판매자 전체조회 (+페이징) -->
 	<select id="selectSellerPaging" parameterType="map" resultMap="seller-basic-resultmap">
 		select <include refid="seller-columns"/> from(
@@ -45,6 +49,11 @@
 	<select id="selectSellerBySellerStoreNo" parameterType="_int" resultMap="seller-basic-resultmap">
 		<include refid="select-basic"/>
 		where seller_store_no = #{value}		
+	</select>
+	
+	<select id="selectMemberByMemberId" resultMap="seller-member-resultmap"	parameterType="string">
+		<include refid="memberMapper.select-basic"/>
+		where member_id = #{value}
 	</select>
 	
 </mapper>

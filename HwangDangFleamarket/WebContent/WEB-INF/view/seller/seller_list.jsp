@@ -45,7 +45,6 @@ div{
 	float: left;
 	width: 150px;
 	height: 150px;
-
 }
 p{
 	clear: both;

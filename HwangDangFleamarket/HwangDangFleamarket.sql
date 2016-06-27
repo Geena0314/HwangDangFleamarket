@@ -105,6 +105,9 @@ insert into member values ('hwang@naver.com','dangdang', '황경희', '010-2387-
 
 insert into member values ('kinghwang', 'kingdang', '퐝경', '010-9977-2905', '123-466',
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 0);
+   										   
+insert into member values ('hwang3', 'dangdang', '황경희매니저', '010-9977-2905', '123-466',
+   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 0);
 
 
 delete from member where member_id = 'hwanghwang'					
@@ -142,7 +145,11 @@ insert into seller values(seller_store_no_seq.nextval, '해물나라', '12345-67
 							'아주아주 싱싱하고 맛있는 해산물을 산지직송해드립니다.', 'hwang');
 insert into seller values(seller_store_no_seq.nextval, '통영대표꿀빵', '12345-66789', '대분류업종', '소분류업종', '123-654', 
 							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵', '#원조꿀빵', '#유자꿀빵', '#고구마꿀빵', 
-							'넘나 맛있는 꿀빵을 만드는 꿀빵집입니다.', 'hwanghwang');  		
+							'넘나 맛있는 꿀빵을 만드는 꿀빵집입니다.', 'hwanghwang');
+							
+insert into seller values(seller_store_no_seq.nextval, '매머드', '12345-66789', '대분류업종', '소분류업종', '123-654', 
+							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵', '#빅커피', '#꿀라떼', '#고구마라떼', 
+							'넘나 맛있는 커피를 만드는 카페입니다.', 'hwang3'); 
    										  
 select * from seller
 delete from seller where member_id = 'hwang'
