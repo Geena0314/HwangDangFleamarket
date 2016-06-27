@@ -25,11 +25,11 @@
 	</insert>
 	
 	<delete id="deleteCart" parameterType="_int">
-		
+		delete from cart where cart_no = #{value}
 	</delete>
 	
 	<select id="selectCartPaging" parameterType="map" resultMap="cart-basic-resultmap">
-	
+		
 	</select>
 	
 	
