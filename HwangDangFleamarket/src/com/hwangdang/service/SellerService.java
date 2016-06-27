@@ -11,5 +11,7 @@ public interface SellerService {
 	public Seller getSellerBySellerStoreNo(int sellerStoreNo);
 	
 	public List getAllSeller(int page);
-
+	
+	//셀러 정보 등록
+	int insertSeller(Seller seller);
 }

@@ -30,4 +30,11 @@ public class SellerSerivceImpl implements SellerService{
 		Seller seller =  dao.selectSellerBySellerStoreNo(sellerStoreNo);
 		return seller;
 	}
+
+	@Override
+	public int insertSeller(Seller seller)
+	{
+		// TODO Auto-generated method stub
+		return dao.insertSeller(seller);
+	}
 }

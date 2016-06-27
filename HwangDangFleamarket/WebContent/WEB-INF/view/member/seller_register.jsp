@@ -51,6 +51,7 @@
 			if(this.value == null || this.value.trim().length < 3 || this.value.length > 20)
 			{
 				//널이거나 3글자보다 작거나 20글자보다 큰경우.
+				$("#sellerStoreName").val("");
 				$("#sellerStoreNameError").append("3글자 이상, 20글자 이하로 입력.");
 				return false;
 			}
@@ -76,6 +77,7 @@
 						}
 						else
 						{
+							$("#sellerStoreName").val("");
 							$("#sellerStoreNameError").append("중복된 이름입니다.");
 							return false;
 						}
@@ -94,6 +96,7 @@
 					return true;
 				else
 				{
+					$("#sellerTaxId").val("");
 					$("#sellerTaxIdError").append("11자리 숫자를 입력해주세요.");
 				}
 			}
@@ -147,6 +150,71 @@
 			}
 		});
 		
+		$("#submits").on("click", function()
+		{
+			$("#sellerMainImageError").empty();
+			var fileName = document.getElementById("sellerMainImage").value
+			if(!fileName)
+			{
+				$("#sellerMainImageError").append("사진을 등록해주세요.");
+				return false;
+			}
+			var ext = fileName.slice(fileName.indexOf(".")+1).toLowerCase();
+			if(ext != "jpg" && ext != "png" && ext != "jpeg")
+			{
+				$("#sellerMainImageError").append("jpg, png 파일만 등록 가능합니다.");
+				return false;
+			}
+			
+			//패스워드가널일경우.
+			$("#passwordError1").empty();
+			if(!$("#password1").val())
+			{
+				$("#passwordError1").append("필수 입력사항입니다..");
+				return false;
+			}
+			
+			//패스워드확인이 널일경우.
+			$("#passwordError2").empty();
+			if(!$("#password2").val())
+			{
+				$("#passwordError2").append("필수 입력사항입니다..");
+				return false;
+			}
+			
+			//상호명을 안적었을경우.
+			$("#sellerStoreNameError").empty();
+			if(!$("#sellerStoreName").val())
+			{
+				$("#sellerStoreNameError").append("필수 입력사항입니다.");
+				return false;
+			}
+			
+			//업종 미선택시
+			$("#sellerIndustryError").empty();
+			if($("#sellerIndustry").val() == "대분류")
+			{
+				$("#sellerIndustryError").append("필수 입력사항입니다.");
+				return false;
+			}
+			
+			//주소미입력
+			$("#addressError").empty();
+			if(!$("#sellerZipcode").val() || !$("#sellerAddress").val() || !$("#sellerSubAddress").val())
+			{
+				$("#addressError").append("필수 입력사항입니다.");
+				return false;
+			}
+			
+			//소개 미입력.
+			$("#sellerIntroductionError").empty();
+			if(!$("#sellerIntroduction").val())
+			{
+				$("#sellerIntroductionError").append("필수 입력사항입니다.");
+				return false;
+			}
+		});
+		
 		function error(xhr, status, err)
 		{
 			alert(status+", "+xhr.readyState+" "+err);
@@ -163,11 +231,11 @@
 
 <div>
 	<h1 align="center">판매자 등록 신청</h1>
-	<form method="POST" enctype="multipart/form-data" action="">
+	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/member/sellerRegisterRequest.go">
 		<table id="table">
 			<tr>
 				<th>아이디</th>
-				<td colspan="2">${ sessionScope.login_info.memberId }</td>
+				<td colspan="2"><input type="text" name="memberId" value="${ sessionScope.login_info.memberId }" readonly="readonly"></td>
 			</tr>
 			<tr>
 				<th rowspan="2">패스워드</th>
@@ -214,7 +282,7 @@
 				<td colspan="2" id="sellerTaxIdError"></td>
 			</tr>
 			<tr>
-				<th>업종</th>
+				<th rowspan="2">업종</th>
 				<td>
 					<select name="sellerIndustry" id="sellerIndustry">
 						<option>대분류</option>
@@ -230,7 +298,10 @@
 				</td>
 			</tr>
 			<tr>
-				<th rowspan="3">매장 주소</th>
+				<td colspan="2" id="sellerIndustryError"></td>
+			</tr>
+			<tr>
+				<th rowspan="4">매장 주소</th>
 				<td colspan="2" align="right">위의 주소와 동일<input type="checkbox" id="sameAddress"></td>
 			</tr>
 			<tr>
@@ -246,8 +317,14 @@
 				<td colspan="2"><input type="text" name="sellerSubAddress" id="sellerSubAddress" size="43"></td>
 			</tr>
 			<tr>
-				<th>사진 등록</th>
-				<td colspan="2"><input type="file" name="sellerStoreImage"></td>
+				<td colspan="2" id="addressError"></td>
+			</tr>
+			<tr>
+				<th rowspan="2">사진 등록</th>
+				<td colspan="2"><input type="file" name="sellerMainImage" id="sellerMainImage"></td>
+			</tr>
+			<tr>
+				<td colspan="2" id="sellerMainImageError"></td>
 			</tr>
 			<tr>
 				<th>판매 물품 1</th>
@@ -262,8 +339,14 @@
 				<td colspan="2"><input type="text" name="sellerProduct3"></td>
 			</tr>
 			<tr>
-				<th>스토어 소개글</th>
-				<td colspan="2"><textarea name="sellerStoreImage" cols="45" rows="10"></textarea></td>
+				<th rowspan="2">스토어 소개글</th>
+				<td colspan="2"><textarea id="sellerIntroduction" name="sellerIntroduction" cols="45" rows="10"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="3"><input type="submit" value="등록하기" id="submits"><input type="reset" value="다시입력."></td>
+			</tr>
+			<tr>
+				<td colspan="2" id="sellerIntroductionError"></td>
 			</tr>
 		</table>
 	</form>
