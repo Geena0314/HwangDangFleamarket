@@ -26,7 +26,10 @@
 	<div id="sellerRegister">
 		<lee:choose>
 			<lee:when test="${ sessionScope.login_info.memberId == 'kinghwang' }">
-					<img src="../image_storage/sellerRegisterStatus.jpg"><!-- 판매자 신청 현황.(관리자) -->
+					<a href="/HwangDangFleamarket/admin/sellerRegisterStatus.go">
+						<!-- 판매자 신청 현황.(관리자) -->
+						<img src="../image_storage/sellerRegisterStatus.jpg">
+					</a>
 			</lee:when>
 			<lee:otherwise>
 				<lee:choose>

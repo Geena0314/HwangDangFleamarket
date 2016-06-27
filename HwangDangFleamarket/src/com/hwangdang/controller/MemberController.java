@@ -141,15 +141,18 @@ public class MemberController {
 	    seller.setSellerStoreImage(OriginalfileName);
 	    int result = sellerService.insertSeller(seller);
 	    if(result == 1)
-		    return new ModelAndView("redirect:/member/sellerRegisterSuccess.go", "result", "등록에 성공했습니다.");
+		    return new ModelAndView("redirect:/member/sellerRegisterSuccess.go?result=1");
 	    else
-	    	return new ModelAndView("redirect:/member/seller_register_success.jsp", "result", "등록에 실패했습니다.");
+	    	return new ModelAndView("redirect:/member/sellerRegisterSuccess.go?result=0");
 	}
 	
 	@RequestMapping("sellerRegisterSuccess")
-	public String sellerRegisterSuccess()
+	public String sellerRegisterSuccess(int result, HttpServletRequest request)
 	{
+		if(result == 0)
+			request.setAttribute("result", "등록에 실패했습니다.");
+		else
+			request.setAttribute("result", "등록에 성공했습니다.");
 		return "member/seller_register_success.tiles";
 	}
-	
 }
