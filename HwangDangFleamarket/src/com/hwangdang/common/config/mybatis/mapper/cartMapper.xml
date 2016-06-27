@@ -21,15 +21,15 @@
 		<selectKey keyProperty="cartNo" resultType="_int" order="BEFORE">
 			select cart_no_seq.nextval from dual
 		</selectKey>
-		insert into cart values(#{cartProductNo},#{cartProductAmount},#{cartProductOption},#{productId},#{memberId})
+		insert into cart values(#{cartNo},#{cartProductAmount},#{cartProductOption},#{productId},#{memberId})
 	</insert>
 	
-	<delete id="deleteCart" parameterType="string">
-	
+	<delete id="deleteCart" parameterType="_int">
+		delete from cart where cart_no = #{value}
 	</delete>
 	
 	<select id="selectCartPaging" parameterType="map" resultMap="cart-basic-resultmap">
-	
+		
 	</select>
 	
 	

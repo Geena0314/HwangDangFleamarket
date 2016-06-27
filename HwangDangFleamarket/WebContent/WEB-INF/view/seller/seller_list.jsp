@@ -45,7 +45,6 @@ div{
 	float: left;
 	width: 150px;
 	height: 150px;
-
 }
 p{
 	clear: both;
@@ -70,7 +69,7 @@ img{
 			<li id="list_block">
 				<div class="thmb">
 					<div class="store_img">
-						<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${list.sellerStoreNo}&sellerStoreImage=${list.sellerStoreImage}"><img src="../image_storage/${list.sellerStoreImage}.jpg"></a>
+						<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${list.sellerStoreNo}&sellerStoreImage=${list.sellerStoreImage}"><img src="../image_storage/${list.sellerStoreImage}"></a>
 					</div>
 				</div>
 				<ul class="store_info">

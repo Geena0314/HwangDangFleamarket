@@ -38,4 +38,11 @@ public class SellerDaoImpl implements SellerDao{
 		return session.selectList("sellerMapper.selectSellerPaging", map);
 	}
 
+	@Override
+	public int insertSeller(Seller seller)
+	{
+		// TODO Auto-generated method stub
+		return session.insert("sellerMapper.insertSeller", seller);
+	}
+
 }
