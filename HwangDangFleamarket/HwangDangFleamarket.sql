@@ -92,13 +92,13 @@ insert into member values ('isj4216', '52545856', '이성준', '010-9977-2905', 
 										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 A동 513호', 0);
 insert into member values ('lsj4216', '52545856', '판매자', '010-9977-2905', '123-456',
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', 1);
-insert into member values ('hwang', 'dang', '황경희매니저', '010-9977-2905', '123-456',
+insert into member values ('hwang', 'dangdang', '황경희매니저', '010-9977-2905', '123-456',
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1);
 insert into member values ('lsj42167', '52545856', '판매자', '010-9977-2905', '123-456',
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', 1);
-insert into member values ('lsj421678', 'dang', '황경희매니저', '010-9977-2905', '123-456',
+insert into member values ('lsj421678', 'dangdang', '황경희매니저', '010-9977-2905', '123-456',
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1); 
-insert into member values ('hwanghwang', 'dang', '황경희매니저', '010-9977-2905', '123-466',
+insert into member values ('hwanghwang', 'dangdang', '황경희매니저', '010-9977-2905', '123-466',
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 1);
    										   
 insert into member values ('hwang@naver.com','dangdang', '황경희', '010-2387-0073','456-888','경기도 안산시 상록구','어디동 21번지',1) 
@@ -107,7 +107,7 @@ insert into member values ('kinghwang', 'kingdang', '퐝경', '010-9977-2905', '
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 0);
 
 
-delete from member where member_id = 'kinghwang'					
+delete from member where member_id = 'hwanghwang'					
 select * from member
 
 /* 판매자vvvvvvvvvvv */
@@ -146,7 +146,7 @@ insert into seller values(seller_store_no_seq.nextval, '통영대표꿀빵', '12
 							'넘나 맛있는 꿀빵을 만드는 꿀빵집입니다.', 'hwanghwang');  		
    										  
 select * from seller
-delete from seller where member_id = 'hwanghwang'
+delete from seller where member_id = 'hwang'
 
 select 	seller_store_no, seller_store_name, seller_tax_id, seller_industry, seller_sub_industry, seller_zipcode, seller_address, seller_sub_address,
 				 	seller_store_image, seller_product1, seller_product2, seller_product3, seller_introduction, member_id
@@ -259,6 +259,7 @@ and 		r.storeQnA_no = q.storeQnA_no
 		
 /* 장바구니vvvvvvv */
 CREATE TABLE cart (
+	cart_no NUMBER primary key,/* 장바구니 번호 */
 	cart_product_amount NUMBER(4) NOT NULL, /* 장바구니 상품수량 */
 	cart_product_option VARCHAR2(100) NOT NULL, /* 장바구니 선택옵션 */
 	product_id VARCHAR2(30) NOT NULL, /* 상품ID */
@@ -266,6 +267,8 @@ CREATE TABLE cart (
 	foreign key(product_id) references product(product_id),
 	foreign key(member_id) references member(member_id)
 );
+
+create sequence cart_no_seq nocache;
 
 /* 주문vvvvvvvvvvvvvv */
 drop table orders
