@@ -101,6 +101,7 @@ insert into member values ('lsj421678', 'dangdang', '황경희매니저', '010-9
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1); 
 insert into member values ('hwanghwang', 'dangdang', '황경희매니저', '010-9977-2905', '123-466',
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 1);
+   						
    										   
 insert into member values ('hwang@naver.com','dangdang', '황경희', '010-2387-0073','456-888','경기도 안산시 상록구','어디동 21번지',1) 
 
@@ -113,6 +114,7 @@ insert into member values ('hwang3', 'dangdang', '황경희매니저', '010-9977
 
 delete from member where member_id = 'hwanghwang'					
 select * from member
+
 
 /* 판매자vvvvvvvvvvv */
 CREATE TABLE seller (
@@ -135,12 +137,6 @@ CREATE TABLE seller (
 );
 drop sequence seller_store_no_seq
 create sequence seller_store_no_seq nocache;
-insert into seller values (seller_store_no_seq.nextval, '황당마켓1', '12345678901', '업종임', '업종소분류', '123-456',
-   										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '사진임', '판매물품1', '판매물품2', '판매물품3', '소개글', '1', 'lsj4216');
-insert into seller values (seller_store_no_seq.nextval, '황당마켓2', '12345678901', '업종임', '업종소분류', '123-456',
-   										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '사진임', '판매물품1', '판매물품2', '판매물품3', '소개글', '1', 'lsj42167');
-insert into seller values (seller_store_no_seq.nextval, '황당마켓3', '12345678901', '업종임', '업종소분류', '123-456',
-   										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '사진임', '판매물품1', '판매물품2', '판매물품3', '소개글', '1', 'lsj421678');   
 
 insert into seller values(seller_store_no_seq.nextval, '해물나라', '12345-67890', '대분류업종', '소분류업종', '123-456', 
 							'경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '해물찜', '#전복', '#냉동문어', '#낙지', 
@@ -152,7 +148,8 @@ insert into seller values(seller_store_no_seq.nextval, '통영대표꿀빵', '12
 insert into seller values(seller_store_no_seq.nextval, '매머드', '12345-66789', '대분류업종', '소분류업종', '123-654', 
 							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵', '#빅커피', '#꿀라떼', '#고구마라떼', 
 							'넘나 맛있는 커피를 만드는 카페입니다.',0, 'hwang3'); 
-   										  
+   		
+select * FROM member;
 select * from seller
 delete from seller where member_id = 'hwang'
 
