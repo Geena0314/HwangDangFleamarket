@@ -43,19 +43,28 @@ padding: 10px;
 		 pattern="yyyy년MM월dd일"/> | 조회수 : ${requestScope.findQnA.adminQnaHit } | 작성자 : ${requestScope.findQnA.adminQnaWriter } | 공개여부 : ${requestScope.findQnA.adminQnaPublished }</div>
 	</header>
 	<article id="content">${requestScope.findQnA.adminQuaContent }</article>
-	<textarea rows="5" cols="35"></textarea>
+	
+	<!-- 관리자일경우만 댓글달기 가능  -->
+	<c:if test="${sessionScope.loginId == 'admin' }">
+		<textarea rows="5" cols="35"></textarea>
+		<a href="/HwangDangFleamarket/admin/boardQnAReply.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">댓글 등록</a>
+	</c:if>
+		<textarea rows="5" cols="35"></textarea>
+		<a href="/HwangDangFleamarket/admin/boardQnAReply.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">댓글 등록</a>
+		<a href="/HwangDangFleamarket/admin/boardQnAReply.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">댓글 수정</a>
 </section>
 <p>
 
-<!-- 관리자일경우만 댓글달기 가능  -->
-<c:if test="${sessionScope.loginId == 'admin'  }">
-	<a href="/HwangDangFleamarket/admin/boardQnAReply.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">댓글달기</a>
-</c:if>
-
-<!-- 작성자만 수정 삭제가능  -->
-<c:if test="${sessionScope.loginId == requestScope.findQnA.adminQnaWriter   }">
-	<a href="/HwangDangFleamarket/admin/boardQnASet.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">수정하기</a>&nbsp;&nbsp;&nbsp;
-	<a href="/HwangDangFleamarket/admin/boardQnARemove.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">삭제하기</a><br/>
-</c:if>
 
 
+
+	<!-- 작성자만 수정 삭제가능  -->
+	<c:if test="${sessionScope.loginId == requestScope.findQnA.adminQnaWriter   }">
+		<a href="/HwangDangFleamarket/admin/boardQnASet.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">수정하기</a>&nbsp;&nbsp;&nbsp;
+		<a href="/HwangDangFleamarket/admin/boardQnARemove.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">삭제하기</a><br/>
+	</c:if>
+
+	<div>
+		<a href="/HwangDangFleamarket/admin/boardQnASet.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">수정하기</a>&nbsp;&nbsp;&nbsp;
+		<a href="/HwangDangFleamarket/admin/boardQnARemove.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">삭제하기</a><br/>
+	</div>

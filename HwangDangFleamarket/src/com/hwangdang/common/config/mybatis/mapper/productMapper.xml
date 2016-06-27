@@ -63,6 +63,14 @@
 		<association property="storeQnAReply" javaType="StoreQnAReply" resultMap="reply-basic-resultMap"/>
 	</resultMap>
 	
+	<!-- 카테고리 resultMap -->
+	<resultMap type="category" id="category-basic-resultMap">
+		<id column="category_id" property="categoryId"/>
+		<result column="category_name" property="categoryName"/>
+		<result column="category_id_ref" property="categoryIdRef"/>
+		<result column="category_type" property="categoryType"/>
+	</resultMap>
+	
 	<!-- 상품 전체 조회. (추천 순, Paging, sellerStoreNo로 조회.)-->
 	<select id="selectAll" resultMap="product-basic-resultMap" parameterType="map">
 		select <include refid="product-columns"/> 
@@ -203,5 +211,15 @@
 	<!-- 스토어 번호로 판매자 조회. -->
 	<select id="selectSellerByNo" parameterType="_int" resultType="string">
 		select member_id from seller where seller_store_no=#{sellerStoreNo}
+	</select>
+	
+	<!-- 카테고리 대분류 조회. -->
+	<select id="selectFirstCategory" resultMap="category-basic-resultMap">
+		select category_id, category_name, category_id_ref, category_type from category where category_type = 'first'
+	</select>
+	
+	<!-- 카테고리 소분류 조회. -->
+	<select id="selectSecondCategory" resultMap="category-basic-resultMap" parameterType="string">
+		select category_id, category_name, category_id_ref, category_type from category where category_id_ref = #{categoryIdRef}
 	</select>
 </mapper>

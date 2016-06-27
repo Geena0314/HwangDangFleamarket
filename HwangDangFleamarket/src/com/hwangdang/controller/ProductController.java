@@ -1,6 +1,7 @@
 package com.hwangdang.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hwangdang.service.ProductService;
 import com.hwangdang.service.StoreQnAService;
+import com.hwangdang.vo.Category;
 import com.hwangdang.vo.Member;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.StoreQnA;
@@ -182,5 +184,12 @@ public class ProductController
 		{
 			return null;
 		}
+	}
+	
+	@RequestMapping("sellerSubIndustry")
+	@ResponseBody
+	public List<Category> sellerSubIndustry(String categoryIdRef)
+	{
+		return service.selectSecondCategory(categoryIdRef);
 	}
 }

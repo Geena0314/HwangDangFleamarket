@@ -71,4 +71,11 @@ public class MemberDaoImpl implements MemberDao{
 		// TODO Auto-generated method stub
 		return session.selectOne("memberMapper.selectSellerById", memberId);
 	}
+
+	@Override
+	public int selectSellerStoreName(String sellerStoreName)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("memberMapper.selectSellerStoreName", sellerStoreName);
+	}
 }

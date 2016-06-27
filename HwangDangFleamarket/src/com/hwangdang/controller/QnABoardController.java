@@ -23,7 +23,7 @@ public class QnABoardController {
 	/**
 	 *  QnA게시판 전체목록조회 
 	 */
-	@Transactional
+	
 	@RequestMapping("/boardQnAList.go")
 	public String noticeQnAList(Model model, int page){
 		System.out.println("page: " + page);
@@ -36,7 +36,6 @@ public class QnABoardController {
 	/**
 	 *  QnA게시판 NO번호로 세부조회  
 	 */
-	@Transactional
 	@RequestMapping("/boardQnADetail.go")
 	public String boardQnADetail(int page , int no , Model model){
 		//System.out.println(page +"," +no);
@@ -49,7 +48,6 @@ public class QnABoardController {
 	/**
 	 *  QnA게시판 No번호로 글 수정 - 작성자만 가능  
 	 */
-	@Transactional
 	@RequestMapping("/boardQnASet.go")
 	public String boardQnASet( int no , int page , Model model){
 		
@@ -58,7 +56,6 @@ public class QnABoardController {
 	/**
 	 *  QnA게시판 No번호로 글 삭제 - 작성자만 가능  
 	 */
-	@Transactional
 	@RequestMapping("/boardQnARemove.go")
 	public String boardQnARemove( int no , int page , Model model){
 		service.removeAdminQnAByNo(no);
@@ -68,7 +65,6 @@ public class QnABoardController {
 	/**
 	 *  QnA게시판 댓글달기 - 관리자만가능  
 	 */
-	@Transactional
 	@RequestMapping("/boardQnAReply.go")
 	public String boardQnAReply( int no , int page , Model model){
 		

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hwangdang.dao.ProductDao;
+import com.hwangdang.vo.Category;
 import com.hwangdang.vo.Product;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.Review;
@@ -176,5 +177,19 @@ public class ProductDaoImpl implements ProductDao
 	{
 		// TODO Auto-generated method stub
 		return session.selectOne("productMapper.selectSellerByNo", storeQnANo);
+	}
+
+	@Override
+	public List<Category> selectFirstCategory()
+	{
+		// TODO Auto-generated method stub
+		return session.selectList("productMapper.selectFirstCategory");
+	}
+
+	@Override
+	public List<Category> selectSecondCategory(String categoryIdRef)
+	{
+		// TODO Auto-generated method stub
+		return session.selectList("productMapper.selectSecondCategory", categoryIdRef);
 	}
 }
