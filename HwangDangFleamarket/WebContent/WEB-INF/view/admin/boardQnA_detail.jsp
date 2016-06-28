@@ -169,7 +169,8 @@ padding: 10px;
 	private String adminQnaPublished; -->
 	
 	
-	
+	세션아이디 : ${sessionScope.login_info.memberId }  <br/>
+	<%-- 작성자 아이디 : ${requestScope.findQnA.adminQnaWriter  } --%>
 	<form method="POST" action="#">
 	<input type="hidden" id="contentPage" name="contentPage" value="${requestScope.page }" />
 	<input type="hidden" id= "contentNo" name ="contentNo" value="${param.no }" />
@@ -184,36 +185,32 @@ padding: 10px;
 		
 		<textarea id="insertContent" rows="30" cols="75" hidden="true" ></textarea>
 		<article id="content">${requestScope.findQnA.adminQuaContent }</article>
-		
-			<a id="setContentBtn" href="#" hidden="true">수정하기 / </a>
-			<a id="setFormMoveBtn" href="#">수정폼이동 / </a>&nbsp;&nbsp;&nbsp;
-			<a id="removeBtn" href="/HwangDangFleamarket/admin/boardQnARemove.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">삭제하기 / </a>
-			<a href="/HwangDangFleamarket/admin/boardQnAList.go?page=${param.page }"> 목록보기</a><br/>
 		<br/>
 	
 		<!-- 작성자만 수정 삭제가능  -->
-		<c:if test="${sessionScope.loginId == requestScope.findQnA.adminQnaWriter   }">
+		<c:if test="${sessionScope.login_info.memberId == requestScope.findQnA.adminQnaWriter   }">
+			<a id="setContentBtn" href="#" hidden="true">수정하기 / </a>
+			<a id="setFormMoveBtn" href="#">수정폼이동 / </a>&nbsp;&nbsp;&nbsp;
+			<a id="removeBtn" href="/HwangDangFleamarket/admin/boardQnARemove.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">삭제하기 / </a>
+			<!--  
 			<a href="/HwangDangFleamarket/admin/boardQnASet.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">수정하기</a>&nbsp;&nbsp;&nbsp;
 			<a href="/HwangDangFleamarket/admin/boardQnARemove.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}">삭제하기</a><br/>
+			-->
 		</c:if>
-	
-		
-			
+				<a href="/HwangDangFleamarket/admin/boardQnAList.go?page=${param.page }"> 목록보기</a><br/>
 			<div>
 				댓글번호 :${requestScope.findQnA.reply.adminReplyNo }
 				<input type="hidden" name="replyNo" value="${requestScope.findQnA.reply.adminReplyNo }">
 				댓글작성일 : <fmt:formatDate value="${requestScope.findQnA.reply.adminReplyDate }" pattern="yyyy년MM월dd일"/> 
 				작성자 : 관리자  <br/>
-				<textarea rows="15" cols="55" name="replyTa" id="replyTa">${requestScope.findQnA.reply.adminReplyContent }</textarea><br/>
+				<c:if test="${sessionScope.login_info.memberId != 'admin@admin.com'  }">답변 : <p id="response">${requestScope.findQnA.reply.adminReplyContent }</p>
+				</c:if>
 			</div>
 			  
-			
-			
-			<!-- 관리자일경우만 댓글달기 가능  -->
-		<c:if test="${sessionScope.loginId == 'admin' }">
-				아래코드를 넣으면 됨 
-		</c:if>  
-			
+			  
+		<!-- 관리자일경우만 댓글달기 가능  -->
+		<c:if test="${sessionScope.login_info.memberId == 'admin@admin.com' }">
+ 				<textarea rows="15" cols="55" name="replyTa" id="replyTa">${requestScope.findQnA.reply.adminReplyContent }</textarea><br/>
 			<c:choose>
 				<c:when test="${requestScope.findQnA.reply.adminReplyNo  !=  null}">
 				<input type="button" value="댓글수정" id="setReplyBtn"  />
@@ -222,11 +219,12 @@ padding: 10px;
 				<c:otherwise>
 					<input type="button" value="댓글등록" id="addReplyBtn" />
 				</c:otherwise>
-			</c:choose>
+			</c:choose>			
+		</c:if>  
 			
 			
-			</form>  
 	</section>
+	</form>  
 	<p>  
   
 

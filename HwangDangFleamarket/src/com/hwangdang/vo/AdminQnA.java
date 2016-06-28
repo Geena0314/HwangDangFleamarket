@@ -1,6 +1,7 @@
 package com.hwangdang.vo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -15,6 +16,8 @@ public class AdminQnA implements Serializable{
 	private String adminQnaPublished;  // 공개여부 
 	//private ArrayList<AdminQnAReply> replyList;  //댓글객체 리스트  
 	private AdminQnAReply reply; 
+	private String adminQnaPassword;
+	
 	
 public AdminQnA(){};
 
@@ -30,8 +33,8 @@ public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQuaContent, St
 	this.adminQnaPublished = adminQnaPublished;
 }
 
-/*public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQnaContent, String adminQnaWriter, Date adminQnaDate,
-		int adminQnaHit, String adminQnaPublished, ArrayList<AdminQnAReply> replyList) {
+public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQnaContent, String adminQnaWriter, Date adminQnaDate,
+		int adminQnaHit, String adminQnaPublished, String adminQnaPassword) {
 	super();
 	this.adminQnaNo = adminQnaNo;
 	this.adminQnaTitle = adminQnaTitle;
@@ -40,19 +43,11 @@ public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQuaContent, St
 	this.adminQnaDate = adminQnaDate;
 	this.adminQnaHit = adminQnaHit;
 	this.adminQnaPublished = adminQnaPublished;
-	this.replyList = replyList;
+	this.adminQnaPassword = adminQnaPassword;
 }
-*/
-/*public ArrayList<AdminQnAReply> getReplyList() {
-	return replyList;
-}
-
-public void setReplyList(ArrayList<AdminQnAReply> replyList) {
-	this.replyList = replyList;
-}*/
 
 public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQnaContent, String adminQnaWriter, Date adminQnaDate,
-		int adminQnaHit, String adminQnaPublished, AdminQnAReply reply) {
+		int adminQnaHit, String adminQnaPublished, AdminQnAReply reply, String adminQnaPassword) {
 	super();
 	this.adminQnaNo = adminQnaNo;
 	this.adminQnaTitle = adminQnaTitle;
@@ -62,6 +57,15 @@ public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQnaContent, St
 	this.adminQnaHit = adminQnaHit;
 	this.adminQnaPublished = adminQnaPublished;
 	this.reply = reply;
+	this.adminQnaPassword = adminQnaPassword;
+}
+
+public String getAdminQnaPassword() {
+	return adminQnaPassword;
+}
+
+public void setAdminQnaPassword(String adminQnaPassword) {
+	this.adminQnaPassword = adminQnaPassword;
 }
 
 public AdminQnAReply getReply() {

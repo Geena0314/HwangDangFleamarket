@@ -3,16 +3,9 @@
 <mapper namespace="boardQnA">
 	
 	<sql id="select-basic">
-		SELECT  admin_qna_no ,
-				admin_qna_title ,
-				admin_qna_content ,
-				admin_qna_writer ,
-				admin_qna_date ,
-				admin_qna_hit ,
-				admin_qna_published
+		SELECT  <include refid="slect-basic-column"/>
 		FROM  admin_qna
 	</sql>
-	
 	
 	<sql id="slect-basic-column">
 					admin_qna_no , 
@@ -21,7 +14,8 @@
 					admin_qna_writer ,
 					admin_qna_date ,
 					admin_qna_hit ,
-					admin_qna_published 
+					admin_qna_published ,
+					admin_qna_password
 	</sql>
 	
 	
@@ -46,7 +40,7 @@
 	 	<result column="admin_qna_date"  property="adminQnaDate" />
 	 	<result column="admin_qna_hit"  property="adminQnaHit" />
 	 	<result column="admin_qna_published"  property="adminQnaPublished" />
-	 	  
+	 	<result column="admin_QnA_password"  property="adminQnaPassword" />
 	 	<association property="reply" javaType="AdminQnAReply">
 		 	<result column="admin_reply_content"  property="adminReplyContent" />
 		 	<result column="admin_reply_date"  property="adminReplyDate" />
@@ -64,22 +58,21 @@
 	
 	<!-- 페이징처리를 위한 쿼리문  -->
 	<select id="select-list-paging" parameterType="map"   resultMap="resultmap-basic-list">
-		SELECT 
-				<include refid="slect-basic-column"/>
-		FROM (
-		SELECT  
-			<include refid="slect-basic-column"/> ,
-				ceil(rownum / #{itemPerPage}) page
-		FROM  ADMIN_QNA
-		ORDER BY  admin_qna_no DESC
-		)WHERE page = #{page}
+	SELECT  <include refid="slect-basic-column"/>
+	FROM (
+		SELECT  <include refid="slect-basic-column"/> , ceil(rownum / #{itemPerPage}) page
+		FROM ( SELECT  <include refid="slect-basic-column"/>
+				FROM  ADMIN_QNA
+				ORDER BY  admin_qna_no DESC
+			)
+	)WHERE page = #{page}
 				
 	</select>
 	
-	<!-- QnA 게시판 글  조회하기 : 세부글정보 보기 
-	 
-	--> 
+	
+	<!-- QnA 게시판 글  조회하기 : 세부글정보 보기 --> 
 	<select id="select-one-detail" parameterType="_int" resultMap="resultmap-qna-reply-join">
+		
 		SELECT  	
 			q.admin_qna_no ,
 			q.admin_qna_title ,
@@ -88,6 +81,7 @@
 			q.admin_qna_date ,
 			q.admin_qna_hit ,
 			q.admin_qna_published, 
+			q.admin_QnA_password ,
 			r.admin_reply_content ,
 			r.admin_reply_date , 
 			r.admin_reply_no
@@ -105,6 +99,40 @@
 		SET admin_qna_hit = admin_qna_hit+1
 		WHERE admin_qna_no = #{no}
 	</update>
+	
+	<!-- QnA게시판  게시글 등록
+		     adminQnaNo   //게시판 글번호 
+			 adminQnaTitle;  //제목
+			 adminQnaContent; //글내용
+			 adminQnaWriter;  //작성자
+			 adminQnaDate;  //작성일 
+			 adminQnaHit;  //조회수 
+			 adminQnaPublished;  // 공개여부 
+			 reply;    //댓글객체 
+			 adminQnaPassword;  //비밀번고
+		 -->
+		 
+	<!-- 시퀀스 조회  -->
+	<select id="select-get-QnA-no" resultType="_int" >
+		SELECT admin_qna_no_seq.nextval 
+		FROM dual
+	</select>
+		
+	<!-- QnA게시판 글등록 -->
+	<insert id="insert" parameterType="AdminQnA">
+		INSERT INTO  admin_qna  
+		(<include refid="slect-basic-column"/>  )
+		VALUES(
+				#{adminQnaNo } ,   
+				#{adminQnaTitle }  , 
+				#{adminQnaContent }  , 
+				#{adminQnaWriter }  , 
+				#{adminQnaDate }  , 
+				#{adminQnaHit }  , 
+				#{adminQnaPublished }  , 
+				#{adminQnaPassword }  
+		)
+	</insert>
 	
 	<!-- QnA게시판 글 삭제 -->
 	<delete id="delete-by-no"  parameterType="_int">
@@ -152,5 +180,8 @@
 			   admin_reply_date = #{setDate} 
 		WHERE admin_reply_no = #{replyNo} 
 	</update>
+	
+	
+	
 	
 </mapper>

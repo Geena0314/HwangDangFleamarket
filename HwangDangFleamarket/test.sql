@@ -1,7 +1,10 @@
-select * FROM admin_QnA
+select * FROM admin_QnA 
+ORDER BY admin_qna_no DESC;
+
 SELECT count(*) FROM  admin_qna
 
 
+select * FROM member;
 
 INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 't');
 INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't');
@@ -190,3 +193,23 @@ insert into seller values(seller_store_no_seq.nextval, '매머드', '12345-66789
 							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵', '#빅커피', '#꿀라떼', '#고구마라떼', 
 							'넘나 맛있는 커피를 만드는 카페입니다.',0, 'hwang3'); 
    		
+SELECT admin_qna_no_seq.nextval 
+FROM dual
+select * FROM admin_QnA 
+ORDER BY admin_qna_no DESC;
+
+
+--페이징
+select * FROM (
+SELECT admin_qna_no , admin_qna_title , admin_qna_content , admin_qna_writer ,
+	   admin_qna_date , admin_qna_hit , admin_qna_published ,admin_qna_password ,
+	   ceil(rownum / 10) page
+FROM (
+	SELECT    rownum , admin_qna_no , admin_qna_title , admin_qna_content ,admin_qna_writer ,
+			  admin_qna_date ,admin_qna_hit ,admin_qna_published , admin_qna_password 
+	FROM      ADMIN_QNA
+	ORDER BY  admin_qna_no DESC
+	) 
+	)WHERE page = 1
+			
+		

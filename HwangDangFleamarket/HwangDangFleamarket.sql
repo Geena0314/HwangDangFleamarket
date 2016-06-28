@@ -362,6 +362,8 @@ CREATE TABLE admin_QnA (
 
 
 
+
+
 drop sequence admin_qna_no_seq
 create sequence admin_qna_no_seq nocache;
 

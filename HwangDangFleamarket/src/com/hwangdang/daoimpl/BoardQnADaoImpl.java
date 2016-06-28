@@ -19,8 +19,18 @@ public class BoardQnADaoImpl implements Dao {
 	@Autowired
 	private SqlSessionTemplate session;
 
-	//QnA게시판 전체 조회 -페이징
 	
+	//게시글 추가전  현재 시퀀스값 조회
+	public int selectQnABoardSeq(){
+		return session.selectOne("boardQnA.select-get-QnA-no");
+	}
+	
+	//게시글 insert 
+	public void insertQnABoard(AdminQnA newQnA){
+		session.insert("boardQnA.insert", newQnA);
+	}
+		
+	//QnA게시판 전체 조회 -페이징
 	public List selectAllQnABoard(int page){
 		HashMap<String ,Object> map = new HashMap();
 		map.put("page", page);
@@ -57,5 +67,6 @@ public class BoardQnADaoImpl implements Dao {
 	public void updateReployByNo(HashMap param){
 		session.update("boardQnA.update-reply-by-no", param);
 	}
+	
 	
 }

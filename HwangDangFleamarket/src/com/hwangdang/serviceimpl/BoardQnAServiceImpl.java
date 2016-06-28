@@ -18,20 +18,37 @@ public class BoardQnAServiceImpl implements Service {
 	@Autowired
 	private BoardQnADaoImpl adminDao;
 	
+
+	
+	//QnA게시판 시퀀스값 조회 
+	@Transactional(rollbackFor=Exception.class)
+	public int getQnABoardSeq(){
+		return adminDao.selectQnABoardSeq();
+	}
+		
+	//페이징 게시판 글 등록 
+	@Transactional(rollbackFor=Exception.class)
+	public void registerNewQnA(AdminQnA newQnA){
+	 adminDao.insertQnABoard(newQnA);
+	}
+	
 	//페이징 게시판 리스트 조회 
 	@Transactional(rollbackFor=Exception.class)
 	public List getBoardList(int page){
-		return adminDao.selectAllQnABoard(page);
+	
+	return adminDao.selectAllQnABoard(page);
 	}
-	//게시판의 전테글수 조회 
+	//게시판의 전체글 갯수 조회 
 	@Transactional(rollbackFor=Exception.class)
 	public int getTotalItems(){
-		return adminDao.selectTotalItems();
+	
+	return adminDao.selectTotalItems();
 	}
 	//글번호로 글조회
 	@Transactional(rollbackFor=Exception.class)
 	public AdminQnA getAdminQnAByNo(int no){
-		return adminDao.selectByNo(no);
+	
+	return adminDao.selectByNo(no);
 	}
 	//글번호로 글삭제
 	@Transactional(rollbackFor=Exception.class)
