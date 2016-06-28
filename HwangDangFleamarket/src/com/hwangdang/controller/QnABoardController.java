@@ -5,16 +5,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.SessionScope;
 
 import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.serviceimpl.BoardQnAServiceImpl;
 import com.hwangdang.vo.AdminQnA;
 import com.hwangdang.vo.AdminQnAReply;
+import com.hwangdang.vo.Member;
 
 @Controller
 @RequestMapping("/admin")
@@ -24,15 +28,17 @@ public class QnABoardController {
 	private BoardQnAServiceImpl service;
 	
 	
-	//QnA게시판 글등록 
+	/**
+	 * QnA게시판 글등록 
+	 */
 	@RequestMapping("/register.go")
 	public String registerQnAContent( String loginId , String title , String password , String published ,String content  ){
-		System.out.println("로그인아이디 :" + loginId +"title : "+title+", published :" + published + "content: " + content);
+		//System.out.println("로그인아이디 :" + loginId +"title : "+title+", published :" + published + "content: " + content);
 		int seq = service.getQnABoardSeq();
-		System.out.println(seq);
+		//System.out.println(seq);
 		AdminQnA newQnA = new AdminQnA(seq , title, content, loginId.trim(), new Date(), 1, published, password);
 		service.registerNewQnA(newQnA);
-		return "/admin/boardQnADetail.go?page="+1 +"&no="+seq;
+	return "/admin/boardQnADetail.go?page="+1 +"&no="+seq;
 	} 
 	
 	/**
@@ -45,25 +51,32 @@ public class QnABoardController {
 		ArrayList<AdminQnA> list = (ArrayList<AdminQnA>) service.getBoardList(page);
 		model.addAttribute("list", list);
 		model.addAttribute("pasingBean",pasingBean);
-		return "admin/boardQnA_list.tiles";
+	return "admin/boardQnA_list.tiles";
 	}
 	
 	/**
-	 *  QnA게시판 NO번호로 세부조회  
+	 *  QnA게시판 공개/비공개 여부확인 
 	 */
 	@RequestMapping("/boardQnADetailBefore.go")
-	public String boardQnADetailBefore(int page , int no , Model model){
-		
+	public String boardQnADetailBefore(int page , int no , Model model , HttpSession session){
 		String url = "";
 		AdminQnA findQnA = service.getAdminQnAByNo(no);
 		if(findQnA.getAdminQnaPublished().equals("t")){
-			//공개
+			//문의글의 공개 
 			url ="/admin/boardQnADetail.go"; 
 		}else{
-			//비공개 
-			//System.out.println("비밀번호:" + findQnA.getAdminQnaPassword()); 
-			model.addAttribute("password" , findQnA.getAdminQnaPassword());
-			url="admin/boardQnA_detail_before.tiles";
+			//문의글의 비공개
+			Member member = (Member) session.getAttribute("login_info");
+			//System.out.println(member.getMemberId());
+			if(member != null && member.getMemberId().equals("admin@admin.com")){
+				//스토어관리자이면 
+				url ="/admin/boardQnADetail.go?password="+findQnA.getAdminQnaPassword();
+				model.addAttribute("password" , findQnA.getAdminQnaPassword());
+			}else{
+				//System.out.println("비밀번호:" + findQnA.getAdminQnaPassword()); 
+				model.addAttribute("password" , findQnA.getAdminQnaPassword());
+				url="admin/boardQnA_detail_before.tiles";
+			}
 		}
 	return url;
 	}
@@ -73,16 +86,17 @@ public class QnABoardController {
 	 */
 	@RequestMapping("/boardQnADetail.go")
 	public String boardQnADetail(int page , int no , String password , Model model){
-		
-		System.out.println("디테일메소드:" + "페이지 :"+page +",NO: " +no + "password :" + password); 
+		if(password == null){
+			System.out.println("비밀번호가 널");
+		}
+		//System.out.println("디테일메소드:" + "페이지 :"+page +",NO: " +no + "password :" + password); 
 		String url = "";
 		AdminQnA findQnA = service.getAdminQnAByNo(no);
+		//System.out.println("파람패스워드:"+password +"객체패스워드:" + findQnA.getAdminQnaPassword());
 		
 		if(findQnA.getAdminQnaPublished().equals("f")){
 			if(password.equals(findQnA.getAdminQnaPassword() )){
 				//비공개에 비밀번호가 일치하면 
-				//System.out.println(findQnA);
-				//System.out.println(findQnA.getReply());
 				model.addAttribute("findQnA",findQnA);
 				model.addAttribute("page",page);
 				url = "admin/boardQnA_detail.tiles";
@@ -144,11 +158,11 @@ public class QnABoardController {
 	   */
 	@RequestMapping("/removeBoardQnAReply.go")
 	public String removeBoardQnAReply( int contentNo , int replyNo ,int contentPage ){
-		service.removeReplyByNo(replyNo);  
+		service.removeReplyByNo(replyNo , contentNo);  
 		return "/admin/boardQnADetail.go?page="+contentPage +"&no="+contentNo;
 	}
 	 /**
-	   * QnA게시판 관리자 댓글삭제
+	   * QnA게시판 관리자 댓글수정
 	   */
 	@RequestMapping("/setBoardQnAReply.go")
 	public String setBoardQnAReply( int contentNo , int replyNo ,int contentPage ,String replyTa ){

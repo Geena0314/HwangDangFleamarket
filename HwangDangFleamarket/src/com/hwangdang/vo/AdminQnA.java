@@ -17,11 +17,11 @@ public class AdminQnA implements Serializable{
 	//private ArrayList<AdminQnAReply> replyList;  //댓글객체 리스트  
 	private AdminQnAReply reply; 
 	private String adminQnaPassword;
-	
+	private String adminQnaReplyExist;
 	
 public AdminQnA(){};
 
-public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQuaContent, String adminQnaWriter, Date adminQnaDate,
+/*public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQuaContent, String adminQnaWriter, Date adminQnaDate,
 		int adminQnaHit, String adminQnaPublished) {
 	super();
 	this.adminQnaNo = adminQnaNo;
@@ -32,7 +32,7 @@ public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQuaContent, St
 	this.adminQnaHit = adminQnaHit;
 	this.adminQnaPublished = adminQnaPublished;
 }
-
+*/
 public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQnaContent, String adminQnaWriter, Date adminQnaDate,
 		int adminQnaHit, String adminQnaPublished, String adminQnaPassword) {
 	super();
@@ -58,6 +58,17 @@ public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQnaContent, St
 	this.adminQnaPublished = adminQnaPublished;
 	this.reply = reply;
 	this.adminQnaPassword = adminQnaPassword;
+}
+
+
+
+
+public String getAdminQnaReplyExist() {
+	return adminQnaReplyExist;
+}
+
+public void setAdminQnaReplyExist(String adminQnaReplyExist) {
+	this.adminQnaReplyExist = adminQnaReplyExist;
 }
 
 public String getAdminQnaPassword() {

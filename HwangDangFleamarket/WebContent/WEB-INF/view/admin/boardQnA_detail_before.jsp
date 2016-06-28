@@ -7,9 +7,18 @@
 		
 		$("#submintBtn").on("click" ,function(){
 			
+			/*
+			 게시판글 비밀번호 체킹 ajax않하는걸로함 
+			$.ajax({
+				"type" : "POST" ,
+				"url" : "" ,
+				"data" : "no="
+			}); */
+			
+			
 			var inputPass = $("#password").val();
 			var originPass = $("#originalPassword").val();
-			//console.log("인풋패스워드 : " +inputPass +",originPass : " + originPass );
+			console.log("인풋패스워드 : " +inputPass +",originPass : " + originPass );
 			
 			if(inputPass != originPass){
 				//게시판 설정한 비밀번호 틀림 
@@ -29,6 +38,7 @@
 
 
 패스워드 : ${requestScope.password}
+
 
 <input type="hidden" value="${requestScope.password}" id="originalPassword" />
 

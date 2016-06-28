@@ -8,19 +8,12 @@
 	</sql>
 	
 	<sql id="slect-basic-column">
-					admin_qna_no , 
-					admin_qna_title , 
-				    admin_qna_content ,
-					admin_qna_writer ,
-					admin_qna_date ,
-					admin_qna_hit ,
-					admin_qna_published ,
-					admin_qna_password
+	admin_qna_no , admin_qna_title ,  admin_qna_content ,
+	admin_qna_writer ,admin_qna_date , admin_qna_hit ,
+	admin_qna_published , admin_qna_password , admin_qna_reply_exist
 	</sql>
 	
-	
-	
-	 <!-- 게시판글 전체 조회 -->
+	 <!-- 게시판글만 조회 , 댓글X -->
 	 <resultMap type="adminQnA" id="resultmap-basic-list">
 		<id column="admin_qna_no"  property="adminQnaNo"/>
 	 	<result column="admin_qna_title"  property="adminQnaTitle" />
@@ -29,9 +22,12 @@
 	 	<result column="admin_qna_date"  property="adminQnaDate" />
 	 	<result column="admin_qna_hit"  property="adminQnaHit" />
 	 	<result column="admin_qna_published"  property="adminQnaPublished" />
+	 	<result column="admin_qna_password"  property="adminQnaPassword" />
+	 	<result column="admin_qna_reply_exist"  property="adminQnaReplyExist" />
 	</resultMap> 
-		
-		
+	
+	 
+		<!-- 게시판글 조인 하여 전체 조회 -->
 	 <resultMap type="adminQnA" id="resultmap-qna-reply-join">
 		<id column="admin_qna_no"  property="adminQnaNo"/>
 	 	<result column="admin_qna_title"  property="adminQnaTitle" />
@@ -61,34 +57,24 @@
 	SELECT  <include refid="slect-basic-column"/>
 	FROM (
 		SELECT  <include refid="slect-basic-column"/> , ceil(rownum / #{itemPerPage}) page
-		FROM ( SELECT  <include refid="slect-basic-column"/>
+		FROM (  SELECT  <include refid="slect-basic-column"/>
 				FROM  ADMIN_QNA
 				ORDER BY  admin_qna_no DESC
-			)
-	)WHERE page = #{page}
+			 )
+	)
+	WHERE page = #{page}
 				
 	</select>
 	
-	
 	<!-- QnA 게시판 글  조회하기 : 세부글정보 보기 --> 
 	<select id="select-one-detail" parameterType="_int" resultMap="resultmap-qna-reply-join">
-		
-		SELECT  	
-			q.admin_qna_no ,
-			q.admin_qna_title ,
-			q.admin_qna_content ,
-			q.admin_qna_writer ,
-			q.admin_qna_date ,
-			q.admin_qna_hit ,
-			q.admin_qna_published, 
-			q.admin_QnA_password ,
-			r.admin_reply_content ,
-			r.admin_reply_date , 
-			r.admin_reply_no
-			
-		FROM  ADMIN_QNA q  ,  admin_QnA_reply r
-		WHERE q.admin_qna_no = #{no}
-		AND  q.admin_qna_no =  r.admin_qna_no(+) 
+	SELECT  q.admin_qna_no ,q.admin_qna_title ,q.admin_qna_content ,
+			q.admin_qna_writer ,q.admin_qna_date ,q.admin_qna_hit ,
+			q.admin_qna_published, q.admin_QnA_password ,
+			r.admin_reply_content ,r.admin_reply_date , r.admin_reply_no	
+	FROM    ADMIN_QNA q  ,  admin_QnA_reply r
+	WHERE   q.admin_qna_no = #{no}
+	AND     q.admin_qna_no =  r.admin_qna_no(+) 
 
 	</select>
 	
@@ -121,7 +107,6 @@
 	<!-- QnA게시판 글등록 -->
 	<insert id="insert" parameterType="AdminQnA">
 		INSERT INTO  admin_qna  
-		(<include refid="slect-basic-column"/>  )
 		VALUES(
 				#{adminQnaNo } ,   
 				#{adminQnaTitle }  , 
@@ -130,8 +115,9 @@
 				#{adminQnaDate }  , 
 				#{adminQnaHit }  , 
 				#{adminQnaPublished }  , 
-				#{adminQnaPassword }  
-		)
+				#{adminQnaPassword }  ,
+				'f' 
+		) 
 	</insert>
 	
 	<!-- QnA게시판 글 삭제 -->
@@ -154,7 +140,6 @@
 	private Date adminReplyDate;
 	private String adminReplyWriter;
 	private int adminQnaNo;
-	
 	 -->
 	<insert id="insert-reply" parameterType="com.hwangdang.vo.AdminQnAReply">
 		INSERT INTO admin_QnA_reply
@@ -167,11 +152,24 @@
 		)
 	</insert>
 	
+	<!-- 댓글 달때 게시판에admin_QnA_reply_exist 컬럼 't'로 변경    -->
+	<update id="update-by-no-reply-exsit" parameterType="_int">
+		UPDATE admin_QnA 
+		SET admin_QnA_reply_exist = 't'
+		WHERE admin_qna_no  = #{no}
+	</update>
+	
 	<!-- 댓글삭제  -->
 	<delete id="delete-reply-by-no" parameterType="_int">
 		DELETE FROM admin_qna_reply 
 		WHERE admin_reply_no = #{no} 
 	</delete>
+	<update id="update-by-no-reply-exsit-f" parameterType="_int">
+		UPDATE admin_QnA 
+		SET admin_QnA_reply_exist = 'f'
+		WHERE admin_qna_no  = #{no}
+	</update>
+	
 
 	<!-- 댓글수정 -->
 	<update id="update-reply-by-no" parameterType="hashmap">

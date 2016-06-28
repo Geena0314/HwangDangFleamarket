@@ -9,6 +9,10 @@
 			location.href="/HwangDangFleamarket/boardQnA_register_form.go";		
 		});	
 		
+	/* 	$("#moveDetail").on("click",function(){
+			alert("gg");
+			return false;
+		});	 */
 		
 	});//ready
 </script>
@@ -21,6 +25,7 @@
 		<thead>
 			<tr>
 				<td>글번호</td>
+				<td>답변여부</td>
 				<td>글제목</td>
 				<td>작성자</td>
 				<td>작성일</td>
@@ -28,12 +33,20 @@
 				<td>공개여부</td>
 			</tr>
 		</thead>
-		<tbody>
-			
+		<tbody>		
+				
 				<c:forEach var="list" items="${requestScope.list }" >
+				
 				<tr>
 					<td>${list.adminQnaNo }</td>
-					<td><a href="/HwangDangFleamarket/admin/boardQnADetailBefore.go?page=${requestScope.pasingBean.page }&no=${list.adminQnaNo }">${list.adminQnaTitle }</a></td>
+					<td>
+						<c:choose>
+							<c:when test="${list.adminQnaReplyExist eq 't' }"><font color="blue">답변완료</font> </c:when>
+							<c:otherwise><font color="red">답변미완료</font></c:otherwise>
+						</c:choose>
+						
+					</td>  
+					<td><a  id="moveDetail" href="/HwangDangFleamarket/admin/boardQnADetailBefore.go?page=${requestScope.pasingBean.page }&no=${list.adminQnaNo }">${list.adminQnaTitle }</a></td>
 					<td>${list.adminQnaWriter }</td>
 					<td><fmt:formatDate value="${list.adminQnaDate }" pattern="yyyy년MM월dd일"/></td>
 					<td>${list.adminQnaHit }</td>

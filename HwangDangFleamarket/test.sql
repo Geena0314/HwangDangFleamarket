@@ -213,3 +213,21 @@ FROM (
 	)WHERE page = 1
 			
 		
+SELECT      q.admin_qna_no ,q.admin_qna_title ,q.admin_qna_content ,
+			q.admin_qna_writer ,q.admin_qna_date ,q.admin_qna_hit ,
+			q.admin_qna_published, q.admin_QnA_password ,
+			r.admin_reply_content ,r.admin_reply_date , r.admin_reply_no	
+FROM        ADMIN_QNA q  ,  admin_QnA_reply r
+WHERE       q.admin_qna_no =  r.admin_qna_no(+) 
+	  
+SELECT * FROM admin_QnA
+
+
+
+--QnA게시판 답변여부 컬럼추가 
+ALTER TABLE admin_QnA ADD admin_QnA_reply_exist char(1)
+ALTER TABLE admin_QnA DROP COLUMN  admin_QnA_reply_exist 
+
+
+
+

@@ -57,11 +57,16 @@ public class BoardQnADaoImpl implements Dao {
 	}
 	//댓글등록 add
 	public void insertReploy(AdminQnAReply reply){
+		//System.out.println("글번호 : " + reply.getAdminQnaNo());
+		session.update("boardQnA.update-by-no-reply-exsit", reply.getAdminQnaNo());
 		session.insert("boardQnA.insert-reply", reply);
-	}
+	}  
 	//댓글삭제 remove
-	public void deleteReployByNo(int no){
-		session.delete("boardQnA.delete-reply-by-no", no);
+	public void deleteReployByNo(int replyNo , int contentNo){ 
+		//adminQnA 컬럼 'f'으로 변경 
+		session.update("boardQnA.update-by-no-reply-exsit-f",contentNo);
+		//댓글삭제
+		session.delete("boardQnA.delete-reply-by-no", replyNo);
 	}
 	//댓글수정 update
 	public void updateReployByNo(HashMap param){

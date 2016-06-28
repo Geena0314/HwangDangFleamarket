@@ -71,8 +71,8 @@ public class BoardQnAServiceImpl implements Service {
 	}	
 	//댓글 삭제 remove
 	@Transactional(rollbackFor=Exception.class)
-	public void removeReplyByNo(int no ){
-		adminDao.deleteReployByNo(no);
+	public void removeReplyByNo(int replyNo , int contentNo ){
+		adminDao.deleteReployByNo(replyNo ,contentNo );
 	}			
 	//댓글 수정 remove
 	@Transactional(rollbackFor=Exception.class)
