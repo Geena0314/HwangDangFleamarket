@@ -1,0 +1,41 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="orderMapper">
+	<!-- 주문 기본 리절트맵 -->
+	<resultMap type="orders" id="orders-basic-resultmap">
+		<id column="orders_no" property="ordersNo"/>
+		<result column="orders_receiver" property="ordersReceiver"/>
+		<result column="orders_phone" property="ordersPhone"/>
+		<result column="orders_zipcode" property="ordersZipcode"/>
+		<result column="orders_address" property="ordersAddress"/>
+		<result column="orders_sub_address" property="ordersSubAddress"/>
+		<result column="orders_total_price" property="ordersTotalPrice"/>
+		<result column="orders_payment" property="ordersPayment"/>
+		<result column="orders_request" property="ordersRequest"/>
+		<result column="payment_status" property="paymentStatus"/>
+		<result column="orders_status" property="ordersStatus"/>
+		<result column="member_id" property="memberId"/>
+	</resultMap>
+	
+	<!-- 주문상품 리절트맵. -->
+	<resultMap type="orderProduct" id="orderProduct-basic-resultmap">
+		<result column="order_amount" property="orderAmount"/>
+		<result column="orders_no" property="ordersNo"/>
+		<result column="product_id" property="productId"/>
+		<result column="option_id" property="optionId"/>
+	</resultMap>
+	
+	<!-- 주문, 상품 ,주문상품 Join -->
+	<resultMap type="orders" id="orders-product-orderProduct" extends="orders-basic-resultmap">
+		<association property="product" javaType="Product" resultMap="productMapper.product-basic-resultMap"/>
+		<association property="orderProduct" javaType="OrderProduct" resultMap="orderProduct-basic-resultmap"/>
+	</resultMap>
+	
+	<!-- 페이징추가해야함. 
+	<select id="selectOrderState" parameterType=""  resultMap="orders-product-orderProduct">
+		select 	* 
+		from 		orders o, product p, order_product op 
+		where 	op.order_no = o.order_no
+		and		op.product_id = p.product_id
+		
+	</select> -->
+</mapper>

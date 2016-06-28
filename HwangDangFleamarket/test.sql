@@ -1,7 +1,10 @@
-select * FROM admin_QnA
+select * FROM admin_QnA 
+ORDER BY admin_qna_no DESC;
+
 SELECT count(*) FROM  admin_qna
 
 
+select * FROM member;
 
 INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 't');
 INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't');
@@ -190,3 +193,58 @@ insert into seller values(seller_store_no_seq.nextval, '매머드', '12345-66789
 							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵', '#빅커피', '#꿀라떼', '#고구마라떼', 
 							'넘나 맛있는 커피를 만드는 카페입니다.',0, 'hwang3'); 
    		
+SELECT admin_qna_no_seq.nextval 
+FROM dual
+select * FROM admin_QnA 
+ORDER BY admin_qna_no DESC;
+
+
+--페이징
+select * FROM (
+SELECT admin_qna_no , admin_qna_title , admin_qna_content , admin_qna_writer ,
+	   admin_qna_date , admin_qna_hit , admin_qna_published ,admin_qna_password ,
+	   ceil(rownum / 10) page
+FROM (
+	SELECT    rownum , admin_qna_no , admin_qna_title , admin_qna_content ,admin_qna_writer ,
+			  admin_qna_date ,admin_qna_hit ,admin_qna_published , admin_qna_password 
+	FROM      ADMIN_QNA
+	ORDER BY  admin_qna_no DESC
+	) 
+	)WHERE page = 1
+			
+		
+SELECT      q.admin_qna_no ,q.admin_qna_title ,q.admin_qna_content ,
+			q.admin_qna_writer ,q.admin_qna_date ,q.admin_qna_hit ,
+			q.admin_qna_published, q.admin_QnA_password ,
+			r.admin_reply_content ,r.admin_reply_date , r.admin_reply_no	
+FROM        ADMIN_QNA q  ,  admin_QnA_reply r
+WHERE       q.admin_qna_no =  r.admin_qna_no(+) 
+	  
+SELECT * FROM admin_QnA
+
+
+
+--QnA게시판 답변여부 컬럼추가 
+ALTER TABLE admin_QnA ADD admin_QnA_reply_exist char(1)
+ALTER TABLE admin_QnA DROP COLUMN  admin_QnA_reply_exist 
+
+
+
+-------------- 나의주문
+
+SELECT * FROM orders 
+
+--페이먼트 0 : 1: 2: 3:
+insert into orders values ('order_no_1', '홍길동1', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 30000, '카드', '부재중일시 경비실에 맡겨주세요', 1, '배송중', 'ID123');
+insert into orders values ('order_no_2', '홍길동2', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 20000, '카드', '부재중일시 경비실에 맡겨주세요', 2, '배송대기중', 'ID444');
+insert into orders values ('order_no_3', '홍길동3', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 50000, '카드', '부재중일시 경비실에 맡겨주세요', 3, '배송완료', 'ID55');
+insert into orders values ('order_no_4', '홍길동4', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 10000, '카드', '부재중일시 경비실에 맡겨주세요', 4, '교환신청', 'ID6');
+insert into orders values ('order_no_5', '홍길동5', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 340000, '카드', '부재중일시 경비실에 맡겨주세요', 1, '환불신청', 'ID12');
+
+
+
+
+
+
+
+

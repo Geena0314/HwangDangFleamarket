@@ -17,6 +17,9 @@ public class Orders implements Serializable
 	private String ordersStatus;
 	private String memberId;
 	
+	private Product product;
+	private OrderProduct orderProduct;
+	
 	public Orders()
 	{
 		// TODO Auto-generated constructor stub
@@ -39,6 +42,28 @@ public class Orders implements Serializable
 		this.paymentStatus = paymentStatus;
 		this.ordersStatus = ordersStatus;
 		this.memberId = memberId;
+	}
+
+	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
+			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
+			String ordersRequest, int paymentStatus, String ordersStatus, String memberId, Product product,
+			OrderProduct orderProduct)
+	{
+		super();
+		this.ordersNo = ordersNo;
+		this.ordersReceiver = ordersReceiver;
+		this.ordersPhone = ordersPhone;
+		this.ordersZipcode = ordersZipcode;
+		this.ordersAddress = ordersAddress;
+		this.ordersSubAddress = ordersSubAddress;
+		this.ordersTotalPrice = ordersTotalPrice;
+		this.ordersPayment = ordersPayment;
+		this.ordersRequest = ordersRequest;
+		this.paymentStatus = paymentStatus;
+		this.ordersStatus = ordersStatus;
+		this.memberId = memberId;
+		this.product = product;
+		this.orderProduct = orderProduct;
 	}
 
 	public String getOrdersNo()
@@ -161,12 +186,33 @@ public class Orders implements Serializable
 		this.memberId = memberId;
 	}
 
+	public Product getProduct()
+	{
+		return product;
+	}
+
+	public void setProduct(Product product)
+	{
+		this.product = product;
+	}
+
+	public OrderProduct getOrderProduct()
+	{
+		return orderProduct;
+	}
+
+	public void setOrderProduct(OrderProduct orderProduct)
+	{
+		this.orderProduct = orderProduct;
+	}
+
 	@Override
 	public int hashCode()
 	{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((memberId == null) ? 0 : memberId.hashCode());
+		result = prime * result + ((orderProduct == null) ? 0 : orderProduct.hashCode());
 		result = prime * result + ((ordersAddress == null) ? 0 : ordersAddress.hashCode());
 		result = prime * result + ((ordersNo == null) ? 0 : ordersNo.hashCode());
 		result = prime * result + ((ordersPayment == null) ? 0 : ordersPayment.hashCode());
@@ -178,6 +224,7 @@ public class Orders implements Serializable
 		result = prime * result + ordersTotalPrice;
 		result = prime * result + ((ordersZipcode == null) ? 0 : ordersZipcode.hashCode());
 		result = prime * result + paymentStatus;
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		return result;
 	}
 
@@ -196,6 +243,12 @@ public class Orders implements Serializable
 			if (other.memberId != null)
 				return false;
 		} else if (!memberId.equals(other.memberId))
+			return false;
+		if (orderProduct == null)
+		{
+			if (other.orderProduct != null)
+				return false;
+		} else if (!orderProduct.equals(other.orderProduct))
 			return false;
 		if (ordersAddress == null)
 		{
@@ -255,6 +308,12 @@ public class Orders implements Serializable
 			return false;
 		if (paymentStatus != other.paymentStatus)
 			return false;
+		if (product == null)
+		{
+			if (other.product != null)
+				return false;
+		} else if (!product.equals(other.product))
+			return false;
 		return true;
 	}
 
@@ -265,6 +324,7 @@ public class Orders implements Serializable
 				+ ", ordersZipcode=" + ordersZipcode + ", ordersAddress=" + ordersAddress + ", ordersSubAddress="
 				+ ordersSubAddress + ", ordersTotalPrice=" + ordersTotalPrice + ", ordersPayment=" + ordersPayment
 				+ ", ordersRequest=" + ordersRequest + ", paymentStatus=" + paymentStatus + ", ordersStatus="
-				+ ordersStatus + ", memberId=" + memberId + "]";
+				+ ordersStatus + ", memberId=" + memberId + ", product=" + product + ", orderProduct=" + orderProduct
+				+ "]";
 	}
 }

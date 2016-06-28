@@ -268,7 +268,7 @@
 				
 				$("#reviewWrite").on("focus", function()
 				{
-					if(${empty sessionScope.login_info.memberId})
+					if('${empty sessionScope.login_info.memberId}')
 					{
 						$("#reviewError").empty();
 						$("#reviewError").append("로그인 한 회원만 입력 가능합니다.");
@@ -625,7 +625,7 @@
 					{
 						"url" : "/HwangDangFleamarket/product/qnaShow.go",
 						"type" : "POST",
-						"data" : {"storeQnANo" : no, "sellerStoreNo" : ${param.sellerStoreNo}},
+						"data" : {"storeQnANo" : no, "sellerStoreNo" : '${param.sellerStoreNo}'},
 						"dataType" : "JSON",
 						"beforeSend" : function()
 						{
@@ -665,7 +665,7 @@
 										{
 											"url" : "/HwangDangFleamarket/product/qnaReplyRegister.go",
 											"type" : "POST",
-											"data" : {"sellerStoreNo" : ${param.sellerStoreNo}, "storeReplyContent" : $("#qnaReply").val(), "storeQnANo" : no},
+											"data" : {"sellerStoreNo" : '${param.sellerStoreNo}', "storeReplyContent" : $("#qnaReply").val(), "storeQnANo" : no},
 											"dataType" : "JSON",
 											"beforeSend" : function()
 											{
@@ -747,7 +747,7 @@
 											//삭제하기 버튼 클릭시...
 											"url" : "/HwangDangFleamarket/storeQnA/storeQnARemove.go",
 											"type" : "POST",
-											"data" : {"sellerStoreNo" : ${param.sellerStoreNo}, "storeQnANo" : no, "memberId" : "xx", "productId" : $("#productId").text()},
+											"data" : {"sellerStoreNo" : '${param.sellerStoreNo}', "storeQnANo" : no, "memberId" : "xx", "productId" : $("#productId").text()},
 											"dataType" : "JSON",
 											"beforeSend" : function()
 											{
