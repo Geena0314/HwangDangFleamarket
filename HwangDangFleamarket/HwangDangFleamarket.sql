@@ -296,6 +296,7 @@ create sequence cart_no_seq nocache;
 
 /* 주문vvvvvvvvvvvvvv */
 drop table orders
+
 CREATE TABLE orders (
 	orders_no VARCHAR2(10) primary key, /* 주문번호 */
 	orders_receiver VARCHAR2(18) NOT NULL, /* 받는사람 */
@@ -318,6 +319,7 @@ insert into orders values ('c', '받는사람3', '123-123-1234', '123-123', '주
 insert into orders values ('d', '받는사람4', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 'ㅈㅁㅎㅎ', 'isj4216');
 insert into orders values ('e', '받는사람5', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 'ㅈㅁㅎㅎ', 'isj4216');
 insert into orders values ('f', '받는사람6', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 'ㅈㅁㅎㅎ', 'isj4216');
+
 
 
 /* 상품옵션vvvvvvvv */
