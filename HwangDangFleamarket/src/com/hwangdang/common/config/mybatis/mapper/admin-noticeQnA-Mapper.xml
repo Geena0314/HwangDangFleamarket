@@ -116,6 +116,7 @@
 				#{adminQnaHit }  , 
 				#{adminQnaPublished }  , 
 				#{adminQnaPassword }  ,
+				null , 
 				'f' 
 		) 
 	</insert>
