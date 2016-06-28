@@ -1,21 +1,21 @@
 package com.hwangdang.vo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class AdminQnA implements Serializable{
 
 	private int adminQnaNo;
-	private String adminQnaTitle;
-	private String adminQnaContent;
-	private String adminQnaWriter;
-	private Date adminQnaDate;
-	private int adminQnaHit;
-	private String adminQnaPublished;
+	private String adminQnaTitle;  //제목
+	private String adminQnaContent; //글내용
+	private String adminQnaWriter;  //작성자
+	private Date adminQnaDate;  //작성일 
+	private int adminQnaHit;  //조회수 
+	private String adminQnaPublished;  // 공개여부 
+	//private ArrayList<AdminQnAReply> replyList;  //댓글객체 리스트  
+	private AdminQnAReply reply; 
 	
-	/*private AdminQnAReply reply;*/  //댓글객체 
-	
-
 public AdminQnA(){};
 
 public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQuaContent, String adminQnaWriter, Date adminQnaDate,
@@ -29,6 +29,59 @@ public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQuaContent, St
 	this.adminQnaHit = adminQnaHit;
 	this.adminQnaPublished = adminQnaPublished;
 }
+
+/*public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQnaContent, String adminQnaWriter, Date adminQnaDate,
+		int adminQnaHit, String adminQnaPublished, ArrayList<AdminQnAReply> replyList) {
+	super();
+	this.adminQnaNo = adminQnaNo;
+	this.adminQnaTitle = adminQnaTitle;
+	this.adminQnaContent = adminQnaContent;
+	this.adminQnaWriter = adminQnaWriter;
+	this.adminQnaDate = adminQnaDate;
+	this.adminQnaHit = adminQnaHit;
+	this.adminQnaPublished = adminQnaPublished;
+	this.replyList = replyList;
+}
+*/
+/*public ArrayList<AdminQnAReply> getReplyList() {
+	return replyList;
+}
+
+public void setReplyList(ArrayList<AdminQnAReply> replyList) {
+	this.replyList = replyList;
+}*/
+
+public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQnaContent, String adminQnaWriter, Date adminQnaDate,
+		int adminQnaHit, String adminQnaPublished, AdminQnAReply reply) {
+	super();
+	this.adminQnaNo = adminQnaNo;
+	this.adminQnaTitle = adminQnaTitle;
+	this.adminQnaContent = adminQnaContent;
+	this.adminQnaWriter = adminQnaWriter;
+	this.adminQnaDate = adminQnaDate;
+	this.adminQnaHit = adminQnaHit;
+	this.adminQnaPublished = adminQnaPublished;
+	this.reply = reply;
+}
+
+public AdminQnAReply getReply() {
+	return reply;
+}
+
+public void setReply(AdminQnAReply reply) {
+	this.reply = reply;
+}
+
+public String getAdminQnaContent() {
+	return adminQnaContent;
+}
+
+
+
+public void setAdminQnaContent(String adminQnaContent) {
+	this.adminQnaContent = adminQnaContent;
+}
+
 
 public int getAdminQnaNo() {
 	return adminQnaNo;
