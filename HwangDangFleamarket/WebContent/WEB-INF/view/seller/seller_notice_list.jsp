@@ -32,7 +32,7 @@ b {
 </script>
 <p align="right">
 	<b>스토어 소식통</b>
-	<input type="button" id="rgstBtn" value="소식글등록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRegisterNoticeForm.go?sellerStoreNo=${requestScope.sellerStoreNo}'">
+	<input type="button" id="rgstBtn" value="소식글등록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRegisterNoticeForm.go?sellerStoreNo=${requestScope.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
 </p>
 <table>
 	<thead>

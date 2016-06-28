@@ -41,7 +41,7 @@ public class QnABoardController {
 	 */
 	@RequestMapping("/boardQnADetail.go")
 	public String boardQnADetail(int page , int no , Model model){
-		System.out.println("디테일메소드:" + page +"," +no);  
+		//System.out.println("디테일메소드:" + page +"," +no);  
 		AdminQnA findQnA = service.getAdminQnAByNo(no);
 		//System.out.println(findQnA);
 		//System.out.println(findQnA.getReply());
