@@ -83,13 +83,13 @@ img{
 				<div class="store_products">
 					<ul class="product_list">
 						<c:if test="${list.sellerProduct1!=null}">
-							<li>${list.sellerProduct1}</li><br>
+							<li>#${list.sellerProduct1}</li><br>
 						</c:if>
 						<c:if test="${list.sellerProduct2!=null}">
-							<li>${list.sellerProduct2}</li><br>
+							<li>#${list.sellerProduct2}</li><br>
 						</c:if>
 						<c:if test="${list.sellerProduct3!=null}">
-							<li>${list.sellerProduct3}</li><br>
+							<li>#${list.sellerProduct3}</li><br>
 						</c:if>
 					</ul>
 				</div>

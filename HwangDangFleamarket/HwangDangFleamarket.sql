@@ -142,18 +142,18 @@ insert into seller values (seller_store_no_seq.nextval, '황당마켓3', '123456
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '사진임', '판매물품1', '판매물품2', '판매물품3', '소개글', '1', 'lsj421678');   
 
 insert into seller values(seller_store_no_seq.nextval, '해물나라', '12345-67890', '대분류업종', '소분류업종', '123-456', 
-							'경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '해물찜', '#전복', '#냉동문어', '#낙지', 
+							'경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '해물찜.jpg', '#전복', '#냉동문어', '#낙지', 
 							'아주아주 싱싱하고 맛있는 해산물을 산지직송해드립니다.',1, 'hwang');
 insert into seller values(seller_store_no_seq.nextval, '통영대표꿀빵', '12345-66789', '대분류업종', '소분류업종', '123-654', 
-							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵', '#원조꿀빵', '#유자꿀빵', '#고구마꿀빵', 
+							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵.jpg', '#원조꿀빵', '#유자꿀빵', '#고구마꿀빵', 
 							'넘나 맛있는 꿀빵을 만드는 꿀빵집입니다.',1, 'hwanghwang');
 							
 insert into seller values(seller_store_no_seq.nextval, '매머드', '12345-66789', '대분류업종', '소분류업종', '123-654', 
-							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵', '#빅커피', '#꿀라떼', '#고구마라떼', 
+							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵.jpg', '#빅커피', '#꿀라떼', '#고구마라떼', 
 							'넘나 맛있는 커피를 만드는 카페입니다.',0, 'hwang3'); 
    										  
 select * from seller
-delete from seller where member_id = 'hwang'
+delete from seller where member_id = 'hwang3'
 
 select count(seller_store_no) from seller where seller_assign = 1
 

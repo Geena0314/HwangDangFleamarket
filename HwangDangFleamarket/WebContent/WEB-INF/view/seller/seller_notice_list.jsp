@@ -32,7 +32,9 @@ b {
 </script>
 <p align="right">
 	<b>스토어 소식통</b>
-	<input type="button" id="rgstBtn" value="소식글등록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRegisterNoticeForm.go?sellerStoreNo=${requestScope.sellerStoreNo}'">
+	<c:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
+	<input type="button" id="rgstBtn" value="소식글등록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRegisterNoticeForm.go?sellerStoreNo=${requestScope.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
+	</c:if>
 </p>
 <table>
 	<thead>
@@ -46,7 +48,7 @@ b {
 		<c:forEach var="list" items="${requestScope.list}">
 			<tr>
 				<td>
-					<a href="/HwangDangFleamarket/sellerNotice/sellerNoticeDetail.go?page=${requestScope.pagingBean.page}&sellerNoticeNo=${list.sellerNoticeNo}">
+					<a href="/HwangDangFleamarket/sellerNotice/sellerNoticeDetail.go?page=${requestScope.pagingBean.page}&sellerNoticeNo=${list.sellerNoticeNo}&sellerStoreNo=${requestScope.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}">
 						${list.sellerNoticeTitle}
 					</a>
 				</td>

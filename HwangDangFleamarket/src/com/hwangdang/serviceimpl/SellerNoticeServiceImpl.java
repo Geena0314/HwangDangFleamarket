@@ -18,7 +18,14 @@ public class SellerNoticeServiceImpl implements SellerNoticeService{
 
 	@Override
 	public List getAllSellerNotice(int page, int sellerStoreNo) {
-		return dao.selectAllSellerNotice(page, sellerStoreNo);
+		List<SellerNotice> list = dao.selectAllSellerNotice(page, sellerStoreNo);
+		for(SellerNotice sellerNotice : list){
+			sellerNotice.setSellerNoticeTitle(sellerNotice.getSellerNoticeTitle().replace(">", "&gt;"));
+			sellerNotice.setSellerNoticeTitle(sellerNotice.getSellerNoticeTitle().replace("<", "&lt;"));
+			sellerNotice.setSellerNoticeTitle(sellerNotice.getSellerNoticeTitle().replace("\n", "<br>"));
+			sellerNotice.setSellerNoticeTitle(sellerNotice.getSellerNoticeTitle().replace(" ", "&nbsp;"));
+		}
+		return list;
 	}
 
 	@Override
@@ -28,11 +35,7 @@ public class SellerNoticeServiceImpl implements SellerNoticeService{
 
 	@Override
 	public SellerNotice getSellerNoticeByNoticeNo(int sellerNoticeNo) {
-		SellerNotice sellerNotice = dao.selectSellerNoticeByNoticeNo(sellerNoticeNo);
-		dao.updateSellerNoticeHit(sellerNoticeNo);
-		String replace = sellerNotice.getSellerNoticeContent().replace("\n", "<br>");
-		sellerNotice.setSellerNoticeContent(replace);
-		return sellerNotice;
+		return dao.selectSellerNoticeByNoticeNo(sellerNoticeNo);
 	}
 	
 	@Transactional

@@ -33,6 +33,7 @@ span{
 	<input type="hidden" name="page" value="${param.page}">
 	<input type="hidden" name="sellerNoticeNo" value="${requestScope.sellerNotice.sellerNoticeNo}">
 	<input type="hidden" name="sellerStoreNo" value="${requestScope.sellerNotice.sellerStoreNo}">
+	<input type="hidden" name="sellerStoreImage" value="${param.sellerStoreImage}">
 	<table>
 		<thead>
 			<tr>
@@ -61,6 +62,7 @@ span{
 		</tbody>
 	</table>
 	<p align="right">
-	<input type="submit" value="수정">&nbsp;&nbsp;<input type="reset" value="다시작성">
+	<input type="submit" value="수정">&nbsp;&nbsp;<input type="reset" value="다시작성">&nbsp;&nbsp;
+	<input type="button" value="취소" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
 	</p>
 </form>

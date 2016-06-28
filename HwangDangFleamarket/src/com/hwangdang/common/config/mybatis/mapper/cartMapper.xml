@@ -29,10 +29,19 @@
 	</delete>
 	
 	<select id="selectCartPaging" parameterType="map" resultMap="cart-basic-resultmap">
-		
+		select <include refid="cart-columns"/> from(
+			select ceil(rownum /#{itemsPerPage})page, <include refid="cart-columns"/> from(
+				select <include refid="cart-columns"/> from cart where member_id=#{memberId} order by cart_no DESC) 
+				) where page = #{page}
 	</select>
 	
+	<select id="selectCountCart" resultType="_int">
+		select count(cart_no) from cart where member_id = #{memberId}
+	</select>
 	
-	
+	<select id="selectCartByCartNo" parameterType="_int" resultMap="cart-basic-resultmap">
+		<include refid="select-basic"/>
+		where cart_no = #{value}
+	</select>
 	
 </mapper>

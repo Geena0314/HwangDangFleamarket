@@ -1,11 +1,5 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="lee"  uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Insert title here</title>
-		
 		<style type="text/css">
 			#main
 			{
@@ -73,7 +67,7 @@
 						"beforeSend" : function()
 						{
 							$("#error").empty();
-							$("#optionAddPrice").empty().append("원.");
+							$("#optionAddPrice").empty().append("원");
 							$("#optionStock").empty().html("<option>수량선택</option>");
 							$("#optionNameError").empty();
 							$("#optionStockError").empty();
@@ -818,7 +812,41 @@
 						}
 					});
 				});
-				
+				$("#cartBtn").on("click", function(){
+					if(${empty sessionScope.login_info.memberId})
+					{
+						var result = confirm("로그인이 필요한 서비스입니다.\n로그인하시겠습니까?");
+						if(result){
+							return window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');
+						}else{
+							return false;
+						}
+					}
+					$.ajax({
+						"url":"/HwangDangFleamarket/cart/addCart.go",
+						"type":"POST",
+						"data":{"page": 1,"productName": $("#productName").val(),"productPrice": $("#productPrice").val(),
+								"cartProductOption": $("#optionName").selected,"cartProductAmount": $("#optionStock").selected,
+								"memberId":"${sessionScope.login_info.memberId}"},
+						"dataType":"json",
+						"success":function(){
+							
+						},
+						"error":function(){
+							
+						},
+						"beforeSend":function(){
+							if(!$("#optionName").selected){
+								alert("옵션을 선택해주세요.");
+								return false;
+							}
+							if(!$("#optionStock").selected){
+								alert("수량을 선택해주세요.");
+								return false;
+							}
+						}
+					});
+				});
 			});
 			
 			function error(xhr, status, err)
@@ -827,11 +855,8 @@
 			}
 		</script>
 		
-	</head>
-
-	<body>
 		<div id="main" align="center">
-			<h2>상품 상세 정보 보기.</h2>
+			<h2>상품 상세 정보 보기</h2>
 			<div id="mainImage">
 				<img src="../image_storage/${ requestScope.product.productMainImage }"  style="width:300px;height:200px;">
 			</div>
@@ -841,11 +866,11 @@
 						<tr><td>상품ID</td><td id="productId">${ requestScope.product.productId }</td></tr>
 						<tr>
 							<td>상품명</td>
-							<td>${ requestScope.product.productName }</td>
+							<td id="prductName">${ requestScope.product.productName }</td>
 						</tr>
 						<tr>
 							<td>가격</td>
-							<td>${ requestScope.product.productPrice }원.</td>
+							<td id="productPrice">${ requestScope.product.productPrice }원</td>
 						</tr>
 						<tr>
 							<td>옵션</td>
@@ -863,18 +888,23 @@
 							<td>수량</td>
 							<td>
 								<select id="optionStock">
-									<option>수량선택.</option>
+									<option>수량선택</option>
 								</select>
 							</td>
 						</tr>
 						<tr><td colspan="2" id="optionStockError"></td></tr>
 						<tr>
 							<td>추가가격</td>
-							<td id="optionAddPrice">원.</td>
+							<td id="optionAddPrice">
+								원
+							</td>
 						</tr>
 						<tr>
 							<td><input type="submit" value="바로구매"></td>
-							<td><input type="button" value="리스트로 돌아가기." onclick="window.location='/HwangDangFleamarket/product/list.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }'"></td>
+							<td><input type="button" value="장바구니담기" id="cartBtn"></td>
+						</tr>
+						<tr>
+							<td colspan="2"><input type="button" value="리스트로 돌아가기" onclick="window.location='/HwangDangFleamarket/product/list.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }'"></td>
 						</tr>
 					</table>
 				</form>
@@ -1036,5 +1066,3 @@
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		</div>
-	</body>
-</html>
