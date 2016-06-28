@@ -45,4 +45,38 @@ public class SellerDaoImpl implements SellerDao{
 		return session.insert("sellerMapper.insertSeller", seller);
 	}
 
+	@Override
+	public List<Seller> selectSellerRegister(HashMap<String, Object> map)
+	{
+		// TODO Auto-generated method stub
+		return session.selectList("sellerMapper.selectSellerRegister", map);
+	}
+
+	@Override
+	public int selectCountSellerRegister()
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("sellerMapper.selectCountSellerRegister");
+	}
+
+	@Override
+	public Seller selectSellerMember(int sellerStoreNo)
+	{
+		// TODO Auto-generated method stub
+		return session.selectOne("sellerMapper.selectSellerMember", sellerStoreNo);
+	}
+
+	@Override
+	public int sellerAssignUpdate(int sellerStoreNo)
+	{
+		// TODO Auto-generated method stub
+		return session.update("sellerMapper.sellerAssignUpdate", sellerStoreNo);
+	}
+
+	@Override
+	public int deleteSellerByNo(int sellerStoreNo)
+	{
+		// TODO Auto-generated method stub
+		return session.delete("sellerMapper.deleteSellerByNo", sellerStoreNo);
+	}
 }

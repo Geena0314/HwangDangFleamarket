@@ -26,7 +26,7 @@
 	<div id="sellerRegister">
 		<lee:choose>
 			<lee:when test="${ sessionScope.login_info.memberId == 'kinghwang' }">
-					<a href="/HwangDangFleamarket/admin/sellerRegisterStatus.go">
+					<a href="/HwangDangFleamarket/admin/sellerRegisterStatus.go?page=1">
 						<!-- 판매자 신청 현황.(관리자) -->
 						<img src="../image_storage/sellerRegisterStatus.jpg">
 					</a>
@@ -34,9 +34,17 @@
 			<lee:otherwise>
 				<lee:choose>
 					<lee:when test="${ sessionScope.login_info.memberAssign == 0 }">
-						<a href="/HwangDangFleamarket/member/sellerRegister.go">
-							<img src="../image_storage/sellerRegister.jpg"><!-- 등록폼으로이동. 판매자등록신청.-->
-						</a>
+						<lee:choose>
+							<lee:when test="${ sessionScope.sellerRegister == 1 }">
+								<!-- 등록신청을 했는데 결과가 없는경우. -->
+								<img src="../image_storage/sellerRegisterResult.jpg">
+							</lee:when>
+							<lee:otherwise>
+								<a href="/HwangDangFleamarket/member/sellerRegister.go">
+									<img src="../image_storage/sellerRegister.jpg"><!-- 등록폼으로이동. 판매자등록신청.-->
+								</a>
+							</lee:otherwise>
+						</lee:choose>
 					</lee:when>
 					<lee:otherwise>
 						<img src="../image_storage/salesStatus.jpg"><!-- 판매현황. -->

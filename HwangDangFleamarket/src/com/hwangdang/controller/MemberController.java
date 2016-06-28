@@ -1,6 +1,7 @@
 package com.hwangdang.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,7 +52,7 @@ public class MemberController {
 	
 	@RequestMapping("/login") //로그인 화면폼이 나오게 함
 	public String login(){
-		return "member/login_form.tiles";
+		return "/WEB-INF/view/member/login_form.jsp";
 	}
 	
 	@RequestMapping("/loginResult") //로그인 후 화면
@@ -61,7 +63,16 @@ public class MemberController {
 			if(memberPassword.equals(member.getMemberPassword())){ //아이디와 패스워드가 맞는 경우
 				if(member.getMemberAssign() == 1)
 				{
+					//판매자인경우
 					session.setAttribute("seller", service.selectSellerById(memberId));
+				}
+				else
+				{
+					//판매자가 아닌데 셀러신청을 한경우.
+					if(service.selectSellerById(memberId) != null)
+					{
+						session.setAttribute("sellerRegister", 1);
+					}
 				}
 				session.setAttribute("login_info", member);
 				return new ModelAndView("member/login_success.tiles");
@@ -131,7 +142,12 @@ public class MemberController {
 	    // /는 application의 루트경로 => 파일경로로 알려준다.
 	    try
 		{
-			sellerMainImage.transferTo(image);
+	    	//톰캣 경로의 image_storage로 파일복사.
+	    	String imageStorage = request.getServletContext().getRealPath("/image_storage");
+	    	FileCopyUtils.copy(sellerMainImage.getInputStream(), new FileOutputStream(imageStorage+"/"+OriginalfileName));
+	    	
+	    	//gits경로로 이미지 이동.
+ 			sellerMainImage.transferTo(image);
 		} catch (IllegalStateException | IOException e)
 		{
 			// TODO Auto-generated catch block

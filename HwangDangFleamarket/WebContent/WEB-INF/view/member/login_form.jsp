@@ -1,5 +1,17 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="lee" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>황당마켓</title>
+<style type="text/css">
+	div
+	{
+		margin-top: 100px;
+		margin-left: 27px;
+	}
+</style>
 
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
 <script type="text/javascript">
@@ -36,41 +48,46 @@
 		});
 	});
 </script>
-
-<fieldset style="width:350px">
-	<legend>로그인 폼</legend>   
-	<form action="/HwangDangFleamarket/member/loginResult.go" method="post" name="login_form">
-		<table align='center'>
-			<tr>
-				<td>아이디</td>
-				<td><input type="text" name="memberId" id="id" size="10" autofocus="autofocus">@
-					  <input type="text" name="email" id="email" size="10"> 
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" id="idError">
-					<lee:if test="${not empty requestScope.idError }">
-						${ requestScope.idError }
-					</lee:if>
-				</td>
-			</tr>
-			<tr>
-				<td>패스워드</td>
-				<td><input type="password" name="memberPassword" id="password" size="20"></td>
-			</tr>
-			<tr>
-				<td colspan="2" id="passwordError">
-					<lee:if test="${not empty requestScope.passwordError }">
-						${ requestScope.passwordError }
-					</lee:if>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<input type="submit" value="로그인" id="login"/>
-					<input type="reset" value="초기화"/>
-				</td>
-			</tr>
-		</table>	
-	</form>
-</fieldset>
+</head>
+	<body>
+		<div>
+			<fieldset style="width:350px">
+				<legend>로그인 폼</legend>   
+				<form action="/HwangDangFleamarket/member/loginResult.go" method="post" name="login_form">
+					<table align='center'>
+						<tr>
+							<td>아이디</td>
+							<td><input type="text" name="memberId" id="id" size="10" autofocus="autofocus">@
+								  <input type="text" name="email" id="email" size="10"> 
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" id="idError">
+								<lee:if test="${not empty requestScope.idError }">
+									${ requestScope.idError }
+								</lee:if>
+							</td>
+						</tr>
+						<tr>
+							<td>패스워드</td>
+							<td><input type="password" name="memberPassword" id="password" size="20"></td>
+						</tr>
+						<tr>
+							<td colspan="2" id="passwordError">
+								<lee:if test="${not empty requestScope.passwordError }">
+									${ requestScope.passwordError }
+								</lee:if>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<input type="submit" value="로그인" id="login"/>
+								<input type="reset" value="초기화"/>
+							</td>
+						</tr>
+					</table>	
+				</form>
+			</fieldset>
+		</div>
+	</body>
+</html>
