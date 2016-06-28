@@ -20,6 +20,8 @@ public class Seller implements Serializable
 	private int sellerAssign;
 	private String memberId;
 	
+	private Member member;
+	
 	public Seller()
 	{
 		// TODO Auto-generated constructor stub
@@ -45,6 +47,30 @@ public class Seller implements Serializable
 		this.sellerIntroduction = sellerIntroduction;
 		this.sellerAssign = sellerAssign;
 		this.memberId = memberId;
+	}
+
+	public Seller(int sellerStoreNo, String sellerStoreName, String sellerTaxId, String sellerIndustry,
+			String sellerSubIndustry, String sellerZipcode, String sellerAddress, String sellerSubAddress,
+			String sellerStoreImage, String sellerProduct1, String sellerProduct2, String sellerProduct3,
+			String sellerIntroduction, int sellerAssign, String memberId, Member member)
+	{
+		super();
+		this.sellerStoreNo = sellerStoreNo;
+		this.sellerStoreName = sellerStoreName;
+		this.sellerTaxId = sellerTaxId;
+		this.sellerIndustry = sellerIndustry;
+		this.sellerSubIndustry = sellerSubIndustry;
+		this.sellerZipcode = sellerZipcode;
+		this.sellerAddress = sellerAddress;
+		this.sellerSubAddress = sellerSubAddress;
+		this.sellerStoreImage = sellerStoreImage;
+		this.sellerProduct1 = sellerProduct1;
+		this.sellerProduct2 = sellerProduct2;
+		this.sellerProduct3 = sellerProduct3;
+		this.sellerIntroduction = sellerIntroduction;
+		this.sellerAssign = sellerAssign;
+		this.memberId = memberId;
+		this.member = member;
 	}
 
 	public int getSellerStoreNo() {
@@ -167,10 +193,22 @@ public class Seller implements Serializable
 		this.memberId = memberId;
 	}
 
+	public Member getMember()
+	{
+		return member;
+	}
+
+	public void setMember(Member member)
+	{
+		this.member = member;
+	}
+
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((member == null) ? 0 : member.hashCode());
 		result = prime * result + ((memberId == null) ? 0 : memberId.hashCode());
 		result = prime * result + ((sellerAddress == null) ? 0 : sellerAddress.hashCode());
 		result = prime * result + sellerAssign;
@@ -190,7 +228,8 @@ public class Seller implements Serializable
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -198,71 +237,90 @@ public class Seller implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		Seller other = (Seller) obj;
-		if (memberId == null) {
+		if (member == null)
+		{
+			if (other.member != null)
+				return false;
+		} else if (!member.equals(other.member))
+			return false;
+		if (memberId == null)
+		{
 			if (other.memberId != null)
 				return false;
 		} else if (!memberId.equals(other.memberId))
 			return false;
-		if (sellerAddress == null) {
+		if (sellerAddress == null)
+		{
 			if (other.sellerAddress != null)
 				return false;
 		} else if (!sellerAddress.equals(other.sellerAddress))
 			return false;
 		if (sellerAssign != other.sellerAssign)
 			return false;
-		if (sellerIndustry == null) {
+		if (sellerIndustry == null)
+		{
 			if (other.sellerIndustry != null)
 				return false;
 		} else if (!sellerIndustry.equals(other.sellerIndustry))
 			return false;
-		if (sellerIntroduction == null) {
+		if (sellerIntroduction == null)
+		{
 			if (other.sellerIntroduction != null)
 				return false;
 		} else if (!sellerIntroduction.equals(other.sellerIntroduction))
 			return false;
-		if (sellerProduct1 == null) {
+		if (sellerProduct1 == null)
+		{
 			if (other.sellerProduct1 != null)
 				return false;
 		} else if (!sellerProduct1.equals(other.sellerProduct1))
 			return false;
-		if (sellerProduct2 == null) {
+		if (sellerProduct2 == null)
+		{
 			if (other.sellerProduct2 != null)
 				return false;
 		} else if (!sellerProduct2.equals(other.sellerProduct2))
 			return false;
-		if (sellerProduct3 == null) {
+		if (sellerProduct3 == null)
+		{
 			if (other.sellerProduct3 != null)
 				return false;
 		} else if (!sellerProduct3.equals(other.sellerProduct3))
 			return false;
-		if (sellerStoreImage == null) {
+		if (sellerStoreImage == null)
+		{
 			if (other.sellerStoreImage != null)
 				return false;
 		} else if (!sellerStoreImage.equals(other.sellerStoreImage))
 			return false;
-		if (sellerStoreName == null) {
+		if (sellerStoreName == null)
+		{
 			if (other.sellerStoreName != null)
 				return false;
 		} else if (!sellerStoreName.equals(other.sellerStoreName))
 			return false;
 		if (sellerStoreNo != other.sellerStoreNo)
 			return false;
-		if (sellerSubAddress == null) {
+		if (sellerSubAddress == null)
+		{
 			if (other.sellerSubAddress != null)
 				return false;
 		} else if (!sellerSubAddress.equals(other.sellerSubAddress))
 			return false;
-		if (sellerSubIndustry == null) {
+		if (sellerSubIndustry == null)
+		{
 			if (other.sellerSubIndustry != null)
 				return false;
 		} else if (!sellerSubIndustry.equals(other.sellerSubIndustry))
 			return false;
-		if (sellerTaxId == null) {
+		if (sellerTaxId == null)
+		{
 			if (other.sellerTaxId != null)
 				return false;
 		} else if (!sellerTaxId.equals(other.sellerTaxId))
 			return false;
-		if (sellerZipcode == null) {
+		if (sellerZipcode == null)
+		{
 			if (other.sellerZipcode != null)
 				return false;
 		} else if (!sellerZipcode.equals(other.sellerZipcode))
@@ -271,12 +329,14 @@ public class Seller implements Serializable
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "Seller [sellerStoreNo=" + sellerStoreNo + ", sellerStoreName=" + sellerStoreName + ", sellerTaxId="
 				+ sellerTaxId + ", sellerIndustry=" + sellerIndustry + ", sellerSubIndustry=" + sellerSubIndustry
 				+ ", sellerZipcode=" + sellerZipcode + ", sellerAddress=" + sellerAddress + ", sellerSubAddress="
 				+ sellerSubAddress + ", sellerStoreImage=" + sellerStoreImage + ", sellerProduct1=" + sellerProduct1
 				+ ", sellerProduct2=" + sellerProduct2 + ", sellerProduct3=" + sellerProduct3 + ", sellerIntroduction="
-				+ sellerIntroduction + ", sellerAssign=" + sellerAssign + ", memberId=" + memberId + "]";
+				+ sellerIntroduction + ", sellerAssign=" + sellerAssign + ", memberId=" + memberId + ", member="
+				+ member + "]";
 	}
 }

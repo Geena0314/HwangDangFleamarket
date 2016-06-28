@@ -89,8 +89,14 @@ CREATE TABLE member (
 );
 ALTER TABLE member RENAME COLUMN member_sub_adress to member_sub_address;
 
-insert into member values ('isj4216', '52545856', '이성준', '010-9977-2905', '123-456',
-										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 A동 513호', 0);
+insert into member values ('eeeeeeee', '52545856', '이성준', '010-9977-2905', '123-456',
+										   '전라북도 익산시 신동', '신동아파트', 0);
+insert into member values ('ffffffff', '52545856', '이선영', '010-9977-2905', '123-456',
+'전북 익산시 마동.', '명서점슈퍼', 0);
+insert into member values ('cccccccc', '52545856', '김종미', '010-9977-2905', '123-456',
+'전북 군산시 나운동.', '우진아파트 6동 203호', 0);
+insert into member values ('dddddddd', '52545856', '이종엽', '010-9977-2905', '123-456',
+'경기도 성남시 정자동.', '음 무슨 아파트였드라', 0);
 insert into member values ('lsj4216', '52545856', '판매자', '010-9977-2905', '123-456',
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', 1);
 insert into member values ('hwang', 'dangdang', '황경희매니저', '010-9977-2905', '123-456',
@@ -115,6 +121,17 @@ insert into member values ('hwang3', 'dangdang', '황경희매니저', '010-9977
 delete from member where member_id = 'hwanghwang'					
 select * from member
 
+
+select 	s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
+			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
+			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
+			s.seller_introduction, s.seller_assign, s.member_id, 
+			m.member_id, m.member_password, m.member_name, 
+			m.member_phone, m.member_zipcode, m.member_address, 
+			m.member_sub_address, m.member_assign
+from 		seller s, member m
+where 	s.seller_store_no=1
+and		s.member_id=m.member_id
 
 /* 판매자vvvvvvvvvvv */
 CREATE TABLE seller (

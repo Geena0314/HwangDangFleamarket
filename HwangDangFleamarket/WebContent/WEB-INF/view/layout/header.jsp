@@ -39,7 +39,7 @@
 			<c:otherwise>
 				<a href="#" onClick="window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');">로그인</a>&nbsp;&nbsp;
 				<a href="/HwangDangFleamarket/member/register.go">회원가입</a>&nbsp;&nbsp;
-				<a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');}; ">my page</a>&nbsp;&nbsp;
+				<a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');};">my page</a>&nbsp;&nbsp;
 				<a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');};">나의주문</a>&nbsp;&nbsp;
 				<a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');};">장바구니</a>&nbsp;&nbsp;
 			</c:otherwise>

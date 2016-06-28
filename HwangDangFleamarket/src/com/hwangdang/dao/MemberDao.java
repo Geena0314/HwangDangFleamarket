@@ -43,4 +43,7 @@ public interface MemberDao {
 	
 	//스토어 이름으로 중복체크
 	int selectSellerStoreName(String sellerStoreName);
+	
+	//멤버어싸인 1로변경(판매자등록승인)
+	int updateMemberAssign(String memberId);
 }

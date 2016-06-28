@@ -60,22 +60,21 @@ img{
 	border-radius: 30px;
 	overflow: hidden;
 }
-
 </style>
-<h2>황당 플리마켓 Stores</h2>
+<h2>황당 플리마켓 판매자 신청 현황.</h2>
 <div class="seller_listing">
 	<ul>
-		<c:forEach items="${requestScope.list}" var="list">
+		<c:forEach items="${requestScope.registerList}" var="list" varStatus="no">
 			<li id="list_block">
 				<div class="thmb">
 					<div class="store_img">
-						<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${list.sellerStoreNo}&sellerStoreImage=${list.sellerStoreImage}"><img src="../image_storage/${list.sellerStoreImage}"></a>
+						<a href="#" onClick="window.open('/HwangDangFleamarket/admin/sellerRegisterInfo.go?sellerStoreNo=${list.sellerStoreNo}&page=${ requestScope.bean.page }', '판매자 등록 신청 내용', 'scrollbars=yes width=600 height=600 left=450 top=100');"><img src="../image_storage/${list.sellerStoreImage}"></a>
 					</div>
 				</div>
 				<ul class="store_info">
 					<li>
-						<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${list.sellerStoreNo}&sellerStoreImage=${list.sellerStoreImage}">${list.sellerStoreName}</a>
-					</li><br>
+						${list.sellerStoreName}
+					</li>
 					<li class="introduction">
 						${list.sellerIntroduction}
 					</li>
@@ -101,8 +100,8 @@ img{
 <p align="center">
 	<%-- ◀이전 페이지 그룹 처리 --%>
 <c:choose>
-	<c:when test="${requestScope.pagingBean.previousPageGroup}">
-		<a href="/HwangDangFleamarket/seller/sellerList.go?page=${requestScope.pagingBean.beginPage-1}">
+	<c:when test="${requestScope.bean.previousPageGroup}">
+		<a href="/HwangDangFleamarket/admin/sellerRegisterStatus.go?page=${requestScope.bean.beginPage-1}">
 			◀ 
 		</a>
 	</c:when>
@@ -110,14 +109,14 @@ img{
 </c:choose>
 &nbsp;&nbsp;
 <%--페이지 처리 --%>
-<c:forEach begin="${requestScope.pagingBean.beginPage}"
-	end="${requestScope.pagingBean.endPage}" var="page">
+<c:forEach begin="${requestScope.bean.beginPage}"
+	end="${requestScope.bean.endPage}" var="page">
 	<c:choose>
-		<c:when test="${page == requestScope.pagingBean.page}">
+		<c:when test="${page == requestScope.bean.page}">
   				<b>${page}</b>
  			</c:when>
 		<c:otherwise>
-			<a href="/HwangDangFleamarket/seller/sellerList.go?page=${page}">
+			<a href="/HwangDangFleamarket/admin/sellerRegisterStatus.go?page=${page}">
 				${page} 
 			</a>
 		</c:otherwise>
@@ -126,8 +125,8 @@ img{
 </c:forEach>
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
-		<c:when test="${requestScope.pagingBean.nextPageGroup}">
-			<a href="/HwangDangFleamarket/seller/sellerList.go?page=${requestScope.pagingBean.endPage+1}">
+		<c:when test="${requestScope.bean.nextPageGroup}">
+			<a href="/HwangDangFleamarket/admin/sellerRegisterStatus.go?page=${requestScope.bean.endPage+1}">
 				▶
 			</a>
 		</c:when>
