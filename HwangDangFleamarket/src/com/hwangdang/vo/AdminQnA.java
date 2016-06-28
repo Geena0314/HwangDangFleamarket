@@ -1,24 +1,27 @@
 package com.hwangdang.vo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class AdminQnA implements Serializable{
 
 	private int adminQnaNo;
-	private String adminQnaTitle;
-	private String adminQnaContent;
-	private String adminQnaWriter;
-	private Date adminQnaDate;
-	private int adminQnaHit;
-	private String adminQnaPublished;
+	private String adminQnaTitle;  //제목
+	private String adminQnaContent; //글내용
+	private String adminQnaWriter;  //작성자
+	private Date adminQnaDate;  //작성일 
+	private int adminQnaHit;  //조회수 
+	private String adminQnaPublished;  // 공개여부 
+	//private ArrayList<AdminQnAReply> replyList;  //댓글객체 리스트  
+	private AdminQnAReply reply; 
+	private String adminQnaPassword;
+	private String adminQnaReplyExist;
 	
-	/*private AdminQnAReply reply;*/  //댓글객체 
-	
-
 public AdminQnA(){};
 
-public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQuaContent, String adminQnaWriter, Date adminQnaDate,
+/*public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQuaContent, String adminQnaWriter, Date adminQnaDate,
 		int adminQnaHit, String adminQnaPublished) {
 	super();
 	this.adminQnaNo = adminQnaNo;
@@ -29,6 +32,71 @@ public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQuaContent, St
 	this.adminQnaHit = adminQnaHit;
 	this.adminQnaPublished = adminQnaPublished;
 }
+*/
+public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQnaContent, String adminQnaWriter, Date adminQnaDate,
+		int adminQnaHit, String adminQnaPublished, String adminQnaPassword) {
+	super();
+	this.adminQnaNo = adminQnaNo;
+	this.adminQnaTitle = adminQnaTitle;
+	this.adminQnaContent = adminQnaContent;
+	this.adminQnaWriter = adminQnaWriter;
+	this.adminQnaDate = adminQnaDate;
+	this.adminQnaHit = adminQnaHit;
+	this.adminQnaPublished = adminQnaPublished;
+	this.adminQnaPassword = adminQnaPassword;
+}
+
+public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQnaContent, String adminQnaWriter, Date adminQnaDate,
+		int adminQnaHit, String adminQnaPublished, AdminQnAReply reply, String adminQnaPassword) {
+	super();
+	this.adminQnaNo = adminQnaNo;
+	this.adminQnaTitle = adminQnaTitle;
+	this.adminQnaContent = adminQnaContent;
+	this.adminQnaWriter = adminQnaWriter;
+	this.adminQnaDate = adminQnaDate;
+	this.adminQnaHit = adminQnaHit;
+	this.adminQnaPublished = adminQnaPublished;
+	this.reply = reply;
+	this.adminQnaPassword = adminQnaPassword;
+}
+
+
+
+
+public String getAdminQnaReplyExist() {
+	return adminQnaReplyExist;
+}
+
+public void setAdminQnaReplyExist(String adminQnaReplyExist) {
+	this.adminQnaReplyExist = adminQnaReplyExist;
+}
+
+public String getAdminQnaPassword() {
+	return adminQnaPassword;
+}
+
+public void setAdminQnaPassword(String adminQnaPassword) {
+	this.adminQnaPassword = adminQnaPassword;
+}
+
+public AdminQnAReply getReply() {
+	return reply;
+}
+
+public void setReply(AdminQnAReply reply) {
+	this.reply = reply;
+}
+
+public String getAdminQnaContent() {
+	return adminQnaContent;
+}
+
+
+
+public void setAdminQnaContent(String adminQnaContent) {
+	this.adminQnaContent = adminQnaContent;
+}
+
 
 public int getAdminQnaNo() {
 	return adminQnaNo;

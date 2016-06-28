@@ -10,6 +10,8 @@ public class AdminQnAReply implements Serializable
 	private Date adminReplyDate;
 	private String adminReplyWriter;
 	private int adminQnaNo;
+	private String adminReplyWriteDate;
+	
 	
 	public AdminQnAReply()
 	{
@@ -27,6 +29,26 @@ public class AdminQnAReply implements Serializable
 		this.adminQnaNo = adminQnaNo;
 	}
 
+	public AdminQnAReply(String adminReplyContent, Date adminReplyDate, String adminReplyWriter,
+			int adminQnaNo) 
+	{
+		super();
+		this.adminReplyContent = adminReplyContent;
+		this.adminReplyDate = adminReplyDate;
+		this.adminReplyWriter = adminReplyWriter;
+		this.adminQnaNo = adminQnaNo;
+	}
+	public AdminQnAReply(String adminReplyContent, String adminReplyWriteDate , String adminReplyWriter,
+			int adminQnaNo) 
+	{
+		super();
+		this.adminReplyContent = adminReplyContent;
+		this.adminReplyWriteDate = adminReplyWriteDate;
+		this.adminReplyWriter = adminReplyWriter;
+		this.adminQnaNo = adminQnaNo;
+	}
+	
+	
 	public int getAdminReplyNo() 
 	{
 		return adminReplyNo;
@@ -75,6 +97,15 @@ public class AdminQnAReply implements Serializable
 	public void setAdminQnaNo(int adminQnaNo) 
 	{
 		this.adminQnaNo = adminQnaNo;
+	}
+
+	
+	public String getAdminReplyWriteDate() {
+		return adminReplyWriteDate;
+	}
+
+	public void setAdminReplyWriteDate(String adminReplyWriteDate) {
+		this.adminReplyWriteDate = adminReplyWriteDate;
 	}
 
 	@Override
@@ -128,6 +159,9 @@ public class AdminQnAReply implements Serializable
 		return true;
 	}
 
+	
+	
+	
 	@Override
 	public String toString() 
 	{

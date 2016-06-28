@@ -39,10 +39,17 @@
 	<context:component-scan
 		base-package="com.hwangdang.serviceimpl, com.hwangdang.controller, com.hwangdang.daoimpl" />
 
-	<mvc:annotation-driven />
+	<mvc:annotation-driven >
+		 <mvc:message-converters>
+		 	 <bean class="org.springframework.http.converter.StringHttpMessageConverter"
+		 		c:defaultCharset="UTF-8" />
+		 </mvc:message-converters>
+	</mvc:annotation-driven>
 	
 	<!-- 메인페이지 설정. -->
 	<mvc:view-controller path="/main.go" view-name="main.tiles" />
+	<mvc:view-controller path="/boardQnA_register_form.go"  view-name="admin/boardQnA_register_form.tiles"/>
+	
 	
 	<bean name="tilesConfig" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">

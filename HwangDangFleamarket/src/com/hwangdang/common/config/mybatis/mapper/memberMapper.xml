@@ -96,4 +96,11 @@
 	<select id="selectSellerStoreName" parameterType="string" resultType="_int">
 		select count(seller_store_name) from seller where seller_store_name = #{sellerStoreName}
 	</select>
+	
+	<!-- 멤버 판매자등록승인(assign값 1로변경) -->
+	<update id="updateMemberAssign" parameterType="string">
+		update 	member
+		set			member_assign=1
+		where 	member_id=#{memberId}
+	</update>
 </mapper>

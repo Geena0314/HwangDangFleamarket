@@ -1,3 +1,4 @@
+
 /* 회원 */
 DROP TABLE member 
 	CASCADE CONSTRAINTS;
@@ -88,8 +89,14 @@ CREATE TABLE member (
 );
 ALTER TABLE member RENAME COLUMN member_sub_adress to member_sub_address;
 
-insert into member values ('isj4216', '52545856', '이성준', '010-9977-2905', '123-456',
-										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 A동 513호', 0);
+insert into member values ('eeeeeeee', '52545856', '이성준', '010-9977-2905', '123-456',
+										   '전라북도 익산시 신동', '신동아파트', 0);
+insert into member values ('ffffffff', '52545856', '이선영', '010-9977-2905', '123-456',
+'전북 익산시 마동.', '명서점슈퍼', 0);
+insert into member values ('cccccccc', '52545856', '김종미', '010-9977-2905', '123-456',
+'전북 군산시 나운동.', '우진아파트 6동 203호', 0);
+insert into member values ('dddddddd', '52545856', '이종엽', '010-9977-2905', '123-456',
+'경기도 성남시 정자동.', '음 무슨 아파트였드라', 0);
 insert into member values ('lsj4216', '52545856', '판매자', '010-9977-2905', '123-456',
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', 1);
 insert into member values ('hwang', 'dangdang', '황경희매니저', '010-9977-2905', '123-456',
@@ -100,6 +107,7 @@ insert into member values ('lsj421678', 'dangdang', '황경희매니저', '010-9
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1); 
 insert into member values ('hwanghwang', 'dangdang', '황경희매니저', '010-9977-2905', '123-466',
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 1);
+   						
    										   
 insert into member values ('hwang@naver.com','dangdang', '황경희', '010-2387-0073','456-888','경기도 안산시 상록구','어디동 21번지',1) 
 
@@ -112,6 +120,18 @@ insert into member values ('hwang3', 'dangdang', '황경희매니저', '010-9977
 
 delete from member where member_id = 'hwanghwang'					
 select * from member
+
+
+select 	s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
+			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
+			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
+			s.seller_introduction, s.seller_assign, s.member_id, 
+			m.member_id, m.member_password, m.member_name, 
+			m.member_phone, m.member_zipcode, m.member_address, 
+			m.member_sub_address, m.member_assign
+from 		seller s, member m
+where 	s.seller_store_no=1
+and		s.member_id=m.member_id
 
 /* 판매자vvvvvvvvvvv */
 CREATE TABLE seller (
@@ -134,12 +154,6 @@ CREATE TABLE seller (
 );
 drop sequence seller_store_no_seq
 create sequence seller_store_no_seq nocache;
-insert into seller values (seller_store_no_seq.nextval, '황당마켓1', '12345678901', '업종임', '업종소분류', '123-456',
-   										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '사진임', '판매물품1', '판매물품2', '판매물품3', '소개글', '1', 'lsj4216');
-insert into seller values (seller_store_no_seq.nextval, '황당마켓2', '12345678901', '업종임', '업종소분류', '123-456',
-   										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '사진임', '판매물품1', '판매물품2', '판매물품3', '소개글', '1', 'lsj42167');
-insert into seller values (seller_store_no_seq.nextval, '황당마켓3', '12345678901', '업종임', '업종소분류', '123-456',
-   										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '사진임', '판매물품1', '판매물품2', '판매물품3', '소개글', '1', 'lsj421678');   
 
 insert into seller values(seller_store_no_seq.nextval, '해물나라', '12345-67890', '대분류업종', '소분류업종', '123-456', 
 							'경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '해물찜.jpg', '#전복', '#냉동문어', '#낙지', 
@@ -151,7 +165,8 @@ insert into seller values(seller_store_no_seq.nextval, '통영대표꿀빵', '12
 insert into seller values(seller_store_no_seq.nextval, '매머드', '12345-66789', '대분류업종', '소분류업종', '123-654', 
 							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵.jpg', '#빅커피', '#꿀라떼', '#고구마라떼', 
 							'넘나 맛있는 커피를 만드는 카페입니다.',0, 'hwang3'); 
-   										  
+   		
+select * FROM member;
 select * from seller
 delete from seller where member_id = 'hwang3'
 
@@ -281,6 +296,7 @@ create sequence cart_no_seq nocache;
 
 /* 주문vvvvvvvvvvvvvv */
 drop table orders
+
 CREATE TABLE orders (
 	orders_no VARCHAR2(10) primary key, /* 주문번호 */
 	orders_receiver VARCHAR2(18) NOT NULL, /* 받는사람 */
@@ -303,6 +319,7 @@ insert into orders values ('c', '받는사람3', '123-123-1234', '123-123', '주
 insert into orders values ('d', '받는사람4', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 'ㅈㅁㅎㅎ', 'isj4216');
 insert into orders values ('e', '받는사람5', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 'ㅈㅁㅎㅎ', 'isj4216');
 insert into orders values ('f', '받는사람6', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 'ㅈㅁㅎㅎ', 'isj4216');
+
 
 
 /* 상품옵션vvvvvvvv */
@@ -361,6 +378,11 @@ CREATE TABLE admin_QnA (
 	admin_qna_hit NUMBER NOT NULL, /* 관리자QnA 조회수 */
 	admin_qna_published VARCHAR2(3) NOT NULL /* 관리자QnA 공개여부 */
 );
+
+
+
+
+
 drop sequence admin_qna_no_seq
 create sequence admin_qna_no_seq nocache;
 
@@ -403,6 +425,9 @@ CREATE TABLE admin_QnA_reply (
 	admin_qna_no NUMBER not null, /* 관리자QnA no */
 	foreign key(admin_qna_no) references admin_qna(admin_qna_no) on delete cascade
 );
+
+
+
 drop sequence admin_reply_no_seq
 create sequence admin_reply_no_seq nocache;
 

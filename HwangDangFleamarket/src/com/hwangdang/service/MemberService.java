@@ -4,7 +4,8 @@ import com.hwangdang.vo.Member;
 import com.hwangdang.vo.Seller;
 
 public interface MemberService {
-
+	void add(Member member);
+	
 	Member findById(String memberId);
 
 	//멤버 아이디로 셀러정보찾기.

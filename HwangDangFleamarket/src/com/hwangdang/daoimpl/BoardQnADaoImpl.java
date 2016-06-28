@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hwangdang.common.util.Constants;
 import com.hwangdang.dao.Dao;
 import com.hwangdang.vo.AdminQnA;
+import com.hwangdang.vo.AdminQnAReply;
 
 @Repository
 public class BoardQnADaoImpl implements Dao {
@@ -18,8 +19,18 @@ public class BoardQnADaoImpl implements Dao {
 	@Autowired
 	private SqlSessionTemplate session;
 
-	//QnA게시판 전체 조회 -페이징
 	
+	//게시글 추가전  현재 시퀀스값 조회
+	public int selectQnABoardSeq(){
+		return session.selectOne("boardQnA.select-get-QnA-no");
+	}
+	
+	//게시글 insert 
+	public void insertQnABoard(AdminQnA newQnA){
+		session.insert("boardQnA.insert", newQnA);
+	}
+		
+	//QnA게시판 전체 조회 -페이징
 	public List selectAllQnABoard(int page){
 		HashMap<String ,Object> map = new HashMap();
 		map.put("page", page);
@@ -37,8 +48,30 @@ public class BoardQnADaoImpl implements Dao {
 		return session.selectOne("boardQnA.select-one-detail" ,no);
 	}
 	//글번호로 게시글 삭제
-		public int deleteByNo(int no){
-			return session.delete("boardQnA.delete-no", no);
-		}
+	public int deleteByNo(int no){
+		return session.delete("boardQnA.delete-by-no", no);
+	}
+	//글번호로 게시글 수정변경 
+	public void updateByNo(HashMap param){
+		session.update("boardQnA.update-by-no", param);
+	}
+	//댓글등록 add
+	public void insertReploy(AdminQnAReply reply){
+		//System.out.println("글번호 : " + reply.getAdminQnaNo());
+		session.update("boardQnA.update-by-no-reply-exsit", reply.getAdminQnaNo());
+		session.insert("boardQnA.insert-reply", reply);
+	}  
+	//댓글삭제 remove
+	public void deleteReployByNo(int replyNo , int contentNo){ 
+		//adminQnA 컬럼 'f'으로 변경 
+		session.update("boardQnA.update-by-no-reply-exsit-f",contentNo);
+		//댓글삭제
+		session.delete("boardQnA.delete-reply-by-no", replyNo);
+	}
+	//댓글수정 update
+	public void updateReployByNo(HashMap param){
+		session.update("boardQnA.update-reply-by-no", param);
+	}
+	
 	
 }
