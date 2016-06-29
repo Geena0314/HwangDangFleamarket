@@ -47,7 +47,9 @@
 						</lee:choose>
 					</lee:when>
 					<lee:otherwise>
-						<img src="../image_storage/salesStatus.jpg"><!-- 판매현황. -->
+						<a href="/HwangDangFleamarket/seller/salesStatus.go">
+							<img src="../image_storage/salesStatus.jpg"><!-- 판매현황조회. -->
+						</a>
 					</lee:otherwise>
 				</lee:choose>
 			</lee:otherwise>

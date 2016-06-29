@@ -37,4 +37,6 @@ public class SellerController {
 		map.put("seller", seller);
 		return new ModelAndView("seller/seller/seller_store_main.tiles", map);
 	}
+	
+	
 }
