@@ -114,7 +114,7 @@ insert into member values ('hwang@naver.com','dangdang', '황경희', '010-2387-
 insert into member values ('kinghwang', 'kingdang', '퐝경', '010-9977-2905', '123-466',
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 0);
    										   
-insert into member values ('hwang3', 'dangdang', '황경희매니저', '010-9977-2905', '123-466',
+insert into member values ('admin@admin.com', '12341234', '관리자', '010-9977-2905', '123-466',
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 1);
 
 
