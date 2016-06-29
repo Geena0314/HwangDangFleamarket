@@ -18,11 +18,13 @@
 	
 	<!-- 주문상품 리절트맵. -->
 	<resultMap type="orderProduct" id="orderProduct-basic-resultmap">
+		<id column="order_seq_no" property="orderSeqNo"/>
 		<result column="order_amount" property="orderAmount"/>
 		<result column="orders_no" property="ordersNo"/>
 		<result column="product_id" property="productId"/>
 		<result column="option_id" property="optionId"/>
-	</resultMap>
+		<result column="seller_store_no" property="sellerStoreNo"/>
+	</resultMap>   
 	
 	<!-- 주문, 상품 ,주문상품 Join -->
 	<resultMap type="orders" id="orders-product-orderProduct" extends="orders-basic-resultmap">

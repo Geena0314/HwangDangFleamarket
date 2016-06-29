@@ -9,25 +9,7 @@
 	member_id , seller_id , product_id
 </sql>
 
-
-<!-- 	private String ordersNo;
-	private String ordersReceiver;
-	private String ordersPhone;
-	private String ordersZipcode;
-	private String ordersAddress;
-	private String ordersSubAddress;
-	private int ordersTotalPrice;
-	private String ordersPayment;
-	private String ordersRequest;
-	private int paymentStatus;
-	private int ordersStatus;
-	private String memberId;  //구매자 ID
-	private Seller seller; // 판매자객체 
-	private Product product;  // 제품객체 
-	private OrderProduct orderProduct;  // 주문한 제품에대한 세부정보  , 주문수량 , 상품ID -->
- <!--  구매자 아이디까지  -->
- 
-
+<!-- Orders객체 : 주문자아이디까지 -->
 <resultMap type="com.hwangdang.vo.Orders" id="order-select-basic-resultmap">
 	<id  column="orders_no"   property="ordersNo" />
 	<result column="orders_receiver"   property="ordersReceiver" />
@@ -55,12 +37,14 @@
 
 	<!-- order : orderProduct  조인. -->
 	<resultMap type="orders" id="order-orderProduct-join" extends="order-product-join">
-		<association property="orderProduct" javaType="orderProduct" resultMap="productMapper.productOption-basic-resultMap"/>
+		<association property="orderProduct" javaType="orderProduct" resultMap="orderMapper.orderProduct-basic-resultmap"/>
+	</resultMap>
+	
+	<!-- order : ProductOption  조인. -->
+	<resultMap type="orders" id="order-productOption-join" extends="order-orderProduct-join">
+		<association property="productOption" javaType="productOption" resultMap="productMapper.productOption-basic-resultMap"/>
 	</resultMap>
   	
-	
-  
- 
 <!-- 배송현황 조회
 	배송현황 - 입금대기중 : 0 
 	배송현황 - 결제완료 : 1
@@ -72,9 +56,9 @@
 	교환/환불/취소 - 구매취소(배송전) :  7 
 	
  -->			
-<select id="select-diliver-status" parameterType="string"  resultMap="order-product-join" >
+<select id="select-diliver-status" parameterType="string"  resultMap="order-productOption-join" >
 
-SELECT      o.orders_no , o.orders_receiver , o.orders_phone ,
+	SELECT  o.orders_no , o.orders_receiver , o.orders_phone ,
 			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
 			o.orders_total_price , o.orders_payment , o.orders_request ,
 			o.payment_status , o.orders_status ,
@@ -89,16 +73,18 @@ SELECT      o.orders_no , o.orders_receiver , o.orders_phone ,
 			s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
 			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
 			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
-			s.seller_introduction, s.seller_assign, s.member_id  
+			s.seller_introduction, s.seller_assign, s.member_id  , 
 		
+			po.option_id , po.option_name , po.option_sub_name , po.option_stock , po.option_add_price , po.product_id 
 			
-	FROM   orders o ,  order_product op , product p  ,seller s  ,member m 
+	FROM   orders o ,  order_product op , product p  ,seller s  , product_option po
 	
-	WHERE  o.member_id =  #{id} 
+	WHERE  o.member_id =  'admin@admin.com'  
 	AND    o.orders_no =  op.orders_no
 	AND    op.product_id =  p.product_Id
 	AND    op.seller_store_no =  s.seller_store_no
-	AND    o.orders_status IN ( 0,1,2,3,4)	 
+	AND    op.option_id  =  po.option_id
+	AND     p.product_Id = po.product_id 
 </select>
 
 <!-- 
