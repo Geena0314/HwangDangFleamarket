@@ -308,17 +308,17 @@ CREATE TABLE orders (
 	orders_payment VARCHAR2(21) NOT NULL, /* 결제방식 */
 	orders_request VARCHAR2(51), /* 요청사항 */
 	payment_status NUMBER(1) NOT NULL, /* 결제여부 */
-	orders_status VARCHAR2(15) NOT NULL, /* 주문현황 */
+	orders_status number(1) NOT NULL, /* 주문현황 */
 	member_id VARCHAR2(30) NOT NULL,/* 아이디 */
 	foreign key(member_id) references member(member_id)
 );
 
-insert into orders values ('a', '받는사람1', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 'ㅈㅁㅎㅎ', 'isj4216');
-insert into orders values ('b', '받는사람2', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 'ㅈㅁㅎㅎ', 'isj4216');
-insert into orders values ('c', '받는사람3', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 'ㅈㅁㅎㅎ', 'isj4216');
-insert into orders values ('d', '받는사람4', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 'ㅈㅁㅎㅎ', 'isj4216');
-insert into orders values ('e', '받는사람5', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 'ㅈㅁㅎㅎ', 'isj4216');
-insert into orders values ('f', '받는사람6', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 'ㅈㅁㅎㅎ', 'isj4216');
+insert into orders values ('m', '받는사람1', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 0, 'asdfasdf');
+insert into orders values ('n', '받는사람2', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 1, 'asdfasdf');
+insert into orders values ('o', '받는사람3', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 2, 'asdfasdf');
+insert into orders values ('p', '받는사람4', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 3, 'asdfasdf');
+insert into orders values ('q', '받는사람5', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 4, 'asdfasdf');
+insert into orders values ('r', '받는사람6', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 5, 'asdfasdf');
 
 
 
@@ -470,15 +470,19 @@ select member_id from seller where seller_store_no = 1
 
 /* 주문상품 vvvvvvv*/
 drop table order_product
-CREATE TABLE order_product (
-	order_amount number(4) not null, /* 상품수량 */
-	orders_no VARCHAR2(10) not null, /* 주문번호 */
-	product_id VARCHAR2(30) not null, /* 상품ID */
-	option_id number not null,
+CREATE TABLE order_product  (
+	order_seq_no number primary key ,  -- PK 
+	order_amount number(4) not null, /* 상품수량  */
+	orders_no VARCHAR2(10) not null, /* 주문번호 FK */
+	product_id VARCHAR2(30) not null, /* 상품ID FK */
+	option_id number not null ,      --  상품옵션ID_FK  
+	seller_store_no number not null,     -- 판매자스토어NO_FK
 	foreign key(orders_no) references orders(orders_no) on delete cascade,
-	foreign key(product_id) references product(product_id),
-	foreign key(option_id) references product_option(option_id) on delete set null
+	foreign key(product_id) references product(product_id) on delete set null ,
+	foreign key(option_id) references product_option(option_id) on delete set null ,
+	foreign key(seller_store_no) references seller(seller_store_no) on delete set null
 );
+create sequence order_seq_no_seq 
 
 
 SELECT * FROM product_option;
