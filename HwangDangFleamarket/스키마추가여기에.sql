@@ -20,7 +20,7 @@ ALTER TABLE admin_QnA DROP COLUMN  admin_QnA_reply_exist
 	--교환/환불/취소 - 구매취소(배송전) :  7 
 -- 
 ALTER TABLE orders MODIFY  orders_status number(1);
-
+    
 
     
 -- order_product TB 스키마 변경 
