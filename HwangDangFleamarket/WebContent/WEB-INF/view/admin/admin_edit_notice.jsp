@@ -63,6 +63,7 @@ span{
 		</tbody>
 	</table>
 	<p align="right">
-	<input type="submit" value="수정">&nbsp;&nbsp;<input type="reset" value="다시작성">
+	<input type="submit" value="수정">&nbsp;&nbsp;<input type="reset" value="다시작성">&nbsp;&nbsp;
+	<input type="button" value="취소" onclick="window.location='/HwangDangFleamarket/admin/adminNotice.go?page=${param.page}'">
 	</p>
 </form>

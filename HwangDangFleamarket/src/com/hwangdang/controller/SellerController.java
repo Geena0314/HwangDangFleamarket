@@ -30,7 +30,7 @@ public class SellerController {
 		return new ModelAndView("seller/seller_list.tiles", map);
 	}
 	
-	@RequestMapping("sellerStore")
+	@RequestMapping("/sellerStore")
 	public ModelAndView sellerStore(int sellerStoreNo){
 		Seller seller = service.getSellerBySellerStoreNo(sellerStoreNo);
 		HashMap map = new HashMap<>();
