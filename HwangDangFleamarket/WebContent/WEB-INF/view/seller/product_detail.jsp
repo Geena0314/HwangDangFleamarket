@@ -50,6 +50,7 @@
 		</style>
 		
 		<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
+		 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script type="text/javascript">
 			var currentPage;
 			var qnaCurrentPage;
@@ -847,7 +848,7 @@
 						"success":function(json){
 							
 							
-							confirm("장바구니 이동 ㄱㄱ?");
+							confirm("장바구니에 담겼습니다.\n장바구니 목록으로 이동하시겠습니까?");
 							
 							
 							
