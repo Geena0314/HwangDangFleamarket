@@ -19,7 +19,7 @@ public class CartDaoImpl implements CartDao{
 
 	@Override
 	public int insertCart(Cart cart) {
-		return session.insert("cartMapper.insetCart", cart);
+		return session.insert("cartMapper.insertCart", cart);
 	}
 
 	@Override

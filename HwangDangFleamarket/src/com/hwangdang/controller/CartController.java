@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hwangdang.common.util.PagingBean;
@@ -28,13 +29,14 @@ public class CartController {
 			}
 			
 			@RequestMapping("/addCart")
-			public ModelAndView addCart(Cart cart, int page, String productName, int productPrice){
+			@ResponseBody
+			public HashMap<String, Object> addCart( String productName, int productPrice, Cart cart){
 				service.addCart(cart);
 				HashMap map = new HashMap<>();
-				map.put("page", page);
+				map.put("cart", cart);
 				map.put("productName",  productName);
 				map.put("productPrice", productPrice);
-				return new ModelAndView("buyer/cart_list.tiles", map); // controller로 보내줘야하나 뭐지
+				return map; // ajax로 돌아가야겠지
 			}
 			
 			
