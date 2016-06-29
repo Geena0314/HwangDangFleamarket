@@ -362,53 +362,5 @@ SELECT      o.orders_no , o.orders_receiver , o.orders_phone ,
 	
 	AND    o.orders_status IN ( 0,1,2,3,4)	 
 	
-	-------------------------------------------
-	
-	
-	
-	SELECT  o.orders_no , o.orders_receiver , o.orders_phone ,
-			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
-			o.orders_total_price , o.orders_payment , o.orders_request ,
-			o.payment_status , o.orders_status ,
-			o.member_id  , o.seller_id , o.product_id ,
-			
-			s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
-			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
-			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
-			s.seller_introduction, s.seller_assign, s.member_id , 
-		
-			p.product_Id, p.product_name, p.product_price, p.product_stock, 
-			p.product_main_image, p.product_info, p.product_like, 
-			p.seller_store_no
-		
-		
-	FROM   orders o , seller s , product p 
-	
-	WHERE  o.member_id =  'admin@admin.com'  
-	AND	   o.seller_id =  s.member_id
-	AND	   o.product_id = p.product_Id
-	
-	
 
 	
-	SELECT  o.orders_no , o.orders_receiver , o.orders_phone ,
-			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
-			o.orders_total_price , o.orders_payment , o.orders_request ,
-			o.payment_status , o.orders_status ,
-			o.member_id buyer , o.seller_id , o.product_id ,
-			
-			s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
-			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
-			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
-			s.seller_introduction, s.seller_assign, s.member_id , 
-		
-			p.product_Id, p.product_name, p.product_price, p.product_stock, 
-			p.product_main_image, p.product_info, p.product_like, 
-			p.seller_store_no
-		
-	FROM   orders o , seller s , product p 
-	
-	WHERE  o.member_id =  'admin@admin.com'  
-	AND	   o.seller_id =  s.member_id
-	AND	   o.product_id = p.product_Id
-	AND    o.orders_status IN ( 0,1,2,3,4)
