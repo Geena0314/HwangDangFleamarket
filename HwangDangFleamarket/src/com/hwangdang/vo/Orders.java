@@ -17,79 +17,17 @@ public class Orders implements Serializable
 	private int ordersStatus;
 	private String memberId;  //구매자 ID
 	
-	
 	private Seller seller; // 판매자객체 
 	private Product product;  // 제품객체 
 	private OrderProduct orderProduct;  // 주문한 제품에대한 세부정보  , 주문수량 , 상품ID
-	
-	
+	private ProductOption productOption;   // 제품옵션객체 
 	
 	public Orders() {}
 
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
 			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
-			String ordersRequest, int paymentStatus, int ordersStatus, String memberId)
-	{
-		super();
-		this.ordersNo = ordersNo;
-		this.ordersReceiver = ordersReceiver;
-		this.ordersPhone = ordersPhone;
-		this.ordersZipcode = ordersZipcode;
-		this.ordersAddress = ordersAddress;
-		this.ordersSubAddress = ordersSubAddress;
-		this.ordersTotalPrice = ordersTotalPrice;
-		this.ordersPayment = ordersPayment;
-		this.ordersRequest = ordersRequest;
-		this.paymentStatus = paymentStatus;
-		this.ordersStatus = ordersStatus;
-		this.memberId = memberId;
-	}
-
-	
-	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
-			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
-			String ordersRequest, int paymentStatus, int ordersStatus, String memberId, Seller seller,
-			Product product) {
-		super();
-		this.ordersNo = ordersNo;
-		this.ordersReceiver = ordersReceiver;
-		this.ordersPhone = ordersPhone;
-		this.ordersZipcode = ordersZipcode;
-		this.ordersAddress = ordersAddress;
-		this.ordersSubAddress = ordersSubAddress;
-		this.ordersTotalPrice = ordersTotalPrice;
-		this.ordersPayment = ordersPayment;
-		this.ordersRequest = ordersRequest;
-		this.paymentStatus = paymentStatus;
-		this.ordersStatus = ordersStatus;
-		this.memberId = memberId;
-		this.seller = seller;
-		this.product = product;
-	}
-
-	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
-			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
-			String ordersRequest, int paymentStatus, int ordersStatus, String memberId, Seller seller) {
-		super();
-		this.ordersNo = ordersNo;
-		this.ordersReceiver = ordersReceiver;
-		this.ordersPhone = ordersPhone;
-		this.ordersZipcode = ordersZipcode;
-		this.ordersAddress = ordersAddress;
-		this.ordersSubAddress = ordersSubAddress;
-		this.ordersTotalPrice = ordersTotalPrice;
-		this.ordersPayment = ordersPayment;
-		this.ordersRequest = ordersRequest;
-		this.paymentStatus = paymentStatus;
-		this.ordersStatus = ordersStatus;
-		this.memberId = memberId;
-		this.seller = seller;
-	}
-
-	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
-			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
 			String ordersRequest, int paymentStatus, int ordersStatus, String memberId, Seller seller, Product product,
-			OrderProduct orderProduct) {
+			OrderProduct orderProduct, ProductOption productOption) {
 		super();
 		this.ordersNo = ordersNo;
 		this.ordersReceiver = ordersReceiver;
@@ -106,6 +44,121 @@ public class Orders implements Serializable
 		this.seller = seller;
 		this.product = product;
 		this.orderProduct = orderProduct;
+		this.productOption = productOption;
+	}
+
+	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
+			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
+			String ordersRequest, int paymentStatus, int ordersStatus, String memberId) {
+		super();
+		this.ordersNo = ordersNo;
+		this.ordersReceiver = ordersReceiver;
+		this.ordersPhone = ordersPhone;
+		this.ordersZipcode = ordersZipcode;
+		this.ordersAddress = ordersAddress;
+		this.ordersSubAddress = ordersSubAddress;
+		this.ordersTotalPrice = ordersTotalPrice;
+		this.ordersPayment = ordersPayment;
+		this.ordersRequest = ordersRequest;
+		this.paymentStatus = paymentStatus;
+		this.ordersStatus = ordersStatus;
+		this.memberId = memberId;
+	}
+
+	public String getOrdersNo() {
+		return ordersNo;
+	}
+
+	public void setOrdersNo(String ordersNo) {
+		this.ordersNo = ordersNo;
+	}
+
+	public String getOrdersReceiver() {
+		return ordersReceiver;
+	}
+
+	public void setOrdersReceiver(String ordersReceiver) {
+		this.ordersReceiver = ordersReceiver;
+	}
+
+	public String getOrdersPhone() {
+		return ordersPhone;
+	}
+
+	public void setOrdersPhone(String ordersPhone) {
+		this.ordersPhone = ordersPhone;
+	}
+
+	public String getOrdersZipcode() {
+		return ordersZipcode;
+	}
+
+	public void setOrdersZipcode(String ordersZipcode) {
+		this.ordersZipcode = ordersZipcode;
+	}
+
+	public String getOrdersAddress() {
+		return ordersAddress;
+	}
+
+	public void setOrdersAddress(String ordersAddress) {
+		this.ordersAddress = ordersAddress;
+	}
+
+	public String getOrdersSubAddress() {
+		return ordersSubAddress;
+	}
+
+	public void setOrdersSubAddress(String ordersSubAddress) {
+		this.ordersSubAddress = ordersSubAddress;
+	}
+
+	public int getOrdersTotalPrice() {
+		return ordersTotalPrice;
+	}
+
+	public void setOrdersTotalPrice(int ordersTotalPrice) {
+		this.ordersTotalPrice = ordersTotalPrice;
+	}
+
+	public String getOrdersPayment() {
+		return ordersPayment;
+	}
+
+	public void setOrdersPayment(String ordersPayment) {
+		this.ordersPayment = ordersPayment;
+	}
+
+	public String getOrdersRequest() {
+		return ordersRequest;
+	}
+
+	public void setOrdersRequest(String ordersRequest) {
+		this.ordersRequest = ordersRequest;
+	}
+
+	public int getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(int paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+	public int getOrdersStatus() {
+		return ordersStatus;
+	}
+
+	public void setOrdersStatus(int ordersStatus) {
+		this.ordersStatus = ordersStatus;
+	}
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
 	public Seller getSeller() {
@@ -116,144 +169,28 @@ public class Orders implements Serializable
 		this.seller = seller;
 	}
 
-	public String getOrdersNo()
-	{
-		return ordersNo;
-	}
-
-	public void setOrdersNo(String ordersNo)
-	{
-		this.ordersNo = ordersNo;
-	}
-
-	public String getOrdersReceiver()
-	{
-		return ordersReceiver;
-	}
-
-	public void setOrdersReceiver(String ordersReceiver)
-	{
-		this.ordersReceiver = ordersReceiver;
-	}
-
-	public String getOrdersPhone()
-	{
-		return ordersPhone;
-	}
-
-	public void setOrdersPhone(String ordersPhone)
-	{
-		this.ordersPhone = ordersPhone;
-	}
-
-	public String getOrdersZipcode()
-	{
-		return ordersZipcode;
-	}
-
-	public void setOrdersZipcode(String ordersZipcode)
-	{
-		this.ordersZipcode = ordersZipcode;
-	}
-
-	public String getOrdersAddress()
-	{
-		return ordersAddress;
-	}
-
-	public void setOrdersAddress(String ordersAddress)
-	{
-		this.ordersAddress = ordersAddress;
-	}
-
-	public String getOrdersSubAddress()
-	{
-		return ordersSubAddress;
-	}
-
-	public void setOrdersSubAddress(String ordersSubAddress)
-	{
-		this.ordersSubAddress = ordersSubAddress;
-	}
-
-	public int getOrdersTotalPrice()
-	{
-		return ordersTotalPrice;
-	}
-
-	public void setOrdersTotalPrice(int ordersTotalPrice)
-	{
-		this.ordersTotalPrice = ordersTotalPrice;
-	}
-
-	public String getOrdersPayment()
-	{
-		return ordersPayment;
-	}
-
-	public void setOrdersPayment(String ordersPayment)
-	{
-		this.ordersPayment = ordersPayment;
-	}
-
-	public String getOrdersRequest()
-	{
-		return ordersRequest;
-	}
-
-	public void setOrdersRequest(String ordersRequest)
-	{
-		this.ordersRequest = ordersRequest;
-	}
-
-	public int getPaymentStatus()
-	{
-		return paymentStatus;
-	}
-
-	public void setPaymentStatus(int paymentStatus)
-	{
-		this.paymentStatus = paymentStatus;
-	}
-
-	public int getOrdersStatus()
-	{
-		return ordersStatus;
-	}
-
-	public void setOrdersStatus(int ordersStatus)
-	{
-		this.ordersStatus = ordersStatus;
-	}
-
-	public String getMemberId()
-	{
-		return memberId;
-	}
-
-	public void setMemberId(String memberId)
-	{
-		this.memberId = memberId;
-	}
-
-	public Product getProduct()
-	{
+	public Product getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product)
-	{
+	public void setProduct(Product product) {
 		this.product = product;
 	}
 
-	public OrderProduct getOrderProduct()
-	{
+	public OrderProduct getOrderProduct() {
 		return orderProduct;
 	}
 
-	public void setOrderProduct(OrderProduct orderProduct)
-	{
+	public void setOrderProduct(OrderProduct orderProduct) {
 		this.orderProduct = orderProduct;
+	}
+
+	public ProductOption getProductOption() {
+		return productOption;
+	}
+
+	public void setProductOption(ProductOption productOption) {
+		this.productOption = productOption;
 	}
 
 	@Override
@@ -263,7 +200,7 @@ public class Orders implements Serializable
 				+ ordersSubAddress + ", ordersTotalPrice=" + ordersTotalPrice + ", ordersPayment=" + ordersPayment
 				+ ", ordersRequest=" + ordersRequest + ", paymentStatus=" + paymentStatus + ", ordersStatus="
 				+ ordersStatus + ", memberId=" + memberId + ", seller=" + seller + ", product=" + product
-				+ ", orderProduct=" + orderProduct + "]";
+				+ ", orderProduct=" + orderProduct + ", productOption=" + productOption + "]";
 	}
 
 	@Override
@@ -284,6 +221,7 @@ public class Orders implements Serializable
 		result = prime * result + ((ordersZipcode == null) ? 0 : ordersZipcode.hashCode());
 		result = prime * result + paymentStatus;
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		result = prime * result + ((productOption == null) ? 0 : productOption.hashCode());
 		result = prime * result + ((seller == null) ? 0 : seller.hashCode());
 		return result;
 	}
@@ -358,6 +296,11 @@ public class Orders implements Serializable
 				return false;
 		} else if (!product.equals(other.product))
 			return false;
+		if (productOption == null) {
+			if (other.productOption != null)
+				return false;
+		} else if (!productOption.equals(other.productOption))
+			return false;
 		if (seller == null) {
 			if (other.seller != null)
 				return false;
@@ -366,7 +309,6 @@ public class Orders implements Serializable
 		return true;
 	}
 
-	
 	
 	
 }

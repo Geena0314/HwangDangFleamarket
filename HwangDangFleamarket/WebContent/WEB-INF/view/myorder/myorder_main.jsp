@@ -82,7 +82,8 @@ tr  {
 		<tr>
 			<td>체크박스</td>
 			<td>상품이미지</td>
-			<td>제품정보</td>
+			<td>제품명</td>
+			<td>판매스토어</td>
 			<td>주문수량</td>
 			<td>총주문가격</td>
 			<td>판매자</td>
@@ -96,8 +97,9 @@ tr  {
 			<td><input type="checkbox" name="items" /></td>
 			<td><img src="" /></td>
 			<td>${order.product.productName }</td>
+			<td>${order.seller.sellerStoreName }</td>
 			<td>몰라아직1</td>
-			<td>몰라아직2</td> 
+			<td><%-- ${order.orderTotalPrice } --%></td> 
 			<td>${order.seller.memberId }</td>
 			<td>
 				<c:choose>
