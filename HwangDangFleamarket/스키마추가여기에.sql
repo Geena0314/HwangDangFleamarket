@@ -22,7 +22,7 @@ ALTER TABLE admin_QnA DROP COLUMN  admin_QnA_reply_exist
 ALTER TABLE orders MODIFY  orders_status number(1);
 
 
-
+    
 -- order_product TB 스키마 변경 
 --1
 drop table order_product
