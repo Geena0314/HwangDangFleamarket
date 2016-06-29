@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.hwangdang.dao.AdminNoticeDao;
 import com.hwangdang.service.AdminNoticeService;
@@ -28,7 +27,14 @@ public class AdminNoticeServiceImpl implements AdminNoticeService{
 
 	@Override
 	public List getAllNotice(int page) {
-		return dao.selectAllNotice(page);
+		List<Notice> list = dao.selectAllNotice(page);
+		for(Notice notice : list){
+			notice.setNoticeTitle(notice.getNoticeTitle().replace(">", "&gt;"));
+			notice.setNoticeTitle(notice.getNoticeTitle().replace("<", "&lt;"));
+			notice.setNoticeTitle(notice.getNoticeTitle().replace("\n", "<br>"));
+			notice.setNoticeTitle(notice.getNoticeTitle().replace(" ", "&nbsp;"));
+		}
+		return list;
 	}
 
 	@Override
@@ -40,8 +46,6 @@ public class AdminNoticeServiceImpl implements AdminNoticeService{
 	public Notice getNoticeByNoticeNo(int noticeNo){
 		Notice notice = dao.selectNoticeByNoticeNo(noticeNo);
 		dao.updateNoticeHit(noticeNo);
-		String replace = notice.getNoticeContent().replaceAll("\n", "<br>");
-		notice.setNoticeContent(replace);
 		return notice;
 	}
 

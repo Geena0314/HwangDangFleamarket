@@ -37,6 +37,7 @@ public class AdminNoticeController{
 	@RequestMapping("/adminNoticeDetail")
 	public ModelAndView noticeDetail(int page, int noticeNo){
 		Notice notice = service.getNoticeByNoticeNo(noticeNo);
+		notice = convertor(notice);
 		HashMap map = new HashMap<>();
 		map.put("notice", notice);
 		map.put("page", page);
@@ -55,7 +56,9 @@ public class AdminNoticeController{
 		}
 		notice.setNoticeDate(new Date());
 		service.adminRegisterNotice(notice);
+		notice = convertor(notice);
 		HashMap map = new HashMap<>();
+		map.put("notice", notice);
 		map.put("page", page);
 		return new ModelAndView("admin/admin_notice_detail.tiles", map);
 	}
@@ -76,8 +79,9 @@ public class AdminNoticeController{
 		}
 		notice.setNoticeDate(new Date());
 		service.adminEditNotice(notice);
+		notice = convertor(notice);
 		HashMap map = new HashMap<>();
-		//map.put("notice", notice);
+		map.put("notice", notice);
 		map.put("page", page);
 		return new ModelAndView("admin/admin_notice_detail.tiles", map);
 	}
@@ -91,5 +95,18 @@ public class AdminNoticeController{
 		map.put("list", list);
 		map.put("pagingBean",pagingBean);
 		return new ModelAndView("admin/admin_notice_list.tiles", map);
+	}
+	
+	public Notice convertor(Notice notice){
+		notice.setNoticeTitle(notice.getNoticeTitle().replace(">", "&gt;"));
+		notice.setNoticeTitle(notice.getNoticeTitle().replace("<", "&lt;"));
+		notice.setNoticeTitle(notice.getNoticeTitle().replace("\n", "<br>"));
+		notice.setNoticeTitle(notice.getNoticeTitle().replace(" ", "&nbsp;"));
+		
+		notice.setNoticeContent(notice.getNoticeContent().replace(">", "&gt;"));
+		notice.setNoticeContent(notice.getNoticeContent().replace("<", "&lt;"));
+		notice.setNoticeContent(notice.getNoticeContent().replace("\n", "<br>"));
+		notice.setNoticeContent(notice.getNoticeContent().replace(" ", "&nbsp;"));
+		return notice;
 	}
 }

@@ -1,6 +1,5 @@
 package com.hwangdang.serviceimpl;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,14 @@ public class SellerSerivceImpl implements SellerService{
 
 	@Override
 	public List getAllSeller(int page) {
-		return dao.selectAllSeller(page);
+		List<Seller> list = dao.selectAllSeller(page);
+		for(Seller seller : list){
+			seller.setSellerIntroduction(seller.getSellerIntroduction().replace(">", "&gt;"));
+			seller.setSellerIntroduction(seller.getSellerIntroduction().replace("<", "&lt;"));
+			seller.setSellerIntroduction(seller.getSellerIntroduction().replace("\n", "<br>"));
+			seller.setSellerIntroduction(seller.getSellerIntroduction().replace(" ", "&nbsp;"));
+		}
+		return list;
 	}
 
 	@Override

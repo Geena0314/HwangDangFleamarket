@@ -32,6 +32,7 @@ span{
 <form action="/HwangDangFleamarket/sellerNotice/sellerRegisterNotice.go" method="post">
 	<input type="hidden" name="page" value="1">
 	<input type="hidden" name="sellerStoreNo" value="${param.sellerStoreNo}">
+	<input type="hidden" name="sellerStoreImage" value="${param.sellerStoreImage}">
 	<table>
 		<thead>
 			<tr>
@@ -61,6 +62,6 @@ span{
 	</table>
 	<p align="right">
 	<input type="submit" value="등록">&nbsp;&nbsp;<input type="reset" value="다시작성">&nbsp;&nbsp;
-	<input type="button" value="취소" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=1&sellerStoreNo=${param.sellerStoreNo}'">
+	<input type="button" value="취소" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=1&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
 	</p>
 </form>
