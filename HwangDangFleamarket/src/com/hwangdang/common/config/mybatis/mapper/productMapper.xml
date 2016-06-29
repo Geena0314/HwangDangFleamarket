@@ -6,7 +6,7 @@
 	<sql id="select-basic">
 		SELECT <include refid="product-columns"/> FROM product 
 	</sql>
-	
+
 	<!-- 상품 resultMap -->
 	<resultMap type="product" id="product-basic-resultMap">
 		<id column="product_Id" property="productId"/>

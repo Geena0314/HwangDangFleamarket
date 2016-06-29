@@ -9,10 +9,7 @@ public class OrderProduct implements Serializable
 	private String productId;
 	private int optionId;
 	
-	public OrderProduct()
-	{
-		// TODO Auto-generated constructor stub
-	}
+	public OrderProduct() { }
 
 	public OrderProduct(int orderAmount, String ordersNo, String productId, int optionId)
 	{

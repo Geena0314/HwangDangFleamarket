@@ -14,20 +14,21 @@ public class Orders implements Serializable
 	private String ordersPayment;
 	private String ordersRequest;
 	private int paymentStatus;
-	private String ordersStatus;
-	private String memberId;
+	private int ordersStatus;
+	private String memberId;  //구매자 ID
 	
-	private Product product;
-	private OrderProduct orderProduct;
 	
-	public Orders()
-	{
-		// TODO Auto-generated constructor stub
-	}
+	private Seller seller; // 판매자객체 
+	private Product product;  // 제품객체 
+	private OrderProduct orderProduct;  // 주문한 제품에대한 세부정보  , 주문수량 , 상품ID
+	
+	
+	
+	public Orders() {}
 
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
 			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
-			String ordersRequest, int paymentStatus, String ordersStatus, String memberId)
+			String ordersRequest, int paymentStatus, int ordersStatus, String memberId)
 	{
 		super();
 		this.ordersNo = ordersNo;
@@ -44,11 +45,11 @@ public class Orders implements Serializable
 		this.memberId = memberId;
 	}
 
+	
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
 			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
-			String ordersRequest, int paymentStatus, String ordersStatus, String memberId, Product product,
-			OrderProduct orderProduct)
-	{
+			String ordersRequest, int paymentStatus, int ordersStatus, String memberId, Seller seller,
+			Product product) {
 		super();
 		this.ordersNo = ordersNo;
 		this.ordersReceiver = ordersReceiver;
@@ -62,8 +63,57 @@ public class Orders implements Serializable
 		this.paymentStatus = paymentStatus;
 		this.ordersStatus = ordersStatus;
 		this.memberId = memberId;
+		this.seller = seller;
+		this.product = product;
+	}
+
+	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
+			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
+			String ordersRequest, int paymentStatus, int ordersStatus, String memberId, Seller seller) {
+		super();
+		this.ordersNo = ordersNo;
+		this.ordersReceiver = ordersReceiver;
+		this.ordersPhone = ordersPhone;
+		this.ordersZipcode = ordersZipcode;
+		this.ordersAddress = ordersAddress;
+		this.ordersSubAddress = ordersSubAddress;
+		this.ordersTotalPrice = ordersTotalPrice;
+		this.ordersPayment = ordersPayment;
+		this.ordersRequest = ordersRequest;
+		this.paymentStatus = paymentStatus;
+		this.ordersStatus = ordersStatus;
+		this.memberId = memberId;
+		this.seller = seller;
+	}
+
+	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
+			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
+			String ordersRequest, int paymentStatus, int ordersStatus, String memberId, Seller seller, Product product,
+			OrderProduct orderProduct) {
+		super();
+		this.ordersNo = ordersNo;
+		this.ordersReceiver = ordersReceiver;
+		this.ordersPhone = ordersPhone;
+		this.ordersZipcode = ordersZipcode;
+		this.ordersAddress = ordersAddress;
+		this.ordersSubAddress = ordersSubAddress;
+		this.ordersTotalPrice = ordersTotalPrice;
+		this.ordersPayment = ordersPayment;
+		this.ordersRequest = ordersRequest;
+		this.paymentStatus = paymentStatus;
+		this.ordersStatus = ordersStatus;
+		this.memberId = memberId;
+		this.seller = seller;
 		this.product = product;
 		this.orderProduct = orderProduct;
+	}
+
+	public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
 	}
 
 	public String getOrdersNo()
@@ -166,12 +216,12 @@ public class Orders implements Serializable
 		this.paymentStatus = paymentStatus;
 	}
 
-	public String getOrdersStatus()
+	public int getOrdersStatus()
 	{
 		return ordersStatus;
 	}
 
-	public void setOrdersStatus(String ordersStatus)
+	public void setOrdersStatus(int ordersStatus)
 	{
 		this.ordersStatus = ordersStatus;
 	}
@@ -207,8 +257,17 @@ public class Orders implements Serializable
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public String toString() {
+		return "Orders [ordersNo=" + ordersNo + ", ordersReceiver=" + ordersReceiver + ", ordersPhone=" + ordersPhone
+				+ ", ordersZipcode=" + ordersZipcode + ", ordersAddress=" + ordersAddress + ", ordersSubAddress="
+				+ ordersSubAddress + ", ordersTotalPrice=" + ordersTotalPrice + ", ordersPayment=" + ordersPayment
+				+ ", ordersRequest=" + ordersRequest + ", paymentStatus=" + paymentStatus + ", ordersStatus="
+				+ ordersStatus + ", memberId=" + memberId + ", seller=" + seller + ", product=" + product
+				+ ", orderProduct=" + orderProduct + "]";
+	}
+
+	@Override
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((memberId == null) ? 0 : memberId.hashCode());
@@ -219,18 +278,18 @@ public class Orders implements Serializable
 		result = prime * result + ((ordersPhone == null) ? 0 : ordersPhone.hashCode());
 		result = prime * result + ((ordersReceiver == null) ? 0 : ordersReceiver.hashCode());
 		result = prime * result + ((ordersRequest == null) ? 0 : ordersRequest.hashCode());
-		result = prime * result + ((ordersStatus == null) ? 0 : ordersStatus.hashCode());
+		result = prime * result + ordersStatus;
 		result = prime * result + ((ordersSubAddress == null) ? 0 : ordersSubAddress.hashCode());
 		result = prime * result + ordersTotalPrice;
 		result = prime * result + ((ordersZipcode == null) ? 0 : ordersZipcode.hashCode());
 		result = prime * result + paymentStatus;
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		result = prime * result + ((seller == null) ? 0 : seller.hashCode());
 		return result;
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -238,93 +297,76 @@ public class Orders implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		Orders other = (Orders) obj;
-		if (memberId == null)
-		{
+		if (memberId == null) {
 			if (other.memberId != null)
 				return false;
 		} else if (!memberId.equals(other.memberId))
 			return false;
-		if (orderProduct == null)
-		{
+		if (orderProduct == null) {
 			if (other.orderProduct != null)
 				return false;
 		} else if (!orderProduct.equals(other.orderProduct))
 			return false;
-		if (ordersAddress == null)
-		{
+		if (ordersAddress == null) {
 			if (other.ordersAddress != null)
 				return false;
 		} else if (!ordersAddress.equals(other.ordersAddress))
 			return false;
-		if (ordersNo == null)
-		{
+		if (ordersNo == null) {
 			if (other.ordersNo != null)
 				return false;
 		} else if (!ordersNo.equals(other.ordersNo))
 			return false;
-		if (ordersPayment == null)
-		{
+		if (ordersPayment == null) {
 			if (other.ordersPayment != null)
 				return false;
 		} else if (!ordersPayment.equals(other.ordersPayment))
 			return false;
-		if (ordersPhone == null)
-		{
+		if (ordersPhone == null) {
 			if (other.ordersPhone != null)
 				return false;
 		} else if (!ordersPhone.equals(other.ordersPhone))
 			return false;
-		if (ordersReceiver == null)
-		{
+		if (ordersReceiver == null) {
 			if (other.ordersReceiver != null)
 				return false;
 		} else if (!ordersReceiver.equals(other.ordersReceiver))
 			return false;
-		if (ordersRequest == null)
-		{
+		if (ordersRequest == null) {
 			if (other.ordersRequest != null)
 				return false;
 		} else if (!ordersRequest.equals(other.ordersRequest))
 			return false;
-		if (ordersStatus == null)
-		{
-			if (other.ordersStatus != null)
-				return false;
-		} else if (!ordersStatus.equals(other.ordersStatus))
+		if (ordersStatus != other.ordersStatus)
 			return false;
-		if (ordersSubAddress == null)
-		{
+		if (ordersSubAddress == null) {
 			if (other.ordersSubAddress != null)
 				return false;
 		} else if (!ordersSubAddress.equals(other.ordersSubAddress))
 			return false;
 		if (ordersTotalPrice != other.ordersTotalPrice)
 			return false;
-		if (ordersZipcode == null)
-		{
+		if (ordersZipcode == null) {
 			if (other.ordersZipcode != null)
 				return false;
 		} else if (!ordersZipcode.equals(other.ordersZipcode))
 			return false;
 		if (paymentStatus != other.paymentStatus)
 			return false;
-		if (product == null)
-		{
+		if (product == null) {
 			if (other.product != null)
 				return false;
 		} else if (!product.equals(other.product))
 			return false;
+		if (seller == null) {
+			if (other.seller != null)
+				return false;
+		} else if (!seller.equals(other.seller))
+			return false;
 		return true;
 	}
 
-	@Override
-	public String toString()
-	{
-		return "Orders [ordersNo=" + ordersNo + ", ordersReceiver=" + ordersReceiver + ", ordersPhone=" + ordersPhone
-				+ ", ordersZipcode=" + ordersZipcode + ", ordersAddress=" + ordersAddress + ", ordersSubAddress="
-				+ ordersSubAddress + ", ordersTotalPrice=" + ordersTotalPrice + ", ordersPayment=" + ordersPayment
-				+ ", ordersRequest=" + ordersRequest + ", paymentStatus=" + paymentStatus + ", ordersStatus="
-				+ ordersStatus + ", memberId=" + memberId + ", product=" + product + ", orderProduct=" + orderProduct
-				+ "]";
-	}
+	
+	
+	
 }
