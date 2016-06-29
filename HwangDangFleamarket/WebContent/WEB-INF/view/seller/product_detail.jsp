@@ -262,7 +262,7 @@
 				
 				$("#reviewWrite").on("focus", function()
 				{
-					if('${empty sessionScope.login_info.memberId}')
+					if(!'${sessionScope.login_info.memberId}')
 					{
 						$("#reviewError").empty();
 						$("#reviewError").append("로그인 한 회원만 입력 가능합니다.");
@@ -813,7 +813,7 @@
 					});
 				});
 				$("#cartBtn").on("click", function(){
-					if(${empty sessionScope.login_info.memberId})
+					if(!'${sessionScope.login_info.memberId}')
 					{
 						var result = confirm("로그인이 필요한 서비스입니다.\n로그인하시겠습니까?");
 						if(result){
@@ -1060,7 +1060,7 @@
 				</tr>
 				<tr><td colspan="2" id="qnaError"></td></tr>
 				<tr>
-					<td colspan = "3" align="right"><input type="button" id="qnaRegister" value="문의 하기." onClick="window.open('/HwangDangFleamarket/storeQnA/storeQnARegisterForm.go?productId=${param.productId}&memberId=${ sessionScope.login_info.memberId }','문의하기','resizable=no width=600 height=600')"></td>
+					<td colspan = "3" align="right"><input type="button" id="qnaRegister" value="문의 하기." onClick="if(${empty sessionScope.login_info.memberId }){if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');}}else{window.open('/HwangDangFleamarket/storeQnA/storeQnARegisterForm.go?productId=${param.productId}&memberId=${ sessionScope.login_info.memberId }','문의하기','resizable=no width=600 height=600');};"></td>
 				</tr>
 			</table>
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

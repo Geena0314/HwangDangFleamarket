@@ -1,12 +1,16 @@
 package com.hwangdang.serviceimpl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hwangdang.common.util.Constants;
+import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.dao.SellerDao;
 import com.hwangdang.service.SellerService;
+import com.hwangdang.vo.Orders;
 import com.hwangdang.vo.Seller;
 
 @Service
@@ -43,5 +47,19 @@ public class SellerSerivceImpl implements SellerService{
 	{
 		// TODO Auto-generated method stub
 		return dao.insertSeller(seller);
+	}
+
+	@Override
+	public HashMap<String, Object> selectOrderState(int page, int sellerStoreNo)
+	{
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("itemPerPage", Constants.ITEMS_PER_PAGE);
+		map.put("page", page);
+		map.put("sellerStoreNo", sellerStoreNo);
+		map.put("orderList", dao.selectOrderState(map));
+		PagingBean bean = new PagingBean(dao.selectOrderCount(sellerStoreNo), page);
+		map.put("bean", bean);
+		return map;
 	}
 }

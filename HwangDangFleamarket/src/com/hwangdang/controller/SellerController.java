@@ -38,5 +38,9 @@ public class SellerController {
 		return new ModelAndView("seller/seller/seller_store_main.tiles", map);
 	}
 	
-	
+	@RequestMapping("/salesStatus")
+	public ModelAndView salesStatus(int page, int sellerStoreNo)
+	{
+		return new ModelAndView("seller/seller_sales_status.tiles", service.selectOrderState(page, sellerStoreNo));
+	}
 }

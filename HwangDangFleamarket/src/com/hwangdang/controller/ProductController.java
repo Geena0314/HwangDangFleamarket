@@ -19,7 +19,7 @@ import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.StoreQnA;
 
 @Controller
-@RequestMapping("product")
+@RequestMapping("/product/")
 public class ProductController
 {
 	@Autowired

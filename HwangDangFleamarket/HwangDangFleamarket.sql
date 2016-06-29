@@ -493,6 +493,12 @@ select orders_no from orders
 		where member_id = 'isj4216'
 		and payment_status = 1
 
+select 	count(op.orders_no)
+	from 		order_product op, orders o, product p 
+	where		op.orders_no = o.orders_no
+	and		op.product_id = p.product_id
+	and		p.seller_store_no = 1
+		
 /* 코드 vvvvvvvv*/
 CREATE TABLE code (
 	code VARCHAR2(30) NOT NULL, /* 코드 */
@@ -548,3 +554,26 @@ drop sequence seller_notice_no_seq
 create sequence seller_notice_no_seq nocache;
 
 insert into seller_notice values(seller_notice_no_seq.nextval,'aaa','aaa',sysdate,0,1)
+
+
+select 
+		orders_no, orders_receiver, orders_phone, orders_zipcode, orders_address, orders_sub_address,
+		orders_total_price, orders_payment, orders_request, payment_status, orders_status, member_id,
+		product_Id, product_name, product_price, product_stock, product_main_image, 
+		product_info, product_like, seller_store_no,
+		order_amount, op_orders_no, op_product_id, option_id
+from		(select ceil(rownum/6) page, orders_no, orders_receiver, orders_phone, orders_zipcode, orders_address, orders_sub_address,
+		orders_total_price, orders_payment, orders_request, payment_status, orders_status, member_id,
+		product_Id, product_name, product_price, product_stock, product_main_image, 
+		product_info, product_like, seller_store_no,
+		order_amount, op_orders_no, op_product_id, option_id
+			from	(select o.orders_no, o.orders_receiver, o.orders_phone, o.orders_zipcode, o.orders_address, o.orders_sub_address,
+		o.orders_total_price, o.orders_payment, o.orders_request, o.payment_status, o.orders_status, o.member_id,
+		p.product_Id, p.product_name, p.product_price, p.product_stock, p.product_main_image, 
+		p.product_info, p.product_like, p.seller_store_no,
+		op.order_amount, op.orders_no as op_orders_no, op.product_id as op_product_id, op.option_id
+					from 		orders o, product p, order_product op 
+					where 	op.orders_no = o.orders_no
+					and	 	op.product_id = p.product_id
+					and		p.seller_store_no = 1 order by op.orders_no desc))
+where		page = 1
