@@ -195,10 +195,10 @@ CREATE TABLE product (
 --연습용 시퀀스
 drop sequence product_id_seq
 create sequence product_id_seq nocache;
-insert into product values ('상품id135', '상품명', 50000, 20, 'shoes1', '상품정보클롭8', 1, 8);
-insert into product values ('상품id134', '상품명', 60000, 20, 'shoes3', '상품정보클롭9', 3, 8);
-insert into product values ('상품id133', '상품명', 70000, 20, 'shoes2', '상품정보클롭10', 2, 8);
-insert into product values ('상품id132', '상품명', 80000, 20, 'shoes4', '상품정보클롭11', 6, 8);
+insert into product values ('상품id135', '상품명', 50000, 20, 'shoes1', '상품정보클롭8', 1, 15);
+insert into product values ('상품id134', '상품명', 60000, 20, 'shoes3', '상품정보클롭9', 3, 15);
+insert into product values ('상품id133', '상품명', 70000, 20, 'shoes2', '상품정보클롭10', 2, 15);
+insert into product values ('상품id132', '상품명', 80000, 20, 'shoes4', '상품정보클롭11', 6,15);
 insert into product values ('상품id131', '상품명', 30000, 20, 'shoes6', '상품정보클롭12', 7, 8);
 insert into product values ('상품id130', '상품명', 20000, 20, 'shoes7', '상품정보클롭13', 2, 8);
 insert into product values ('상품id129', '상품명', 10000, 20, 'shoes8', '상품정보클롭14', 11, 8);
@@ -336,13 +336,13 @@ CREATE TABLE product_option (
 drop sequence option_id_seq
 create sequence option_id_seq nocache;
 
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '250/흰색', 10, 0, '상품id29');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '240/검정색', 5, 0, '상품id29');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '230/흰색', 10, 0, '상품id29');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '220/흰색', 10, 0, '상품id29');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '210/검정색', 5, 0, '상품id29');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '260/흰색', 10, 2000, '상품id29');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '270/흰색', 10, 3000, '상품id29');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '250/흰색', 10, 0, '상품id135');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '240/검정색', 5, 0, '상품id134');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '230/흰색', 10, 0, '상품id133');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '220/흰색', 10, 0, '상품id133');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '210/검정색', 5, 0, '상품id133');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '260/흰색', 10, 2000, '상품id132');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '270/흰색', 10, 3000, '상품id132');
 
 /* 소식통(관리자) vvvvvvvv*/
 CREATE TABLE notice (
@@ -480,12 +480,15 @@ CREATE TABLE order_product (
 	foreign key(option_id) references product_option(option_id) on delete set null
 );
 
-insert into order_product values (5, 'a', '상품id29', 2);
-insert into order_product values (4, 'e', '상품id29', 2);
-insert into order_product values (1, 'f', '상품id29', 3);
-insert into order_product values (2, 'b', '상품id29', 4);
-insert into order_product values (1, 'c', '상품id29', 5);
-insert into order_product values (1, 'd', '상품id29', 6);
+
+SELECT * FROM product_option;
+SELECT * FROM order_product
+insert into order_product values (5, 'order_no43', '상품id135', 7);
+insert into order_product values (4, 'order_no37', '상품id134', 8);
+insert into order_product values (1, 'order_no28', '상품id133', 9);
+insert into order_product values (2, 'order_no13', '상품id132', 10);
+insert into order_product values (1, 'order_no17', '상품id132', 11);
+insert into order_product values (1, 'order_no43', '상품id133', 6);
 select count(orders_no)
 		from order_product
 		where orders_no='a'
