@@ -33,7 +33,7 @@
 			<c:when test="${not empty sessionScope.login_info }">
 				<a href="/HwangDangFleamarket/member/logout.go" onclick="return confirm('로그아웃할꺼?')">로그아웃</a>&nbsp;&nbsp;
 				<a href="/HwangDangFleamarket/member/mypageCheck.go">my page</a>&nbsp;&nbsp;
-				<a href="/HwangDangFleamarket/myorder/main.go">나의주문</a>&nbsp;&nbsp;
+				<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">나의주문</a>&nbsp;&nbsp;
 				<a href="/HwangDangFleamarket/cart/cartList.go">장바구니</a>&nbsp;&nbsp;
 			</c:when>
 			<c:otherwise> 

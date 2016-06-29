@@ -1,0 +1,140 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="myorder">
+
+<sql id="basic-column-ordersTB">
+	orders_no , orders_receiver , orders_phone ,
+	orders_zipcode , orders_address , orders_sub_address ,
+	orders_total_price , orders_payment , orders_request ,
+	orders_payment_status , orders_status ,
+	member_id , seller_id , product_id
+</sql>
+
+
+<!-- 	private String ordersNo;
+	private String ordersReceiver;
+	private String ordersPhone;
+	private String ordersZipcode;
+	private String ordersAddress;
+	private String ordersSubAddress;
+	private int ordersTotalPrice;
+	private String ordersPayment;
+	private String ordersRequest;
+	private int paymentStatus;
+	private int ordersStatus;
+	private String memberId;  //구매자 ID
+	private Seller seller; // 판매자객체 
+	private Product product;  // 제품객체 
+	private OrderProduct orderProduct;  // 주문한 제품에대한 세부정보  , 주문수량 , 상품ID -->
+ <!--  구매자 아이디까지  -->
+ 
+
+<resultMap type="com.hwangdang.vo.Orders" id="order-select-basic-resultmap">
+	<id  column="orders_no"   property="ordersNo" />
+	<result column="orders_receiver"   property="ordersReceiver" />
+	<result column="orders_phone" property="ordersPhone" />
+	<result column="orders_zipcode" property="ordersZipcode" />
+	<result column="orders_address" property="ordersAddress" />
+	<result column="orders_sub_address" property="ordersSubAddress" />
+	<result column="orders_total_price" property="ordersTotalPrice" />
+	<result column="orders_payment" property="ordersPayment" />
+	<result column="orders_request" property="ordersRequest" />
+	<result column="orders_payment_status" property="paymentStatus" />
+	<result column="orders_status" property="ordersStatus" />
+	<result column="member_id" property="memberId" />
+</resultMap>
+
+	<!-- order : seller  조인. -->
+	<resultMap type="orders" id="order-seller-join" extends="order-select-basic-resultmap">
+		<association property="seller" javaType="seller" resultMap="sellerMapper.seller-basic-resultmap"/>
+	</resultMap>
+	
+	<!-- order : product  조인. -->
+	<resultMap type="orders" id="order-product-join" extends="order-seller-join">
+		<association property="product" javaType="product" resultMap="productMapper.product-basic-resultMap"/>
+	</resultMap>
+
+	<!-- order : orderProduct  조인. -->
+	<resultMap type="orders" id="order-orderProduct-join" extends="order-product-join">
+		<association property="orderProduct" javaType="orderProduct" resultMap="productMapper.productOption-basic-resultMap"/>
+	</resultMap>
+  	
+	
+  
+ 
+<!-- 배송현황 조회
+	배송현황 - 입금대기중 : 0 
+	배송현황 - 결제완료 : 1
+	배송현황 - 배송준비중 : 2
+	배송현황 - 배송중 : 3
+	배송완료 - 배송완료 : 4
+	교환/환불/취소 -  교환신청 : 5
+	교환/환불/취소 -  환불신청 :  6 
+	교환/환불/취소 - 구매취소(배송전) :  7 
+	
+ -->			
+<select id="select-diliver-status" parameterType="string"  resultMap="order-product-join" >
+
+SELECT      o.orders_no , o.orders_receiver , o.orders_phone ,
+			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
+			o.orders_total_price , o.orders_payment , o.orders_request ,
+			o.payment_status , o.orders_status ,
+			o.member_id  ,
+			
+			op.order_amount  , op.orders_no ,  op.product_id  ,op.option_id , op.seller_store_no ,
+			
+			p.product_Id, p.product_name, p.product_price, p.product_stock, 
+			p.product_main_image, p.product_info, p.product_like, 
+			p.seller_store_no ,
+			
+			s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
+			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
+			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
+			s.seller_introduction, s.seller_assign, s.member_id  
+		
+			
+	FROM   orders o ,  order_product op , product p  ,seller s  ,member m 
+	
+	WHERE  o.member_id =  #{id} 
+	AND    o.orders_no =  op.orders_no
+	AND    op.product_id =  p.product_Id
+	AND    op.seller_store_no =  s.seller_store_no
+	AND    o.orders_status IN ( 0,1,2,3,4)	 
+</select>
+
+<!-- 
+
+	SELECT  o.orders_no , o.orders_receiver , o.orders_phone ,
+			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
+			o.orders_total_price , o.orders_payment , o.orders_request ,
+			o.payment_status , o.orders_status ,
+			o.member_id buyer  ,
+			
+			op.orders_no , op.order_amount , op.product_id  ,op.option_id
+			
+			
+			s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
+			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
+			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
+			s.seller_introduction, s.seller_assign, s.member_id , 
+		
+			p.product_Id, p.product_name, p.product_price, p.product_stock, 
+			p.product_main_image, p.product_info, p.product_like, 
+			p.seller_store_no
+		
+	FROM   orders o , order_product op  ,  seller s , product p 
+	
+	WHERE  o.member_id =  #{buyerId}  
+	AND    o.orders_no  = op.orders_no
+	
+	
+	
+	
+	AND	   o.seller_id =  s.member_id
+	AND	   o.product_id = p.product_Id
+	AND    o.orders_status IN ( 0,1,2,3,4)
+		 
+ -->
+
+
+
+</mapper>

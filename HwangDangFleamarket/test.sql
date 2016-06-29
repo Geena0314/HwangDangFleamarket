@@ -229,22 +229,186 @@ ALTER TABLE admin_QnA ADD admin_QnA_reply_exist char(1)
 ALTER TABLE admin_QnA DROP COLUMN  admin_QnA_reply_exist 
 
 
+DROP TABLE orders 
+	CASCADE CONSTRAINTS;
+
+
+CREATE TABLE orders (
+	orders_no VARCHAR2(10) primary key, /* 주문번호 */
+	orders_receiver VARCHAR2(18) NOT NULL, /* 받는사람 */
+	orders_phone CHAR(13) NOT NULL, /* 전화번호 */
+	orders_zipcode VARCHAR2(7) NOT NULL, /* 우편번호 */
+	orders_address VARCHAR2(180) NOT NULL, /* 주소 */
+	orders_sub_address VARCHAR2(90) NOT NULL, /* 세부주소 */
+	orders_total_price NUMBER NOT NULL, /* 총주문가격 */
+	orders_payment VARCHAR2(21) NOT NULL, /* 결제방식 */
+	orders_request VARCHAR2(51), /* 요청사항 */
+	payment_status NUMBER(1) NOT NULL, /* 결제여부 */
+	orders_status VARCHAR2(15) NOT NULL, /* 주문현황 */
+	member_id VARCHAR2(30) NOT NULL,/* 구매자 ID */
+	foreign key(member_id) references member(member_id) 
+);
+ALTER TABLE orders MODIFY  orders_status number(1);
+
+
+
+--주문TB
+insert into orders values ('order_no43', '홍길동1', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 30000, '카드', '부재중일시 경비실에 맡겨주세요', 1, 0, 'admin@admin.com' );
+insert into orders values ('order_no17', '홍길동2', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 20000, '카드', '부재중일시 경비실에 맡겨주세요', 2, 1, 'admin@admin.com' );
+insert into orders values ('order_no37', '홍길동3', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 50000, '카드', '부재중일시 경비실에 맡겨주세요', 3, 2, 'admin@admin.com' );
+insert into orders values ('order_no28', '홍길동4', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 10000, '카드', '부재중일시 경비실에 맡겨주세요', 4, 3, 'admin@admin.com' );
+insert into orders values ('order_no13', '홍길동5', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 340000, '카드', '부재중일시 경비실에 맡겨주세요', 1, 4, 'admin@admin.com' );
+insert into orders values ('order_no11', '홍길동6', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 340000, '카드', '부재중일시 경비실에 맡겨주세요', 1, 5, 'admin@admin.com');
+insert into orders values ('order_no42', '홍길동7', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 30000, '카드', '부재중일시 경비실에 맡겨주세요', 1, 6, 'admin@admin.com' );
+insert into orders values ('order_no34', '홍길동8', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 20000, '카드', '부재중일시 경비실에 맡겨주세요', 2, 7, 'admin@admin.com' );
+
+drop table order_product
+create sequence order_product_seq nocache;
+CREATE TABLE order_product  (
+	order_seq_no number primary key ,  -- PK 
+	order_amount number(4) not null, /* 상품수량  */
+	orders_no VARCHAR2(10) not null, /* 주문번호 FK */
+	product_id VARCHAR2(30) not null, /* 상품ID FK */
+	option_id number not null ,      --  상품옵션ID_FK  
+	seller_store_no number not null,     -- 판매자스토어NO_FK
+	foreign key(orders_no) references orders(orders_no) on delete cascade,
+	foreign key(product_id) references product(product_id) on delete set null ,
+	foreign key(option_id) references product_option(option_id) on delete set null ,
+	foreign key(seller_store_no) references seller(seller_store_no) on delete set null
+);
+
+-- 주문상품 TB                           //PK              주문수량  , 주문번호  , 상품ID   , 상품옵션 ,  판매자스토어NO          
+insert into order_product values (order_product_seq.nextval , 5, 'order_no43', '상품id1', 12 , 15 );
+insert into order_product values (order_product_seq.nextval ,4, 'order_no17', '상품id2', 13, 15 );
+insert into order_product values (order_product_seq.nextval ,4, 'order_no37', '상품id3', 14, 15 );
+insert into order_product values (order_product_seq.nextval ,1, 'order_no28', '상품id4', 15, 16);
+insert into order_product values (order_product_seq.nextval ,2, 'order_no13', '상품id5', 16, 16);
+insert into order_product values (order_product_seq.nextval ,1, 'order_no11', '상품id6', 17, 16);
+insert into order_product values (order_product_seq.nextval , 1, 'order_no42', '상품id7', 18, 17);
+insert into order_product values (order_product_seq.nextval ,4, 'order_no34', '상품id1', 12, 17);
+
+
+
+--제품TB
+                       --  상품아이디   상품명           가격     재고량     메인사진 ,  (상세사진)    상품정보     추천수    , 스토어번호  
+insert into product values ('상품id1', '새우깡', 50000, 10, 'abc1.jpg', '상품정보1', 1, 15);
+insert into product values ('상품id2', '부여사과', 60000, 20, 'abc2.jpg', '상품정보2', 3, 15);
+insert into product values ('상품id3', '금산인삼', 70000, 30, 'abc3.jpg', '상품정보3', 2, 17);
+insert into product values ('상품id4', '북한냉면', 80000, 40, 'abc4.jpg', '상품정보4', 6, 16);
+insert into product values ('상품id5', '여수밤바다', 30000, 50, 'abc5.jpg', '상품정보5', 7, 16);
+insert into product values ('상품id6', '금사빠', 20000, 60, 'abc6.jpg', '상품정보6', 2, 16);
+insert into product values ('상품id7', '금도끼', 10000, 70, 'abc7.jpg', '상품정보7', 11, 17);
+
+delete FROM product
+
+
+
+SELECT * FROM product_option
+--상품 옵션TB                        // 옵션아이디                옵션네임            옵션서브네임    수량       추가가격   , 상품ID
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '250/흰색', 10, 1000, '상품id1');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '240/검정색', 5, 5000, '상품id2');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '230/흰색', 10, 3000, '상품id3');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '220/흰색', 10, 0, '상품id4');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '210/검정색', 5, 0, '상품id5');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '260/흰색', 10, 2000, '상품id6');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '270/흰색', 10, 3000, '상품id7');
+
 
 -------------- 나의주문
 select * FROM member;
 SELECT * FROM orders 
-
---페이먼트 0 : 1: 2: 3:
-insert into orders values ('order_no_1', '홍길동1', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 30000, '카드', '부재중일시 경비실에 맡겨주세요', 1, 0, 'admin@admin.com');
-insert into orders values ('order_no_2', '홍길동2', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 20000, '카드', '부재중일시 경비실에 맡겨주세요', 2, 1, 'admin@admin.com');
-insert into orders values ('order_no_3', '홍길동3', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 50000, '카드', '부재중일시 경비실에 맡겨주세요', 3, 2, 'admin@admin.com');
-insert into orders values ('order_no_4', '홍길동4', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 10000, '카드', '부재중일시 경비실에 맡겨주세요', 4, 3, 'admin@admin.com');
-insert into orders values ('order_no_5', '홍길동5', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 340000, '카드', '부재중일시 경비실에 맡겨주세요', 1, 4, 'admin@admin.com');
-
-delete orders 
-
-SELECT * FROM admin_QnA_reply 
-
-ALTER TABLE orders MODIFY  orders_status number(1);
+select * FROM seller;    
+select * FROM product;  
+SELECT * FROM order_product
+SELECT * FROM product_option
 
 
+
+
+
+
+
+
+
+
+SELECT      o.orders_no , o.orders_receiver , o.orders_phone ,
+			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
+			o.orders_total_price , o.orders_payment , o.orders_request ,
+			o.payment_status , o.orders_status ,
+			o.member_id  ,
+			
+			op.order_amount  , op.orders_no ,  op.product_id  ,op.option_id , op.seller_store_no ,
+			
+			p.product_Id, p.product_name, p.product_price, p.product_stock, 
+			p.product_main_image, p.product_info, p.product_like, 
+			p.seller_store_no ,
+			
+			s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
+			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
+			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
+			s.seller_introduction, s.seller_assign, s.member_id  , 
+		
+			po.option_id , po.option_name , po.option_sub_name , po.option_stock , po.option_add_price , po.product_id 
+			
+	FROM   orders o ,  order_product op , product p  ,seller s  , product_option po
+	
+	WHERE  o.member_id =  'admin@admin.com'  
+	AND    o.orders_no =  op.orders_no
+	AND    op.product_id =  p.product_Id
+	AND    op.seller_store_no =  s.seller_store_no
+	AND    op.option_id  =  po.option_id
+	AND     p.product_Id = po.product_id 
+	
+	
+	AND    o.orders_status IN ( 0,1,2,3,4)	 
+	
+	-------------------------------------------
+	
+	
+	
+	SELECT  o.orders_no , o.orders_receiver , o.orders_phone ,
+			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
+			o.orders_total_price , o.orders_payment , o.orders_request ,
+			o.payment_status , o.orders_status ,
+			o.member_id  , o.seller_id , o.product_id ,
+			
+			s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
+			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
+			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
+			s.seller_introduction, s.seller_assign, s.member_id , 
+		
+			p.product_Id, p.product_name, p.product_price, p.product_stock, 
+			p.product_main_image, p.product_info, p.product_like, 
+			p.seller_store_no
+		
+		
+	FROM   orders o , seller s , product p 
+	
+	WHERE  o.member_id =  'admin@admin.com'  
+	AND	   o.seller_id =  s.member_id
+	AND	   o.product_id = p.product_Id
+	
+	
+
+	
+	SELECT  o.orders_no , o.orders_receiver , o.orders_phone ,
+			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
+			o.orders_total_price , o.orders_payment , o.orders_request ,
+			o.payment_status , o.orders_status ,
+			o.member_id buyer , o.seller_id , o.product_id ,
+			
+			s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
+			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
+			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
+			s.seller_introduction, s.seller_assign, s.member_id , 
+		
+			p.product_Id, p.product_name, p.product_price, p.product_stock, 
+			p.product_main_image, p.product_info, p.product_like, 
+			p.seller_store_no
+		
+	FROM   orders o , seller s , product p 
+	
+	WHERE  o.member_id =  'admin@admin.com'  
+	AND	   o.seller_id =  s.member_id
+	AND	   o.product_id = p.product_Id
+	AND    o.orders_status IN ( 0,1,2,3,4)
