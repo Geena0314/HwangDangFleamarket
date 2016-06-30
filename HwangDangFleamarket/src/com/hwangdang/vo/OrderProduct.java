@@ -15,6 +15,8 @@ public class OrderProduct implements Serializable
 	private Product product;
 	private ProductOption productOption;
 	
+	private Seller seller;
+	
 	public OrderProduct()
 	{
 		// TODO Auto-generated constructor stub
@@ -37,7 +39,7 @@ public class OrderProduct implements Serializable
 	public OrderProduct(int orderSeqNo, int orderAmount, String ordersNo, String productId, int optionId,
 			int sellerStoreNo, int orderProductStatus, Product product, ProductOption productOption)
 	{
-		//모든정보.
+		//모든정보 - seller.
 		super();
 		this.orderSeqNo = orderSeqNo;
 		this.orderAmount = orderAmount;
@@ -48,6 +50,22 @@ public class OrderProduct implements Serializable
 		this.orderProductStatus = orderProductStatus;
 		this.product = product;
 		this.productOption = productOption;
+	}
+
+	public OrderProduct(int orderSeqNo, int orderAmount, String ordersNo, String productId, int optionId,
+			int sellerStoreNo, int orderProductStatus, Product product, ProductOption productOption, Seller seller)
+	{
+		super();
+		this.orderSeqNo = orderSeqNo;
+		this.orderAmount = orderAmount;
+		this.ordersNo = ordersNo;
+		this.productId = productId;
+		this.optionId = optionId;
+		this.sellerStoreNo = sellerStoreNo;
+		this.orderProductStatus = orderProductStatus;
+		this.product = product;
+		this.productOption = productOption;
+		this.seller = seller;
 	}
 
 	public int getOrderSeqNo()
@@ -140,6 +158,16 @@ public class OrderProduct implements Serializable
 		this.productOption = productOption;
 	}
 
+	public Seller getSeller()
+	{
+		return seller;
+	}
+
+	public void setSeller(Seller seller)
+	{
+		this.seller = seller;
+	}
+
 	@Override
 	public int hashCode()
 	{
@@ -153,6 +181,7 @@ public class OrderProduct implements Serializable
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		result = prime * result + ((productId == null) ? 0 : productId.hashCode());
 		result = prime * result + ((productOption == null) ? 0 : productOption.hashCode());
+		result = prime * result + ((seller == null) ? 0 : seller.hashCode());
 		result = prime * result + sellerStoreNo;
 		return result;
 	}
@@ -199,6 +228,12 @@ public class OrderProduct implements Serializable
 				return false;
 		} else if (!productOption.equals(other.productOption))
 			return false;
+		if (seller == null)
+		{
+			if (other.seller != null)
+				return false;
+		} else if (!seller.equals(other.seller))
+			return false;
 		if (sellerStoreNo != other.sellerStoreNo)
 			return false;
 		return true;
@@ -210,6 +245,6 @@ public class OrderProduct implements Serializable
 		return "OrderProduct [orderSeqNo=" + orderSeqNo + ", orderAmount=" + orderAmount + ", ordersNo=" + ordersNo
 				+ ", productId=" + productId + ", optionId=" + optionId + ", sellerStoreNo=" + sellerStoreNo
 				+ ", orderProductStatus=" + orderProductStatus + ", product=" + product + ", productOption="
-				+ productOption + "]";
+				+ productOption + ", seller=" + seller + "]";
 	}
 }
