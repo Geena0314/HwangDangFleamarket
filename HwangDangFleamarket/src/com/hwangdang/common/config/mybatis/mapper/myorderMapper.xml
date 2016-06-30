@@ -10,24 +10,25 @@
 </sql>
 
 <sql id="join-column" >
-		o.orders_no , o.orders_receiver , o.orders_phone ,
-		o.orders_zipcode , o.orders_address , o.orders_sub_address ,
-		o.orders_total_price , o.orders_payment , o.orders_request ,
-		o.payment_status , o.orders_status ,
-		o.member_id  buyer ,
+			o.orders_no , o.orders_receiver , o.orders_phone ,
+			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
+			o.orders_total_price , o.orders_payment , o.orders_request ,
+			o.payment_status , o.orders_date ,
+			o.member_id  ,
 			
-		op.order_amount  , op.orders_no ,  op.product_id  ,op.option_id , op.seller_store_no ,
+			op.order_amount  , op.orders_no ,  op.product_id  ,op.option_id , 
+			op.seller_store_no , op.order_product_status , 
 			
-		p.product_Id, p.product_name, p.product_price, p.product_stock, 
-		p.product_main_image, p.product_info, p.product_like, 
-		p.seller_store_no ,
+			p.product_Id, p.product_name, p.product_price, p.product_stock, 
+			p.product_main_image, p.product_info, p.product_like, 
+			p.seller_store_no ,
 			
-		s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
-		s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
-		s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
-		s.seller_introduction, s.seller_assign, s.member_id  , 
+			s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
+			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
+			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
+			s.seller_introduction, s.seller_assign, s.member_id  , 
 		
-		po.option_id , po.option_name , po.option_sub_name , po.option_stock , po.option_add_price , po.product_id 
+			po.option_id , po.option_name , po.option_sub_name , po.option_stock , po.option_add_price , po.product_id 
 </sql>
 
 <!-- Orders객체 : 주문자아이디까지 -->
@@ -42,10 +43,22 @@
 	<result column="orders_payment" property="ordersPayment" />
 	<result column="orders_request" property="ordersRequest" />
 	<result column="orders_payment_status" property="paymentStatus" />
-	<result column="orders_status" property="ordersStatus" />
+	<result column="orders_date" property="orders_date" /> 
 	<result column="buyer" property="memberId" />
 </resultMap>
 
+	<!-- 주문상품 리절트맵. -->
+	<resultMap type="orderProduct" id="orderProduct-basic-resultmap">
+		<id column="order_seq_no" property="orderSeqNo"/>
+		<result column="order_amount" property="orderAmount"/>
+		<result column="orders_no" property="ordersNo"/>
+		<result column="product_id" property="productId"/>
+		<result column="option_id" property="optionId"/>
+		<result column="seller_store_no" property="sellerStoreNo"/>
+		<result column="order_product_status" property="orderProductStatus"/>
+	</resultMap>
+
+	<!-- seller 리절트맵  -->
 	<resultMap type="seller" id="seller-basic-resultmap">
 		<id column="seller_store_no" property="sellerStoreNo"/>
 		<result column="seller_store_name" property="sellerStoreName"/>
@@ -63,26 +76,32 @@
 		<result column="seller_assign" property="sellerAssign"/>
 		<result column="member_id" property="memberId"/>
 	</resultMap>
-
-	<!-- order : orderProduct  조인. -->
-	<resultMap type="orders" id="order-orderProduct-join" extends="order-select-basic-resultmap">
-		<association property="orderProduct" javaType="orderProduct" resultMap="orderMapper.orderProduct-basic-resultmap"/>
-	</resultMap>
-
-	<!-- order : product  조인. -->
-	<resultMap type="orders" id="order-product-join" extends="order-orderProduct-join">
-		<association property="product" javaType="product" resultMap="productMapper.product-basic-resultMap"/>
+	
+	
+	<!-- 상품옵션 resultmap -->
+	<resultMap type="productOption" id="productoption-basic-resultMap">
+		<id column="option_Id" property="optionId"/>
+		<result column="option_name" property="optionName"/>
+		<result column="option_sub_name" property="optionSubName"/>
+		<result column="option_stock" property="optionStock"/>
+		<result column="option_add_price" property="optionAddPrice"/>
+		<result column="product_id" property="productId"/>
 	</resultMap>
 	
-	<!-- order : seller  조인. sellerMapper.seller-basic-resultmap  //   seller-member -->
-	<resultMap type="orders" id="order-seller-join" extends="order-product-join">
-		<association property="seller" javaType="seller" resultMap="seller-basic-resultmap"/>
-	</resultMap>    
-
-	<!-- order : ProductOption  조인. -->
-	<resultMap type="orders" id="order-productOption-join" extends="order-seller-join">
-		<association property="productOption" javaType="productOption" resultMap="productMapper.productOption-basic-resultMap"/>
+	<!-- 주문상품 + 상품 (1:1)-->
+	<resultMap type="orderProduct" id="orderProduct-product" extends="orderProduct-basic-resultmap">
+		<association property="product" javaType="Product" resultMap="productMapper.product-basic-resultMap"/>
 	</resultMap>
+	<!-- 주문상품 + 상품옵션. (1:1)-->
+	<resultMap type="orderProduct" id="orderProduct-productoption" extends="orderProduct-product">
+		<association property="productOption" javaType="productOption" resultMap="productoption-basic-resultMap"/>
+	</resultMap>
+	
+	<!-- 주문상품 + 상품옵션. (1:1)-->
+	<resultMap type="orderProduct" id="orderProduct-seller" extends="orderProduct-productoption">
+		<association property="seller" javaType="seller" resultMap="seller-basic-resultmap"/>
+	</resultMap>
+	
   	
 <!-- 배송현황 조회
 	배송현황 - 입금대기중 : 0 
@@ -106,7 +125,7 @@
 	AND    op.seller_store_no =  s.seller_store_no
 	AND    op.option_id  =  po.option_id
 	AND    p.product_Id = po.product_id
-	AND    o.orders_status IN ( 0,1,2,3,4)	 
+	AND     op.order_product_status IN ( 0,1,2,3,4)	 
 </select>
 
 <!-- 배송 완료 조회 -->		
@@ -120,7 +139,7 @@
 	AND    op.seller_store_no =  s.seller_store_no
 	AND    op.option_id  =  po.option_id
 	AND     p.product_Id = po.product_id 
-	AND    o.orders_status IN (4)
+	AND     op.order_product_status IN (-1)
 </select>
 
 <!-- 주문취소/교환/환불 조회 -->		
@@ -133,7 +152,7 @@
 	AND    op.seller_store_no =  s.seller_store_no
 	AND    op.option_id  =  po.option_id
 	AND     p.product_Id = po.product_id 
-	AND    o.orders_status IN ( 5,6,7 )
+	AND     op.order_product_status IN ( 5,6,7 )
 </select>
 
 <!-- 주문취소  : 주문TB에 해당주문번호로 삭제  => 자식TB order_product TB에서도 삭제됨   -->

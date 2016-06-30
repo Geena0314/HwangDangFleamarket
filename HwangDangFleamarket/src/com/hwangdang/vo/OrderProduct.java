@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 public class OrderProduct implements Serializable
 {
-	private int orderSeqNo;
-	private int orderAmount;
-	private String ordersNo;
-	private String productId;
-	private int optionId;
-	private int sellerStoreNo;
-	private int orderProductStatus;
-	
+	private int orderSeqNo;  // 식별자
+	private int orderAmount;  //상품수량
+	private String ordersNo;  // 주문번호
+	private String productId; //상품ID
+	private int optionId;  // 상품옵션 ID
+	private int sellerStoreNo;   // 셀러 스토어NO
+	private int orderProductStatus;  //상품에대한 상태  -1~9
+	  
 	private Product product;
 	private ProductOption productOption;
 	

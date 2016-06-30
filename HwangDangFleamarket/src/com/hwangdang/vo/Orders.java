@@ -6,18 +6,17 @@ import java.util.List;
 
 public class Orders implements Serializable
 {
-	private String ordersNo;
+	private String ordersNo;    //주문번호
 	private String ordersReceiver;
 	private String ordersPhone;
 	private String ordersZipcode;
 	private String ordersAddress;
 	private String ordersSubAddress;
-	private int ordersTotalPrice;
-	private String ordersPayment;
-	private String ordersRequest;
-	private int paymentStatus;
-	private int ordersStatus;
-	private Date orders_date;
+	private int ordersTotalPrice;  //주문한 총가격 
+	private String ordersPayment;   // 결제방식
+	private String ordersRequest;  
+	private int paymentStatus;    // 결재여부 
+	private Date orders_date;   //주문날짜 
 	private String memberId;  //구매자 ID
 	
 	private List<OrderProduct> orderProductList;  // 주문한 제품에대한 세부정보  , 주문수량 , 상품ID
@@ -43,7 +42,6 @@ public class Orders implements Serializable
 		this.ordersPayment = ordersPayment;
 		this.ordersRequest = ordersRequest;
 		this.paymentStatus = paymentStatus;
-		this.ordersStatus = ordersStatus;
 		this.orders_date = orders_date;
 		this.memberId = memberId;
 	}
@@ -65,7 +63,6 @@ public class Orders implements Serializable
 		this.ordersPayment = ordersPayment;
 		this.ordersRequest = ordersRequest;
 		this.paymentStatus = paymentStatus;
-		this.ordersStatus = ordersStatus;
 		this.orders_date = orders_date;
 		this.memberId = memberId;
 		this.orderProductList = orderProductList;
@@ -171,15 +168,6 @@ public class Orders implements Serializable
 		this.paymentStatus = paymentStatus;
 	}
 
-	public int getOrdersStatus()
-	{
-		return ordersStatus;
-	}
-
-	public void setOrdersStatus(int ordersStatus)
-	{
-		this.ordersStatus = ordersStatus;
-	}
 
 	public Date getOrders_date()
 	{
@@ -212,8 +200,16 @@ public class Orders implements Serializable
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public String toString() {
+		return "Orders [ordersNo=" + ordersNo + ", ordersReceiver=" + ordersReceiver + ", ordersPhone=" + ordersPhone
+				+ ", ordersZipcode=" + ordersZipcode + ", ordersAddress=" + ordersAddress + ", ordersSubAddress="
+				+ ordersSubAddress + ", ordersTotalPrice=" + ordersTotalPrice + ", ordersPayment=" + ordersPayment
+				+ ", ordersRequest=" + ordersRequest + ", paymentStatus=" + paymentStatus + ", orders_date="
+				+ orders_date + ", memberId=" + memberId + ", orderProductList=" + orderProductList + "]";
+	}
+
+	@Override
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((memberId == null) ? 0 : memberId.hashCode());
@@ -224,7 +220,6 @@ public class Orders implements Serializable
 		result = prime * result + ((ordersPhone == null) ? 0 : ordersPhone.hashCode());
 		result = prime * result + ((ordersReceiver == null) ? 0 : ordersReceiver.hashCode());
 		result = prime * result + ((ordersRequest == null) ? 0 : ordersRequest.hashCode());
-		result = prime * result + ordersStatus;
 		result = prime * result + ((ordersSubAddress == null) ? 0 : ordersSubAddress.hashCode());
 		result = prime * result + ordersTotalPrice;
 		result = prime * result + ((ordersZipcode == null) ? 0 : ordersZipcode.hashCode());
@@ -234,8 +229,7 @@ public class Orders implements Serializable
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -243,72 +237,59 @@ public class Orders implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		Orders other = (Orders) obj;
-		if (memberId == null)
-		{
+		if (memberId == null) {
 			if (other.memberId != null)
 				return false;
 		} else if (!memberId.equals(other.memberId))
 			return false;
-		if (orderProductList == null)
-		{
+		if (orderProductList == null) {
 			if (other.orderProductList != null)
 				return false;
 		} else if (!orderProductList.equals(other.orderProductList))
 			return false;
-		if (ordersAddress == null)
-		{
+		if (ordersAddress == null) {
 			if (other.ordersAddress != null)
 				return false;
 		} else if (!ordersAddress.equals(other.ordersAddress))
 			return false;
-		if (ordersNo == null)
-		{
+		if (ordersNo == null) {
 			if (other.ordersNo != null)
 				return false;
 		} else if (!ordersNo.equals(other.ordersNo))
 			return false;
-		if (ordersPayment == null)
-		{
+		if (ordersPayment == null) {
 			if (other.ordersPayment != null)
 				return false;
 		} else if (!ordersPayment.equals(other.ordersPayment))
 			return false;
-		if (ordersPhone == null)
-		{
+		if (ordersPhone == null) {
 			if (other.ordersPhone != null)
 				return false;
 		} else if (!ordersPhone.equals(other.ordersPhone))
 			return false;
-		if (ordersReceiver == null)
-		{
+		if (ordersReceiver == null) {
 			if (other.ordersReceiver != null)
 				return false;
 		} else if (!ordersReceiver.equals(other.ordersReceiver))
 			return false;
-		if (ordersRequest == null)
-		{
+		if (ordersRequest == null) {
 			if (other.ordersRequest != null)
 				return false;
 		} else if (!ordersRequest.equals(other.ordersRequest))
 			return false;
-		if (ordersStatus != other.ordersStatus)
-			return false;
-		if (ordersSubAddress == null)
-		{
+		if (ordersSubAddress == null) {
 			if (other.ordersSubAddress != null)
 				return false;
 		} else if (!ordersSubAddress.equals(other.ordersSubAddress))
 			return false;
 		if (ordersTotalPrice != other.ordersTotalPrice)
 			return false;
-		if (ordersZipcode == null)
-		{
+		if (ordersZipcode == null) {
 			if (other.ordersZipcode != null)
 				return false;
 		} else if (!ordersZipcode.equals(other.ordersZipcode))
 			return false;
-		if (orders_date == null)
-		{
+		if (orders_date == null) {
 			if (other.orders_date != null)
 				return false;
 		} else if (!orders_date.equals(other.orders_date))
@@ -318,14 +299,5 @@ public class Orders implements Serializable
 		return true;
 	}
 
-	@Override
-	public String toString()
-	{
-		return "Orders [ordersNo=" + ordersNo + ", ordersReceiver=" + ordersReceiver + ", ordersPhone=" + ordersPhone
-				+ ", ordersZipcode=" + ordersZipcode + ", ordersAddress=" + ordersAddress + ", ordersSubAddress="
-				+ ordersSubAddress + ", ordersTotalPrice=" + ordersTotalPrice + ", ordersPayment=" + ordersPayment
-				+ ", ordersRequest=" + ordersRequest + ", paymentStatus=" + paymentStatus + ", ordersStatus="
-				+ ordersStatus + ", orders_date=" + orders_date + ", memberId=" + memberId + ", orderProductList="
-				+ orderProductList + "]";
-	}
+
 }
