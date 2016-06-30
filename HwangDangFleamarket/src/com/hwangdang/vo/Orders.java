@@ -1,6 +1,7 @@
 package com.hwangdang.vo;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class Orders implements Serializable
@@ -16,9 +17,9 @@ public class Orders implements Serializable
 	private String ordersRequest;
 	private int paymentStatus;
 	private int ordersStatus;
+	private Date orders_date;
 	private String memberId;  //구매자 ID
 	
-	private Seller seller; // 판매자객체 
 	private List<OrderProduct> orderProductList;  // 주문한 제품에대한 세부정보  , 주문수량 , 상품ID
 	
 	public Orders()
@@ -28,7 +29,7 @@ public class Orders implements Serializable
 
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
 			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
-			String ordersRequest, int paymentStatus, int ordersStatus, String memberId)
+			String ordersRequest, int paymentStatus, int ordersStatus, Date orders_date, String memberId)
 	{
 		//오더정보만.
 		super();
@@ -43,15 +44,16 @@ public class Orders implements Serializable
 		this.ordersRequest = ordersRequest;
 		this.paymentStatus = paymentStatus;
 		this.ordersStatus = ordersStatus;
+		this.orders_date = orders_date;
 		this.memberId = memberId;
 	}
 
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
 			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
-			String ordersRequest, int paymentStatus, int ordersStatus, String memberId, Seller seller,
+			String ordersRequest, int paymentStatus, int ordersStatus, Date orders_date, String memberId,
 			List<OrderProduct> orderProductList)
 	{
-		//모든정보.
+		//주문상품까지 추가.
 		super();
 		this.ordersNo = ordersNo;
 		this.ordersReceiver = ordersReceiver;
@@ -64,8 +66,8 @@ public class Orders implements Serializable
 		this.ordersRequest = ordersRequest;
 		this.paymentStatus = paymentStatus;
 		this.ordersStatus = ordersStatus;
+		this.orders_date = orders_date;
 		this.memberId = memberId;
-		this.seller = seller;
 		this.orderProductList = orderProductList;
 	}
 
@@ -179,6 +181,16 @@ public class Orders implements Serializable
 		this.ordersStatus = ordersStatus;
 	}
 
+	public Date getOrders_date()
+	{
+		return orders_date;
+	}
+
+	public void setOrders_date(Date orders_date)
+	{
+		this.orders_date = orders_date;
+	}
+
 	public String getMemberId()
 	{
 		return memberId;
@@ -187,16 +199,6 @@ public class Orders implements Serializable
 	public void setMemberId(String memberId)
 	{
 		this.memberId = memberId;
-	}
-
-	public Seller getSeller()
-	{
-		return seller;
-	}
-
-	public void setSeller(Seller seller)
-	{
-		this.seller = seller;
 	}
 
 	public List<OrderProduct> getOrderProductList()
@@ -226,8 +228,8 @@ public class Orders implements Serializable
 		result = prime * result + ((ordersSubAddress == null) ? 0 : ordersSubAddress.hashCode());
 		result = prime * result + ordersTotalPrice;
 		result = prime * result + ((ordersZipcode == null) ? 0 : ordersZipcode.hashCode());
+		result = prime * result + ((orders_date == null) ? 0 : orders_date.hashCode());
 		result = prime * result + paymentStatus;
-		result = prime * result + ((seller == null) ? 0 : seller.hashCode());
 		return result;
 	}
 
@@ -305,13 +307,13 @@ public class Orders implements Serializable
 				return false;
 		} else if (!ordersZipcode.equals(other.ordersZipcode))
 			return false;
-		if (paymentStatus != other.paymentStatus)
-			return false;
-		if (seller == null)
+		if (orders_date == null)
 		{
-			if (other.seller != null)
+			if (other.orders_date != null)
 				return false;
-		} else if (!seller.equals(other.seller))
+		} else if (!orders_date.equals(other.orders_date))
+			return false;
+		if (paymentStatus != other.paymentStatus)
 			return false;
 		return true;
 	}
@@ -323,7 +325,7 @@ public class Orders implements Serializable
 				+ ", ordersZipcode=" + ordersZipcode + ", ordersAddress=" + ordersAddress + ", ordersSubAddress="
 				+ ordersSubAddress + ", ordersTotalPrice=" + ordersTotalPrice + ", ordersPayment=" + ordersPayment
 				+ ", ordersRequest=" + ordersRequest + ", paymentStatus=" + paymentStatus + ", ordersStatus="
-				+ ordersStatus + ", memberId=" + memberId + ", seller=" + seller + ", orderProductList="
+				+ ordersStatus + ", orders_date=" + orders_date + ", memberId=" + memberId + ", orderProductList="
 				+ orderProductList + "]";
 	}
 }
