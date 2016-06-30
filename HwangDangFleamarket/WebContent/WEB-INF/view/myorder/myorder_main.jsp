@@ -95,6 +95,13 @@ tr  {
 			sendForm(url);
 		});
 		
+		$("input[type='button']").on("click",function(){
+			var tr = $(this).parent().parent();
+			var orderNo = $(tr).children().eq(1).text();
+			
+			
+		}); 
+		
 		//
 		/* $("input:checkbox").on("click",function(){
 			console.log(this);
@@ -139,6 +146,7 @@ tr  {
 	<thead>
 		<tr>
 			<td>체크박스</td> <!--  -->
+			<td>주문번호</td> <!--  -->
 			<td>상품이미지</td> <!--  -->
 			<td>제품명</td> <!--  -->
 			<td>판매스토어</td> <!--  -->
@@ -154,6 +162,7 @@ tr  {
 		<c:forEach items="${requestScope.orderList }"  var="order" >
 			<tr>
 				<td><input type="checkbox" name="items"  value="${order.ordersNo },${order.ordersStatus} , ${order.product.productName }" /></td>
+				<td>${order.ordersNo }</td>
 				<td><img src="/HwangDangFleamarket/product_img/${order.product.productMainImage }" /></td>
 				<td>${order.product.productName }</td>
 				<td>${order.seller.sellerStoreName }</td>
@@ -170,7 +179,7 @@ tr  {
 						<c:when test="${order.ordersStatus == 4 }">배송완료</c:when>
 					</c:choose> 
 				 </td> 
-				<td><c:if test="${order.ordersStatus == 4  or  order.ordersStatus == 3 }"><input type="button" value="구매확정" /></c:if></td>
+				<td value="${order.ordersNo }"><c:if test="${order.ordersStatus == 4  or  order.ordersStatus == 3 }"><input type="button" value="구매확정"  /></c:if></td>
 		</tr>
 		</c:forEach>
 		

@@ -81,15 +81,5 @@ public class MyOrderController {
 		service.setOrderStatus(param , status);  // 6:환불신청 status //5: 교환신청status
 		return "redirect:/myorder/cancel.go?loginId="+loginId;
 	}  
-	
-	/*@RequestMapping("/orderStatusChange.go") 
-	public String orderStatusChange(String orderChangeList ,String loginId){
-		//System.out.println("오더교환리스트 : "+ orderChangeList);
-		ArrayList<String> param  = listSplit(orderChangeList);   
-		service.setOrderStatus(param , 5);  
-		
-		return "redirect:/myorder/cancel.go?loginId="+loginId;
-	}*/
-	
 }
  

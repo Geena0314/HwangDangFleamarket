@@ -254,7 +254,7 @@ ALTER TABLE orders MODIFY  orders_status number(1);
 
 --주문TB
 insert into orders values ('order_no43', '홍길동1', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 30000, '카드', '부재중일시 경비실에 맡겨주세요', 1, 0, 'admin@admin.com' );
-insert into orders values ('order_no17', '홍길동2', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 20000, '카드', '부재중일시 경비실에 맡겨주세요', 2, 1, 'admin@admin.com' );
+insert into orders values ('order_no17', '홍길동2', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 20000, '카드', '부재중일시 경비실에 맡겨주세요', 2, -1, 'admin@admin.com' );
 insert into orders values ('order_no37', '홍길동3', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 50000, '카드', '부재중일시 경비실에 맡겨주세요', 3, 2, 'admin@admin.com' );
 insert into orders values ('order_no28', '홍길동4', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 10000, '카드', '부재중일시 경비실에 맡겨주세요', 4, 3, 'admin@admin.com' );
 insert into orders values ('order_no13', '홍길동5', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 340000, '카드', '부재중일시 경비실에 맡겨주세요', 1, 4, 'admin@admin.com' );
@@ -269,6 +269,9 @@ update orders
 SET   orders_status= 4
 WHERE orders_no = 'order_no13'
 
+update orders
+SET   orders_status= 3
+WHERE orders_no = 'order_no28'
 
 -- 주문상품 TB                           //PK              주문수량  , 주문번호  , 상품ID   , 상품옵션 ,  판매자스토어NO          
 insert into order_product values (order_product_seq.nextval , 5, 'order_no43', '상품id1', 12 , 15 );
