@@ -265,6 +265,10 @@ insert into orders values ('order_no34', '홍길동8', '010-123-1234', '850-123'
 delete FROM orders
 WHERE orders_no = 'order_no13'
 
+update orders
+SET   orders_status= 4
+WHERE orders_no = 'order_no13'
+
 
 -- 주문상품 TB                           //PK              주문수량  , 주문번호  , 상품ID   , 상품옵션 ,  판매자스토어NO          
 insert into order_product values (order_product_seq.nextval , 5, 'order_no43', '상품id1', 12 , 15 );

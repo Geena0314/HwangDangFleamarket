@@ -84,14 +84,14 @@ tr  {
 		// 환불신청 
 		$("#btnRequestRefund").on("click",function(){
 			checkboxValidation(4 , 3, -1  , "배송완료상품만 환불을 신청할수 있습니다.");
-			url	="/HwangDangFleamarket/myorder/orderStatusRefund.go?orderRefundList="+orderCancelList+"&loginId="+loginId;
+			url	="/HwangDangFleamarket/myorder/orderStatusChange.go?orderList="+orderCancelList+"&loginId="+loginId +"&status="+6;
 			sendForm(url);
 		});
 		
 		// 교환신청 
 		$("#btnRequestChange").on("click",function(){
 			checkboxValidation(4 , 3, -1  , "배송완료상품만 교환을 신청할수 있습니다.");
-			url	="/HwangDangFleamarket/myorder/orderStatusChange.go?orderChangeList="+orderCancelList+"&loginId="+loginId;
+			url	="/HwangDangFleamarket/myorder/orderStatusChange.go?orderList="+orderCancelList+"&loginId="+loginId+"&status="+5;
 			sendForm(url);
 		});
 		

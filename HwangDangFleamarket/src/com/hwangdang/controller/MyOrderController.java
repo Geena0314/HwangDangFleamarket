@@ -73,22 +73,23 @@ public class MyOrderController {
 	}
 	
 	//주문:환불신청 3:배송중 , 4:배송완료만 가능 
-	@RequestMapping("/orderStatusRefund.go") 
-	public String orderStatusRefund(String orderRefundList ,String loginId){
-		//System.out.println("오더체인지리스트 :: "+ orderChangeList);
-		ArrayList<String> param  = listSplit(orderRefundList);   
-		service.setOrderStatus(param);
-		return "redirect:/myorder/cancel.go?loginId="+loginId;
-	}
-	
 	@RequestMapping("/orderStatusChange.go") 
+	public String orderStatusRefund(String orderList ,String loginId , int status){
+		//System.out.println("오더환불리스트 :: "+ orderChangeList);
+		System.out.println("status: "+status);  
+		ArrayList<String> param  = listSplit(orderList);   
+		service.setOrderStatus(param , status);  // 6:환불신청 status //5: 교환신청status
+		return "redirect:/myorder/cancel.go?loginId="+loginId;
+	}  
+	
+	/*@RequestMapping("/orderStatusChange.go") 
 	public String orderStatusChange(String orderChangeList ,String loginId){
-		//System.out.println("오더체인지리스트 :: "+ orderChangeList);
+		//System.out.println("오더교환리스트 : "+ orderChangeList);
 		ArrayList<String> param  = listSplit(orderChangeList);   
-		
+		service.setOrderStatus(param , 5);  
 		
 		return "redirect:/myorder/cancel.go?loginId="+loginId;
-	}
+	}*/
 	
 }
  

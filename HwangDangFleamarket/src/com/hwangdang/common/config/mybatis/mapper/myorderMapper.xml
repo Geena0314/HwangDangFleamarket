@@ -144,11 +144,11 @@
 
 
 <!-- 환불신청 : orders TB orders_status 6 으로 상태 변경 -->
-
-<update id="update-by-orderNo"  parameterType="string">
+<!-- 교환신청 : orders TB orders_status 5 으로 상태 변경 -->
+<update id="update-by-orderNo"  parameterType="map">
 	update orders
-	SET orders_status = 6
-	WHERE orders_no = #{value} 
+	SET orders_status = #{status}
+	WHERE orders_no = #{no} 
 </update>
 
 

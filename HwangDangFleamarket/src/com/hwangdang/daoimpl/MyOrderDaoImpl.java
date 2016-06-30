@@ -45,8 +45,8 @@ public class MyOrderDaoImpl implements MyOrderDao {
 	
 	//배송중 3: 배송완료4: 를 환불신청 :6으로 변경 
 	@Transactional
-	public int updateOrdersStatus(String orderNo ){
-		return session.delete("myorder.update-by-orderNo" , orderNo);
+	public int updateOrdersStatus(HashMap<String,Object> map ){
+		return session.delete("myorder.update-by-orderNo" , map);
 	}
 		
 	
