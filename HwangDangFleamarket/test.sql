@@ -262,6 +262,20 @@ insert into orders values ('order_no11', '홍길동6', '010-123-1234', '850-123'
 insert into orders values ('order_no42', '홍길동7', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 30000, '카드', '부재중일시 경비실에 맡겨주세요', 1, 6, 'admin@admin.com' );
 insert into orders values ('order_no34', '홍길동8', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 20000, '카드', '부재중일시 경비실에 맡겨주세요', 2, 7, 'admin@admin.com' );
 
+delete FROM orders
+WHERE orders_no = 'order_no13'
+
+
+-- 주문상품 TB                           //PK              주문수량  , 주문번호  , 상품ID   , 상품옵션 ,  판매자스토어NO          
+insert into order_product values (order_product_seq.nextval , 5, 'order_no43', '상품id1', 12 , 15 );
+insert into order_product values (order_product_seq.nextval ,4, 'order_no17', '상품id2', 13, 15 );
+insert into order_product values (order_product_seq.nextval ,4, 'order_no37', '상품id3', 14, 15 );
+insert into order_product values (order_product_seq.nextval ,1, 'order_no28', '상품id4', 15, 16);
+insert into order_product values (order_product_seq.nextval ,2, 'order_no13', '상품id5', 16, 16);
+insert into order_product values (order_product_seq.nextval ,1, 'order_no11', '상품id6', 17, 16);
+insert into order_product values (order_product_seq.nextval , 1, 'order_no42', '상품id7', 18, 17);
+insert into order_product values (order_product_seq.nextval ,4, 'order_no34', '상품id1', 12, 17);
+
 select * FROM orders;
 
 drop table order_product
@@ -279,15 +293,6 @@ CREATE TABLE order_product  (
 	foreign key(seller_store_no) references seller(seller_store_no) on delete set null
 );
 
--- 주문상품 TB                           //PK              주문수량  , 주문번호  , 상품ID   , 상품옵션 ,  판매자스토어NO          
-insert into order_product values (order_product_seq.nextval , 5, 'order_no43', '상품id1', 12 , 15 );
-insert into order_product values (order_product_seq.nextval ,4, 'order_no17', '상품id2', 13, 15 );
-insert into order_product values (order_product_seq.nextval ,4, 'order_no37', '상품id3', 14, 15 );
-insert into order_product values (order_product_seq.nextval ,1, 'order_no28', '상품id4', 15, 16);
-insert into order_product values (order_product_seq.nextval ,2, 'order_no13', '상품id5', 16, 16);
-insert into order_product values (order_product_seq.nextval ,1, 'order_no11', '상품id6', 17, 16);
-insert into order_product values (order_product_seq.nextval , 1, 'order_no42', '상품id7', 18, 17);
-insert into order_product values (order_product_seq.nextval ,4, 'order_no34', '상품id1', 12, 17);
 
 
 
@@ -361,7 +366,7 @@ SELECT      o.orders_no , o.orders_receiver , o.orders_phone ,
 	AND    p.product_Id = po.product_id
 	
 	
-	AND    o.orders_status IN ( 0,1,2,3)	 
+	AND    o.orders_status IN ( 0,1,2,3,4)	 
 	
 SELECT * FROM orders;
 	

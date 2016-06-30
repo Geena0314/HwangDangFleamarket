@@ -13,6 +13,7 @@ public class Member implements Serializable
 	private String memberSubAddress;
 	private int memberAssign;
 	
+	
 	public Member()
 	{
 		// TODO Auto-generated constructor stub

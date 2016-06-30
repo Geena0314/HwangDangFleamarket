@@ -43,4 +43,12 @@ public class MyOrderDaoImpl implements MyOrderDao {
 		return session.delete("myorder.delete-by-orderNo" , orderNo);
 	}
 	
+	//배송중 3: 배송완료4: 를 환불신청 :6으로 변경 
+	@Transactional
+	public int updateOrdersStatus(String orderNo ){
+		return session.delete("myorder.update-by-orderNo" , orderNo);
+	}
+		
+	
+	
 }

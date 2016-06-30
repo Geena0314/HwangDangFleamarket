@@ -70,7 +70,7 @@ tr  {
 	교환/환불/취소 - 구매취소(배송전) :  7 
  -->
 
-<h3>주문내역</h3>
+<h2>나의주문 - 교환/환불/취소</h2>
 ${sessionScope.login_info.memberId }
 <div id="nav_layer">		
 	<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">배송 현황</a><br/><br/><br/><br/>

@@ -40,6 +40,19 @@ public class MyOrderServiceImpl implements MyOrderService {
 				break;  
 			}
 		}
-		
-	}
+	} // 메소드
+	
+	//0:입금대기중 ,1:결제완료 , 2:배송준비중 삭제  == 주문취소 실행 
+	public void setOrderStatus(ArrayList<String> param){
+		int flag = 0;
+		for(int i=0;  i< param.size();  i++){
+			flag = dao.updateOrdersStatus(param.get(i));
+			System.out.println("flag:"+flag + "개 환불신청 변경 성공");
+			if(flag == 0){
+				break;  
+			}
+		}
+	} // 메소드
+	
+	
 }
