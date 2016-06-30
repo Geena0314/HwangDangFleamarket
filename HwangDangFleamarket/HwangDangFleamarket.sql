@@ -344,6 +344,10 @@ insert into product_option values (option_id_seq.nextval, '사이즈/색상', '2
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '260/흰색', 10, 2000, '상품id132');
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '270/흰색', 10, 3000, '상품id132');
 
+update 	product_option
+set			option_stock = option_stock+2
+where		option_id = 2
+
 /* 소식통(관리자) vvvvvvvv*/
 CREATE TABLE notice (
 	notice_no NUMBER primary key, /* 소식글 no */
@@ -436,16 +440,17 @@ drop table exchange_request
 CREATE TABLE exchange_request (
 	exchage_title VARCHAR2(60) NOT NULL, /* 신청제목 */
 	exchange_content VARCHAR2(4000) NOT NULL, /* 신청내용 */
-	orders_no VARCHAR2(10) not null, /* 주문번호 */
-	foreign key(orders_no) references orders(orders_no) on delete cascade
+	order_seq_no number not null, /* 주문번호 */
+	foreign key(order_seq_no) references order_product(order_seq_no) on delete cascade
 );
 
 /* 환불신청vvvvvvvvvvvv */
+drop table refund_request
 CREATE TABLE refund_request (
 	refund_title VARCHAR2(60) NOT NULL, /* 신청제목 */
 	refund_content VARCHAR2(4000) NOT NULL, /* 신청내용 */
-	orders_no VARCHAR2(10) not null, /* 주문번호 */
-	foreign key(orders_no) references orders(orders_no) on delete cascade
+	order_seq_no number not null, /* 주문상품번호 */
+	foreign key(order_seq_no) references order_product(order_seq_no) on delete cascade
 );
 
 /* 상품상세사진 vvvvvvv*/
@@ -487,12 +492,18 @@ create sequence order_seq_no_seq
 
 SELECT * FROM product_option;
 SELECT * FROM order_product
-insert into order_product values (5, 'order_no43', '상품id135', 7);
+insert into order_product values (order_seq_no_seq.nextval , 'order_no43', '상품id135', 7);
 insert into order_product values (4, 'order_no37', '상품id134', 8);
 insert into order_product values (1, 'order_no28', '상품id133', 9);
 insert into order_product values (2, 'order_no13', '상품id132', 10);
 insert into order_product values (1, 'order_no17', '상품id132', 11);
 insert into order_product values (1, 'order_no43', '상품id133', 6);
+
+insert into order_product values (order_seq_no_seq.nextval, 5, 'a', '상품id29', 2, 1, 0);
+insert into order_product values (order_seq_no_seq.nextval, 2, 'b', '상품id34', 9, 1, 1);
+insert into order_product values (order_seq_no_seq.nextval, 3, 'c', '상품id33', 8, 1, 2);
+insert into order_product values (order_seq_no_seq.nextval, 1, 'd', '상품id33', 8, 2, 0);
+insert into order_product values (order_seq_no_seq.nextval, 1, 'e', '상품id34', 9, 2, 0);
 select count(orders_no)
 		from order_product
 		where orders_no='a'
@@ -568,19 +579,31 @@ select
 		orders_total_price, orders_payment, orders_request, payment_status, orders_status, member_id,
 		product_Id, product_name, product_price, product_stock, product_main_image, 
 		product_info, product_like, seller_store_no,
-		order_amount, op_orders_no, op_product_id, option_id
+		order_amount, op_orders_no, op_product_id, option_id, order_product_status
 from		(select ceil(rownum/6) page, orders_no, orders_receiver, orders_phone, orders_zipcode, orders_address, orders_sub_address,
 		orders_total_price, orders_payment, orders_request, payment_status, orders_status, member_id,
 		product_Id, product_name, product_price, product_stock, product_main_image, 
 		product_info, product_like, seller_store_no,
-		order_amount, op_orders_no, op_product_id, option_id
+		order_amount, op_orders_no, op_product_id, option_id, order_product_status
 			from	(select o.orders_no, o.orders_receiver, o.orders_phone, o.orders_zipcode, o.orders_address, o.orders_sub_address,
 		o.orders_total_price, o.orders_payment, o.orders_request, o.payment_status, o.orders_status, o.member_id,
 		p.product_Id, p.product_name, p.product_price, p.product_stock, p.product_main_image, 
 		p.product_info, p.product_like, p.seller_store_no,
-		op.order_amount, op.orders_no as op_orders_no, op.product_id as op_product_id, op.option_id
+		op.order_amount, op.orders_no as op_orders_no, op.product_id as op_product_id, op.option_id, op.order_product_status
 					from 		orders o, product p, order_product op 
-					where 	op.orders_no = o.orders_no
+					where 	o.orders_no = op.orders_no
 					and	 	op.product_id = p.product_id
-					and		p.seller_store_no = 1 order by op.orders_no desc))
+					and		op.seller_store_no = 1 order by op.orders_no desc))
 where		page = 1
+
+select 	count(op.orders_no)
+		from 		order_product op, orders o, product p 
+		where		op.orders_no = o.orders_no
+		and		op.product_id = p.product_id
+		and		op.seller_store_no = 1
+
+select 	count(op.orders_no)
+		from 		order_product op, orders o, product p 
+		where		op.orders_no = o.orders_no
+		and		op.product_id = p.product_id
+		and		op.seller_store_no = 1

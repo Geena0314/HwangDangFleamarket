@@ -15,8 +15,8 @@ public interface ProductService
 	//상품 상세정보 조회. 아이디로.
 	HashMap<String, Object> selectProductDetailById(int page, String productId);
 	
-	//옵션세부내용으로 재고량과 추가가격 조회.
-	ProductOption selectOptionStockByName(String optionName);
+	//옵션세부내용으로 재고량과 추가가격 조회.(상품명도 가져가야함.)
+	ProductOption selectOptionStockByName(String optionName, String productId);
 	
 	//리뷰 페이징.
 	HashMap<String, Object> selectReviewPaging(int page, String productId);

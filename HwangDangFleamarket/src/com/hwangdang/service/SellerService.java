@@ -18,4 +18,7 @@ public interface SellerService {
 	
 	//주문상품리스트조회.
 	HashMap<String, Object> selectOrderState(int page, int sellerStoreNo);
+	
+	//주문번호로 주문정보조회, 주문상품번호로 환불정보 조회.
+	HashMap<String, Object> selectOrderAndRefund(String ordersNo, int orderSeqNo);
 }

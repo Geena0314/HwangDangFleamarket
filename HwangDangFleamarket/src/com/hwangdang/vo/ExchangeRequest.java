@@ -6,19 +6,19 @@ public class ExchangeRequest implements Serializable
 {
 	private String exchageTitle;
 	private String exchangeContent;
-	private String ordersNo;
+	private int orderSeqNo;
 	
 	public ExchangeRequest()
 	{
 		// TODO Auto-generated constructor stub
 	}
 
-	public ExchangeRequest(String exchageTitle, String exchangeContent, String ordersNo)
+	public ExchangeRequest(String exchageTitle, String exchangeContent, int orderSeqNo)
 	{
 		super();
 		this.exchageTitle = exchageTitle;
 		this.exchangeContent = exchangeContent;
-		this.ordersNo = ordersNo;
+		this.orderSeqNo = orderSeqNo;
 	}
 
 	public String getExchageTitle()
@@ -41,14 +41,14 @@ public class ExchangeRequest implements Serializable
 		this.exchangeContent = exchangeContent;
 	}
 
-	public String getOrdersNo()
+	public int getOrderSeqNo()
 	{
-		return ordersNo;
+		return orderSeqNo;
 	}
 
-	public void setOrdersNo(String ordersNo)
+	public void setOrderSeqNo(int orderSeqNo)
 	{
-		this.ordersNo = ordersNo;
+		this.orderSeqNo = orderSeqNo;
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class ExchangeRequest implements Serializable
 		int result = 1;
 		result = prime * result + ((exchageTitle == null) ? 0 : exchageTitle.hashCode());
 		result = prime * result + ((exchangeContent == null) ? 0 : exchangeContent.hashCode());
-		result = prime * result + ((ordersNo == null) ? 0 : ordersNo.hashCode());
+		result = prime * result + orderSeqNo;
 		return result;
 	}
 
@@ -84,11 +84,7 @@ public class ExchangeRequest implements Serializable
 				return false;
 		} else if (!exchangeContent.equals(other.exchangeContent))
 			return false;
-		if (ordersNo == null)
-		{
-			if (other.ordersNo != null)
-				return false;
-		} else if (!ordersNo.equals(other.ordersNo))
+		if (orderSeqNo != other.orderSeqNo)
 			return false;
 		return true;
 	}
@@ -96,7 +92,7 @@ public class ExchangeRequest implements Serializable
 	@Override
 	public String toString()
 	{
-		return "ExchangeRequest [exchageTitle=" + exchageTitle + ", exchangeContent=" + exchangeContent + ", ordersNo="
-				+ ordersNo + "]";
+		return "ExchangeRequest [exchageTitle=" + exchageTitle + ", exchangeContent=" + exchangeContent
+				+ ", orderSeqNo=" + orderSeqNo + "]";
 	}
 }

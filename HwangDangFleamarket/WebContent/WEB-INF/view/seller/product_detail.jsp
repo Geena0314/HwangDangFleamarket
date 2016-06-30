@@ -47,6 +47,10 @@
 				width : 582.73px;
 				min-height : 235.46px;
 			}
+			#optionAddPriceTr
+			{
+				display : none;
+			}
 		</style>
 		
 		<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
@@ -62,13 +66,13 @@
 					({
 						"url" : "/HwangDangFleamarket/product/optionStock.go",
 						"type" : "POST",
-						"data" : "optionName=" + $("#optionName").val(),
+						"data" : {"optionName" : $("#optionName").val(), "productId" : $("#productId").text()},
 						"dataType" : "JSON",
 						"beforeSend" : function()
 						{
 							$("#error").empty();
-							$("#optionAddPrice").empty().append("원");
-							$("#optionStock").empty().html("<option>수량선택</option>");
+							$("#optionAddPriceTr").empty().hide();
+							//$("#optionStock").empty().html("<option>수량선택</option>");
 							$("#optionNameError").empty();
 							$("#optionStockError").empty();
 							if(index == 0)
@@ -78,20 +82,26 @@
 						{
 							if(json.optionStock == 0)
 							{
-								$("#optionStockError").append("재고량이 부족합니다.")
+								$("#optionStockError").append("재고량이 부족합니다.");
+								$("#optionName option:eq(0)").removeAttr('selected');
+								$("#optionName option:eq(0)").attr('selected', 'true');
+								alert("asdf");
 								return false;
 							}
-							for(var i = json.optionStock; i > 0 ; i--)
+							/* for(var i = json.optionStock; i > 0 ; i--)
 							{
 								$("#optionStock").append("<option>" + i + "</option>");
-							}
+							} */
 							if(json.optionAddPrice == 0)
 							{
 								return false;
 							}
-							$("#optionAddPrice").prepend(json.optionAddPrice);
+							$("#optionAddPriceTr").html("<td>추가 가격</td><td id='optionAddPrice'>" + json.optionAddPrice + "원</td>").show();
 						},
-						"error" : error
+						"error" : function()
+						{
+							alert("선택할 수 없는 옵션입니다.");
+						}
 					});
 				});
 				
@@ -885,19 +895,21 @@
 						</tr>
 						<tr><td colspan="2" id="optionNameError"></td></tr>
 						<tr>
-							<td>수량</td>
+							<!-- <td>수량</td>
 							<td>
 								<select id="optionStock">
 									<option>수량선택</option>
 								</select>
+							</td> -->
+							<td>수량</td>
+							<td>
+								<input type="text" size="3" readonly="readonly" value="0">
+								<img src="../image_storage/minus.png" style="width:19px; height:19px; cursor: pointer;" class="amount">
+								<img src="../image_storage/plus.png" style="width:19px; height:19px; cursor: pointer;" class="amount">
 							</td>
 						</tr>
 						<tr><td colspan="2" id="optionStockError"></td></tr>
-						<tr>
-							<td>추가가격</td>
-							<td id="optionAddPrice">
-								원
-							</td>
+						<tr id="optionAddPriceTr">
 						</tr>
 						<tr>
 							<td><input type="submit" value="바로구매"></td>

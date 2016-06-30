@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.hwangdang.vo.Orders;
+import com.hwangdang.vo.RefundRequest;
 import com.hwangdang.vo.Seller;
 
 public interface SellerDao {
@@ -37,4 +38,10 @@ public interface SellerDao {
 	
 	//주문상품 전체개수 조회.(스토어넘버로)
 	int selectOrderCount(int sellerStoreNo);
+	
+	//주문상품 번호로 환불정보 조회.
+	RefundRequest selectRefundByNo(int orderSeqNo);
+	
+	//주문번호로 주문정보조회.
+	Orders selectOrderInfo(String ordersNo);
 }
