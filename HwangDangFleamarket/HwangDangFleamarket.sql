@@ -308,17 +308,17 @@ CREATE TABLE orders (
 	orders_payment VARCHAR2(21) NOT NULL, /* 결제방식 */
 	orders_request VARCHAR2(51), /* 요청사항 */
 	payment_status NUMBER(1) NOT NULL, /* 결제여부 */
-	orders_status VARCHAR2(15) NOT NULL, /* 주문현황 */
+	orders_status number(1) NOT NULL, /* 주문현황 */
 	member_id VARCHAR2(30) NOT NULL,/* 아이디 */
 	foreign key(member_id) references member(member_id)
 );
 
-insert into orders values ('a', '받는사람1', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 'ㅈㅁㅎㅎ', 'isj4216');
-insert into orders values ('b', '받는사람2', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 'ㅈㅁㅎㅎ', 'isj4216');
-insert into orders values ('c', '받는사람3', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 'ㅈㅁㅎㅎ', 'isj4216');
-insert into orders values ('d', '받는사람4', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 'ㅈㅁㅎㅎ', 'isj4216');
-insert into orders values ('e', '받는사람5', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 'ㅈㅁㅎㅎ', 'isj4216');
-insert into orders values ('f', '받는사람6', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 'ㅈㅁㅎㅎ', 'isj4216');
+insert into orders values ('m', '받는사람1', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 0, 'asdfasdf');
+insert into orders values ('n', '받는사람2', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 1, 'asdfasdf');
+insert into orders values ('o', '받는사람3', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 2, 'asdfasdf');
+insert into orders values ('p', '받는사람4', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 3, 'asdfasdf');
+insert into orders values ('q', '받는사람5', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 4, 'asdfasdf');
+insert into orders values ('r', '받는사람6', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 5, 'asdfasdf');
 
 
 
@@ -343,6 +343,10 @@ insert into product_option values (option_id_seq.nextval, '사이즈/색상', '2
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '210/검정색', 5, 0, '상품id133');
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '260/흰색', 10, 2000, '상품id132');
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '270/흰색', 10, 3000, '상품id132');
+
+update 	product_option
+set			option_stock = option_stock+2
+where		option_id = 2
 
 /* 소식통(관리자) vvvvvvvv*/
 CREATE TABLE notice (
@@ -436,16 +440,17 @@ drop table exchange_request
 CREATE TABLE exchange_request (
 	exchage_title VARCHAR2(60) NOT NULL, /* 신청제목 */
 	exchange_content VARCHAR2(4000) NOT NULL, /* 신청내용 */
-	orders_no VARCHAR2(10) not null, /* 주문번호 */
-	foreign key(orders_no) references orders(orders_no) on delete cascade
+	order_seq_no number not null, /* 주문번호 */
+	foreign key(order_seq_no) references order_product(order_seq_no) on delete cascade
 );
 
 /* 환불신청vvvvvvvvvvvv */
+drop table refund_request
 CREATE TABLE refund_request (
 	refund_title VARCHAR2(60) NOT NULL, /* 신청제목 */
 	refund_content VARCHAR2(4000) NOT NULL, /* 신청내용 */
-	orders_no VARCHAR2(10) not null, /* 주문번호 */
-	foreign key(orders_no) references orders(orders_no) on delete cascade
+	order_seq_no number not null, /* 주문상품번호 */
+	foreign key(order_seq_no) references order_product(order_seq_no) on delete cascade
 );
 
 /* 상품상세사진 vvvvvvv*/
@@ -470,25 +475,35 @@ select member_id from seller where seller_store_no = 1
 
 /* 주문상품 vvvvvvv*/
 drop table order_product
-CREATE TABLE order_product (
-	order_amount number(4) not null, /* 상품수량 */
-	orders_no VARCHAR2(10) not null, /* 주문번호 */
-	product_id VARCHAR2(30) not null, /* 상품ID */
-	option_id number not null,
+CREATE TABLE order_product  (
+	order_seq_no number primary key ,  -- PK 
+	order_amount number(4) not null, /* 상품수량  */
+	orders_no VARCHAR2(10) not null, /* 주문번호 FK */
+	product_id VARCHAR2(30) not null, /* 상품ID FK */
+	option_id number not null ,      --  상품옵션ID_FK  
+	seller_store_no number not null,     -- 판매자스토어NO_FK
 	foreign key(orders_no) references orders(orders_no) on delete cascade,
-	foreign key(product_id) references product(product_id),
-	foreign key(option_id) references product_option(option_id) on delete set null
+	foreign key(product_id) references product(product_id) on delete set null ,
+	foreign key(option_id) references product_option(option_id) on delete set null ,
+	foreign key(seller_store_no) references seller(seller_store_no) on delete set null
 );
+create sequence order_seq_no_seq 
 
 
 SELECT * FROM product_option;
 SELECT * FROM order_product
-insert into order_product values (5, 'order_no43', '상품id135', 7);
+insert into order_product values (order_seq_no_seq.nextval , 'order_no43', '상품id135', 7);
 insert into order_product values (4, 'order_no37', '상품id134', 8);
 insert into order_product values (1, 'order_no28', '상품id133', 9);
 insert into order_product values (2, 'order_no13', '상품id132', 10);
 insert into order_product values (1, 'order_no17', '상품id132', 11);
 insert into order_product values (1, 'order_no43', '상품id133', 6);
+
+insert into order_product values (order_seq_no_seq.nextval, 5, 'a', '상품id29', 2, 1, 0);
+insert into order_product values (order_seq_no_seq.nextval, 2, 'b', '상품id34', 9, 1, 1);
+insert into order_product values (order_seq_no_seq.nextval, 3, 'c', '상품id33', 8, 1, 2);
+insert into order_product values (order_seq_no_seq.nextval, 1, 'd', '상품id33', 8, 2, 0);
+insert into order_product values (order_seq_no_seq.nextval, 1, 'e', '상품id34', 9, 2, 0);
 select count(orders_no)
 		from order_product
 		where orders_no='a'
@@ -496,6 +511,12 @@ select orders_no from orders
 		where member_id = 'isj4216'
 		and payment_status = 1
 
+select 	count(op.orders_no)
+	from 		order_product op, orders o, product p 
+	where		op.orders_no = o.orders_no
+	and		op.product_id = p.product_id
+	and		p.seller_store_no = 1
+		
 /* 코드 vvvvvvvv*/
 CREATE TABLE code (
 	code VARCHAR2(30) NOT NULL, /* 코드 */
@@ -551,3 +572,38 @@ drop sequence seller_notice_no_seq
 create sequence seller_notice_no_seq nocache;
 
 insert into seller_notice values(seller_notice_no_seq.nextval,'aaa','aaa',sysdate,0,1)
+
+
+select 
+		orders_no, orders_receiver, orders_phone, orders_zipcode, orders_address, orders_sub_address,
+		orders_total_price, orders_payment, orders_request, payment_status, orders_status, member_id,
+		product_Id, product_name, product_price, product_stock, product_main_image, 
+		product_info, product_like, seller_store_no,
+		order_amount, op_orders_no, op_product_id, option_id, order_product_status
+from		(select ceil(rownum/6) page, orders_no, orders_receiver, orders_phone, orders_zipcode, orders_address, orders_sub_address,
+		orders_total_price, orders_payment, orders_request, payment_status, orders_status, member_id,
+		product_Id, product_name, product_price, product_stock, product_main_image, 
+		product_info, product_like, seller_store_no,
+		order_amount, op_orders_no, op_product_id, option_id, order_product_status
+			from	(select o.orders_no, o.orders_receiver, o.orders_phone, o.orders_zipcode, o.orders_address, o.orders_sub_address,
+		o.orders_total_price, o.orders_payment, o.orders_request, o.payment_status, o.orders_status, o.member_id,
+		p.product_Id, p.product_name, p.product_price, p.product_stock, p.product_main_image, 
+		p.product_info, p.product_like, p.seller_store_no,
+		op.order_amount, op.orders_no as op_orders_no, op.product_id as op_product_id, op.option_id, op.order_product_status
+					from 		orders o, product p, order_product op 
+					where 	o.orders_no = op.orders_no
+					and	 	op.product_id = p.product_id
+					and		op.seller_store_no = 1 order by op.orders_no desc))
+where		page = 1
+
+select 	count(op.orders_no)
+		from 		order_product op, orders o, product p 
+		where		op.orders_no = o.orders_no
+		and		op.product_id = p.product_id
+		and		op.seller_store_no = 1
+
+select 	count(op.orders_no)
+		from 		order_product op, orders o, product p 
+		where		op.orders_no = o.orders_no
+		and		op.product_id = p.product_id
+		and		op.seller_store_no = 1

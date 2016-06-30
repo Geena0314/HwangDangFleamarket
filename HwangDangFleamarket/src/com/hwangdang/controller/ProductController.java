@@ -49,9 +49,9 @@ public class ProductController
 	
 	@RequestMapping("optionStock")
 	@ResponseBody
-	public ProductOption optionStock(String optionName)
+	public ProductOption optionStock(String optionName, String productId)
 	{
-		return service.selectOptionStockByName(optionName);
+		return service.selectOptionStockByName(optionName, productId);
 	}
 	
 	@RequestMapping("reviewPaging")

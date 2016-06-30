@@ -3,7 +3,8 @@ package com.hwangdang.dao;
 import java.util.HashMap;
 import java.util.List;
 
-import com.hwangdang.vo.Notice;
+import com.hwangdang.vo.Orders;
+import com.hwangdang.vo.RefundRequest;
 import com.hwangdang.vo.Seller;
 
 public interface SellerDao {
@@ -31,4 +32,16 @@ public interface SellerDao {
 	
 	//셀러정보삭제(관리자가 거부)
 	int deleteSellerByNo(int sellerStoreNo);
+	
+	//주문상품리스트조회.
+	List<Orders> selectOrderState(HashMap<String, Object> map);
+	
+	//주문상품 전체개수 조회.(스토어넘버로)
+	int selectOrderCount(int sellerStoreNo);
+	
+	//주문상품 번호로 환불정보 조회.
+	RefundRequest selectRefundByNo(int orderSeqNo);
+	
+	//주문번호로 주문정보조회.
+	Orders selectOrderInfo(String ordersNo);
 }

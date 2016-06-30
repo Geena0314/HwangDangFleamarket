@@ -9,6 +9,10 @@ ALTER TABLE admin_QnA ADD admin_QnA_password char(4)
 ALTER TABLE admin_QnA ADD admin_QnA_reply_exist char(1)
 ALTER TABLE admin_QnA DROP COLUMN  admin_QnA_reply_exist 
 
+--order_product 테이블에 주문현황 컬럼 추가.
+ALTER TABLE order_product ADD order_product_status number(1)
+ALTER TABLE order_product DROP COLUMN order_product_status
+
 
 	--배송현황 - 입금대기중 : 0 
 	--배송현황 - 결제완료 : 1

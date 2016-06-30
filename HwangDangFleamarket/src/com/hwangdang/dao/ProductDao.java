@@ -29,7 +29,7 @@ public interface ProductDao
 	String selectDetailImageById(String productId);
 	
 	//옵션 상세 이름으로 추가가격과, 재고량 조회.
-	ProductOption selectOptionStockByName(String optionName);
+	ProductOption selectOptionStockByName(HashMap<String, Object> map);
 	
 	//상품ID로 등록된 리뷰갯수 조회.
 	int selectCountById(String productId);
