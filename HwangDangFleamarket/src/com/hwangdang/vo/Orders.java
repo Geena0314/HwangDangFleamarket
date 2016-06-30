@@ -16,7 +16,6 @@ public class Orders implements Serializable
 	private String ordersPayment;
 	private String ordersRequest;
 	private int paymentStatus;
-	private int ordersStatus;
 	private Date orders_date;
 	private String memberId;  //구매자 ID
 	
@@ -29,7 +28,7 @@ public class Orders implements Serializable
 
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
 			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
-			String ordersRequest, int paymentStatus, int ordersStatus, Date orders_date, String memberId)
+			String ordersRequest, int paymentStatus, Date orders_date, String memberId)
 	{
 		//오더정보만.
 		super();
@@ -43,17 +42,16 @@ public class Orders implements Serializable
 		this.ordersPayment = ordersPayment;
 		this.ordersRequest = ordersRequest;
 		this.paymentStatus = paymentStatus;
-		this.ordersStatus = ordersStatus;
 		this.orders_date = orders_date;
 		this.memberId = memberId;
 	}
 
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
 			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
-			String ordersRequest, int paymentStatus, int ordersStatus, Date orders_date, String memberId,
+			String ordersRequest, int paymentStatus, Date orders_date, String memberId,
 			List<OrderProduct> orderProductList)
 	{
-		//주문상품까지 추가.
+		//주문상품까지.
 		super();
 		this.ordersNo = ordersNo;
 		this.ordersReceiver = ordersReceiver;
@@ -65,7 +63,6 @@ public class Orders implements Serializable
 		this.ordersPayment = ordersPayment;
 		this.ordersRequest = ordersRequest;
 		this.paymentStatus = paymentStatus;
-		this.ordersStatus = ordersStatus;
 		this.orders_date = orders_date;
 		this.memberId = memberId;
 		this.orderProductList = orderProductList;
@@ -171,16 +168,6 @@ public class Orders implements Serializable
 		this.paymentStatus = paymentStatus;
 	}
 
-	public int getOrdersStatus()
-	{
-		return ordersStatus;
-	}
-
-	public void setOrdersStatus(int ordersStatus)
-	{
-		this.ordersStatus = ordersStatus;
-	}
-
 	public Date getOrders_date()
 	{
 		return orders_date;
@@ -224,7 +211,6 @@ public class Orders implements Serializable
 		result = prime * result + ((ordersPhone == null) ? 0 : ordersPhone.hashCode());
 		result = prime * result + ((ordersReceiver == null) ? 0 : ordersReceiver.hashCode());
 		result = prime * result + ((ordersRequest == null) ? 0 : ordersRequest.hashCode());
-		result = prime * result + ordersStatus;
 		result = prime * result + ((ordersSubAddress == null) ? 0 : ordersSubAddress.hashCode());
 		result = prime * result + ordersTotalPrice;
 		result = prime * result + ((ordersZipcode == null) ? 0 : ordersZipcode.hashCode());
@@ -291,8 +277,6 @@ public class Orders implements Serializable
 				return false;
 		} else if (!ordersRequest.equals(other.ordersRequest))
 			return false;
-		if (ordersStatus != other.ordersStatus)
-			return false;
 		if (ordersSubAddress == null)
 		{
 			if (other.ordersSubAddress != null)
@@ -324,8 +308,7 @@ public class Orders implements Serializable
 		return "Orders [ordersNo=" + ordersNo + ", ordersReceiver=" + ordersReceiver + ", ordersPhone=" + ordersPhone
 				+ ", ordersZipcode=" + ordersZipcode + ", ordersAddress=" + ordersAddress + ", ordersSubAddress="
 				+ ordersSubAddress + ", ordersTotalPrice=" + ordersTotalPrice + ", ordersPayment=" + ordersPayment
-				+ ", ordersRequest=" + ordersRequest + ", paymentStatus=" + paymentStatus + ", ordersStatus="
-				+ ordersStatus + ", orders_date=" + orders_date + ", memberId=" + memberId + ", orderProductList="
-				+ orderProductList + "]";
+				+ ", ordersRequest=" + ordersRequest + ", paymentStatus=" + paymentStatus + ", orders_date="
+				+ orders_date + ", memberId=" + memberId + ", orderProductList=" + orderProductList + "]";
 	}
 }
