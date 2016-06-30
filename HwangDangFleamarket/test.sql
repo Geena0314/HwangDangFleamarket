@@ -262,6 +262,8 @@ insert into orders values ('order_no11', '홍길동6', '010-123-1234', '850-123'
 insert into orders values ('order_no42', '홍길동7', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 30000, '카드', '부재중일시 경비실에 맡겨주세요', 1, 6, 'admin@admin.com' );
 insert into orders values ('order_no34', '홍길동8', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 20000, '카드', '부재중일시 경비실에 맡겨주세요', 2, 7, 'admin@admin.com' );
 
+select * FROM orders;
+
 drop table order_product
 create sequence order_product_seq nocache;
 CREATE TABLE order_product  (
@@ -322,10 +324,9 @@ select * FROM product;
 SELECT * FROM order_product
 SELECT * FROM product_option
 
-
-
-
-
+update product 
+SET product_main_image = 'abc4.png' 
+WHERE product_id = '상품id4'
 
 
 
@@ -353,14 +354,30 @@ SELECT      o.orders_no , o.orders_receiver , o.orders_phone ,
 	FROM   orders o ,  order_product op , product p  ,seller s  , product_option po
 	
 	WHERE  o.member_id =  'admin@admin.com'  
-	AND    o.orders_no =  op.orders_no
+	AND    o.orders_no =  op.orders_no(+)
 	AND    op.product_id =  p.product_Id
 	AND    op.seller_store_no =  s.seller_store_no
 	AND    op.option_id  =  po.option_id
-	AND     p.product_Id = po.product_id 
+	AND    p.product_Id = po.product_id
 	
 	
-	AND    o.orders_status IN ( 0,1,2,3,4)	 
+	AND    o.orders_status IN ( 0,1,2,3)	 
+	
+SELECT * FROM orders;
 	
 
-	
+SELECT 		o.orders_no , o.orders_receiver , o.orders_phone ,
+			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
+			o.orders_total_price , o.orders_payment , o.orders_request ,
+			o.payment_status , o.orders_status ,
+			o.member_id  ,
+			
+			op.order_amount  , op.orders_no ,  op.product_id  ,op.option_id , op.seller_store_no 
+			
+FROM   orders o ,  order_product op , product p  ,seller s  , product_option po
+
+WHERE  o.member_id =  'admin@admin.com'  
+AND    o.orders_no =  op.orders_no
+GROUP BY o.orders_status;
+
+

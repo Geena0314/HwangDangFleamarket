@@ -55,14 +55,14 @@
 	교환/환불/취소 -  환불신청 :  6 
 	교환/환불/취소 - 구매취소(배송전) :  7 
 	
- -->			
+ -->	
+ <!-- 배송현황 조회 -->		
 <select id="select-diliver-status" parameterType="string"  resultMap="order-productOption-join" >
-
 	SELECT  o.orders_no , o.orders_receiver , o.orders_phone ,
 			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
 			o.orders_total_price , o.orders_payment , o.orders_request ,
 			o.payment_status , o.orders_status ,
-			o.member_id  ,
+			o.member_id buyer ,
 			
 			op.order_amount  , op.orders_no ,  op.product_id  ,op.option_id , op.seller_store_no ,
 			
@@ -79,48 +79,84 @@
 			
 	FROM   orders o ,  order_product op , product p  ,seller s  , product_option po
 	
-	WHERE  o.member_id =  'admin@admin.com'  
+	WHERE  o.member_id =  #{buyerId}
 	AND    o.orders_no =  op.orders_no
 	AND    op.product_id =  p.product_Id
 	AND    op.seller_store_no =  s.seller_store_no
 	AND    op.option_id  =  po.option_id
 	AND     p.product_Id = po.product_id 
+	AND    o.orders_status IN ( 0,1,2,3 )
 </select>
 
-<!-- 
-
+<!-- 배송 완료 조회 -->		
+<select id="select-diliver-success" parameterType="string"  resultMap="order-productOption-join" >
 	SELECT  o.orders_no , o.orders_receiver , o.orders_phone ,
 			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
 			o.orders_total_price , o.orders_payment , o.orders_request ,
 			o.payment_status , o.orders_status ,
-			o.member_id buyer  ,
+			o.member_id buyer ,
 			
-			op.orders_no , op.order_amount , op.product_id  ,op.option_id
+			op.order_amount  , op.orders_no ,  op.product_id  ,op.option_id , op.seller_store_no ,
 			
+			p.product_Id, p.product_name, p.product_price, p.product_stock, 
+			p.product_main_image, p.product_info, p.product_like, 
+			p.seller_store_no ,
 			
 			s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
 			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
 			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
-			s.seller_introduction, s.seller_assign, s.member_id , 
+			s.seller_introduction, s.seller_assign, s.member_id  , 
 		
+			po.option_id , po.option_name , po.option_sub_name , po.option_stock , po.option_add_price , po.product_id 
+			
+	FROM   orders o ,  order_product op , product p  ,seller s  , product_option po
+	
+	WHERE  o.member_id =  #{buyerId}
+	AND    o.orders_no =  op.orders_no
+	AND    op.product_id =  p.product_Id
+	AND    op.seller_store_no =  s.seller_store_no
+	AND    op.option_id  =  po.option_id
+	AND     p.product_Id = po.product_id 
+	AND    o.orders_status IN ( 4 )
+</select>
+
+<!-- 주문취소/교환/환불 조회 -->		
+<select id="select-diliver-cancel" parameterType="string"  resultMap="order-productOption-join" >
+	SELECT  o.orders_no , o.orders_receiver , o.orders_phone ,
+			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
+			o.orders_total_price , o.orders_payment , o.orders_request ,
+			o.payment_status , o.orders_status ,
+			o.member_id buyer ,
+			
+			op.order_amount  , op.orders_no ,  op.product_id  ,op.option_id , op.seller_store_no ,
+			
 			p.product_Id, p.product_name, p.product_price, p.product_stock, 
 			p.product_main_image, p.product_info, p.product_like, 
-			p.seller_store_no
+			p.seller_store_no ,
+			
+			s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
+			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
+			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
+			s.seller_introduction, s.seller_assign, s.member_id  , 
 		
-	FROM   orders o , order_product op  ,  seller s , product p 
+			po.option_id , po.option_name , po.option_sub_name , po.option_stock , po.option_add_price , po.product_id 
+			
+	FROM   orders o ,  order_product op , product p  ,seller s  , product_option po
 	
-	WHERE  o.member_id =  #{buyerId}  
-	AND    o.orders_no  = op.orders_no
-	
-	
-	
-	
-	AND	   o.seller_id =  s.member_id
-	AND	   o.product_id = p.product_Id
-	AND    o.orders_status IN ( 0,1,2,3,4)
-		 
- -->
+	WHERE  o.member_id =  #{buyerId}
+	AND    o.orders_no =  op.orders_no
+	AND    op.product_id =  p.product_Id
+	AND    op.seller_store_no =  s.seller_store_no
+	AND    op.option_id  =  po.option_id
+	AND     p.product_Id = po.product_id 
+	AND    o.orders_status IN ( 5,6,7 )
+</select>
 
+<!-- 주문취소 -->
+<delete id="delete-by-orderNo" parameterType="string">
+	DELETE FROM orders 
+	WHERE orders_no = #{value} 
+</delete>
 
 
 </mapper>
