@@ -50,7 +50,7 @@ public class SellerController {
 		HashMap<String, Object> map = service.selectOrderState(page, sellerStoreNo);
 		ArrayList<Orders> orderList = (ArrayList<Orders>) map.get("orderList");
 		ArrayList<String> status = new ArrayList<>();
-		for(int i = 0; i < 10; i++)
+		for(int i = 0; i < 11; i++)
 		{
 			switch(i)
 			{
@@ -83,6 +83,9 @@ public class SellerController {
 					break;
 				case 9 :
 					status.add("환불승인처리");
+					break;
+				case 10 : 
+					status.add("구매확정");
 					break;
 				default:
 					break;

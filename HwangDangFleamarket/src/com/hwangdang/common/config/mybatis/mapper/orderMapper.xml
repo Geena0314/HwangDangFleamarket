@@ -2,7 +2,7 @@
 <mapper namespace="orderMapper">
 	<sql id="orders-join">
 		o.orders_no, o.orders_receiver, o.orders_phone, o.orders_zipcode, o.orders_address, o.orders_sub_address,
-		o.orders_total_price, o.orders_payment, o.orders_request, o.payment_status, o.orders_status, o.member_id
+		o.orders_total_price, o.orders_payment, o.orders_request, o.payment_status, o.member_id
 	</sql>
 	<sql id="product-join">
 		p.product_Id, p.product_name, p.product_price, p.product_stock, p.product_main_image, 
@@ -15,7 +15,7 @@
 	<sql id="order-join-column">
 		order_seq_no, order_amount, op_orders_no, op_product_id, option_id, op_seller_store_no, order_product_status,
 		orders_no, orders_receiver, orders_phone, orders_zipcode, orders_address, orders_sub_address,
-		orders_total_price, orders_payment, orders_request, payment_status, orders_status, member_id,
+		orders_total_price, orders_payment, orders_request, payment_status, member_id,
 		product_Id, product_name, product_price, product_stock, product_main_image, 
 		product_info, product_like, seller_store_no
 	</sql>
@@ -31,7 +31,6 @@
 		<result column="orders_payment" property="ordersPayment"/>
 		<result column="orders_request" property="ordersRequest"/>
 		<result column="payment_status" property="paymentStatus"/>
-		<result column="orders_status" property="ordersStatus"/>
 		<result column="member_id" property="memberId"/>
 	</resultMap>
 	
