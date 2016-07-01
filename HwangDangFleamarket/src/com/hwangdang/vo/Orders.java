@@ -1,33 +1,36 @@
 package com.hwangdang.vo;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 public class Orders implements Serializable
 {
-	private String ordersNo;
+	private String ordersNo;    //주문번호
 	private String ordersReceiver;
 	private String ordersPhone;
 	private String ordersZipcode;
 	private String ordersAddress;
 	private String ordersSubAddress;
-	private int ordersTotalPrice;
-	private String ordersPayment;
-	private String ordersRequest;
-	private int paymentStatus;
-	private int ordersStatus;
+	private int ordersTotalPrice;  //주문한 총가격 
+	private String ordersPayment;   // 결제방식
+	private String ordersRequest;  
+	private int paymentStatus;    // 결재여부 
+	private Date orders_date;   //주문날짜 
 	private String memberId;  //구매자 ID
 	
-	private Seller seller; // 판매자객체 
-	private Product product;  // 제품객체 
-	private OrderProduct orderProduct;  // 주문한 제품에대한 세부정보  , 주문수량 , 상품ID
-	private ProductOption productOption;   // 제품옵션객체 
+	private List<OrderProduct> orderProductList;  // 주문한 제품에대한 세부정보  , 주문수량 , 상품ID
 	
-	public Orders() {}
+	public Orders()
+	{
+		// TODO Auto-generated constructor stub
+	}
 
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
 			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
-			String ordersRequest, int paymentStatus, int ordersStatus, String memberId, Seller seller, Product product,
-			OrderProduct orderProduct, ProductOption productOption) {
+			String ordersRequest, int paymentStatus, int ordersStatus, Date orders_date, String memberId)
+	{
+		//오더정보만.
 		super();
 		this.ordersNo = ordersNo;
 		this.ordersReceiver = ordersReceiver;
@@ -39,17 +42,16 @@ public class Orders implements Serializable
 		this.ordersPayment = ordersPayment;
 		this.ordersRequest = ordersRequest;
 		this.paymentStatus = paymentStatus;
-		this.ordersStatus = ordersStatus;
+		this.orders_date = orders_date;
 		this.memberId = memberId;
-		this.seller = seller;
-		this.product = product;
-		this.orderProduct = orderProduct;
-		this.productOption = productOption;
 	}
 
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
 			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
-			String ordersRequest, int paymentStatus, int ordersStatus, String memberId) {
+			String ordersRequest, int paymentStatus, int ordersStatus, Date orders_date, String memberId,
+			List<OrderProduct> orderProductList)
+	{
+		//주문상품까지 추가.
 		super();
 		this.ordersNo = ordersNo;
 		this.ordersReceiver = ordersReceiver;
@@ -61,136 +63,140 @@ public class Orders implements Serializable
 		this.ordersPayment = ordersPayment;
 		this.ordersRequest = ordersRequest;
 		this.paymentStatus = paymentStatus;
-		this.ordersStatus = ordersStatus;
+		this.orders_date = orders_date;
 		this.memberId = memberId;
+		this.orderProductList = orderProductList;
 	}
 
-	public String getOrdersNo() {
+	public String getOrdersNo()
+	{
 		return ordersNo;
 	}
 
-	public void setOrdersNo(String ordersNo) {
+	public void setOrdersNo(String ordersNo)
+	{
 		this.ordersNo = ordersNo;
 	}
 
-	public String getOrdersReceiver() {
+	public String getOrdersReceiver()
+	{
 		return ordersReceiver;
 	}
 
-	public void setOrdersReceiver(String ordersReceiver) {
+	public void setOrdersReceiver(String ordersReceiver)
+	{
 		this.ordersReceiver = ordersReceiver;
 	}
 
-	public String getOrdersPhone() {
+	public String getOrdersPhone()
+	{
 		return ordersPhone;
 	}
 
-	public void setOrdersPhone(String ordersPhone) {
+	public void setOrdersPhone(String ordersPhone)
+	{
 		this.ordersPhone = ordersPhone;
 	}
 
-	public String getOrdersZipcode() {
+	public String getOrdersZipcode()
+	{
 		return ordersZipcode;
 	}
 
-	public void setOrdersZipcode(String ordersZipcode) {
+	public void setOrdersZipcode(String ordersZipcode)
+	{
 		this.ordersZipcode = ordersZipcode;
 	}
 
-	public String getOrdersAddress() {
+	public String getOrdersAddress()
+	{
 		return ordersAddress;
 	}
 
-	public void setOrdersAddress(String ordersAddress) {
+	public void setOrdersAddress(String ordersAddress)
+	{
 		this.ordersAddress = ordersAddress;
 	}
 
-	public String getOrdersSubAddress() {
+	public String getOrdersSubAddress()
+	{
 		return ordersSubAddress;
 	}
 
-	public void setOrdersSubAddress(String ordersSubAddress) {
+	public void setOrdersSubAddress(String ordersSubAddress)
+	{
 		this.ordersSubAddress = ordersSubAddress;
 	}
 
-	public int getOrdersTotalPrice() {
+	public int getOrdersTotalPrice()
+	{
 		return ordersTotalPrice;
 	}
 
-	public void setOrdersTotalPrice(int ordersTotalPrice) {
+	public void setOrdersTotalPrice(int ordersTotalPrice)
+	{
 		this.ordersTotalPrice = ordersTotalPrice;
 	}
 
-	public String getOrdersPayment() {
+	public String getOrdersPayment()
+	{
 		return ordersPayment;
 	}
 
-	public void setOrdersPayment(String ordersPayment) {
+	public void setOrdersPayment(String ordersPayment)
+	{
 		this.ordersPayment = ordersPayment;
 	}
 
-	public String getOrdersRequest() {
+	public String getOrdersRequest()
+	{
 		return ordersRequest;
 	}
 
-	public void setOrdersRequest(String ordersRequest) {
+	public void setOrdersRequest(String ordersRequest)
+	{
 		this.ordersRequest = ordersRequest;
 	}
 
-	public int getPaymentStatus() {
+	public int getPaymentStatus()
+	{
 		return paymentStatus;
 	}
 
-	public void setPaymentStatus(int paymentStatus) {
+	public void setPaymentStatus(int paymentStatus)
+	{
 		this.paymentStatus = paymentStatus;
 	}
 
-	public int getOrdersStatus() {
-		return ordersStatus;
+
+	public Date getOrders_date()
+	{
+		return orders_date;
 	}
 
-	public void setOrdersStatus(int ordersStatus) {
-		this.ordersStatus = ordersStatus;
+	public void setOrders_date(Date orders_date)
+	{
+		this.orders_date = orders_date;
 	}
 
-	public String getMemberId() {
+	public String getMemberId()
+	{
 		return memberId;
 	}
 
-	public void setMemberId(String memberId) {
+	public void setMemberId(String memberId)
+	{
 		this.memberId = memberId;
 	}
 
-	public Seller getSeller() {
-		return seller;
+	public List<OrderProduct> getOrderProductList()
+	{
+		return orderProductList;
 	}
 
-	public void setSeller(Seller seller) {
-		this.seller = seller;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public OrderProduct getOrderProduct() {
-		return orderProduct;
-	}
-
-	public void setOrderProduct(OrderProduct orderProduct) {
-		this.orderProduct = orderProduct;
-	}
-
-	public ProductOption getProductOption() {
-		return productOption;
-	}
-
-	public void setProductOption(ProductOption productOption) {
-		this.productOption = productOption;
+	public void setOrderProductList(List<OrderProduct> orderProductList)
+	{
+		this.orderProductList = orderProductList;
 	}
 
 	@Override
@@ -198,9 +204,8 @@ public class Orders implements Serializable
 		return "Orders [ordersNo=" + ordersNo + ", ordersReceiver=" + ordersReceiver + ", ordersPhone=" + ordersPhone
 				+ ", ordersZipcode=" + ordersZipcode + ", ordersAddress=" + ordersAddress + ", ordersSubAddress="
 				+ ordersSubAddress + ", ordersTotalPrice=" + ordersTotalPrice + ", ordersPayment=" + ordersPayment
-				+ ", ordersRequest=" + ordersRequest + ", paymentStatus=" + paymentStatus + ", ordersStatus="
-				+ ordersStatus + ", memberId=" + memberId + ", seller=" + seller + ", product=" + product
-				+ ", orderProduct=" + orderProduct + ", productOption=" + productOption + "]";
+				+ ", ordersRequest=" + ordersRequest + ", paymentStatus=" + paymentStatus + ", orders_date="
+				+ orders_date + ", memberId=" + memberId + ", orderProductList=" + orderProductList + "]";
 	}
 
 	@Override
@@ -208,21 +213,18 @@ public class Orders implements Serializable
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((memberId == null) ? 0 : memberId.hashCode());
-		result = prime * result + ((orderProduct == null) ? 0 : orderProduct.hashCode());
+		result = prime * result + ((orderProductList == null) ? 0 : orderProductList.hashCode());
 		result = prime * result + ((ordersAddress == null) ? 0 : ordersAddress.hashCode());
 		result = prime * result + ((ordersNo == null) ? 0 : ordersNo.hashCode());
 		result = prime * result + ((ordersPayment == null) ? 0 : ordersPayment.hashCode());
 		result = prime * result + ((ordersPhone == null) ? 0 : ordersPhone.hashCode());
 		result = prime * result + ((ordersReceiver == null) ? 0 : ordersReceiver.hashCode());
 		result = prime * result + ((ordersRequest == null) ? 0 : ordersRequest.hashCode());
-		result = prime * result + ordersStatus;
 		result = prime * result + ((ordersSubAddress == null) ? 0 : ordersSubAddress.hashCode());
 		result = prime * result + ordersTotalPrice;
 		result = prime * result + ((ordersZipcode == null) ? 0 : ordersZipcode.hashCode());
+		result = prime * result + ((orders_date == null) ? 0 : orders_date.hashCode());
 		result = prime * result + paymentStatus;
-		result = prime * result + ((product == null) ? 0 : product.hashCode());
-		result = prime * result + ((productOption == null) ? 0 : productOption.hashCode());
-		result = prime * result + ((seller == null) ? 0 : seller.hashCode());
 		return result;
 	}
 
@@ -240,10 +242,10 @@ public class Orders implements Serializable
 				return false;
 		} else if (!memberId.equals(other.memberId))
 			return false;
-		if (orderProduct == null) {
-			if (other.orderProduct != null)
+		if (orderProductList == null) {
+			if (other.orderProductList != null)
 				return false;
-		} else if (!orderProduct.equals(other.orderProduct))
+		} else if (!orderProductList.equals(other.orderProductList))
 			return false;
 		if (ordersAddress == null) {
 			if (other.ordersAddress != null)
@@ -275,8 +277,6 @@ public class Orders implements Serializable
 				return false;
 		} else if (!ordersRequest.equals(other.ordersRequest))
 			return false;
-		if (ordersStatus != other.ordersStatus)
-			return false;
 		if (ordersSubAddress == null) {
 			if (other.ordersSubAddress != null)
 				return false;
@@ -289,26 +289,15 @@ public class Orders implements Serializable
 				return false;
 		} else if (!ordersZipcode.equals(other.ordersZipcode))
 			return false;
+		if (orders_date == null) {
+			if (other.orders_date != null)
+				return false;
+		} else if (!orders_date.equals(other.orders_date))
+			return false;
 		if (paymentStatus != other.paymentStatus)
-			return false;
-		if (product == null) {
-			if (other.product != null)
-				return false;
-		} else if (!product.equals(other.product))
-			return false;
-		if (productOption == null) {
-			if (other.productOption != null)
-				return false;
-		} else if (!productOption.equals(other.productOption))
-			return false;
-		if (seller == null) {
-			if (other.seller != null)
-				return false;
-		} else if (!seller.equals(other.seller))
 			return false;
 		return true;
 	}
 
-	
-	
+
 }

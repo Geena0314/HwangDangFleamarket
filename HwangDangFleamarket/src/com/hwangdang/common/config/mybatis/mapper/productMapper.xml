@@ -114,6 +114,7 @@
 		select option_id, option_name, option_sub_name, option_stock, option_add_price, product_id
 		from product_option
 		where option_sub_name = #{optionName}
+		and	 product_id = #{productId}
 	</select>
 	
 	<!-- 상품 ID로 상세이미지 조회. -->

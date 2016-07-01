@@ -61,10 +61,10 @@ public class ProductDaoImpl implements ProductDao
 	}
 
 	@Override
-	public ProductOption selectOptionStockByName(String optionName)
+	public ProductOption selectOptionStockByName(HashMap<String, Object> map)
 	{
 		// TODO Auto-generated method stub
-		return session.selectOne("productMapper.selectOptionStockByName", optionName);
+		return session.selectOne("productMapper.selectOptionStockByName", map);
 	}
 
 	@Override

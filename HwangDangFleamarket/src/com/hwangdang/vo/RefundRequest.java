@@ -6,19 +6,19 @@ public class RefundRequest implements Serializable
 {
 	private String refundTitle;
 	private String refundContent;
-	private String ordersNo;
+	private int orderSeqNo;
 
 	public RefundRequest()
 	{
 		// TODO Auto-generated constructor stub
 	}
 
-	public RefundRequest(String refundTitle, String refundContent, String ordersNo)
+	public RefundRequest(String refundTitle, String refundContent, int orderSeqNo)
 	{
 		super();
 		this.refundTitle = refundTitle;
 		this.refundContent = refundContent;
-		this.ordersNo = ordersNo;
+		this.orderSeqNo = orderSeqNo;
 	}
 
 	public String getRefundTitle()
@@ -41,14 +41,14 @@ public class RefundRequest implements Serializable
 		this.refundContent = refundContent;
 	}
 
-	public String getOrdersNo()
+	public int getOrderSeqNo()
 	{
-		return ordersNo;
+		return orderSeqNo;
 	}
 
-	public void setOrdersNo(String ordersNo)
+	public void setOrderSeqNo(int orderSeqNo)
 	{
-		this.ordersNo = ordersNo;
+		this.orderSeqNo = orderSeqNo;
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class RefundRequest implements Serializable
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((ordersNo == null) ? 0 : ordersNo.hashCode());
+		result = prime * result + orderSeqNo;
 		result = prime * result + ((refundContent == null) ? 0 : refundContent.hashCode());
 		result = prime * result + ((refundTitle == null) ? 0 : refundTitle.hashCode());
 		return result;
@@ -72,11 +72,7 @@ public class RefundRequest implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		RefundRequest other = (RefundRequest) obj;
-		if (ordersNo == null)
-		{
-			if (other.ordersNo != null)
-				return false;
-		} else if (!ordersNo.equals(other.ordersNo))
+		if (orderSeqNo != other.orderSeqNo)
 			return false;
 		if (refundContent == null)
 		{
@@ -96,7 +92,7 @@ public class RefundRequest implements Serializable
 	@Override
 	public String toString()
 	{
-		return "RefundRequest [refundTitle=" + refundTitle + ", refundContent=" + refundContent + ", ordersNo="
-				+ ordersNo + "]";
+		return "RefundRequest [refundTitle=" + refundTitle + ", refundContent=" + refundContent + ", orderSeqNo="
+				+ orderSeqNo + "]";
 	}
 }

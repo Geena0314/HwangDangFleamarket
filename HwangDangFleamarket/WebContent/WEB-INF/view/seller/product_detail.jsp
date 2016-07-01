@@ -47,9 +47,19 @@
 				width : 582.73px;
 				min-height : 235.46px;
 			}
+<<<<<<< HEAD
 			#optionId
 			{
 				display: none;
+=======
+			#optionAddPriceTr
+			{
+				display : none;
+			}
+			#optionStockError
+			{
+				display : none;
+>>>>>>> branch 'master' of https://github.com/Geena0314/HwangDangFleamarket.git
 			}
 		</style>
 		<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
@@ -61,6 +71,38 @@
 			var qnaCurrentPage;
 			$(document).ready(function()
 			{  
+				$("#minus").on("click", function()
+				{
+					//alert($("#optionStockError").text());
+					if($("#optionStock").val() == 0)
+					{
+						alert("주문 수량은 1개 이상으로 입력하세요.");
+						return false;
+					}
+					var amount = $("#optionStock").val()
+					amount--;
+					$("#optionStock").empty().val(amount);
+				});
+				
+				$("#plus").on("click", function()
+				{
+					if($("#optionStockError").text() == "재고량이 부족합니다.")
+						return false;
+					if(!$("#optionStockError").text())
+					{
+						alert("옵션을 선택해 주세요.");
+						return false;
+					}
+					if($("#optionStock").val() == $("#optionStockError").text())
+					{
+						alert("재고량이 부족합니다.");
+						return false;
+					}
+					var amount = $("#optionStock").val()
+					amount++;
+					$("#optionStock").empty().val(amount);
+				});
+				
 				$("#optionName").on("change", function()
 				{
 					var index = this.selectedIndex;
@@ -68,13 +110,14 @@
 					({
 						"url" : "/HwangDangFleamarket/product/optionStock.go",
 						"type" : "POST",
-						"data" : "optionName=" + $("#optionName").val(),
+						"data" : {"optionName" : $("#optionName").val(), "productId" : $("#productId").text()},
 						"dataType" : "JSON",
 						"beforeSend" : function()
 						{
+							$("#optionStock").empty().val(0);
 							$("#error").empty();
-							$("#optionAddPrice").empty().append("원");
-							$("#optionStock").empty().html("<option>수량선택</option>");
+							$("#optionAddPriceTr").empty().hide();
+							//$("#optionStock").empty().html("<option>수량선택</option>");
 							$("#optionNameError").empty();
 							$("#optionStockError").empty();
 							$("#optionId").empty();
@@ -86,20 +129,30 @@
 							$("#optionId").append(json.optionId);
 							if(json.optionStock == 0)
 							{
-								$("#optionStockError").append("재고량이 부족합니다.")
+								$("#optionStockError").append("재고량이 부족합니다.").show();
+								$("#optionName option:eq(0)").removeAttr('selected');
+								$("#optionName option:eq(0)").attr('selected', 'true');
 								return false;
 							}
-							for(var i = json.optionStock; i > 0 ; i--)
+							/* for(var i = json.optionStock; i > 0 ; i--)
 							{
 								$("#optionStock").append("<option>" + i + "</option>");
-							}
+							} */
 							if(json.optionAddPrice == 0)
 							{
+								$("#optionStockError").empty().append(json.optionStock).hide();
 								return false;
 							}
-							$("#optionAddPrice").prepend(json.optionAddPrice);
-						},
-						"error" : error
+							else
+							{
+								$("#optionAddPriceTr").html("<td>추가 가격</td><td id='optionAddPrice'>" + json.optionAddPrice + "원</td>").show();
+								$("#optionStockError").empty().append(json.optionStock).hide();
+							}
+						},		
+						"error" : function()
+						{
+							alert("선택할 수 없는 옵션입니다.");
+						}
 					});
 				});
 				
@@ -270,7 +323,7 @@
 				
 				$("#reviewWrite").on("focus", function()
 				{
-					if('${empty sessionScope.login_info.memberId}')
+					if(!'${sessionScope.login_info.memberId}')
 					{
 						$("#reviewError").empty();
 						$("#reviewError").append("로그인 한 회원만 입력 가능합니다.");
@@ -395,6 +448,11 @@
 							if(json.reviewDelete == 0)
 							{
 								$("#reviewError").append("등록된 리뷰가 없습니다.");
+								return false;
+							}
+							if(json.reviewDelete == 3)
+							{
+								$("#reviewError").append("로그인한 회원만 가능합니다.");
 								return false;
 							}
 							//리뷰 삭제 후 리뷰 페이징처리...
@@ -823,7 +881,7 @@
 				$("#cartLayer").hide();
 				$("#cartBtn").on("click", function(){
 					var productId = $("#productId").text();
-					if(!"${sessionScope.login_info.memberId}")
+					if(!'${sessionScope.login_info.memberId}')
 					{
 						var result = confirm("로그인이 필요한 서비스입니다.\n로그인하시겠습니까?");
 						if(result){
@@ -916,19 +974,21 @@
 						</tr>
 						<tr><td colspan="2" id="optionNameError"></td></tr>
 						<tr>
-							<td>수량</td>
+							<!-- <td>수량</td>
 							<td>
 								<select id="optionStock">
 									<option>수량선택</option>
 								</select>
+							</td> -->
+							<td>수량</td>
+							<td>
+								<img src="../image_storage/minus.png" style="width:15px; height:15px; cursor: pointer;" class="amount" id="minus">
+								<input type="text" size="3" readonly="readonly" value="0" id="optionStock">
+								<img src="../image_storage/plus.png" style="width:15px; height:15px; cursor: pointer;" class="amount" id="plus">
 							</td>
 						</tr>
 						<tr><td colspan="2" id="optionStockError"></td></tr>
-						<tr>
-							<td>추가가격</td>
-							<td id="optionAddPrice">
-								원
-							</td>
+						<tr id="optionAddPriceTr">
 						</tr>
 						<tr>
 							<td><input type="submit" value="바로구매"></td>
@@ -1091,7 +1151,7 @@
 				</tr>
 				<tr><td colspan="2" id="qnaError"></td></tr>
 				<tr>
-					<td colspan = "3" align="right"><input type="button" id="qnaRegister" value="문의 하기." onClick="window.open('/HwangDangFleamarket/storeQnA/storeQnARegisterForm.go?productId=${param.productId}&memberId=${ sessionScope.login_info.memberId }','문의하기','resizable=no width=600 height=600')"></td>
+					<td colspan = "3" align="right"><input type="button" id="qnaRegister" value="문의 하기." onClick="if(${empty sessionScope.login_info.memberId }){if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');}}else{window.open('/HwangDangFleamarket/storeQnA/storeQnARegisterForm.go?productId=${param.productId}&memberId=${ sessionScope.login_info.memberId }','문의하기','resizable=no width=600 height=600');};"></td>
 				</tr>
 			</table>
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

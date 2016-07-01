@@ -84,10 +84,13 @@ public class ProductServiceImpl implements ProductService
 	}
 
 	@Override
-	public ProductOption selectOptionStockByName(String optionName)
+	public ProductOption selectOptionStockByName(String optionName, String productId)
 	{
 		// TODO Auto-generated method stub
-		return dao.selectOptionStockByName(optionName);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("optionName", optionName);
+		map.put("productId", productId);
+		return dao.selectOptionStockByName(map);
 	}
 
 	@Override

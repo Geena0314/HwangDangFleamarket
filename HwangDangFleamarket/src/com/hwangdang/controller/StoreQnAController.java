@@ -69,7 +69,6 @@ public class StoreQnAController
 		catch (Exception e)
 		{
 			//로그인 안한 경우.
-			e.printStackTrace();
 			return map;
 		}
 	}
