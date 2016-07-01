@@ -49,3 +49,38 @@ insert into order_product values (order_product_seq.nextval ,1, 'order_no11', '�
 insert into order_product values (order_product_seq.nextval , 1, 'order_no42', '상품id7', 18, 17);
 insert into order_product values (order_product_seq.nextval ,4, 'order_no34', '상품id1', 12, 17);
 
+
+
+-- cart TB 변경
+drop sequence cart_no_seq;
+create sequence cart_no_seq nocache;
+
+-- cart TB에 seller_store_no 추가
+-- cart TB에 seller_store_name 추가
+drop table cart
+CREATE TABLE cart (
+	cart_no NUMBER primary key,/* 장바구니 번호 */
+	cart_product_amount NUMBER(4) NOT NULL, /* 장바구니 상품수량 */
+	cart_product_option VARCHAR2(100) NOT NULL, /* 장바구니 선택옵션 */
+	product_id VARCHAR2(30) NOT NULL, /* 상품ID */
+	member_id VARCHAR2(30) NOT NULL, /* 아이디 */
+	option_id NUMBER NOT NULL, /* 상품 옵션 아이디 */
+	foreign key(product_id) references product(product_id),
+	foreign key(member_id) references member(member_id),
+	foreign key(option_id) references PRODUCT_OPTION(option_id)
+);
+
+select * from cart
+insert into cart values(cart_no_seq.nextval,2,'230/검','상품id133','hwang',6)
+
+select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.member_id, c.option_id,
+			   p.product_Id, p.product_name, p.product_price, p.product_stock, p.product_main_image, p.product_info, p.product_like, p.seller_store_no, 
+			   s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, s.seller_sub_industry, s.seller_zipcode, s.seller_address, 
+			   s.seller_sub_address, s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, s.seller_introduction, s.seller_assign, s.member_id
+		from   cart c, product p, seller s
+		where  c.product_id = p.product_id
+		and    p.seller_store_no = s.seller_store_no
+		and    p.product_id = '상품id133'
+		and    s.seller_store_no = 8
+		and    c.member_id = 'hwang'
+

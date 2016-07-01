@@ -45,11 +45,13 @@ public class ProductServiceImpl implements ProductService
 
 	@Override
 	//상품 ID로 조회.
-	public HashMap<String, Object> selectProductDetailById(int page, String productId)
+	public HashMap<String, Object> selectProductDetailById(int page, String productId, int sellerStoreNo)
 	{
 		// TODO Auto-generated method stub
 		HashMap<String, Object> map = new HashMap<>();
-		Product product = dao.selectProductDetailById(productId);
+		map.put("productId", productId);
+		map.put("sellerStoreNo", sellerStoreNo);
+		Product product = dao.selectProductSellerJoin(map);
 		product.setProductInfo(product.getProductInfo().replaceAll(">", "&gt;"));
 		product.setProductInfo(product.getProductInfo().replaceAll("<", "&lt;"));
 		product.setProductInfo(product.getProductInfo().replaceAll("\n", "<br>"));

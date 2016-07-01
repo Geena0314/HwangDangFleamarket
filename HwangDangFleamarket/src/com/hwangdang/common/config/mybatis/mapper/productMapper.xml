@@ -71,6 +71,12 @@
 		<result column="category_type" property="categoryType"/>
 	</resultMap>
 	
+	<!-- seller join -->
+	<resultMap type="product" id="product-seller-join" extends="product-basic-resultMap">
+		<association property="seller" javaType="seller" resultMap="sellerMapper.seller-basic-resultmap"/>
+		<association property="productOption" javaType="productOption" resultMap="productOption-basic-resultMap"/>
+	</resultMap>
+	
 	<!-- 상품 전체 조회. (추천 순, Paging, sellerStoreNo로 조회.)-->
 	<select id="selectAll" resultMap="product-basic-resultMap" parameterType="map">
 		select <include refid="product-columns"/> 
@@ -221,5 +227,15 @@
 	<!-- 카테고리 소분류 조회. -->
 	<select id="selectSecondCategory" resultMap="category-basic-resultMap" parameterType="string">
 		select category_id, category_name, category_id_ref, category_type from category where category_id_ref = #{categoryIdRef}
+	</select>
+	
+	<select id="selectProductSellerJoin" resultMap="product-seller-join" parameterType="map">
+		select p.product_Id, p.product_name, p.product_price, p.product_stock, p.product_main_image, p.product_info, p.product_like, p.seller_store_no, 
+			   s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, s.seller_sub_industry, s.seller_zipcode, s.seller_address, 
+			   s.seller_sub_address, s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, s.seller_introduction, s.seller_assign, s.member_id
+		from   product p, seller s
+		where  p.seller_store_no = #{sellerStoreNo}
+		and	   p.product_id = #{productId}
+		and    p.seller_store_no = s.seller_store_no
 	</select>
 </mapper>

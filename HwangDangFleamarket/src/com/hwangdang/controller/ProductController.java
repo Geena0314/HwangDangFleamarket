@@ -42,9 +42,9 @@ public class ProductController
 	}
 	
 	@RequestMapping("detail")
-	public ModelAndView productDetail(int page, String productId)
+	public ModelAndView productDetail(int page, String productId, int sellerStoreNo)
 	{
-		return new ModelAndView("seller/seller/product_detail.tiles", service.selectProductDetailById(page, productId));
+		return new ModelAndView("seller/seller/product_detail.tiles", service.selectProductDetailById(page, productId, sellerStoreNo));
 	}
 	
 	@RequestMapping("optionStock")

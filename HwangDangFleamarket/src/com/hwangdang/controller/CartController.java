@@ -11,7 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.service.CartService;
+import com.hwangdang.service.SellerService;
 import com.hwangdang.vo.Cart;
+import com.hwangdang.vo.Product;
 
 @Controller
 @RequestMapping("/cart")
@@ -21,22 +23,22 @@ public class CartController {
 			private CartService service;
 		
 			@RequestMapping("/cartList")
-			public ModelAndView cartList(int page, String memberId){
+			public ModelAndView cartList(String memberId){
 				HashMap map = new HashMap<>();
-				PagingBean pagingBean = new PagingBean(service.getCountCart(memberId), page);
-				ArrayList list = (ArrayList)service.getAllCart(page, memberId);
+				ArrayList list = (ArrayList)service.getAllCart(memberId);
+				map.put("cartList", list);
 				return new ModelAndView("buyer/cart_list.tiles", map);
 			}
 			
 			@RequestMapping("/addCart")
 			@ResponseBody
-			public HashMap<String, Object> addCart( String productName, int productPrice, Cart cart){
+			public HashMap<String, Object> addCart(Cart cart){
 				service.addCart(cart);
 				HashMap map = new HashMap<>();
 				map.put("cart", cart);
-				map.put("productName",  productName);
-				map.put("productPrice", productPrice);
-				return map; // ajax로 돌아가야겠지
+				//map.put("productName",  productName);
+			   //map.put("productPrice", productPrice);
+				return map; 
 			}
 			
 			

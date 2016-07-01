@@ -81,4 +81,7 @@ public interface ProductDao
 	
 	//second 카테고리조회.
 	List<Category> selectSecondCategory(String categoryIdRef);
+	
+	//상품 - 판매자 조인
+	Product selectProductSellerJoin(HashMap<String, Object> map);
 }

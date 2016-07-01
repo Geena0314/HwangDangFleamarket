@@ -344,6 +344,7 @@ insert into product_option values (option_id_seq.nextval, '사이즈/색상', '2
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '260/흰색', 10, 2000, '상품id132');
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '270/흰색', 10, 3000, '상품id132');
 
+select * from PRODUCT_OPTION
 /* 소식통(관리자) vvvvvvvv*/
 CREATE TABLE notice (
 	notice_no NUMBER primary key, /* 소식글 no */
@@ -551,3 +552,28 @@ drop sequence seller_notice_no_seq
 create sequence seller_notice_no_seq nocache;
 
 insert into seller_notice values(seller_notice_no_seq.nextval,'aaa','aaa',sysdate,0,1)
+
+select s.seller_store_name
+from   product p, seller s
+where  p.seller_store_no = 8
+and    p.seller_store_no = s.seller_store_no
+
+select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.member_id, c.option_id,
+			   p.product_Id, p.product_name, p.product_price, p.product_stock, p.product_main_image, p.product_info, p.product_like, p.seller_store_no, 
+			   s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, s.seller_sub_industry, s.seller_zipcode, s.seller_address, 
+			   s.seller_sub_address, s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, s.seller_introduction, s.seller_assign, s.member_id
+		from   cart c, product p, seller s
+		where  c.product_id = p.product_id
+		and    p.seller_store_no = s.seller_store_no
+		and    c.member_id = 'hwang3'
+		
+	select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.member_id, c.option_id,
+		   p.product_Id, p.product_name, p.product_price, p.product_stock, p.product_main_image, p.product_info, p.product_like, p.seller_store_no, 
+		   s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, s.seller_sub_industry, s.seller_zipcode, s.seller_address, 
+		   s.seller_sub_address, s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, s.seller_introduction, s.seller_assign, s.member_id,
+		   o.option_id, o.option_name, o.option_sub_name, o.option_stock, o.option_add_price, o.product_id
+	from   cart c, product p, seller s, product_option o
+	where  c.product_id = p.product_id
+	and    p.seller_store_no = s.seller_store_no
+	and    c.member_id = 'hwang3'
+	and    c.option_id = o.option_id

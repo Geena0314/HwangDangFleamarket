@@ -3,19 +3,26 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style type="text/css">
 table, td {
-	border: 1px solid gray;
+	border-top: 3px solid gray;
+	border-bottom: 3px solid gray;
+	border-left: none;
+	border-right: none;
 	text-align: center;
 }
 
 table {
-	border-collapse: collapse;
 	width: 650px;
 }
-
-td {
-	padding: 5px;
+.thead{
+	width: 650px;
+	background-color: lightgray;
 }
-
+.tfoot{
+	background-color: lightgray;
+}
+td {
+	border: none;
+}
 a {
 	text-decoration: none;
 }
@@ -27,15 +34,44 @@ a:HOVER {
 b {
 	font-size: 15pt;
 }
+img{
+	width: 100px;
+	height: 100px; 
+	float: left;
+}
+ul li{
+	list-style: none;
+}
+.estimatedPrice{
+	display: block;
+	border: 3px solid gray;
+	text-align: right;
+}
+.bottomBtn{
+	float: right;
+}
 </style>
+<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
 <script type="text/javascript">
-	
+$( document ).ready( function() {
+    $('#basketAll').on("click", function() {
+    	if($("#basketAll").prop("checked")){
+            $("input[name=checkBasket]").prop("checked",true);
+        }else{
+            $("input[name=checkBasket]").prop("checked",false);
+        }
+    });
+    $('#deleteBtn').on("click", function(){
+    	
+    	
+    });
+});
 </script>
 <p align="right">
 	<b>장바구니</b>
 </p>
-<div class="cart_list_section">
-	<div class="cart_table">
+<div class="cartListSection">
+	<div class="cartTable">
 		<table>
 			<colgroup>
 				<col style="width: 5%">
@@ -43,13 +79,13 @@ b {
 				<col style="width: 10%">
 				<col style="width: 15%">
 			</colgroup>
-			<thead>
+			<thead class="thead">
 				<tr>
 					<th scope="col">
-						<label for="basket_all">
-							<div class="checker" id="mark-basket_all">
+						<label for="basketAll">
+							<div class="checker" id="markBasketAll">
 								<span class="checked"> 
-									<input type="checkbox" id="basket_all" title="장바구니 상품 전체선택">
+									<input type="checkbox" id="basketAll" title="장바구니 상품 전체선택">
 								</span>
 							</div>
 						</label>
@@ -61,86 +97,63 @@ b {
 				</tr>
 			</thead>
 				<tbody>
-					<tr class="cart_list">
-						<td class="first">
-							<div class="checker" id="mark-basket_all">
-								<span class="checked"> 
-									<input type="checkbox" id="basket_all" title="장바구니 상품 전체선택">
-								</span>
-							</div>
-						</td>
-						<td>
-						<%-- 스토어 이름, 상품명, 선택한 옵션 --%>
-							<ul>
-								<li id="list_block">
-									<div class="thmb">
-										<div class="store_img">
-											<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${list.sellerStoreNo}&sellerStoreImage=${list.sellerStoreImage}"><img src="../image_storage/${list.sellerStoreImage}"></a>
-										</div>
+					<c:forEach items="${requestScope.cartList}" var="list">
+						<c:forEach items="${list.productList}" var="product">
+							<tr class="cartList">
+								<td class="first">
+									<div class="checker" id="markBasketAll">
+										<span class="checked"> 
+											<input type="checkbox" name="checkBasket" title="장바구니 상품 선택">
+										</span>
 									</div>
-									<ul class="store_info">
-										<li>
-											<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${list.sellerStoreNo}&sellerStoreImage=${list.sellerStoreImage}">${list.sellerStoreName}</a>
-										</li><br>
-										<li>
-											상품명
-										</li>
-										<li>
-											선택한 옵션
+								</td>
+								<td>
+								<%-- 스토어 이름, 상품명, 선택한 옵션 --%>
+									<ul>
+										<li id="listBlock">
+											<div class="thmb">
+												<div class="storeImg">
+													<a href="/HwangDangFleamarket/product/detail.go?page=1&productId=${product.productId}&sellerStoreNo=${product.seller.sellerStoreNo}&sellerStoreImage=${product.seller.sellerStoreImage}"><img src="../image_storage/${product.productMainImage}"></a>
+												</div>
+											</div>
+											<ul class="storeInfo">
+												<li>
+													<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${product.seller.sellerStoreNo}&sellerStoreImage=${product.seller.sellerStoreImage}">${product.seller.sellerStoreName}</a>
+												</li><br>
+												<li>
+													${product.productName}/${product.productOption.optionSubName}
+												</li>
+											</ul>
 										</li>
 									</ul>
-								</li>
-							</ul>
-						</td>
-						<td>
-						<%-- 수량 --%>
-						</td>
-						<td>
-						<%-- 가격 --%>
-						</td>
-						<td>
-							무료 배송
-						</td>
-					</tr>
+								</td>
+								<td>
+								<%-- 수량 --%>
+									${list.cartProductAmount}
+								</td>
+								<td>
+								<%-- 가격 --%>
+								<%-- 수량이랑 곱한값 넣어주기 --%>	
+									${product.productPrice * list.cartProductAmount}
+								</td>
+								<td>
+									무료 배송
+								</td>
+							</tr>
+						</c:forEach>
+					</c:forEach>
 				</tbody>
 		</table>
 	</div>
+	<p>
+	<div class="estimatedPrice">
+		결제 예상 금액
+		<hr>
+		5,555,000원
+	</div>
+	<p>
+	<span class="bottomBtn">
+	<input type="button" value="선택상품삭제" id="deleteBtn">&nbsp;&nbsp;
+	<input type="button" value="결제정보입력">
+	</span>
 </div>
-
-<%-- 페이징 처리 --%>
-<p align="center">
-	<%-- ◀이전 페이지 그룹 처리 --%>
-	<c:choose>
-		<c:when test="${requestScope.pagingBean.previousPageGroup}">
-			<a
-				href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${requestScope.pagingBean.beginPage-1}">
-				◀ </a>
-		</c:when>
-		<c:otherwise>◀</c:otherwise>
-	</c:choose>
-	&nbsp;&nbsp;
-	<%--페이지 처리 --%>
-	<c:forEach begin="${requestScope.pagingBean.beginPage}"
-		end="${requestScope.pagingBean.endPage}" var="page">
-		<c:choose>
-			<c:when test="${page == requestScope.pagingBean.page}">
-				<b>${page}</b>
-			</c:when>
-			<c:otherwise>
-				<a
-					href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${page}">
-					${page} </a>
-			</c:otherwise>
-		</c:choose>
-&nbsp;&nbsp;
-</c:forEach>
-	<%--다음 페이지 그룹 처리 ▶--%>
-	<c:choose>
-		<c:when test="${requestScope.pagingBean.nextPageGroup}">
-			<a
-				href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${requestScope.pagingBean.endPage+1}">
-				▶ </a>
-		</c:when>
-		<c:otherwise>▶</c:otherwise>
-	</c:choose>
-</p>

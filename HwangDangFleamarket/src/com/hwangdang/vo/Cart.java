@@ -1,6 +1,7 @@
 package com.hwangdang.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Cart implements Serializable
 {
@@ -9,19 +10,25 @@ public class Cart implements Serializable
 	private String cartProductOption;
 	private String productId;
 	private String memberId;
+	private int optionId;
+	
+	private List<Product> productList;
 	
 	public Cart()
 	{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cart(int cartNo, int cartProductAmount, String cartProductOption, String productId, String memberId) {
+	public Cart(int cartNo, int cartProductAmount, String cartProductOption, String productId, String memberId,
+			int optionId, List<Product> productList) {
 		super();
 		this.cartNo = cartNo;
 		this.cartProductAmount = cartProductAmount;
 		this.cartProductOption = cartProductOption;
 		this.productId = productId;
 		this.memberId = memberId;
+		this.optionId = optionId;
+		this.productList = productList;
 	}
 
 	public int getCartNo() {
@@ -64,6 +71,22 @@ public class Cart implements Serializable
 		this.memberId = memberId;
 	}
 
+	public int getOptionId() {
+		return optionId;
+	}
+
+	public void setOptionId(int optionId) {
+		this.optionId = optionId;
+	}
+
+	public List<Product> getProductList() {
+		return productList;
+	}
+
+	public void setProductList(List<Product> productList) {
+		this.productList = productList;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -72,7 +95,9 @@ public class Cart implements Serializable
 		result = prime * result + cartProductAmount;
 		result = prime * result + ((cartProductOption == null) ? 0 : cartProductOption.hashCode());
 		result = prime * result + ((memberId == null) ? 0 : memberId.hashCode());
+		result = prime * result + optionId;
 		result = prime * result + ((productId == null) ? 0 : productId.hashCode());
+		result = prime * result + ((productList == null) ? 0 : productList.hashCode());
 		return result;
 	}
 
@@ -99,10 +124,17 @@ public class Cart implements Serializable
 				return false;
 		} else if (!memberId.equals(other.memberId))
 			return false;
+		if (optionId != other.optionId)
+			return false;
 		if (productId == null) {
 			if (other.productId != null)
 				return false;
 		} else if (!productId.equals(other.productId))
+			return false;
+		if (productList == null) {
+			if (other.productList != null)
+				return false;
+		} else if (!productList.equals(other.productList))
 			return false;
 		return true;
 	}
@@ -110,6 +142,7 @@ public class Cart implements Serializable
 	@Override
 	public String toString() {
 		return "Cart [cartNo=" + cartNo + ", cartProductAmount=" + cartProductAmount + ", cartProductOption="
-				+ cartProductOption + ", productId=" + productId + ", memberId=" + memberId + "]";
+				+ cartProductOption + ", productId=" + productId + ", memberId=" + memberId + ", optionId=" + optionId
+				+ ", productList=" + productList + "]";
 	}
 }
