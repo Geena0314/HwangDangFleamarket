@@ -23,8 +23,9 @@ public class MyOrderController {
 	MyOrderServiceImpl service;
 	
 	//나의주문 - 메인페이지 (배송현황 조회 ) 이동 
-	@RequestMapping("/main.go") /*  @RequestParam(value="num1", defaultValue = "0") int num1,  */ 
-	public String goMainPage(String loginId , Model model , @RequestParam(value="page" ,defaultValue="1") int page ){
+	@RequestMapping("/main.go") 
+	public String goMainPage(String loginId , Model model , 
+			@RequestParam(value="page" ,defaultValue="1") int page ){
 		//System.out.println(page);
 		//System.out.println("메인페이지 , 구매자아이디 : " + loginId);
 		// 전체피이지수 ,  보고픈  page번호   : 디폴트 1  

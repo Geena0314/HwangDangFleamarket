@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hwangdang.common.util.Constants;
 import com.hwangdang.dao.MyOrderDao;
 import com.hwangdang.vo.Orders;
 import com.hwangdang.vo.Seller;
