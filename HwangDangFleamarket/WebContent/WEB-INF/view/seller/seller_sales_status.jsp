@@ -100,7 +100,7 @@ img{
 					<div class="store_products">
 						<ul class="product_list">
 							<li>구매자 : ${list.memberId}</li>
-							<c:forEach begin="0" end="9" step="1" varStatus="status">
+							<c:forEach begin="0" end="10" step="1" varStatus="status">
 								<c:if test="${ productList.orderProductStatus ==  status.index}">
 									<li>주문 현황 : ${requestScope.status[status.index]}</li>
 								</c:if>

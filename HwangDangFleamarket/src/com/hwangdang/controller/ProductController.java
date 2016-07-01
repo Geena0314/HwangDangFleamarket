@@ -89,9 +89,17 @@ public class ProductController
 	@ResponseBody
 	public HashMap<String, Object> reviewDelete(String memberId, String productId, HttpSession session)
 	{
-		memberId = ((Member)session.getAttribute("login_info")).getMemberId();
-		int reviewDelete = service.deleteReview(memberId, productId);
 		HashMap<String, Object> map = reviewPaging(1, productId);
+		try
+		{
+			memberId = ((Member)session.getAttribute("login_info")).getMemberId();
+		}
+		catch (Exception e)
+		{
+			map.put("reviewDelete", 3);
+			return map;
+		}
+		int reviewDelete = service.deleteReview(memberId, productId);
 		map.put("reviewDelete", reviewDelete);
 		return map;
 	}

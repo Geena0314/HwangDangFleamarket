@@ -51,6 +51,10 @@
 			{
 				display : none;
 			}
+			#optionStockError
+			{
+				display : none;
+			}
 		</style>
 		
 		<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
@@ -59,6 +63,38 @@
 			var qnaCurrentPage;
 			$(document).ready(function()
 			{  
+				$("#minus").on("click", function()
+				{
+					//alert($("#optionStockError").text());
+					if($("#optionStock").val() == 0)
+					{
+						alert("주문 수량은 1개 이상으로 입력하세요.");
+						return false;
+					}
+					var amount = $("#optionStock").val()
+					amount--;
+					$("#optionStock").empty().val(amount);
+				});
+				
+				$("#plus").on("click", function()
+				{
+					if($("#optionStockError").text() == "재고량이 부족합니다.")
+						return false;
+					if(!$("#optionStockError").text())
+					{
+						alert("옵션을 선택해 주세요.");
+						return false;
+					}
+					if($("#optionStock").val() == $("#optionStockError").text())
+					{
+						alert("재고량이 부족합니다.");
+						return false;
+					}
+					var amount = $("#optionStock").val()
+					amount++;
+					$("#optionStock").empty().val(amount);
+				});
+				
 				$("#optionName").on("change", function()
 				{
 					var index = this.selectedIndex;
@@ -70,6 +106,7 @@
 						"dataType" : "JSON",
 						"beforeSend" : function()
 						{
+							$("#optionStock").empty().val(0);
 							$("#error").empty();
 							$("#optionAddPriceTr").empty().hide();
 							//$("#optionStock").empty().html("<option>수량선택</option>");
@@ -82,10 +119,9 @@
 						{
 							if(json.optionStock == 0)
 							{
-								$("#optionStockError").append("재고량이 부족합니다.");
+								$("#optionStockError").append("재고량이 부족합니다.").show();
 								$("#optionName option:eq(0)").removeAttr('selected');
 								$("#optionName option:eq(0)").attr('selected', 'true');
-								alert("asdf");
 								return false;
 							}
 							/* for(var i = json.optionStock; i > 0 ; i--)
@@ -94,10 +130,15 @@
 							} */
 							if(json.optionAddPrice == 0)
 							{
+								$("#optionStockError").empty().append(json.optionStock).hide();
 								return false;
 							}
-							$("#optionAddPriceTr").html("<td>추가 가격</td><td id='optionAddPrice'>" + json.optionAddPrice + "원</td>").show();
-						},
+							else
+							{
+								$("#optionAddPriceTr").html("<td>추가 가격</td><td id='optionAddPrice'>" + json.optionAddPrice + "원</td>").show();
+								$("#optionStockError").empty().append(json.optionStock).hide();
+							}
+						},		
 						"error" : function()
 						{
 							alert("선택할 수 없는 옵션입니다.");
@@ -397,6 +438,11 @@
 							if(json.reviewDelete == 0)
 							{
 								$("#reviewError").append("등록된 리뷰가 없습니다.");
+								return false;
+							}
+							if(json.reviewDelete == 3)
+							{
+								$("#reviewError").append("로그인한 회원만 가능합니다.");
 								return false;
 							}
 							//리뷰 삭제 후 리뷰 페이징처리...
@@ -903,9 +949,9 @@
 							</td> -->
 							<td>수량</td>
 							<td>
-								<input type="text" size="3" readonly="readonly" value="0">
-								<img src="../image_storage/minus.png" style="width:19px; height:19px; cursor: pointer;" class="amount">
-								<img src="../image_storage/plus.png" style="width:19px; height:19px; cursor: pointer;" class="amount">
+								<img src="../image_storage/minus.png" style="width:15px; height:15px; cursor: pointer;" class="amount" id="minus">
+								<input type="text" size="3" readonly="readonly" value="0" id="optionStock">
+								<img src="../image_storage/plus.png" style="width:15px; height:15px; cursor: pointer;" class="amount" id="plus">
 							</td>
 						</tr>
 						<tr><td colspan="2" id="optionStockError"></td></tr>

@@ -13,6 +13,9 @@ ALTER TABLE admin_QnA DROP COLUMN  admin_QnA_reply_exist
 ALTER TABLE order_product ADD order_product_status number(1)
 ALTER TABLE order_product DROP COLUMN order_product_status
 
+--order_product 테이블 order_product_status 타입변경
+ALTER TABLE order_product MODIFY (order_product_status number(2))
+
 
 	--배송완료 -  구매확정 : -1 
 	--배송현황 - 입금대기중 : 0 
