@@ -36,10 +36,6 @@ public class CartController {
 				service.addCart(cart);
 				HashMap map = new HashMap<>();
 				map.put("cart", cart);
-				//map.put("productName",  productName);
-			   //map.put("productPrice", productPrice);
 				return map; 
 			}
-			
-			
 }

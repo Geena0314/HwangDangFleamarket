@@ -47,11 +47,9 @@
 				width : 582.73px;
 				min-height : 235.46px;
 			}
-<<<<<<< HEAD
 			#optionId
 			{
 				display: none;
-=======
 			#optionAddPriceTr
 			{
 				display : none;
@@ -59,7 +57,6 @@
 			#optionStockError
 			{
 				display : none;
->>>>>>> branch 'master' of https://github.com/Geena0314/HwangDangFleamarket.git
 			}
 		</style>
 		<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>

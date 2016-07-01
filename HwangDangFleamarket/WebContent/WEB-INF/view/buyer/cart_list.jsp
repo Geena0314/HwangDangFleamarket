@@ -9,7 +9,6 @@ table, td {
 	border-right: none;
 	text-align: center;
 }
-
 table {
 	width: 650px;
 }
