@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hwangdang.common.util.Constants;
 import com.hwangdang.dao.MyOrderDao;
 import com.hwangdang.vo.Orders;
+import com.hwangdang.vo.Seller;
 
 @Repository
 public class MyOrderDaoImpl implements MyOrderDao {
@@ -21,9 +23,14 @@ public class MyOrderDaoImpl implements MyOrderDao {
 	
 	//배송현황조회 - 0:입금대기중 ,1:결제완료 , 2:배송준비중 , 3:배송중  
 	@Transactional
-	public List<Orders> selectOrdersMain(String buyper ){
-		return session.selectList("myorder.select-diliver-status" , buyper);
+	public List<Orders> selectOrdersMain(String buyer , int page ){
+		HashMap<String ,Object> map = new HashMap();
+		map.put("page", page);
+		map.put("itemPerPage", 3);
+		map.put("buyer", buyer);
+		return session.selectList("myorder.select-diliver-status" , map);
 	}
+	
 	//배송완료 조회  - 4: 배송완료 
 	@Transactional
 	public List<Orders> selectOrdersSuccess(String buyper ){
@@ -36,11 +43,6 @@ public class MyOrderDaoImpl implements MyOrderDao {
 		return session.selectList("myorder.select-diliver-cancel" , buyper);
 	}
 	
-	//0:입금대기중 ,1:결제완료 , 2:배송준비중 삭제  == 주문취소 실행 
-	@Transactional
-	public int deleteOrdersCancel(String orderNo ){
-		return session.delete("myorder.delete-by-orderNo" , orderNo);
-	}
 	
 	//배송중 3: 배송완료4: 를 환불신청 :6으로 변경 
 	@Transactional
@@ -48,6 +50,16 @@ public class MyOrderDaoImpl implements MyOrderDao {
 		return session.delete("myorder.update-by-orderNo" , map);
 	}
 		
+	//셀러정보 조회 
+	@Transactional
+	public Seller selectSellerBySellerName(String sellerName){
+		return session.selectOne("myorder.select-seller-by-sellerName",sellerName) ;
+	}
+	//order TB 튜플총개수 조회 
+	@Transactional
+	public int selectOrdersTotalItems(){
+		return session.selectOne("myorder.select-orders-total-couont");
+	}
 	
 	
 }
