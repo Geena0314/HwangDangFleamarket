@@ -348,6 +348,7 @@ update 	product_option
 set			option_stock = option_stock+2
 where		option_id = 2
 
+select * from PRODUCT_OPTION
 /* 소식통(관리자) vvvvvvvv*/
 CREATE TABLE notice (
 	notice_no NUMBER primary key, /* 소식글 no */
@@ -572,6 +573,7 @@ drop sequence seller_notice_no_seq
 create sequence seller_notice_no_seq nocache;
 
 insert into seller_notice values(seller_notice_no_seq.nextval,'aaa','aaa',sysdate,0,1)
+
 
 
 select 

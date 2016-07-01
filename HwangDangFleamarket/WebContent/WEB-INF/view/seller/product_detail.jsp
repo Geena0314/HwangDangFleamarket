@@ -47,6 +47,9 @@
 				width : 582.73px;
 				min-height : 235.46px;
 			}
+			#optionId
+			{
+				display: none;
 			#optionAddPriceTr
 			{
 				display : none;
@@ -56,8 +59,10 @@
 				display : none;
 			}
 		</style>
-		
 		<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
+		<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  		<link rel="stylesheet" href="/HwangDangFleamarket/uiscripts/jquery-ui.min.css">
+  		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 		<script type="text/javascript">
 			var currentPage;
 			var qnaCurrentPage;
@@ -112,11 +117,13 @@
 							//$("#optionStock").empty().html("<option>수량선택</option>");
 							$("#optionNameError").empty();
 							$("#optionStockError").empty();
+							$("#optionId").empty();
 							if(index == 0)
 								$("#optionNameError").append("선택할 수 없는 옵션입니다.");
 						},
 						"success" : function(json)
 						{
+							$("#optionId").append(json.optionId);
 							if(json.optionStock == 0)
 							{
 								$("#optionStockError").append("재고량이 부족합니다.").show();
@@ -868,7 +875,9 @@
 						}
 					});
 				});
+				$("#cartLayer").hide();
 				$("#cartBtn").on("click", function(){
+					var productId = $("#productId").text();
 					if(!'${sessionScope.login_info.memberId}')
 					{
 						var result = confirm("로그인이 필요한 서비스입니다.\n로그인하시겠습니까?");
@@ -881,26 +890,43 @@
 					$.ajax({
 						"url":"/HwangDangFleamarket/cart/addCart.go",
 						"type":"POST",
-						"data":{"page": 1,"productName": $("#productName").val(),"productPrice": $("#productPrice").val(),
-								"cartProductOption": $("#optionName").selected,"cartProductAmount": $("#optionStock").selected,
-								"memberId":"${sessionScope.login_info.memberId}"},
+						"data":{
+								//"productName": "${ requestScope.product.productName }",
+								//"productPrice": "${ requestScope.product.productPrice }",
+								"cartProductAmount": $("#optionStock option:selected").val(),
+								"cartProductOption": $("#optionName option:selected").val(),
+								"sellerStoreName":"${requestScope.product.seller.sellerStoreName}",
+								"memberId":"${sessionScope.login_info.memberId}",
+								"productId":"${ requestScope.product.productId }",
+								"optionId":$('#optionId').text()
+								},
 						"dataType":"json",
-						"success":function(){
-							
-						},
-						"error":function(){
-							
-						},
 						"beforeSend":function(){
-							if(!$("#optionName").selected){
+							if($("#optionName option:selected").val() == "${requestScope.optionList[0].optionName}"){// 이게 첫번째 인덱스면 경고창
 								alert("옵션을 선택해주세요.");
 								return false;
 							}
-							if(!$("#optionStock").selected){
+							if($("#optionStock option:selected").val() == '수량선택'){
 								alert("수량을 선택해주세요.");
 								return false;
 							}
-						}
+						},
+						"success":function(){
+							$("#cartLayer").dialog({
+								resizable: false,
+							    height:150,
+						  		"modal":true,
+						  		buttons: {
+						  	        "장바구니로": function() {
+						  	         location.href = "/HwangDangFleamarket/cart/cartList.go?memberId=${sessionScope.login_info.memberId}";
+						  	        },
+						  	        "계속쇼핑": function() {
+						  	          $( this ).dialog( "close" );
+						  	        }
+						  	      }
+						  	});
+						},
+						"error":error
 					});
 				});
 			});
@@ -937,6 +963,10 @@
 										<option value=${ option.optionSubName }>${ option.optionSubName }</option>
 									</lee:forEach>
 								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" id="optionId">
 							</td>
 						</tr>
 						<tr><td colspan="2" id="optionNameError"></td></tr>
@@ -1123,4 +1153,7 @@
 			</table>
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		</div>
+		<div id="cartLayer" title="장바구니 담기">
+			<b>장바구니</b>에 담겼습니다.
 		</div>

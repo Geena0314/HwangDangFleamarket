@@ -1,5 +1,6 @@
 package com.hwangdang.serviceimpl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class CartServiceImpl implements CartService{
 	}
 
 	@Override
-	public List getAllCart(int page, String memberId) {
-		return dao.selectAllCart(page, memberId);
+	public List getAllCart(String memberId) {
+		return dao.selectAllCart(memberId);
 	}
 
 	@Override

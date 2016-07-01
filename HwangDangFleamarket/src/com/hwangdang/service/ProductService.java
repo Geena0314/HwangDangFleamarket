@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.hwangdang.vo.Category;
+import com.hwangdang.vo.Product;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.StoreQnA;
 
@@ -13,7 +14,7 @@ public interface ProductService
 	HashMap<String, Object> selectAllProduct(int page, int sellerStoreNo);
 	
 	//상품 상세정보 조회. 아이디로.
-	HashMap<String, Object> selectProductDetailById(int page, String productId);
+	HashMap<String, Object> selectProductDetailById(int page, String productId, int sellerStoreNo);
 	
 	//옵션세부내용으로 재고량과 추가가격 조회.(상품명도 가져가야함.)
 	ProductOption selectOptionStockByName(String optionName, String productId);

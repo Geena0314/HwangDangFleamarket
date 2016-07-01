@@ -263,7 +263,7 @@ insert into orders values ('order_no6', '홍길동6', '010-123-1234', '850-123',
 insert into orders values ('order_no7', '홍길동7', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 30000, '카드', '부재중일시 경비실에 맡겨주세요', 1, '2016-07-01', 'admin@admin.com' );
 insert into orders values ('order_no8', '홍길동8', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 20000, '카드', '부재중일시 경비실에 맡겨주세요', 2, '2016-12-01', 'admin@admin.com' );
 
-
+ 
 SELECT * FROM orders;
 delete FROM orders;
 

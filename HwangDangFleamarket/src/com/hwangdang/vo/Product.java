@@ -13,6 +13,9 @@ public class Product implements Serializable
 	private int productLike;
 	private int sellerStoreNo;
 	
+	private Seller seller;
+	private ProductOption productOption;
+	
 	public Product()
 	{
 		// TODO Auto-generated constructor stub
@@ -30,6 +33,43 @@ public class Product implements Serializable
 		this.productInfo = productInfo;
 		this.productLike = productLike;
 		this.sellerStoreNo = sellerStoreNo;
+	}
+	
+	public Product(String productId, String productName, int productPrice, int productStock, String productMainImage,
+			String productInfo, int productLike, int sellerStoreNo, Seller seller) {
+		super();
+		this.productId = productId;
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.productStock = productStock;
+		this.productMainImage = productMainImage;
+		this.productInfo = productInfo;
+		this.productLike = productLike;
+		this.sellerStoreNo = sellerStoreNo;
+		this.seller = seller;
+	}
+
+	public Product(String productId, String productName, int productPrice, int productStock, String productMainImage,
+			String productInfo, int productLike, int sellerStoreNo, Seller seller, ProductOption productOption) {
+		super();
+		this.productId = productId;
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.productStock = productStock;
+		this.productMainImage = productMainImage;
+		this.productInfo = productInfo;
+		this.productLike = productLike;
+		this.sellerStoreNo = sellerStoreNo;
+		this.seller = seller;
+		this.productOption = productOption;
+	}
+
+	public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
 	}
 
 	public String getProductId()
@@ -112,9 +152,16 @@ public class Product implements Serializable
 		this.sellerStoreNo = sellerStoreNo;
 	}
 
+	public ProductOption getProductOption() {
+		return productOption;
+	}
+
+	public void setProductOption(ProductOption productOption) {
+		this.productOption = productOption;
+	}
+
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((productId == null) ? 0 : productId.hashCode());
@@ -122,15 +169,16 @@ public class Product implements Serializable
 		result = prime * result + productLike;
 		result = prime * result + ((productMainImage == null) ? 0 : productMainImage.hashCode());
 		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
+		result = prime * result + ((productOption == null) ? 0 : productOption.hashCode());
 		result = prime * result + productPrice;
 		result = prime * result + productStock;
+		result = prime * result + ((seller == null) ? 0 : seller.hashCode());
 		result = prime * result + sellerStoreNo;
 		return result;
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -138,35 +186,41 @@ public class Product implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		if (productId == null)
-		{
+		if (productId == null) {
 			if (other.productId != null)
 				return false;
 		} else if (!productId.equals(other.productId))
 			return false;
-		if (productInfo == null)
-		{
+		if (productInfo == null) {
 			if (other.productInfo != null)
 				return false;
 		} else if (!productInfo.equals(other.productInfo))
 			return false;
 		if (productLike != other.productLike)
 			return false;
-		if (productMainImage == null)
-		{
+		if (productMainImage == null) {
 			if (other.productMainImage != null)
 				return false;
 		} else if (!productMainImage.equals(other.productMainImage))
 			return false;
-		if (productName == null)
-		{
+		if (productName == null) {
 			if (other.productName != null)
 				return false;
 		} else if (!productName.equals(other.productName))
 			return false;
+		if (productOption == null) {
+			if (other.productOption != null)
+				return false;
+		} else if (!productOption.equals(other.productOption))
+			return false;
 		if (productPrice != other.productPrice)
 			return false;
 		if (productStock != other.productStock)
+			return false;
+		if (seller == null) {
+			if (other.seller != null)
+				return false;
+		} else if (!seller.equals(other.seller))
 			return false;
 		if (sellerStoreNo != other.sellerStoreNo)
 			return false;
@@ -174,10 +228,10 @@ public class Product implements Serializable
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "Product [productId=" + productId + ", productName=" + productName + ", productPrice=" + productPrice
 				+ ", productStock=" + productStock + ", productMainImage=" + productMainImage + ", productInfo="
-				+ productInfo + ", productLike=" + productLike + ", sellerStoreNo=" + sellerStoreNo + "]";
+				+ productInfo + ", productLike=" + productLike + ", sellerStoreNo=" + sellerStoreNo + ", seller="
+				+ seller + ", productOption=" + productOption + "]";
 	}
 }

@@ -19,7 +19,7 @@ public class CartDaoImpl implements CartDao{
 
 	@Override
 	public int insertCart(Cart cart) {
-		return session.insert("cartMapper.insetCart", cart);
+		return session.insert("cartMapper.insertCart", cart);
 	}
 
 	@Override
@@ -33,12 +33,8 @@ public class CartDaoImpl implements CartDao{
 	}
 
 	@Override
-	public List<Cart> selectAllCart(int page, String memberId) {
-		HashMap map = new HashMap<>();
-		map.put("page", page);
-		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
-		map.put("memberId", memberId);
-		return session.selectList("cartMapper.selectCartPaging", map);
+	public List<Cart> selectAllCart(String memberId) {
+		return session.selectList("cartMapper.selectCartProductJoin", memberId);
 	}
 
 	@Override

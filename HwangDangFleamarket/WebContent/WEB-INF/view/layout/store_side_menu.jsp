@@ -20,7 +20,14 @@
 	padding: 5px;
 	text-align: center;
 }
-button{
+/* button{
+	width: 150px;
+	height: 50px;
+	padding: 5px;
+	margin-bottom: 50px;
+	margin-left: 25px;
+} */
+button.basic{
 	width: 150px;
 	height: 50px;
 	padding: 5px;

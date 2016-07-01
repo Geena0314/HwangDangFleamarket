@@ -192,4 +192,10 @@ public class ProductDaoImpl implements ProductDao
 		// TODO Auto-generated method stub
 		return session.selectList("productMapper.selectSecondCategory", categoryIdRef);
 	}
+
+	@Override
+	public Product selectProductSellerJoin(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectProductSellerJoin", map);
+	}
 }

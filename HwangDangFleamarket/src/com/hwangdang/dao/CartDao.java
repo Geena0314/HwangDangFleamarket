@@ -1,5 +1,6 @@
 package com.hwangdang.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.hwangdang.vo.Cart;
@@ -12,7 +13,8 @@ public interface CartDao {
 	
 	int selectCountCart(String memberId);
 	
-	List<Cart> selectAllCart(int page, String memberId);
+	List<Cart> selectAllCart(String memberId);
 	
 	Cart selectCartByCartNo(int cartNo);
+
 }
