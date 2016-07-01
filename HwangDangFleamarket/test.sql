@@ -373,6 +373,7 @@ SELECT      o.orders_no , o.orders_receiver , o.orders_phone ,
 	AND    op.option_id  =  po.option_id
 	AND    p.product_Id = po.product_id
 	AND    op.order_product_status IN ( 0,1,2,3,4)	 
+	ORDER BY o.orders_date DESC;
 	
 SELECT * FROM orders;
 	

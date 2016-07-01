@@ -150,6 +150,7 @@ tr  {
 		<tr>
 			<td>체크박스</td> <!--  -->
 			<td>주문번호</td> <!--  -->
+			<td>주문날짜</td>
 			<td>상품이미지</td> <!--  -->
 			<td>제품명</td> <!--  -->
 			<td>판매스토어</td> <!--  -->
@@ -162,29 +163,33 @@ tr  {
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach items="${requestScope.orderList }"  var="order" >
+		<c:forEach items="${requestScope.orderList }"  var="order" >   
 			<tr>
-				<td><input type="checkbox" name="items"  value="${order.ordersNo },${order.ordersStatus} , ${order.product.productName }" /></td>
+				<td><input type="checkbox" name="items"  <%-- value="${order.ordersNo },${order.orderProduct.orderProductStatus} , ${order.product.productName }" --%> /></td>
 				<td>${order.ordersNo }</td>
-				<td><img src="/HwangDangFleamarket/product_img/${order.product.productMainImage }" /></td>
-				<td>${order.product.productName }</td>
-				<td>${order.seller.sellerStoreName }</td>
-				<td>${order.orderProduct.orderAmount}</td>
-				<td>${order.ordersTotalPrice } </td> 
-				<td>${order.seller.memberId }</td>
-				<td>${order.memberId }</td>
+				<td>${order.orders_date }</td>		
+				<c:forEach items="${order.orderProductList }" var="orderProduct">
+					<td><img src="/HwangDangFleamarket/product_img/${orderProduct.product.productMainImage }" /></td>
+				<td>${orderProduct.product.productName }</td>
+				<td>${orderProduct.seller.sellerStoreName }</td>
+				<td>${orderProduct.orderAmount}</td>
+				<td>${orderProduct.seller.memberId }</td>
 				<td>
 					<c:choose>
-						<c:when test="${order.ordersStatus == 0 }">입금대기중</c:when>
-						<c:when test="${order.ordersStatus == 1 }">결제완료</c:when>
-						<c:when test="${order.ordersStatus == 2 }">배송준비중</c:when>
-						<c:when test="${order.ordersStatus == 3 }">배송중</c:when>
-						<c:when test="${order.ordersStatus == 4 }">배송완료</c:when>
+						<c:when test="${orderProduct.orderProductStatus  == 0 }">입금대기중</c:when>
+						<c:when test="${orderProduct.orderProductStatus  == 1 }">결제완료</c:when>
+						<c:when test="${orderProduct.orderProductStatus  == 2 }">배송준비중</c:when>
+						<c:when test="${orderProduct.orderProductStatus  == 3 }">배송중</c:when>
+						<c:when test="${orderProduct.orderProductStatus == 4 }">배송완료</c:when>
 					</c:choose> 
 				 </td> 
-				<td value="${order.ordersNo }"><c:if test="${order.ordersStatus == 4  or  order.ordersStatus == 3 }"><input type="button" value="구매확정"  /></c:if></td>
-		</tr>
+				<%-- <td value="${order.ordersNo }"><c:if test="${order.orderProduct.orderProductStatus  == 4  or  order.orderProduct.orderProductStatus  == 3 }"><input type="button" value="구매확정"  /></c:if></td> --%>
+		
+				</c:forEach>
+				<td>${order.memberId }</td>
+				<td>${order.ordersTotalPrice } </td> 
 		</c:forEach>
+		</tr>
 		
 	</tbody>
 </table>

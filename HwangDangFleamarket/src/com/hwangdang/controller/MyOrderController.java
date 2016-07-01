@@ -27,7 +27,8 @@ public class MyOrderController {
 			System.out.println(temp.toString());
 		}
 		model.addAttribute("orderList" ,orderList); 
-	return "myorder/myorder_main.tiles";  
+		return "myorder/myorder_main.tiles";  
+		//return "/";  
 	}
 	
 	//나의주문- 배송완료 페이지이동 
