@@ -208,9 +208,9 @@
 		AND    op.product_id =  p.product_Id  
 		AND    op.seller_store_no =  s.seller_store_no   
 		AND    op.option_id  =  po.option_id  
-		
+		AND    op.order_product_status IN (0,1,2,3,4)  
 		ORDER BY o.orders_date DESC 
-		) 
+		)  
 	)WHERE page = #{page}
 </select>
 <!-- AND  op.order_product_status IN (0,1,2,3,4)     -->
@@ -242,12 +242,6 @@
 	ORDER BY o.orders_date DESC
 </select>
 
-<!-- 주문취소  : 주문TB에 해당주문번호로 삭제  => 자식TB order_product TB에서도 삭제됨   -->
-<delete id="delete-by-orderNo" parameterType="string">
-	DELETE FROM orders 
-	WHERE orders_no = #{value} 
-</delete>
-
 
 <!-- 환불신청 : order_product TB orders_status 6 으로 상태 변경 -->
 <!-- 교환신청 : order_product TB orders_status 5 으로 상태 변경 -->
@@ -255,7 +249,7 @@
 <update id="update-by-orderNo"  parameterType="map">
 	update order_product
 	SET order_product_status = #{status}
-	WHERE orders_no = #{no} 
+	WHERE order_seq_no = #{no} 
 </update>
 
 <!-- 셀러명으로 셀러정보 조회 -->

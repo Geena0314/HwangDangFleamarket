@@ -267,6 +267,7 @@ insert into orders values ('order_no9', '홍길동9', '010-123-1234', '850-123',
  SELECT * FROM order_product;
 SELECT * FROM orders;
 delete FROM orders;
+delete FROM order_product;
 
 -- 주문상품 TB                           //PK              주문수량  , 주문번호  , 상품ID   , 상품옵션 ,  판매자스토어NO  , 상품상태 0~10      
 insert into order_product values (order_product_seq.nextval , 5, 'order_no1', '상품id1', 12 , 15 , 0 ); 
@@ -500,12 +501,12 @@ SELECT
 		AND    op.product_id =  p.product_Id  
 		AND    op.seller_store_no =  s.seller_store_no   
 		AND    op.option_id  =  po.option_id  
-		
+		AND    op.order_product_status IN (0,1,2,3,4)   
 		ORDER BY o.orders_date DESC 
 		) 
 	)WHERE page = 4
 	
-	--AND    op.order_product_status IN (0,1,2,3,4)   
+	--
 	
 
 	

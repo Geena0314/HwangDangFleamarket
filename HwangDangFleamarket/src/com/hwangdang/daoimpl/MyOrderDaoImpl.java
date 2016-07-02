@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hwangdang.common.util.Constants;
 import com.hwangdang.dao.MyOrderDao;
 import com.hwangdang.vo.Orders;
 import com.hwangdang.vo.Seller;
@@ -25,7 +26,7 @@ public class MyOrderDaoImpl implements MyOrderDao {
 	public List<Orders> selectOrdersMain(String buyer , int page ){
 		HashMap<String ,Object> map = new HashMap();
 		map.put("page", page);
-		map.put("itemPerPage", 3);
+		map.put("itemPerPage", Constants.ITEMS_PER_PAGE);
 		map.put("buyer", buyer);
 		return session.selectList("myorder.select-diliver-status" , map);
 	}
