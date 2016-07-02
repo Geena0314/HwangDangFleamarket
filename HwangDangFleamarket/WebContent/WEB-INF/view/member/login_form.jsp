@@ -15,10 +15,9 @@
 
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
 <script type="text/javascript">
-	$(document).ready(function()
-	{
-		$("#login").on("click", function()
-		{
+	$(document).ready(function(){
+		
+		$("#login").on("click", function(){
 			if($("#id").val() == null || ($("#id").val() + $("#email").val()).length > 29 || $("#id").val().trim().length == 0)
 			{
 				//id가 비었거나, 30글자보다 크거나, id값에 공백만 있는경우.
@@ -45,15 +44,52 @@
 					return false;
 				}
 			}
-		});
-	});
+			
+			//구매중 로그인페이지로 온경우 이동 
+			var queryString = $("#queryString").val().trim();
+			//alert("쿼리스트링: " + queryString);
+			//alert(queryString.length);  
+			if(queryString.length != 0 ){
+				// 로그인후 상품디테일페이지로 이동 
+				$("form").prop("action", "/HwangDangFleamarket/member/loginAfterProductDetailPage.go");
+				$("form").submit();
+		
+			}else {
+				//일반로그인페이지로이동
+				$("form").prop("action", "/HwangDangFleamarket/member/loginResult.go" );
+				$("form").submit();
+			}
+			
+			
+		}); //btn
+		
+		
+		
+	});//ready
+	
+	
 </script>
 </head>
 	<body>
+	
+		파람 셀러스토어 넘버 : ${param.sellerStoreNo }
+		파람  어마운트 : ${param.amount }
+		셀러스토어 넘버 : ${param.sellerStoreNo }
+		셀러스토어 이미지 : ${param.sellerStoreImage }
+		어마운트 : ${param.amount }
+		옵션 : ${param.option }
+		
+		
+		<h2>로그인</h2>
+	
+		<div >
+			<font size="2" color="red" id="errorMsg">${requestScope.errorMsg }</font>
+		</div>
 		<div>
 			<fieldset style="width:350px">
 				<legend>로그인 폼</legend>   
 				<form action="/HwangDangFleamarket/member/loginResult.go" method="post" name="login_form">
+					<input type="hidden" id="queryString" name="queryString" value="${requestScope.queryString}" />
 					<table align='center'>
 						<tr>
 							<td>아이디</td>

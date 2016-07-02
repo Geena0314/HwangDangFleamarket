@@ -1,0 +1,29 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="directBuy">
+
+<sql id="product-column">
+	product_id , product_name ,product_price ,product_stock ,
+	product_main_image , product_sub_image , produc_info , 
+	product_like , qna_no , seller_store_no
+</sql>
+
+<sql id="seller-column">
+	seller_store_no , seller_store_name , seller_tax_id , seller_industry ,
+	seller_sub_industry , seller_zipcode , seller_address , selelr_sub_address ,
+	seller_sub_address , seller_store_image , seller_product1,seller_store_image , seller_product2,
+	seller_store_image , seller_product3 , seller_introduction , member_id AS 'seller'
+
+</sql>
+
+
+<!-- 재고량 조회 -->
+<select id="product-stock-by-productId" parameterType="string" resultType="_int">
+
+SELECT product_stock 
+FROM   product
+WHERE product_id = #{productId} 
+
+</select>
+
+
+</mapper>

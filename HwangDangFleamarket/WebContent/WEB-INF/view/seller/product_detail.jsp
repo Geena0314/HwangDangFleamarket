@@ -68,6 +68,7 @@
 			var qnaCurrentPage;
 			$(document).ready(function()
 			{  
+				
 				$("#minus").on("click", function()
 				{
 					//alert($("#optionStockError").text());
@@ -929,7 +930,52 @@
 						"error":error
 					});
 				});
-			});
+				
+				
+				//바로구매 
+				$("#buyBtn").on("click",function(){
+					var amount = $("#optionStock").val();
+					//alert("재고량:"+amount);
+					//?page=1&productId=상품id4&sellerStoreNo=2&sellerStoreImage=꿀빵#
+					 var option = $("#optionName option:selected").val();
+					
+						$.ajax({
+							"url" : "/HwangDangFleamarket/buy/checkStock.go?page=${param.page}&productId=${param.productId }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&amount="+amount ,
+							"type" : "GET" , 
+							"dataType" : "text" , 
+							"success" : function(msg){
+								//alert(msg);
+								if(msg == '재고수량부족'){
+									var errorMsg = "구매실패 : 상품변경/재고수량 등의 이유로 구매불가한 상품이 있습니다. 구매상태를 확인해주세요.";		
+								  	alert(errorMsg);
+								  	
+								}else if(msg =="재고수량가능"){
+									
+									$("form").prop("action","/HwangDangFleamarket/buy/moveBuyPage.go?page=${param.page}&productId=${param.productId }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&amount="+amount+"&memberId=${sessionScope.login_info.memberId}&option="+option );
+									//$("form").prop("action","/HwangDangFleamarket/buy/moveBuyPage.go?page=3&productId=${param.productId }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&amount="+amount+"&memberId=${sessionScope.login_info.memberId}");
+									
+									$("form").submit();
+								
+								}
+								
+							},
+							"error" : function(xhr, status, errorMsg){
+								alert("ajax faild : " + status + "," + errorMsg);
+							} ,
+							"beforeSend" : function(){
+								if(amount < 1){
+									alert("구매수량은 1개이상입니다.");
+									return false;
+								}
+							}
+							
+					});
+				}); //btn 
+				
+				
+				
+				
+			}); //reday
 			
 			function error(xhr, status, err)
 			{
@@ -957,6 +1003,7 @@
 						<tr>
 							<td>옵션</td>
 							<td>
+								<!-- <option value=${ option.optionId } hidden="true"></option> -->
 								<select id="optionName">
 									<option>${ requestScope.optionList[0].optionName }</option>
 									<lee:forEach items="${ requestScope.optionList }" var="option">
@@ -988,7 +1035,7 @@
 						<tr id="optionAddPriceTr">
 						</tr>
 						<tr>
-							<td><input type="submit" value="바로구매"></td>
+							<td><input type="submit" value="바로구매" id="buyBtn" ></td>
 							<td><input type="button" value="장바구니담기" id="cartBtn"></td>
 						</tr>
 						<tr>
