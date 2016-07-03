@@ -70,7 +70,7 @@ FROM dual
 	SELECT  option_id , option_name , option_sub_name ,
 			product_id , option_stock , option_add_price
 	FROM 	product_option
-	WHERE 	option_sub_name like '220/흰색'
+	WHERE 	option_sub_name = '220/흰색'
 
 SELECT * FROM member;
  ALTER TABLE member ADD  member_mileage number
@@ -78,3 +78,18 @@ SELECT * FROM member;
  UPDATE MEMBER
  SET member_mileage = 5000
  WHERE member_id ='admin@admin.com' 
+ 
+ 
+ SELECT  *
+ FROM orders
+ WHERE member_id ='admin@admin.com' 
+ AND oders_date = max(orders_date)
+ 
+ 
+SELECT  orders_no
+FROM    orders  
+WHERE   orders_date = (  
+	SELECT MAX(orders_date) FROM orders WHERE member_id ='admin@admin.com' 
+);  
+ 
+

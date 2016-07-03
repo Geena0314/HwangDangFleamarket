@@ -118,11 +118,8 @@ public class BuyController {
 			url = "error.tiles"; 
 			model.addAttribute("errorMsg","결제가실패하였습니다. 관리자에게 문의하세요.");
 		}
-		 
-		
 		return url;
 	}
-	
 	//장바구니 구매
 	@RequestMapping("/buyCarts.go")
 	public String buyCarts(@RequestParam(value="page" ,defaultValue="1") int page  ,
@@ -132,9 +129,22 @@ public class BuyController {
 			//System.out.println("page :" + page + ", 셀러스토어이미지:"+sellerStoreImage);
 			//System.out.println("멤버아이디:"+memberId);
 			String url = "";
-			
-			
 			return url;
 		}  
+
+
+	//최근배송지 조회 
+	@RequestMapping("/currentDeliveryAddress.go")
+	@ResponseBody
+	public Orders currentDeliveryAddress(String memberId){
+		//System.out.println("아이디:"+memberId);
+		Orders orders = service.getcurrentDeliveryAddress(memberId);
+		//System.out.println(orders);
+		return orders;  //세부주소가진 orders 객체 리턴 
+	}
 	
+	
+	
+	
+
 }

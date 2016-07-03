@@ -31,17 +31,24 @@ public class BuyServiceImpl {
 	}
 	
 	
-	//상품 정보 조회
+	//상품 정보 조회 - Product TB 
 	public Product getProductInfo(String productId){
 		return dao.selectProductByProductId(productId);
 	}
-	//상품옵션 조회 
+	//상품옵션 조회 - product_option TB 
 	public ProductOption getProductOptionInfo(String optionSubName){
 		return dao.selectProductOptionByLike(optionSubName);
 	}
 		
-	//상품옵션 조회 
+	// 셀러의 스토어상호명 조회 
 	public String getSellerStoreName(int sellerStoreNo){
 		return dao.selectSellerStoreNameByNo(sellerStoreNo);
 	}
+	
+	//상품옵션 조회 
+	public Orders getcurrentDeliveryAddress(String memberId){
+		return dao.selectCurrentDeliveryAddress(memberId);
+	}
+	
+	
 }

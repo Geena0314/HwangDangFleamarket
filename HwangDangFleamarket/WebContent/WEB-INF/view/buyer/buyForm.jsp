@@ -184,6 +184,34 @@
 			
 		});
 		
+		//ajax : 최근배송지 조회하기
+		$("#currentDeliveryAddress").on("click" ,function(){
+			
+			$.ajax({
+				"url" : "/HwangDangFleamarket/buy/currentDeliveryAddress.go" ,
+				"type" : "POST"  ,
+				"data" : "memberId="+$("#hiddenMemberId").val().trim() ,
+				"dataType" : "json" ,
+				"beforeSend" : function(){
+					//alert("TEST ID: "+$("#hiddenMemberId").val().trim());
+				},
+				"success" : function(obj){
+					
+					alert(obj);
+					append("<span id='currentAddress'>" +obj.ordersReceiver
+					
+					"</span>");
+					
+				} ,
+				"error" : function( a , status, HttpErrorMsg ){
+					alert("ajax:통신실패:" + status + HttpErrorMsg);
+				}
+				
+			});
+			
+		});
+		
+		
 		
 		$("#testBtn").click(function(){
 			
@@ -212,8 +240,9 @@ seller_store_no : ${param.sellerStoreNo  }
 		<div id="address_div">
 			<h4>배송지 선택</h4>
 			<hr>
-			${sessionScope.login_info.memberName}<input type="radio" name="diliverAddress" id="diliverAddress"  checked="checked">   
-			새로운배송지 <input type="radio" name="diliverAddress" id="newAddress">
+			<input type="radio" name="diliverAddress" id="diliverAddress"  checked="checked">${sessionScope.login_info.memberName}   
+			<input type="radio" name="diliverAddress" id="currentDeliveryAddress">최근배송지
+			 <input type="radio" name="diliverAddress" id="newAddress">새로운배송지
 			-----------------------------<br/><br/>
 			<span id="originalAddress">
 				<span id="memberName">${sessionScope.login_info.memberName}</span> <span id="memberPhone">${sessionScope.login_info.memberPhone}</span> <br/>
@@ -221,6 +250,7 @@ seller_store_no : ${param.sellerStoreNo  }
 				<font size="1.5em">우편번호 : [<span id="memberZipcode">${sessionScope.login_info.memberZipcode}</span>]</font><br/>
 		  		<input type="button" id="setBtn" value="수정" /><br/>
 		  	</span>
+		  	
 		  	<span id="hiddenAddress" hidden="true">
 			받는분 <input type="text" name="name" id="name"/><br/>
 			휴대전화 

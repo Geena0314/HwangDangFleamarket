@@ -49,6 +49,10 @@ public class BuyDaoImpl {
 		return session.selectOne("buy.select-seller-by-seller-store-no", sellerStoreNo);
 	}
 	
+	//최근배송주소지 조회  
+	public Orders selectCurrentDeliveryAddress(String memberId){
+		return session.selectOne("buy.select-orders-by-date", memberId.trim());
+	}
 	
 	
 }

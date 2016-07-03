@@ -15,6 +15,10 @@
 
 </sql>
 
+	<sql id="orders-column">
+		orders_no, orders_receiver, orders_phone, orders_zipcode, orders_address, orders_sub_address,
+		orders_total_price, orders_payment,orders_request, payment_status, member_id ,orders_date
+	</sql>
 
 <resultMap type="product" id="basic-productmap">
 
@@ -38,6 +42,23 @@
 	<result column="option_add_price" property="optionAddPrice"/>
 	
 </resultMap>
+
+<!-- 주문 기본 리절트맵 -->
+	<resultMap type="orders" id="orders-basic-resultmap">
+		<id column="orders_no" property="ordersNo"/>
+		<result column="orders_receiver" property="ordersReceiver"/>
+		<result column="orders_phone" property="ordersPhone"/>
+		<result column="orders_zipcode" property="ordersZipcode"/>
+		<result column="orders_address" property="ordersAddress"/>
+		<result column="orders_sub_address" property="ordersSubAddress"/>
+		<result column="orders_total_price" property="ordersTotalPrice"/>
+		<result column="orders_payment" property="ordersPayment"/>
+		<result column="orders_request" property="ordersRequest"/>
+		<result column="payment_status" property="paymentStatus"/>
+		<result column="member_id" property="memberId"/>
+		<result column="orders_date"  property="orders_date"/>
+	</resultMap>
+
 
 <!-- 재고량 조회 -->
 <select id="product-stock-by-productId" parameterType="string" resultType="_int">
@@ -88,7 +109,7 @@ WHERE  product_id = #{productId}
 SELECT  	option_id , option_name , option_sub_name ,
 			product_id , option_stock , option_add_price
 	FROM 	product_option
-	WHERE 	option_sub_name like #{optionName } 
+	WHERE 	option_sub_name = #{optionName } 
 </select>
 
 
@@ -96,6 +117,15 @@ SELECT  	option_id , option_name , option_sub_name ,
 	SELECT seller_store_name  
 	FROM   seller
 	WHERE  seller_store_no = #{value}
+</select>
+
+<select id="select-orders-by-date" parameterType="string" resultMap="orders-basic-resultmap">
+SELECT <include refid="orders-column"/>
+FROM orders  
+WHERE orders_date = 
+(  
+	SELECT MAX(orders_date) FROM orders WHERE member_id =  #{memberId}  
+)    
 </select>
 
 </mapper>
