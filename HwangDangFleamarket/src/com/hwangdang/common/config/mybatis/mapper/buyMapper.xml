@@ -91,4 +91,11 @@ SELECT  	option_id , option_name , option_sub_name ,
 	WHERE 	option_sub_name like #{optionName } 
 </select>
 
+
+<select id="select-seller-by-seller-store-no" parameterType="_int" resultType="string">
+	SELECT seller_store_name  
+	FROM   seller
+	WHERE  seller_store_no = #{value}
+</select>
+
 </mapper>

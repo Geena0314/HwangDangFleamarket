@@ -85,19 +85,12 @@ public class MemberController {
 	}
 	
 	//로그인 이후 상품 디테일페이지로 이동 
-	/*파람 셀러스토어 넘버 : ${param.sellerStoreNo }
-	파람  어마운트 : ${param.amount }
-	셀러스토어 넘버 : ${param.sellerStoreNo }
-	셀러스토어 이미지 : ${param.sellerStoreImage }
-	어마운트 : ${param.amount }
-	옵션 : ${param.option }*/
 	@RequestMapping("/loginAfterProductDetailPage.go") //로그인 후 화면
-	public String loginAfterProductDetailPage(String memberId, String memberPassword, HttpSession session ){
-		//@RequestParam(value="page" ,defaultValue="1") int page  ,
-		// String productId ,String sellerStoreNo   , String sellerStoreImage , String amount , String option
+	public String loginAfterProductDetailPage(String memberId, String memberPassword, HttpSession session , @RequestParam(value="page" ,defaultValue="1") int page  ,
+		 String productId , String sellerStoreNo   , String sellerStoreImage , String amount , String option){
+		
 		//System.out.println(memberId +" , " + memberPassword);
 		//System.out.println("page :" +page +", productId:"+productId + ",sellerStoreNo:" +sellerStoreNo  +",sellerSotreImage:"+sellerStoreImage+", amount:"+amount + ",option" +option);
-		
 		Member member = service.findById(memberId);
 		if(member!=null){
 			//아이디가 존재함.
@@ -106,8 +99,7 @@ public class MemberController {
 				session.setAttribute("login_info", member);
 			}
 		}
-		//상품 디테일페이지 
-		//return "/product/detail.go?"+queryString;
+		
 		// 구매페이지로 이동 
 		return "buyer/buyForm.tiles";
 	}

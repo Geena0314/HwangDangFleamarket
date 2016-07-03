@@ -51,7 +51,8 @@
 			//alert(queryString.length);  
 			if(queryString.length != 0 ){
 				// 로그인후 상품디테일페이지로 이동 
-				$("form").prop("action", "/HwangDangFleamarket/member/loginAfterProductDetailPage.go");
+				var url = "/HwangDangFleamarket/member/loginAfterProductDetailPage.go?page=${param.page}&productId=${param.productId}&sellerStoreNo=${param.sellerStoreNo}&amount=${param.amount}&option=${param.option}";
+				$("form").prop("action",url);  
 				$("form").submit();
 		
 			}else {
@@ -71,12 +72,9 @@
 </script>
 </head>
 	<body>
-	
+		
 		<h2>로그인</h2>
-	
-		<div >
-			<font size="2" color="red" id="errorMsg">${requestScope.errorMsg }</font>
-		</div>
+		
 		<div>
 			<fieldset style="width:350px">
 				<legend>로그인 폼</legend>   
@@ -115,6 +113,7 @@
 						</tr>
 					</table>	
 				</form>
+				<font size="2" color="red" id="errorMsg">${requestScope.errorMsg }</font>
 			</fieldset>
 		</div>
 	</body>

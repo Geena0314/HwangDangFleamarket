@@ -40,8 +40,15 @@ public class BuyDaoImpl {
 	public Product selectProductByProductId(String productId){
 		return session.selectOne("buy.select-product-by-productId" ,productId);
 	}	
-	
+	//제품옵션조회
 	public ProductOption selectProductOptionByLike(String optionSubName){
 		return session.selectOne("buy.select-product-option-by-like", optionSubName);
 	}
+	//셀러상호명 조회 
+	public String selectSellerStoreNameByNo(int sellerStoreNo){
+		return session.selectOne("buy.select-seller-by-seller-store-no", sellerStoreNo);
+	}
+	
+	
+	
 }

@@ -51,6 +51,7 @@ SELECT * FROM category
 SELECT * FROM  seller_notice 
 
 SELECT * FROM PRODUCT
+select * FROM member;
 
 SELECT product_stock 
 FROM   product

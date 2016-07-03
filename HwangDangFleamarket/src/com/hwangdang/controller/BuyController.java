@@ -76,6 +76,8 @@ public class BuyController {
 			model.addAttribute("product" ,product);
 			ProductOption productOption = service.getProductOptionInfo(option);
 			model.addAttribute("productOption" ,productOption);
+			String storeName = service.getSellerStoreName(sellerStoreNo);
+			model.addAttribute("sellerStoreName",storeName);
 		}
 		return url;
 	}  

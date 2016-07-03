@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <style>
 	div {
@@ -175,7 +176,7 @@
 		$("#mileageCheckbox").on("click",function(){
 			if( $("#mileageCheckbox").is(":checked") ){
 				var mileage = $("#memberMileage").text().trim();
-				$("#useMileage").text(mileage+"원");
+				$("#useMileage").text(mileage+"점");
 			}else{ 
 				//체크해재되면 마일리지 지움 
 				$("#useMileage").text("");
@@ -185,8 +186,6 @@
 		
 		
 		$("#testBtn").click(function(){
-			
-		//  int optionId X 
 			
 			
 		});		
@@ -205,8 +204,9 @@ seller_store_no : ${param.sellerStoreNo  }
 구매수량 : ${param.amount }
 옵션명 : ${param.option } 
 옵션ID: ${requestScope.productOption.optionId }
-<form action="" method="POST" >
 
+
+<form action="" method="POST" >
 	<input type="hidden" value="${param.memberId }" id="hiddenMemberId"	/>
 	<div id="left_lalyer">
 		<div id="address_div">
@@ -269,19 +269,20 @@ seller_store_no : ${param.sellerStoreNo  }
 	<div id="right_layer">
 		<hr>
 		<h4>주문상품 정보</h4>
-			스토어명 : ${param.sellerStoreNo  } <br/>
-			제품이름(제품정보) : ${param.productId  } <br/>
-			옵션명 : ${param.option } <br/>
-			가격/구매수랑 :  ${param.amount }개<br/>
+			스토어명 : <span id="sellerStoreName">${requestScope.sellerStoreName }</span><br/>
+			제품이름(제품정보) : <span id="productName">${requestScope.product.productName  }</span><br/>
+			옵션명 : <span id="option">${param.option }</span><br/>
+			가격/구매수랑 : 
+			<span id="productPrice"><fmt:formatNumber type="currency">${requestScope.product.productPrice }</fmt:formatNumber></span>원 /<span id="amount">${param.amount }</span>개<br/>
 			
-			총주문수 :  <br/>
+			총주문건 :<br/>
 		<hr>
 			
 			
 		<hr>
 		<h4>최종결제 정보</h4>
 			
-			test2(true/false) : ${(requestScope.product.productPrice*param.amount) ge 50000 },
+			<%-- test2(true/false) : ${(requestScope.product.productPrice*param.amount) ge 50000 },
 			<c:choose>
 				<c:when test="${(requestScope.product.productPrice*param.amount) ge 50000 } ">
 					true이므로 무조건 실행 
@@ -289,31 +290,16 @@ seller_store_no : ${param.sellerStoreNo  }
 				<c:otherwise>
 					false이므로 무조건 비실행(왜flase가되지?)
 				</c:otherwise>
-			</c:choose>
+			</c:choose> --%>
 			
-			주문가격 :<span id="productPrice">${requestScope.product.productPrice  * param.amount  }</span> <br/>
+			주문가격 :<span id="productPrice"><fmt:formatNumber type="currency">${requestScope.product.productPrice  * param.amount  }</fmt:formatNumber></span>원<br/>
 			보유 마일리지 :<span id="useMileage"></span><br/>
-			배송비 : <span id="deriveryCharge">
-			<c:choose>
-				<c:when test="${ (requestScope.product.productPrice  * param.amount)  ge 50000 } ">배송비 무료</c:when> 
-				<c:otherwise>3000원</c:otherwise>
-			</c:choose> 
-			</span><br/>   
+			배송비 : <span id="deriveryCharge"></span><br/>   
 			 
 			--------------------<br/>
 			결제예정액 : 
-			<span id="ordersTotalPrice">
-			<c:choose>
-				<c:when test="${ (requestScope.product.productPrice * param.amount)  >= 50000 } ">
-					${requestScope.product.productPrice - sessionScope.login_info.memberMileage }
-				</c:when>
-				<c:otherwise>
-					${requestScope.product.productPrice * param.amount  - sessionScope.login_info.memberMileage +3000 }
-				</c:otherwise>
-			</c:choose>
-			</span><br/>
+			<span id="ordersTotalPrice"></span><br/>
 			<input type="button" value="결제하기" id="submitBtn" />
-			
 			<input type="button" value="test" id="testBtn" />
 		<hr>
 		

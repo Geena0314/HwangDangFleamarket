@@ -36,8 +36,12 @@ public class BuyServiceImpl {
 		return dao.selectProductByProductId(productId);
 	}
 	//상품옵션 조회 
-		public ProductOption getProductOptionInfo(String optionSubName){
-			return dao.selectProductOptionByLike(optionSubName);
-		}
-	
+	public ProductOption getProductOptionInfo(String optionSubName){
+		return dao.selectProductOptionByLike(optionSubName);
+	}
+		
+	//상품옵션 조회 
+	public String getSellerStoreName(int sellerStoreNo){
+		return dao.selectSellerStoreNameByNo(sellerStoreNo);
+	}
 }
