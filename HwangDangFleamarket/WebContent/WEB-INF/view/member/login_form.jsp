@@ -72,14 +72,6 @@
 </head>
 	<body>
 	
-		파람 셀러스토어 넘버 : ${param.sellerStoreNo }
-		파람  어마운트 : ${param.amount }
-		셀러스토어 넘버 : ${param.sellerStoreNo }
-		셀러스토어 이미지 : ${param.sellerStoreImage }
-		어마운트 : ${param.amount }
-		옵션 : ${param.option }
-		
-		
 		<h2>로그인</h2>
 	
 		<div >

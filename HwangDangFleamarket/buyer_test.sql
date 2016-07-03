@@ -59,3 +59,16 @@ WHERE product_id = '상품id4'
 update PRODUCT
 SET product_stock = 3
 WHERE product_id = '상품id4'
+
+SELECT * FROM orders
+SELECT * FROM PRODUCT
+
+SELECT  order_product_seq.nextval
+FROM dual
+
+SELECT * FROM member;
+ ALTER TABLE member ADD  member_mileage number
+
+ UPDATE MEMBER
+ SET member_mileage = 5000
+ WHERE member_id ='admin@admin.com' 

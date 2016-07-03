@@ -96,4 +96,11 @@ select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.
 		and    s.seller_store_no = 8
 		and    c.member_id = 'hwang'
 
->>>>>>> branch 'master' of https://github.com/Geena0314/HwangDangFleamarket.git
+
+		
+----------
+--Member TB  마일리지 컬럼 추가
+ ALTER TABLE member ADD  member_mileage number
+
+		
+		

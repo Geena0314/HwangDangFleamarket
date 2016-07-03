@@ -1,10 +1,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="directBuy">
+<mapper namespace="buy">
 
 <sql id="product-column">
 	product_id , product_name ,product_price ,product_stock ,
-	product_main_image , product_sub_image , produc_info , 
-	product_like , qna_no , seller_store_no
+	product_main_image  , product_info , product_like , seller_store_no
 </sql>
 
 <sql id="seller-column">
@@ -16,6 +15,18 @@
 </sql>
 
 
+<resultMap type="product" id="basic-productmap">
+
+	<id column="product_id" property="productId" />
+	<result column="product_name" property="productName"/>
+	<result column="product_price" property="productPrice"/>
+	<result column="product_stock" property="productStock"/>
+	<result column="product_main_image" property="productMainImage"/>
+	<result column="product_info" property="productInfo"/>
+	<result column="product_like" property="productLike"/>
+	<result column="seller_store_no" property="sellerStoreNo"/>
+</resultMap>
+
 <!-- 재고량 조회 -->
 <select id="product-stock-by-productId" parameterType="string" resultType="_int">
 
@@ -23,6 +34,41 @@ SELECT product_stock
 FROM   product
 WHERE product_id = #{productId} 
 
+</select>
+
+<!-- 
+	orders TB INSERT
+ -->
+<insert id="insert-orders" parameterType="orders">
+INSERT INTO orders 
+
+VALUES ( 
+ #{orderNo },#{ordersReceiver },#{ordersPhone },#{ordersZipcode },
+ #{ordersAddress },#{ordersSubAddress },#{ordersTotalPrice },#{ordersPayment },
+ #{ordersRequest },#{paymentStatus },#{orders_date },#{memberId }
+ 
+)
+</insert>
+
+<!-- order_product TB INSERT   -->
+<insert id="insert-order-product" parameterType="OrderProduct">
+<selectKey order="BEFORE" keyProperty="orderSeqNo" resultType="_int" >
+	SELECT  order_product_seq.nextval
+	FROM dual
+</selectKey>
+INSERT INTO order_product
+VALUES ( 
+ #{orderSeqNo },#{orderAmount },#{ordersNo },#{productId },
+ #{optionId },#{sellerStoreNo },#{sellerStoreNo },#{orderProductStatus }
+ 
+)
+</insert>
+
+<select id="select-product-by-productId" parameterType="string" resultMap="basic-productmap">
+SELECT <include refid="product-column"/>
+FROM   product
+WHERE  product_id = #{productId} 
+	
 </select>
 
 
