@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hwangdang.vo.OrderProduct;
 import com.hwangdang.vo.Orders;
 import com.hwangdang.vo.Product;
+import com.hwangdang.vo.ProductOption;
 
 @Repository
 public class BuyDaoImpl {
@@ -40,5 +41,7 @@ public class BuyDaoImpl {
 		return session.selectOne("buy.select-product-by-productId" ,productId);
 	}	
 	
-	
+	public ProductOption selectProductOptionByLike(String optionSubName){
+		return session.selectOne("buy.select-product-option-by-like", optionSubName);
+	}
 }

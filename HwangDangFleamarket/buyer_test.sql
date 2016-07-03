@@ -66,6 +66,11 @@ SELECT * FROM PRODUCT
 SELECT  order_product_seq.nextval
 FROM dual
 
+	SELECT  option_id , option_name , option_sub_name ,
+			product_id , option_stock , option_add_price
+	FROM 	product_option
+	WHERE 	option_sub_name like '220/흰색'
+
 SELECT * FROM member;
  ALTER TABLE member ADD  member_mileage number
 

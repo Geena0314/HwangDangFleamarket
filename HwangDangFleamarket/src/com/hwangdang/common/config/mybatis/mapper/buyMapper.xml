@@ -1,6 +1,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="buy">
 
+     
 <sql id="product-column">
 	product_id , product_name ,product_price ,product_stock ,
 	product_main_image  , product_info , product_like , seller_store_no
@@ -27,6 +28,17 @@
 	<result column="seller_store_no" property="sellerStoreNo"/>
 </resultMap>
 
+
+<resultMap type="ProductOption" id="basic-productOption-resultmap">
+	<id column="option_id" property="optionId" />
+	<result column="option_name" property="optionName"/>
+	<result column="option_sub_name" property="optionSubName" />
+	<result column="product_id" property="productId"/>
+	<result column="option_stock" property="optionStock"/>
+	<result column="option_add_price" property="optionAddPrice"/>
+	
+</resultMap>
+
 <!-- 재고량 조회 -->
 <select id="product-stock-by-productId" parameterType="string" resultType="_int">
 
@@ -43,7 +55,7 @@ WHERE product_id = #{productId}
 INSERT INTO orders 
 
 VALUES ( 
- #{orderNo },#{ordersReceiver },#{ordersPhone },#{ordersZipcode },
+ #{ordersNo },#{ordersReceiver },#{ordersPhone },#{ordersZipcode },
  #{ordersAddress },#{ordersSubAddress },#{ordersTotalPrice },#{ordersPayment },
  #{ordersRequest },#{paymentStatus },#{orders_date },#{memberId }
  
@@ -58,8 +70,8 @@ VALUES (
 </selectKey>
 INSERT INTO order_product
 VALUES ( 
- #{orderSeqNo },#{orderAmount },#{ordersNo },#{productId },
- #{optionId },#{sellerStoreNo },#{sellerStoreNo },#{orderProductStatus }
+ #{orderSeqNo },#{orderAmount }, #{ordersNo }, #{productId },
+ #{optionId }, #{sellerStoreNo },#{orderProductStatus }
  
 )
 </insert>
@@ -71,5 +83,12 @@ WHERE  product_id = #{productId}
 	
 </select>
 
+
+<select id="select-product-option-by-like" resultMap="basic-productOption-resultmap" parameterType="string">
+SELECT  	option_id , option_name , option_sub_name ,
+			product_id , option_stock , option_add_price
+	FROM 	product_option
+	WHERE 	option_sub_name like #{optionName } 
+</select>
 
 </mapper>

@@ -18,7 +18,7 @@ ALTER TABLE orders DROP COLUMN orders_status
 ALTER TABLE order_product MODIFY (order_product_status number(2))
 
 
-	--배송완료 -  구매확정 : -1 
+	--배송완료 -  구매확정 : 10 
 	--배송현황 - 입금대기중 : 0 
 	--배송현황 - 결제완료 : 1
 	--배송현황 - 배송준비중 : 2

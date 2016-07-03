@@ -7,6 +7,7 @@ import com.hwangdang.daoimpl.BuyDaoImpl;
 import com.hwangdang.vo.OrderProduct;
 import com.hwangdang.vo.Orders;
 import com.hwangdang.vo.Product;
+import com.hwangdang.vo.ProductOption;
 
 @Service
 public class BuyServiceImpl {
@@ -29,10 +30,14 @@ public class BuyServiceImpl {
 		return flag;
 	}
 	
+	
 	//상품 정보 조회
-	public Product geetProductInfo(String productId){
+	public Product getProductInfo(String productId){
 		return dao.selectProductByProductId(productId);
 	}
-	
+	//상품옵션 조회 
+		public ProductOption getProductOptionInfo(String optionSubName){
+			return dao.selectProductOptionByLike(optionSubName);
+		}
 	
 }
