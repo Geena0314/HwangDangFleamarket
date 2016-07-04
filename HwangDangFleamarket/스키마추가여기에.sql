@@ -103,12 +103,11 @@ select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.
 --Member TB  마일리지 컬럼 추가
  ALTER TABLE member ADD  member_mileage number
 
- --  프로덕트옵션 TB option_sub_name 컬럼 유니크 추가 
  drop table product_option
 CREATE TABLE product_option (
 	option_id NUMBER primary key, /* 상품옵션ID */
 	option_name VARCHAR2(30) NOT NULL, /* 옵션명 */
-	option_sub_name VARCHAR2(60) NOT NULL unique , /* 세부 옵션명 */
+	option_sub_name VARCHAR2(60) NOT NULL, /* 세부 옵션명 */
 	option_stock NUMBER(4) NOT NULL, /* 재고량 */
 	option_add_price NUMBER(7) not null, /* 추가가격 */
 	product_id VARCHAR2(30) NOT NULL, /* 상품ID */

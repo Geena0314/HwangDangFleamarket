@@ -79,7 +79,8 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/loginResult.go") //로그인 후 화면
-	public ModelAndView loginResult(String memberId, String memberPassword, HttpSession session){
+	public ModelAndView loginResult(String memberId, String domain, String memberPassword, HttpSession session){
+		memberId = memberId + "@" + domain;
 		Member member = service.findById(memberId);
 		if(member!=null){
 			//아이디가 존재함.
@@ -102,10 +103,10 @@ public class MemberController {
 				
 				
 			}else{//패스워드가 틀린 경우
-				return new ModelAndView("member/login_form.tiles", "passwordError", "패스워드가 일치하지 않습니다.");
+				return new ModelAndView("/member/login.go", "passwordError", "패스워드가 일치하지 않습니다.");
 			}
 		}else{//id가 없는 경우
-			return new ModelAndView("member/login_form.tiles", "idError", "아이디가 존재하지 않습니다.");
+			return new ModelAndView("/member/login.go", "idError", "아이디가 존재하지 않습니다.");
 		}
 	}
 	
