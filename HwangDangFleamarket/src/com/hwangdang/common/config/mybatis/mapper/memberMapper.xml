@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="memberMapper">
 	<sql id="member-columns">
-			member_id, member_password, member_name, member_phone, member_zipcode, member_address, member_sub_address, member_assign
+			member_id, member_password, member_name, member_phone, member_zipcode, member_address, 
+			member_sub_address, member_assign ,member_mileage
 	</sql>
 	<sql id="select-basic">
 		SELECT <include refid="member-columns"/> FROM MEMBER
@@ -17,6 +18,7 @@
 		<result column="member_address" property="memberAddress"/>
 		<result column="member_sub_address" property="memberSubAddress"/>
 		<result column="member_assign" property="memberAssign"/>
+		<result column="member_mileage" property="memberMileage"/>
 	</resultMap>
 	
 	<resultMap type="seller" id="seller-basic-resultMap">
@@ -37,7 +39,9 @@
 	</resultMap>
 	
 	<insert id="insert" parameterType="member">
-		INSERT INTO MEMBER VALUES (#{memberId},#{memberPassword},#{memberName},#{memberPhone},#{memberZipcode},#{memberAddress},#{memberSubAddress},#{memberAssign})
+		INSERT INTO MEMBER 
+		VALUES (#{memberId},#{memberPassword},#{memberName},#{memberPhone},
+		#{memberZipcode},#{memberAddress},#{memberSubAddress},#{memberAssign},1000)
 	</insert>
 	<update id="update" parameterType="member">
 		UPDATE MEMBER

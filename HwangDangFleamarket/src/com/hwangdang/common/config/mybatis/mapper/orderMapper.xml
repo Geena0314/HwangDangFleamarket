@@ -2,7 +2,7 @@
 <mapper namespace="orderMapper">
 	<sql id="orders-join">
 		o.orders_no, o.orders_receiver, o.orders_phone, o.orders_zipcode, o.orders_address, o.orders_sub_address,
-		o.orders_total_price, o.orders_payment, o.orders_request, o.payment_status, o.member_id
+		o.orders_total_price, o.orders_payment, o.orders_request, o.payment_status,  o.orders_date , o.member_id
 	</sql>
 	<sql id="product-join">
 		p.product_Id, p.product_name, p.product_price, p.product_stock, p.product_main_image, 
@@ -32,6 +32,7 @@
 		<result column="orders_request" property="ordersRequest"/>
 		<result column="payment_status" property="paymentStatus"/>
 		<result column="member_id" property="memberId"/>
+		<result column="orders_date"  property="orders_date"/>
 	</resultMap>
 	
 	<!-- 주문상품 리절트맵. -->
