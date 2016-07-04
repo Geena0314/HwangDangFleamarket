@@ -50,5 +50,9 @@ public class BuyServiceImpl {
 		return dao.selectCurrentDeliveryAddress(memberId);
 	}
 	
+	//orders TB조회  구매성공한후 buy-product-one-success.jsp 에서 보여주기위해  
+	public Orders getOrdersByOrdersNo(String ordersNo){
+		return dao.selectOrdersByOrdersNo(ordersNo);
+	}
 	
 }

@@ -319,16 +319,28 @@ CREATE TABLE order_product  (
 
 
 
+-- 학원 
+select * FROM seller
+insert into product values ('productid1', '새우깡', 50000, 10, 'abc1.jpg', '상품정보1', 1, 15);
+insert into product values ('productid2', '부여사과', 60000, 20, 'abc2.jpg', '상품정보2', 3, 16);
+insert into product values ('productid3', '금산인삼', 70000, 30, 'abc3.jpg', '상품정보3', 2, 17);
+insert into product values ('productid5', '북한냉면', 80000, 40, 'abc4.jpg', '상품정보4', 6, 18);
+insert into product values ('productid4', '여수밤바다', 30000, 50, 'abc5.jpg', '상품정보5', 7, 15);
+insert into product values ('productid6', '금사빠', 20000, 60, 'abc6.jpg', '상품정보6', 2, 16);
+insert into product values ('productid7', '금도끼', 10000, 70, 'abc7.jpg', '상품정보7', 11,15);
+
+select * FROM product_detail_image
+
 
 --제품TB
-                       --  상품아이디   상품명           가격     재고량     메인사진  상품정보     추천수    , 스토어번호   
-insert into product values ('상품id1', '새우깡', 50000, 10, 'abc1.jpg', '상품정보1', 1, 1);
-insert into product values ('상품id2', '부여사과', 60000, 20, 'abc2.jpg', '상품정보2', 3, 1);
-insert into product values ('상품id3', '금산인삼', 70000, 30, 'abc3.jpg', '상품정보3', 2, 1);
-insert into product values ('상품id4', '북한냉면', 80000, 40, 'abc4.jpg', '상품정보4', 6, 2);
-insert into product values ('상품id5', '여수밤바다', 30000, 50, 'abc5.jpg', '상품정보5', 7, 2);
-insert into product values ('상품id6', '금사빠', 20000, 60, 'abc6.jpg', '상품정보6', 2, 4);
-insert into product values ('상품id7', '금도끼', 10000, 70, 'abc7.jpg', '상품정보7', 11,4);
+                       --  상품아이디      상품명           가격     재고량     메인사진  상품정보     추천수    , 스토어번호   
+insert into product values ('productid1', '새우깡', 50000, 10, 'abc1.jpg', '상품정보1', 1, 1);
+insert into product values ('productid2', '부여사과', 60000, 20, 'abc2.jpg', '상품정보2', 3, 1);
+insert into product values ('productid3', '금산인삼', 70000, 30, 'abc3.jpg', '상품정보3', 2, 1);
+insert into product values ('productid5', '북한냉면', 80000, 40, 'abc4.jpg', '상품정보4', 6, 2);
+insert into product values ('productid4', '여수밤바다', 30000, 50, 'abc5.jpg', '상품정보5', 7, 2);
+insert into product values ('productid6', '금사빠', 20000, 60, 'abc6.jpg', '상품정보6', 2, 4);
+insert into product values ('productid7', '금도끼', 10000, 70, 'abc7.jpg', '상품정보7', 11,4);
 
 delete FROM product
 

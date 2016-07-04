@@ -24,14 +24,42 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
-	$(document).ready(function(){
+
+
+
+	function addMileage(mileage){
 		
+		var originalMileage = $("#memberMileage").text().trim();
+		
+		var sum = 0;
+		console.log(mileage);
+		var value = $(mileage).html();
+		parseInt(value);
+		
+		 var beforeTotal = $("#ordersTotalPrice").html().trim();
+		parseInt(beforeTotal);
+		totalTemp =  beforeTotal;
+		
+		sum =  beforeTotal - value;
+		$("#ordersTotalPrice").html(sum); 
+		$("#mileageCheckbox").prop("disabled" ,"disabled");
+		
+		originalMileage = originalMileage -value;
+		$("#memberMileage").text(originalMileage);
+		
+	}  
+
+	$(document).ready(function(){
+
+		
+		// 주문자 정보를 임시로 저장할 변수들  
 		var temp_ordersReceiver ="";
 		var temp_ordersPhone ="";
 		var temp_ordersZipcode ="";
 		var temp_ordersAddress ="";
 		var temp_ordersSubAddress ="";
-		
+		var totalTemp = 0;
+		var mileageTemp = 0;
 		//배송옵션 선택시 자동입력
 		$("#requestOption").on("change", function(){
 			//alert(this.value); 
@@ -178,17 +206,42 @@
 			
 		}); //결제버튼
 		
-		//마일리지사용버튼을 누르면 최종결제 정보에 show/hide
+		//마일리지 모두 사용버튼을 누르면 최종결제 정보에 show/hide
 		$("#mileageCheckbox").on("click",function(){
 			if( $("#mileageCheckbox").is(":checked") ){
 				var mileage = $("#memberMileage").text().trim();
-				$("#useMileage").text(mileage+"점");
+				$("#useMileage").text(mileage);
+				
+				//마일리지를 결제예상금액에 적용 
+				var sum = 0;
+				var beforeTotal = $("#ordersTotalPrice").html().trim();
+				totalTemp =  beforeTotal;
+				mileageTemp = mileage;
+				
+				parseInt(beforeTotal);
+				parseInt(mileage);
+				sum =  beforeTotal - mileage;
+				$("#ordersTotalPrice").html(sum);
+				$("#useMileageBtn").prop("disabled","disabled");
+				
+				//기존마일리값을 0으로 변경 
+				$("#memberMileage").text(0);
+				
+				
+			
 			}else{ 
 				//체크해재되면 마일리지 지움 
 				$("#useMileage").text("");
+				$("#ordersTotalPrice").html(totalTemp);
+				$("#useMileageBtn").prop("disabled",false);
+				
+				
+				//기존마일리지값을 원복   -temp 이용
+				$("#memberMileage").text(mileageTemp); 
 			}
 			
 		});
+	
 		
 		//ajax : 최근배송지 조회하기
 		$("#currentDeliveryAddress").on("click" ,function(){
@@ -321,7 +374,7 @@ seller_store_no : ${param.sellerStoreNo  }
 		  	<h4>할인 및 포인트 선택</h4>
 		  	사용가능 포인트 :<span id="memberMileage">${sessionScope.login_info.memberMileage }</span>점<br/>
 		  	모두사용하기 <input type="checkbox" id="mileageCheckbox" />
-		  	 <input type="button" value="사용하기" id="useMileageBtn"  />
+		  	 <input type="button" value="사용하기" id="useMileageBtn" />
 			<hr>
 			 
 			<hr>
@@ -349,24 +402,33 @@ seller_store_no : ${param.sellerStoreNo  }
 			
 		<hr>
 		<h4>최종결제 정보</h4>
+			주문가격 :
+			<span id="productPrice">${requestScope.product.productPrice  * param.amount  }</span>원<br/>
+			보유 마일리지 :<span id="useMileage" ></span><br/>
+			배송비 : 
+			<span id="deriveryCharge">
 			
-			<%-- test2(true/false) : ${(requestScope.product.productPrice*param.amount) ge 50000 },
 			<c:choose>
-				<c:when test="${(requestScope.product.productPrice*param.amount) ge 50000 } ">
-					true이므로 무조건 실행 
+				<c:when test="${ (requestScope.product.productPrice*param.amount ) ge 50000 }">0</c:when>
+				<c:otherwise>3000</c:otherwise>
+			</c:choose>
+			</span>원<br/>   
+			
+		<%-- 	<fmt:formatNumber type="currency">
+			</fmt:formatNumber> --%>
+			
+			--------------------<br/>
+			결제예정액 :  
+			<span id="ordersTotalPrice">
+			<c:choose>
+				<c:when test="${ (requestScope.product.productPrice*param.amount ) >= 50000 }">
+					${ (requestScope.product.productPrice*param.amount ) } 
 				</c:when>
 				<c:otherwise>
-					false이므로 무조건 비실행(왜flase가되지?)
+					${ (requestScope.product.productPrice*param.amount ) + 3000}  
 				</c:otherwise>
-			</c:choose> --%>
-			
-			주문가격 :<span id="productPrice"><fmt:formatNumber type="currency">${requestScope.product.productPrice  * param.amount  }</fmt:formatNumber></span>원<br/>
-			보유 마일리지 :<span id="useMileage" ></span><br/>
-			배송비 : <span id="deriveryCharge">3000</span><br/>   
-			 
-			--------------------<br/>
-			결제예정액 : 
-			<span id="ordersTotalPrice">500000</span><br/>
+			</c:choose>
+			</span>원<br/>
 			<input type="button" value="결제하기" id="submitBtn" />
 			<input type="button" value="test" id="testBtn" />
 		<hr>

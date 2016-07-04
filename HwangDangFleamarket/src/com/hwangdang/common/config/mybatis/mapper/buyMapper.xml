@@ -130,4 +130,13 @@ WHERE orders_date =
 )    
 </select>
 
+
+<select id="select-orders-by-ordersNo" parameterType="string" resultMap="orders-basic-resultmap">
+SELECT <include refid="orders-column"/>
+FROM orders  
+WHERE orders_no = #{ordersNo} 
+
+</select>
+
+
 </mapper>
