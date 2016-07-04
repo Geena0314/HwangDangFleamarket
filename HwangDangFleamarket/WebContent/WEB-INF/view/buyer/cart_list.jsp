@@ -64,6 +64,14 @@ $( document ).ready( function() {
     	
     	
     });
+    
+    $("#buyBtn").on("click",function(){
+    	
+		 alert("buyBtn TEST");  	
+    	
+    });
+    
+    
 });
 </script>
 <p align="right">
@@ -95,6 +103,8 @@ $( document ).ready( function() {
 					<th scope="col"><span>배송정보</span></th>
 				</tr>
 			</thead>
+				<form action="" method="POST" id="cart_form">
+				
 				<tbody>
 					<c:forEach items="${requestScope.cartList}" var="list">
 						<c:forEach items="${list.productList}" var="product">
@@ -153,6 +163,8 @@ $( document ).ready( function() {
 	<p>
 	<span class="bottomBtn">
 	<input type="button" value="선택상품삭제" id="deleteBtn">&nbsp;&nbsp;
-	<input type="button" value="결제정보입력">
+	<input type="button" value="구매하기" id="buyBtn">
 	</span>
+	</form>
 </div>
+

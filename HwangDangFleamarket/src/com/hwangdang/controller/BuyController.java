@@ -1,6 +1,8 @@
 package com.hwangdang.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,7 +55,7 @@ public class BuyController {
 	
 	/**
 	 * 비로그인상태이면 로그인페이지로 이동
-	 * 로그인 상태이면  buyForm.jsp이동  
+	 * 로그인 상태이면  buyForm.jsp이동 !!
 	 * //?page=1&productId=상품id4&sellerStoreNo=2&sellerStoreImage=꿀빵#
 	 */
 	@RequestMapping("/moveBuyPage.go")
@@ -72,8 +74,10 @@ public class BuyController {
 		}else{ // 로그인상태! - 바로구매페이지로 이동 
 			
 			url ="buyer/buyForm.tiles";
+			List<Product> productList = new  ArrayList<Product>();
 			Product product = service.getProductInfo(productId);
-			model.addAttribute("product" ,product);
+			productList.add(product);
+			model.addAttribute("productList" ,productList);
 			ProductOption productOption = service.getProductOptionInfo(option);
 			model.addAttribute("productOption" ,productOption);
 			String storeName = service.getSellerStoreName(sellerStoreNo);
@@ -97,10 +101,10 @@ public class BuyController {
 		OrderProduct op = new OrderProduct(orderAmount, ordersNo, productId, optionId, sellerStoreNo, orderProductStatus);
 		int cnt = service.addProductOne(orders ,op);
 		String url = "";
-		if(cnt ==1){
-			System.out.println("성공"); //   "*/*.tiles"
-			String address= ordersAddress + ordersSubAddress;
-			url = "redirect:/buy/addProductPage.go?cnt="+cnt+"&ordersReceiver="+ordersReceiver+"&address="+address +"&phone="+ordersPhone;
+		if(cnt == 1){
+			//System.out.println("성공"); //   "*/*.tiles"
+			//String address= ordersAddress + ordersSubAddress;
+			url = "redirect:/buy/addProductPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&productId="+productId;
 		}else{
 			url = "redirect:/error.tiles"; 
 		}
@@ -108,11 +112,12 @@ public class BuyController {
 	}  
 	
 	@RequestMapping("/addProductPage.go")
-	public String addProductPage(int cnt ,String ordersReceiver ,String address,String phone ,Model model ){
+	public String addProductPage(int cnt ,String ordersNo ,String productId ,Model model ){
 		String url = "/";
 		if(cnt == 1){
 			url = "buyer/buy_product_one_success.tiles";
-			
+			model.addAttribute("ordersNo" ,ordersNo);
+			model.addAttribute("productId",productId);
 		}else{
 			url = "error.tiles"; 
 			model.addAttribute("errorMsg","결제가실패하였습니다. 관리자에게 문의하세요.");

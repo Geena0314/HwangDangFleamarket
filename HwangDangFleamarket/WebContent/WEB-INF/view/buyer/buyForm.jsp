@@ -54,7 +54,7 @@
 		
 		//주소지입력 버튼 클릭 
 		$("#findAddress").on("click",function(){
-			var specs = "left=10,top=10,width=372,height=466";
+			var specs = "left=100,top=100,width=600,height=500";
 			  specs += ",toolbar=no,menubar=no,status=no,scrollbars=no,resizable=no";
 			window.open("/HwangDangFleamarket/popup.jsp","addressForm" ,specs);
 		});
@@ -234,18 +234,21 @@
 		$("#diliverAddress").on("click" ,function(){
 			
 			$("#memberName").html(temp_ordersReceiver);
-			
 			$("#memberAddress").html(temp_currentAddress);
-			
 			$("#memberPhone").html(temp_ordersPhone);
-			
 			$("#memberSubAddress").html(temp_ordersSubAddress);
-			
 			$("#memberZipcode").html(temp_ordersZipcode);
 			
 		});
 		
+		//사용할 마일리지포인트 정하기  
+		$("#useMileageBtn").click(function(){
+			var specs = "left=100,top=100,width=600,height=500";
+			  specs += ",toolbar=no,menubar=no,status=no,scrollbars=no,resizable=no";
 		
+			window.open("/HwangDangFleamarket/use_mileage_popup.jsp" , "useMileage" ,specs );
+			
+		});	
 		$("#testBtn").click(function(){
 			
 			
@@ -267,7 +270,8 @@ seller_store_no : ${param.sellerStoreNo  }
 옵션ID: ${requestScope.productOption.optionId }
 
 
-<form action="" method="POST" >
+<form action="" method="POST" name="buy_form" >
+
 	<input type="hidden" value="${param.memberId }" id="hiddenMemberId"	/>
 	<div id="left_lalyer">
 		<div id="address_div">
@@ -299,7 +303,7 @@ seller_store_no : ${param.sellerStoreNo  }
 			
 			주소 
 				<input type="button" value="주소찾기"  id="findAddress" />
-				<input type="number" name="zipcode" id="zipcode" disabled="disabled" size="10" /><br/>
+				<input type="text" name="zipcode" id="zipcode" disabled="disabled" size="10" /><br/>
 				<input type="text" name="address1" id="address1" disabled="disabled"  size="45" /><br/>
 				<input type="text" name="address2"  size="45" />
 			 </span><br/>
@@ -315,10 +319,11 @@ seller_store_no : ${param.sellerStoreNo  }
 		  	
 		  	<hr>
 		  	<h4>할인 및 포인트 선택</h4>
-		  	<input type="checkbox" id="mileageCheckbox" />보유 마일리지 사용 :<span id="memberMileage">${sessionScope.login_info.memberMileage }</span> <br/>
-		  	
+		  	사용가능 포인트 :<span id="memberMileage">${sessionScope.login_info.memberMileage }</span>점<br/>
+		  	모두사용하기 <input type="checkbox" id="mileageCheckbox" />
+		  	 <input type="button" value="사용하기" id="useMileageBtn"  />
 			<hr>
-			
+			 
 			<hr>
 			<h4>결제수단 선택</h4>
 			<input type="radio" name="payment" value="0">무통장현금
@@ -356,12 +361,12 @@ seller_store_no : ${param.sellerStoreNo  }
 			</c:choose> --%>
 			
 			주문가격 :<span id="productPrice"><fmt:formatNumber type="currency">${requestScope.product.productPrice  * param.amount  }</fmt:formatNumber></span>원<br/>
-			보유 마일리지 :<span id="useMileage"></span><br/>
-			배송비 : <span id="deriveryCharge"></span><br/>   
+			보유 마일리지 :<span id="useMileage" ></span><br/>
+			배송비 : <span id="deriveryCharge">3000</span><br/>   
 			 
 			--------------------<br/>
 			결제예정액 : 
-			<span id="ordersTotalPrice"></span><br/>
+			<span id="ordersTotalPrice">500000</span><br/>
 			<input type="button" value="결제하기" id="submitBtn" />
 			<input type="button" value="test" id="testBtn" />
 		<hr>

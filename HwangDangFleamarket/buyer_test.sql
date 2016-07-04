@@ -80,17 +80,17 @@ SELECT * FROM member;
  WHERE member_id ='admin@admin.com' 
  
  
- SELECT  *
- FROM orders
- WHERE member_id ='admin@admin.com' 
- AND oders_date = max(orders_date)
+ update orders 
+ SET  orders_date = '2011-11-23'
+ WHERE orders_no = 'order_no8'
  
- 
-SELECT  orders_no
+SELECT  rownum ,orders_no, orders_receiver, orders_phone, orders_zipcode, orders_address, orders_sub_address,
+		orders_total_price, orders_payment,orders_request, payment_status, member_id ,orders_date 
 FROM    orders  
 WHERE   orders_date = (  
 	SELECT MAX(orders_date) FROM orders WHERE member_id ='admin@admin.com' 
 );
+
 
 
 SELECT  	option_id , option_name , option_sub_name ,
