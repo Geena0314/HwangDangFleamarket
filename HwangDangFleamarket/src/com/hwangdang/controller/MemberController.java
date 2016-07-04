@@ -3,13 +3,17 @@ package com.hwangdang.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +24,7 @@ import com.hwangdang.service.ProductService;
 import com.hwangdang.service.SellerService;
 import com.hwangdang.vo.Member;
 import com.hwangdang.vo.Seller;
+import com.hwangdang.vo.Zipcode;
 
 
 @Controller
@@ -35,20 +40,40 @@ public class MemberController {
 	private ProductService productService;
 	
 	@RequestMapping("/register") //회원가입 창이 나오게 함
-	public String register(){
-		return "member/register.tiles";
+	public ModelAndView register(){
+		//이메일 셀렉트.
+		return new ModelAndView("member/register.tiles", "emailList", service.selectEmailList());
 	}
 	
+	@RequestMapping("/registerIdCheck")
+	@ResponseBody
+	public String registerIdCheck(String memberId)
+	{
+		if(service.selectById(memberId) == null)
+			return "success";//가입가능(회원아이디 중복아님.)
+		return "fail";//가입불가(회원아이디 중복.)
+	}
+	 
 	@RequestMapping("/registerresult") //DB에 내용을 기입하고 회원가입을 완료함
-	public ModelAndView member(Member member, HttpSession session) throws Exception{
+	public ModelAndView member(@ModelAttribute @Valid Member member, BindingResult result, HttpSession session, String domain,String hp1, String hp2, String hp3) throws Exception{
+		
+		
+		member.setMemberPhone(hp1+hp2+hp3);
+		member.setMemberId(member.getMemberId()+"@"+domain);
 		service.add(member);
-		//mv.setViewName("/member/registerResult.go");
-		return new ModelAndView("member/registerResult.tiles");
+		return new ModelAndView("redirect:/member/registerSuccess.go");
+	}
+	
+	@RequestMapping("/registerSuccess") //DB에 내용을 기입하고 회원가입을 완료함
+	public String registerSuccess()
+	{
+		return "member/register_success.tiles";
 	}
 	
 	@RequestMapping("/login") //로그인 화면폼이 나오게 함
-	public String login(){
-		return "/WEB-INF/view/member/login_form.jsp";
+	public ModelAndView login()
+	{
+		return new ModelAndView("/WEB-INF/view/member/login_form.jsp", "emailList", service.selectEmailList());
 	}
 	
 	@RequestMapping("/loginResult") //로그인 후 화면
@@ -87,19 +112,10 @@ public class MemberController {
 		return "redirect:/main.go";
 	}
 	
-	@RequestMapping("/mypageCheck")
-	public String mypageCheck()
-	{
-		return "member/mypage_check.tiles";
-	}
-	
 	@RequestMapping("/mypage")
-	public ModelAndView mypage(String memberPassword, HttpSession session)
+	public String mypage(String memberPassword, HttpSession session)
 	{
-		if(memberPassword.equals(((Member)session.getAttribute("login_info")).getMemberPassword()))
-			return new ModelAndView("member/mypage.tiles");
-		else
-			return new ModelAndView("member/mypage_check.tiles", "passwordError", "패스워드가 일치하지 않습니다.");
+		return "member/mypage.tiles";
 	}
 	
 	@RequestMapping("/sellerRegister")
@@ -117,7 +133,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/sellerRegisterRequest")
-	public ModelAndView sellerRegisterRequest(Seller seller, MultipartFile sellerMainImage, HttpServletRequest request, HttpSession session)
+	public ModelAndView sellerRegisterRequest(Seller seller, MultipartFile sellerMainImage, HttpServletRequest request, HttpSession session, String[] sellerProduct)
 	{
 		//셀러 등록 신청.
 		//대표이미지 저장처리.(sellerMainImage -> setSellerStoreImage)이름만 저장.
@@ -166,5 +182,24 @@ public class MemberController {
 		else
 			request.setAttribute("result", "등록에 성공했습니다.");
 		return "member/seller_register_success.tiles";
+	}
+	
+	@RequestMapping("findAddress")
+	public String findAddress()
+	{
+		return "/WEB-INF/view/member/address.jsp";
+	}
+	
+	@RequestMapping("findZipcode")
+	@ResponseBody
+	public List<Zipcode> findZipcode(String dong)
+	{
+		return service.selectZipcode(dong);
+	}
+	
+	@RequestMapping("findSellerAddress")
+	public String findSellerAddress()
+	{
+		return "/WEB-INF/view/member/seller_address.jsp";
 	}
 }

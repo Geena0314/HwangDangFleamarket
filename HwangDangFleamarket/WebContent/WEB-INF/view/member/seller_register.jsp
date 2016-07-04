@@ -231,7 +231,7 @@
 
 <div>
 	<h1 align="center">판매자 등록 신청</h1>
-	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/member/sellerRegisterRequest.go">
+	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/member/sellerRegisterRequest.go" name="sellerForm">
 		<table id="table">
 			<tr>
 				<th>아이디</th>
@@ -306,11 +306,11 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="text" name="sellerZipcode" id="sellerZipcode" size="8">
+					<input type="text" name="sellerZipcode" id="sellerZipcode" size="8" readonly="readonly">
 				</td>
 				<td>
-					<input type="text" name="sellerAddress" id="sellerAddress" size="13">
-					<input type="button" value="우편번호검색">
+					<input type="text" name="sellerAddress" id="sellerAddress" size="13" readonly="readonly">
+					<input type="button" value="우편번호검색" onclick="window.open('/HwangDangFleamarket/member/findSellerAddress.go', '주소검색', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');">
 				</td>
 			</tr>
 			<tr>
@@ -328,15 +328,15 @@
 			</tr>
 			<tr>
 				<th>판매 물품 1</th>
-				<td colspan="2"><input type="text" name="sellerProduct1"></td>
+				<td colspan="2"><input type="text" name="sellerProduct"></td>
 			</tr>
 			<tr>
 				<th>판매 물품 2</th>
-				<td colspan="2"><input type="text" name="sellerProduct2"></td>
+				<td colspan="2"><input type="text" name="sellerProduct"></td>
 			</tr>
 			<tr>
 				<th>판매 물품 3</th>
-				<td colspan="2"><input type="text" name="sellerProduct3"></td>
+				<td colspan="2"><input type="text" name="sellerProduct"></td>
 			</tr>
 			<tr>
 				<th rowspan="2">스토어 소개글</th>

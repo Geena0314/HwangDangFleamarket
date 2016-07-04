@@ -2,14 +2,26 @@ package com.hwangdang.vo;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Member implements Serializable
 {
+	@NotEmpty(message="아이디를 입력하세요.")
 	private String memberId;
+	@NotEmpty(message="패스워드를 입력하세요.")
+	@Length(min=8,max=20,message="패스워드는 8자 이상 20자 이하로 입력해 주세요.")
 	private String memberPassword;
+	@NotEmpty(message="이름을 입력하세요.")
+	@Length(min=2,max=6,message="이름은 2자이상 6자 이하로 입력해 주세요.")
 	private String memberName;
+	@NotEmpty(message="전화번호를 입력하세요.")
+	@Length(min=12,max=13,message="전화번호는 12글자 이상, 13글자 이하로 입력해 주세요.")
 	private String memberPhone;
+	@NotEmpty(message="우편번호를 입력하세요.")
 	private String memberZipcode;
 	private String memberAddress;
+	@NotEmpty(message="세부주소를 입력하세요.")
 	private String memberSubAddress;
 	private int memberAssign;
 	

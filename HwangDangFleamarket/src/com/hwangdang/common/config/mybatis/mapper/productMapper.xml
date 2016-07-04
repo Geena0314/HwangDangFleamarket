@@ -144,10 +144,11 @@
 		and payment_status = 1
 	</select>
 	<!-- 주문번호로 주문상품 여부확인(상품id 비교.) -->
-	<select id="selectOrderProduct" resultType="_int" parameterType="string">
+	<select id="selectOrderProduct" resultType="_int" parameterType="map">
 		select count(orders_no)
 		from order_product
-		where orders_no=#{orders_no}
+		where orders_no=#{ordersNo}
+		and	product_id=#{productId}
 	</select>
 	
 	<!-- 리뷰 등록하기. -->

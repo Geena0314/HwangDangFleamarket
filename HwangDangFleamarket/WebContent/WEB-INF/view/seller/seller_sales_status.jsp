@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style type="text/css">
 div.seller_listing{
 	float: left;
@@ -62,6 +61,7 @@ img{
 }
 </style>
 <h2>판매 현황.</h2>
+
 <div class="seller_listing">
 	<ul>
 		<c:forEach items="${requestScope.orderList}" var="list" varStatus="no">

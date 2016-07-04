@@ -122,13 +122,16 @@ public class ProductServiceImpl implements ProductService
 	}
 
 	@Override
-	public boolean reviewWriteCheck(String memberId)
+	public boolean reviewWriteCheck(String memberId, String productId)
 	{
 		// TODO Auto-generated method stub
 		List<String> list = dao.selectOrderNo(memberId);
+		HashMap<String, Object> map = new HashMap<>();
 		for(int i = 0; i < list.size(); i++)
 		{
-			if(dao.selectOrderProduct(list.get(i)) > 0)
+			map.put("ordersNo", list.get(i));
+			map.put("productId", productId);
+			if(dao.selectOrderProduct(map) > 0)
 				return true;
 		}
 		return false;

@@ -1,12 +1,16 @@
 package com.hwangdang.serviceimpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hwangdang.dao.MemberDao;
 import com.hwangdang.service.MemberService;
+import com.hwangdang.vo.Code;
 import com.hwangdang.vo.Member;
 import com.hwangdang.vo.Seller;
+import com.hwangdang.vo.Zipcode;
 @Service
 public class MemberServiceImpl implements MemberService{
 	@Autowired
@@ -40,5 +44,25 @@ public class MemberServiceImpl implements MemberService{
 	public void add(Member member) {
 		// TODO Auto-generated method stub
 		dao.insert(member);
+	}
+	
+	@Override
+	public List<Code> selectEmailList()
+	{
+		// TODO Auto-generated method stub
+		return dao.selectEmailList();
+	}
+	@Override
+	public List<Zipcode> selectZipcode(String dong)
+	{
+		// TODO Auto-generated method stub
+		return dao.selectZipcode(dong);
+	}
+
+	@Override
+	public Member selectById(String memberId)
+	{
+		// TODO Auto-generated method stub
+		return dao.selectById(memberId);
 	}
 }

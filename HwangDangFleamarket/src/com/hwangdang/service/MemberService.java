@@ -1,7 +1,11 @@
 package com.hwangdang.service;
 
+import java.util.List;
+
+import com.hwangdang.vo.Code;
 import com.hwangdang.vo.Member;
 import com.hwangdang.vo.Seller;
+import com.hwangdang.vo.Zipcode;
 
 public interface MemberService {
 	void add(Member member);
@@ -13,5 +17,14 @@ public interface MemberService {
 	
 	//스토어 이름으로 중복체크
 	int selectSellerStoreName(String sellerStoreName);
+	
+	//이메일리스트
+	List<Code> selectEmailList();
+	
+	//동명으로 검색한 주소 리스트.
+	List<Zipcode> selectZipcode(String dong);
+	
+	//회원가입 id 중복체크
+	Member selectById(String memberId);
 }
 

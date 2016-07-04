@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hwangdang.dao.MemberDao;
+import com.hwangdang.vo.Code;
 import com.hwangdang.vo.Member;
 import com.hwangdang.vo.Seller;
+import com.hwangdang.vo.Zipcode;
 
 @Repository
 public class MemberDaoImpl implements MemberDao{
@@ -84,5 +86,19 @@ public class MemberDaoImpl implements MemberDao{
 	{
 		// TODO Auto-generated method stub
 		return session.update("memberMapper.updateMemberAssign", memberId);
+	}
+
+	@Override
+	public List<Code> selectEmailList()
+	{
+		// TODO Auto-generated method stub
+		return session.selectList("memberMapper.selectEmailList");
+	}
+
+	@Override
+	public List<Zipcode> selectZipcode(String dong)
+	{
+		// TODO Auto-generated method stub
+		return session.selectList("memberMapper.selectZipcode", dong);
 	}
 }

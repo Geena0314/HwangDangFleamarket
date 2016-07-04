@@ -63,10 +63,10 @@ public class ProductController
 	
 	@RequestMapping("reviewWriteCheck")
 	@ResponseBody
-	public boolean reviewWriteCheck(String memberId, HttpSession session)
+	public boolean reviewWriteCheck(String memberId, String productId, HttpSession session)
 	{
 		memberId = ((Member)session.getAttribute("login_info")).getMemberId();
-		return service.reviewWriteCheck(memberId);
+		return service.reviewWriteCheck(memberId, productId);
 	}
 	
 	@RequestMapping("reviewRegister")
@@ -89,7 +89,7 @@ public class ProductController
 	@ResponseBody
 	public HashMap<String, Object> reviewDelete(String memberId, String productId, HttpSession session)
 	{
-		HashMap<String, Object> map = reviewPaging(1, productId);
+		HashMap<String, Object> map = new HashMap<>();
 		try
 		{
 			memberId = ((Member)session.getAttribute("login_info")).getMemberId();
@@ -100,6 +100,7 @@ public class ProductController
 			return map;
 		}
 		int reviewDelete = service.deleteReview(memberId, productId);
+		map = reviewPaging(1, productId);
 		map.put("reviewDelete", reviewDelete);
 		return map;
 	}

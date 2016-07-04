@@ -36,6 +36,21 @@
 		<result column="member_id" property="memberId"/>
 	</resultMap>
 	
+	<resultMap type="code" id="code-basic-resultMap">
+		<result column="code" property="code"/>
+		<result column="code_name" property="codeName"/>
+	</resultMap>
+	
+	<!-- zipcode resultMap -->
+	<resultMap type="zipcode" id="zipcode-basic-resultMap">
+		<id column="seq" property="seq"/>
+		<result column="zipcode" property="zipcode"/>
+		<result column="sido" property="sido"/>
+		<result column="gugun" property="gugun"/>
+		<result column="dong" property="dong"/>
+		<result column="bunji" property="bunji"/>
+	</resultMap>
+	
 	<insert id="insert" parameterType="member">
 		INSERT INTO MEMBER VALUES (#{memberId},#{memberPassword},#{memberName},#{memberPhone},#{memberZipcode},#{memberAddress},#{memberSubAddress},#{memberAssign})
 	</insert>
@@ -57,7 +72,6 @@
 	<!-- select -->
 	<select id="selectById" parameterType="string" resultMap="member-basic-resultMap">
 		<include refid="select-basic"/>
-	
 		WHERE member_id = #{memberId}
 	</select>
 	<!-- 전체 회원 select -->
@@ -103,4 +117,14 @@
 		set			member_assign=1
 		where 	member_id=#{memberId}
 	</update>
+	
+	<!-- 이메일 리스트 조회 -->
+	<select id="selectEmailList" resultMap="code-basic-resultMap">
+		select code_name from code where code = 'email'
+	</select>
+	
+	<!-- 동명으로 주소 조회. -->
+	<select id="selectZipcode" parameterType="string" resultMap="zipcode-basic-resultMap">
+		select * from zipcode where dong like #{dong}||'%'
+	</select>
 </mapper>

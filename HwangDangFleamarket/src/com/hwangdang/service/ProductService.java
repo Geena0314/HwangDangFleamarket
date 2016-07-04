@@ -23,7 +23,7 @@ public interface ProductService
 	HashMap<String, Object> selectReviewPaging(int page, String productId);
 	
 	//리뷰등록하기전 구매여부 체크.
-	boolean reviewWriteCheck(String memberId);
+	boolean reviewWriteCheck(String memberId, String productId);
 	
 	//리뷰 등록하기. 멤버객체or멤버아이디가져와서 작성자 입력해주기.
 	int insertReview(String memberId, String reviewContent, String productId, int productLike);
