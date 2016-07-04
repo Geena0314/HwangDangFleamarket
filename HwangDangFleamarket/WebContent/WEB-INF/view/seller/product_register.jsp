@@ -1,21 +1,55 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
 <script type="text/javascript">
+var j = 0;
 $(document).ready(function(){
 	var idx = 1;
-	$('#addOptionBtn').on("click", function(){
+	$('table').on("click", '#addOptionBtn',function(){
 		if(!$('.optionName')[0].value||!$('.optionSubName')[0].value||!$('.optionStock')[0].value){
 			alert("필수입력사항을 입력해주세요.");
 			return false;
 		}else{
+			if(window.j == 0){
+				window.j++;
+				$("#optionSubName").attr("readonly", "readonly");
+				$("#optionStock").attr("readonly", "readonly");
+			}
+			var optionSubName = $('.optionSubName');
+			var optionStock = $('.optionStock');
+			if(optionSubName.length != 1){
+				for(var i=0; i<optionSubName.length-1; i++){
+					for(var j=i+1; j<optionSubName.length; j++){
+						if(!optionSubName[j].value || !optionStock[j].value){
+							alert("필수 사항 입력해라")							
+							return false;
+						}
+						else{
+							if(optionSubName[i].value == optionSubName[j].value){
+								alert(window.j + "처음")
+								alert("세부 옵션명이 중복됩니다.");
+								window.j--;
+								$("#optionSubName"+window.j).removeProp("readonly");
+								$("#optionStock"+window.j).removeProp("readonly");
+								window.j++;
+								alert(window.j);
+								return false;
+							}
+						}
+					}
+					$(".optionSubName").attr("readonly", "readonly");
+					$(".optionStock").attr("readonly", "readonly");
+				}
+			}
 			$("#endOption").after('<tr><th>상품 옵션</th><td colspan="2"><input type="text" name="optionList['+idx+'].optionName" readonly="readonly" value='+$(".optionName")[0].value+' placeholder="필수 입력 사항" class="optionName"></td></tr>'
-								 +'<tr><th>상품 세부 옵션</th><td colspan="2"><input type="text" name="optionList['+idx+'].optionSubName" placeholder="필수 입력 사항" class="optionSubName"></td></tr>'
-								 +'<tr><th>옵션별 재고</th><td colspan="2"><input type="number" name="optionList['+idx+'].optionStock" placeholder="필수 입력 사항" class="optionStock"></td></tr>'
+								 +'<tr><th>상품 세부 옵션</th><td colspan="2"><input type="text" name="optionList['+idx+'].optionSubName" placeholder="필수 입력 사항" class="optionSubName" id="optionSubName' + window.j + '"></td></tr>'
+								 +'<tr><th>옵션별 재고</th><td colspan="2"><input type="number" name="optionList['+idx+'].optionStock" placeholder="필수 입력 사항" class="optionStock" id="optionStock' + window.j + '"></td></tr>'
 								 +'<tr><th>옵션별 추가 가격</th><td colspan="2"><input type="number" name="optionList['+idx+'].optionAddPrice">&nbsp;'
 								 +'<input type="button" value="옵션삭제" class="deleteOptionBtn"></td></tr>'
 								 +'<tr id="endOption"><th colspan="3"><hr></th></tr>');
 			idx++;
-		}
+			window.j++;
+			
+			}
 	});
 	$("table").on("click",".deleteOptionBtn", function(){
 		$(this).parent().parent().prev().remove();
@@ -23,6 +57,10 @@ $(document).ready(function(){
 		$(this).parent().parent().prev().remove();
 		$(this).parent().parent().prev().remove();
 		$(this).parent().parent().remove();
+		if($('.optionSubName').length == 1){
+			$("#optionSubName").removeProp("readonly");
+			$("#optionStock").removeProp("readonly");
+		}
 	});
 	$("#addImageBtn").on("click", function(){
 		if(!$('#imgFile').val()){
@@ -118,11 +156,11 @@ $(document).ready(function(){
 				</tr>
 				<tr>
 					<th>상품 세부 옵션</th>
-					<td colspan="2"><input type="text" name="optionList[0].optionSubName" class="optionSubName" placeholder="필수 입력 사항"></td>
+					<td colspan="2"><input type="text" name="optionList[0].optionSubName" class="optionSubName" placeholder="필수 입력 사항" id="optionSubName"></td>
 				</tr>
 				<tr>
 					<th>옵션별 재고</th>
-					<td colspan="2"><input type="number" name="optionList[0].optionStock" class="optionStock" placeholder="필수 입력 사항"></td>
+					<td colspan="2"><input type="number" name="optionList[0].optionStock" class="optionStock" placeholder="필수 입력 사항" id="optionStock"></td>
 				</tr>
 				<tr>
 					<th>옵션별 추가 가격</th>

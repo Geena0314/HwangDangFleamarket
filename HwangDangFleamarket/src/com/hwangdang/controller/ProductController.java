@@ -214,7 +214,6 @@ public class ProductController
 	public ModelAndView registerProduct(Product product, ProductOption productOption, HttpServletRequest request) 
 																throws FileNotFoundException{
 		
-		System.out.println(product);
 		
 		/*System.out.println(product);
 		System.out.println(productOption);
