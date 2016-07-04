@@ -1,5 +1,6 @@
 package com.hwangdang.serviceimpl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,9 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.dao.ProductDao;
+import com.hwangdang.dao.ProductDetailImageDao;
+import com.hwangdang.dao.ProductOptionDao;
 import com.hwangdang.service.ProductService;
 import com.hwangdang.vo.Category;
 import com.hwangdang.vo.Product;
+import com.hwangdang.vo.ProductDetailImage;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.Review;
 import com.hwangdang.vo.StoreQnA;
@@ -21,6 +25,12 @@ public class ProductServiceImpl implements ProductService
 {
 	@Autowired
 	private ProductDao dao;
+	
+	@Autowired
+	private ProductOptionDao optionDao;
+	
+	@Autowired
+	private ProductDetailImageDao detailImageDao;
 	
 	public ProductServiceImpl()
 	{
@@ -212,5 +222,22 @@ public class ProductServiceImpl implements ProductService
 	{
 		// TODO Auto-generated method stub
 		return dao.selectSecondCategory(categoryIdRef);
+	}
+
+	@Override
+	public int insertProduct(Product product) {
+		// TODO Auto-generated method stub
+		return dao.insertProduct(product);
+	}
+
+	@Override
+	public int insertOption(ProductOption productOption) {
+		return optionDao.insertOption(productOption);
+	}
+
+	@Override
+	public int insertDetailImage(ProductDetailImage productDetailImage) {
+		// TODO Auto-generated method stub
+		return detailImageDao.insertDetailImage(productDetailImage);
 	}
 }

@@ -14,7 +14,7 @@ public interface CartService {
 	@Transactional
 	public int removeCart(int cartNo);
 	
-	public List getAllCart(String memberId);
+	public List<Cart> getAllCart(String memberId);
 	
 	public int getCountCart(String memberId);
 	

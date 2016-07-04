@@ -11,10 +11,12 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -76,7 +78,7 @@ public class MemberController {
 		return new ModelAndView("/WEB-INF/view/member/login_form.jsp", "emailList", service.selectEmailList());
 	}
 	
-	@RequestMapping("/loginResult") //로그인 후 화면
+	@RequestMapping("/loginResult.go") //로그인 후 화면
 	public ModelAndView loginResult(String memberId, String memberPassword, HttpSession session){
 		Member member = service.findById(memberId);
 		if(member!=null){
@@ -97,6 +99,8 @@ public class MemberController {
 				}
 				session.setAttribute("login_info", member);
 				return new ModelAndView("member/login_success.tiles");
+				
+				
 			}else{//패스워드가 틀린 경우
 				return new ModelAndView("member/login_form.tiles", "passwordError", "패스워드가 일치하지 않습니다.");
 			}
@@ -105,10 +109,29 @@ public class MemberController {
 		}
 	}
 	
+	//로그인 이후 상품 디테일페이지로 이동 
+	@RequestMapping("/loginAfterProductDetailPage.go") //로그인 후 화면
+	public String loginAfterProductDetailPage(String memberId, String memberPassword, HttpSession session , @RequestParam(value="page" ,defaultValue="1") int page  ,
+		 String productId , String sellerStoreNo   , String sellerStoreImage , String amount , String option){
+		
+		//System.out.println(memberId +" , " + memberPassword);
+		//System.out.println("page :" +page +", productId:"+productId + ",sellerStoreNo:" +sellerStoreNo  +",sellerSotreImage:"+sellerStoreImage+", amount:"+amount + ",option" +option);
+		Member member = service.findById(memberId);
+		if(member!=null){
+			//아이디가 존재함.
+			if(memberPassword.equals(member.getMemberPassword())){ 
+				//아이디와 패스워드가 맞는 경우
+				session.setAttribute("login_info", member);
+			}
+		}
+		
+		// 구매페이지로 이동 
+		return "buyer/buyForm.tiles";
+	}
 	@RequestMapping("/logout")
 	public String logout(HttpSession session)
 	{
-		session.invalidate();
+		session.invalidate();   
 		return "redirect:/main.go";
 	}
 	
@@ -201,5 +224,12 @@ public class MemberController {
 	public String findSellerAddress()
 	{
 		return "/WEB-INF/view/member/seller_address.jsp";
+	}
+	@RequestMapping("memberWithdrawal")
+	public String memberWithdrawal(String memberId, HttpSession session)
+	{
+		session.invalidate();
+		service.deleteMemberByMemberId(memberId);
+		return "member/member_withdrawal.tiles";
 	}
 }

@@ -1,8 +1,10 @@
 package com.hwangdang.controller;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import com.hwangdang.service.ProductService;
 import com.hwangdang.service.StoreQnAService;
 import com.hwangdang.vo.Category;
 import com.hwangdang.vo.Member;
+import com.hwangdang.vo.Product;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.StoreQnA;
 
@@ -200,5 +203,55 @@ public class ProductController
 	public List<Category> sellerSubIndustry(String categoryIdRef)
 	{
 		return service.selectSecondCategory(categoryIdRef);
+	}
+	
+	@RequestMapping("registerProductForm")
+	public String registerProductForm(){
+		return "seller/seller/product_register.tiles";
+	}
+	
+	@RequestMapping("registerProduct") 
+	public ModelAndView registerProduct(Product product, ProductOption productOption, HttpServletRequest request) 
+																throws FileNotFoundException{
+		
+		System.out.println(product);
+		
+		/*System.out.println(product);
+		System.out.println(productOption);
+		String originalFileName = productMainImage.getOriginalFilename(); //업로드 된 파일명
+
+		//임시 저장소에 저장된 업로드 된 파일을 최종 저장소로 이동.
+		//최종 저장소 디렉토리 조회.
+		//new File(디렉토리, 파일)
+		String path = "C:\\Users\\kosta\\git\\HwangDangFleamarket\\HwangDangFleamarket\\WebContent\\image_storage";
+		File image = new File(path, originalFileName);
+		
+		 //file중복체크
+	    if (image.exists())
+	    {
+			originalFileName = System.currentTimeMillis() + originalFileName;
+			image = new File(path, originalFileName);
+	    }
+	    
+	    //톰캣 경로의 image_storage로 파일복사.
+    		String imageStorage = request.getServletContext().getRealPath("/image_storage");
+			try {
+				FileCopyUtils.copy(productMainImage.getInputStream(), new FileOutputStream(imageStorage+"/"+originalFileName));
+				productMainImage.transferTo(image);
+			} catch (IllegalStateException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+    	product.setProductMainImage(originalFileName);
+		service.insertProduct(product);
+		
+		productOption.setProductId(product.getProductId());
+		service.insertOption(productOption);
+		
+		System.out.println(product);
+		System.out.println(productOption);*/
+		
+		return new ModelAndView("seller/seller/product_register_success.tiles");
 	}
 }

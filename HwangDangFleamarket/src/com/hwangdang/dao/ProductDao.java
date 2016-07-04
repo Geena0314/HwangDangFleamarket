@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.hwangdang.vo.Category;
 import com.hwangdang.vo.Product;
+import com.hwangdang.vo.ProductDetailImage;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.Review;
 import com.hwangdang.vo.StoreQnA;
@@ -84,4 +85,7 @@ public interface ProductDao
 	
 	//상품 - 판매자 조인
 	Product selectProductSellerJoin(HashMap<String, Object> map);
+	
+	//상품 등록
+	int insertProduct(Product product);
 }

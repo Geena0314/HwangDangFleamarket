@@ -201,16 +201,16 @@ ORDER BY admin_qna_no DESC;
 
 --페이징
 select * FROM (
-SELECT admin_qna_no , admin_qna_title , admin_qna_content , admin_qna_writer ,
-	   admin_qna_date , admin_qna_hit , admin_qna_published ,admin_qna_password ,
-	   ceil(rownum / 10) page
-FROM (
-	SELECT    rownum , admin_qna_no , admin_qna_title , admin_qna_content ,admin_qna_writer ,
-			  admin_qna_date ,admin_qna_hit ,admin_qna_published , admin_qna_password 
-	FROM      ADMIN_QNA
-	ORDER BY  admin_qna_no DESC
+	SELECT admin_qna_no , admin_qna_title , admin_qna_content , admin_qna_writer ,
+		   admin_qna_date , admin_qna_hit , admin_qna_published ,admin_qna_password ,
+		   ceil(rownum / 10) page
+	FROM (
+		SELECT    rownum , admin_qna_no , admin_qna_title , admin_qna_content ,admin_qna_writer ,
+				  admin_qna_date ,admin_qna_hit ,admin_qna_published , admin_qna_password 
+		FROM      ADMIN_QNA a
+		ORDER BY  admin_qna_no DESC
 	) 
-	)WHERE page = 1
+)WHERE page = 1
 			
 		
 SELECT      q.admin_qna_no ,q.admin_qna_title ,q.admin_qna_content ,
@@ -248,7 +248,9 @@ CREATE TABLE orders (
 	member_id VARCHAR2(30) NOT NULL,/* 구매자 ID */
 	foreign key(member_id) references member(member_id) 
 );
-ALTER TABLE orders MODIFY  orders_status number(1);
+
+
+
 
 
 
@@ -261,30 +263,45 @@ insert into orders values ('order_no5', '홍길동5', '010-123-1234', '850-123',
 insert into orders values ('order_no6', '홍길동6', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 340000, '카드', '부재중일시 경비실에 맡겨주세요', 1, '2016-06-01', 'admin@admin.com');
 insert into orders values ('order_no7', '홍길동7', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 30000, '카드', '부재중일시 경비실에 맡겨주세요', 1, '2016-07-01', 'admin@admin.com' );
 insert into orders values ('order_no8', '홍길동8', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 20000, '카드', '부재중일시 경비실에 맡겨주세요', 2, '2016-12-01', 'admin@admin.com' );
+insert into orders values ('order_no9', '홍길동9', '010-123-1234', '850-123', '경기도 성남시 분당구 판교동 주소', '유스스페이스 200-1동 303호 세부주소', 20000, '카드', '부재중일시 경비실에 맡겨주세요', 2, '2016-11-01', 'admin@admin.com' );
 
-update orders
-SET   orders_status= 4
-WHERE orders_no = 'order_no13'
+ SELECT * FROM order_product;
+SELECT * FROM orders;
+delete FROM orders;
+delete FROM order_product;
 
-update orders
-SET   orders_status= 3
-WHERE orders_no = 'order_no28'
-
--- 주문상품 TB                           //PK              주문수량  , 주문번호  , 상품ID   , 상품옵션 ,  판매자스토어NO          
-insert into order_product values (order_product_seq.nextval , 5, 'order_no1', '상품id1', 12 , 15 , 0 );
-insert into order_product values (order_product_seq.nextval ,4, 'order_no2', '상품id2', 13, 15 ,1);
+-- 주문상품 TB                           //PK              주문수량  , 주문번호  , 상품ID   , 상품옵션 ,  판매자스토어NO  , 상품상태 0~10      
+insert into order_product values (order_product_seq.nextval , 5, 'order_no1', '상품id1', 12 , 15 , 0 ); 
+insert into order_product values (order_product_seq.nextval ,4, 'order_no2', '상품id2', 13, 15 ,1);  
 insert into order_product values (order_product_seq.nextval ,4, 'order_no3', '상품id3', 14, 15 ,2);
-insert into order_product values (order_product_seq.nextval ,1, 'order_no4', '상품id4', 15, 16,3);
-insert into order_product values (order_product_seq.nextval ,2, 'order_no5', '상품id5', 16, 16,4);
-insert into order_product values (order_product_seq.nextval ,1, 'order_no6', '상품id6', 17, 16 ,-1);
+insert into order_product values (order_product_seq.nextval ,1, 'order_no4', '상품id4', 15, 16,3);   
+insert into order_product values (order_product_seq.nextval ,2, 'order_no5', '상품id5', 16, 16,4);  
+insert into order_product values (order_product_seq.nextval ,1, 'order_no6', '상품id6', 17, 16 ,10);
 insert into order_product values (order_product_seq.nextval , 1, 'order_no7', '상품id7', 18, 17 ,5);
 insert into order_product values (order_product_seq.nextval ,4, 'order_no8', '상품id1', 12, 17 , 6);
 insert into order_product values (order_product_seq.nextval ,4, 'order_no1', '상품id3', 12, 17 , 7);
+
+
+--home
+insert into order_product values (order_product_seq.nextval , 5, 'order_no1', '상품id1', 3 , 1 , 0 ); 
+insert into order_product values (order_product_seq.nextval ,4, 'order_no2', '상품id2', 4, 1 ,1);  
+insert into order_product values (order_product_seq.nextval ,4, 'order_no3', '상품id3', 5, 1 ,2);
+insert into order_product values (order_product_seq.nextval ,1, 'order_no4', '상품id4', 6, 2,3);   
+insert into order_product values (order_product_seq.nextval ,2, 'order_no5', '상품id5', 7, 2,4);  
+insert into order_product values (order_product_seq.nextval ,1, 'order_no6', '상품id6', 3, 2 ,10);
+insert into order_product values (order_product_seq.nextval , 1, 'order_no7', '상품id7', 4, 4 ,4);
+insert into order_product values (order_product_seq.nextval ,4, 'order_no8', '상품id1', 3, 1 , 4);
+insert into order_product values (order_product_seq.nextval ,4, 'order_no1', '상품id3', 6, 4 , 7);
+insert into order_product values (order_product_seq.nextval ,4, 'order_no9', '상품id2', 5, 2 , 3);
 
 select * FROM orders;
 
 drop table order_product
 create sequence order_product_seq nocache;
+
+update order_product 
+SET order_product_status = 10
+WHERE orders_no = 'order_no6';
 
 CREATE TABLE order_product  (
 	order_seq_no number primary key ,  -- PK 
@@ -293,7 +310,7 @@ CREATE TABLE order_product  (
 	product_id VARCHAR2(30) not null, /* 상품ID FK */
 	option_id number not null ,      --  상품옵션ID_FK  
 	seller_store_no number not null,     -- 판매자스토어NO_FK
-	order_product_status number(1) NOT NULL ,
+	order_product_status number(2) NOT NULL ,  -- 상품상태 0 ~ 10 
 	foreign key(orders_no) references orders(orders_no) on delete cascade,
 	foreign key(product_id) references product(product_id) on delete set null ,
 	foreign key(option_id) references product_option(option_id) on delete set null ,
@@ -304,21 +321,21 @@ CREATE TABLE order_product  (
 
 
 --제품TB
-                       --  상품아이디   상품명           가격     재고량     메인사진 ,  (상세사진)    상품정보     추천수    , 스토어번호  
-insert into product values ('상품id1', '새우깡', 50000, 10, 'abc1.jpg', '상품정보1', 1, 15);
-insert into product values ('상품id2', '부여사과', 60000, 20, 'abc2.jpg', '상품정보2', 3, 15);
-insert into product values ('상품id3', '금산인삼', 70000, 30, 'abc3.jpg', '상품정보3', 2, 17);
-insert into product values ('상품id4', '북한냉면', 80000, 40, 'abc4.jpg', '상품정보4', 6, 16);
-insert into product values ('상품id5', '여수밤바다', 30000, 50, 'abc5.jpg', '상품정보5', 7, 16);
-insert into product values ('상품id6', '금사빠', 20000, 60, 'abc6.jpg', '상품정보6', 2, 16);
-insert into product values ('상품id7', '금도끼', 10000, 70, 'abc7.jpg', '상품정보7', 11, 17);
+                       --  상품아이디   상품명           가격     재고량     메인사진  상품정보     추천수    , 스토어번호   
+insert into product values ('상품id1', '새우깡', 50000, 10, 'abc1.jpg', '상품정보1', 1, 1);
+insert into product values ('상품id2', '부여사과', 60000, 20, 'abc2.jpg', '상품정보2', 3, 1);
+insert into product values ('상품id3', '금산인삼', 70000, 30, 'abc3.jpg', '상품정보3', 2, 1);
+insert into product values ('상품id4', '북한냉면', 80000, 40, 'abc4.jpg', '상품정보4', 6, 2);
+insert into product values ('상품id5', '여수밤바다', 30000, 50, 'abc5.jpg', '상품정보5', 7, 2);
+insert into product values ('상품id6', '금사빠', 20000, 60, 'abc6.jpg', '상품정보6', 2, 4);
+insert into product values ('상품id7', '금도끼', 10000, 70, 'abc7.jpg', '상품정보7', 11,4);
 
 delete FROM product
 
 
 
 SELECT * FROM product_option
---상품 옵션TB                        // 옵션아이디                옵션네임            옵션서브네임    수량       추가가격   , 상품ID
+--상품 옵션TB                        // 옵션아이디                옵션네임            옵션서브네임    수량       추가가격   , 상품ID  
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '250/흰색', 10, 1000, '상품id1');
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '240/검정색', 5, 5000, '상품id2');
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '230/흰색', 10, 3000, '상품id3');
@@ -327,6 +344,15 @@ insert into product_option values (option_id_seq.nextval, '사이즈/색상', '2
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '260/흰색', 10, 2000, '상품id6');
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '270/흰색', 10, 3000, '상품id7');
 
+
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '210/검정색', 5, 0, '상품id5');
+
+delete FROM 	product_option
+WHERE  			option_id IN (16 ,26)
+
+
+delete FROM order_product
+WHERE    order_seq_no 152;
 
 -------------- 나의주문
 select * FROM member;
@@ -347,8 +373,7 @@ WHERE product_id = '상품id4'
 SELECT      o.orders_no , o.orders_receiver , o.orders_phone ,
 			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
 			o.orders_total_price , o.orders_payment , o.orders_request ,
-			o.payment_status , o.orders_date ,
-			o.member_id  ,
+			o.payment_status , o.orders_date ,  o.member_id  ,
 			
 			op.order_amount  , op.orders_no ,  op.product_id  ,op.option_id , 
 			op.seller_store_no , op.order_product_status , 
@@ -372,24 +397,129 @@ SELECT      o.orders_no , o.orders_receiver , o.orders_phone ,
 	AND    op.seller_store_no =  s.seller_store_no
 	AND    op.option_id  =  po.option_id
 	AND    p.product_Id = po.product_id
-	AND    op.order_product_status IN ( 0,1,2,3,4)	 
 	ORDER BY o.orders_date DESC;
 	
 SELECT * FROM orders;
 	
 
+
+
+
 SELECT 		o.orders_no , o.orders_receiver , o.orders_phone ,
 			o.orders_zipcode , o.orders_address , o.orders_sub_address ,
 			o.orders_total_price , o.orders_payment , o.orders_request ,
-			o.payment_status , o.orders_status ,
-			o.member_id  ,
+			o.payment_status , o.orders_date ,  o.member_id buyer ,
 			
-			op.order_amount  , op.orders_no ,  op.product_id  ,op.option_id , op.seller_store_no 
+			op.order_amount  , op.orders_no ,  op.product_id  ,op.option_id , 
+			op.seller_store_no ,op.order_product_status ,
 			
-FROM   orders o ,  order_product op , product p  ,seller s  , product_option po
+			p.product_Id, p.product_name, p.product_price, p.product_stock, 
+			p.product_main_image, p.product_info, p.product_like, 
+			p.seller_store_no , 
+			
+			s.seller_store_no, s.seller_store_name, s.seller_tax_id, s.seller_industry, 
+			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address, 
+			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3, 
+			s.seller_introduction, s.seller_assign, s.member_id  ,
+			
+			po.option_id , po.option_name , po.option_sub_name , po.option_stock , 
+			po.option_add_price , po.product_id 
+			
+FROM   orders o ,  order_product op  ,product p  , seller s  ,product_option po
 
 WHERE  o.member_id =  'admin@admin.com'  
 AND    o.orders_no =  op.orders_no
-GROUP BY o.orders_status;
+AND    op.product_id =  p.product_Id
+AND    op.seller_store_no =  s.seller_store_no
+AND    op.option_id  =  po.option_id
+
+ORDER BY op.orders_no 
+	
 
 
+
+
+SELECT 
+		orders_no_1 , orders_receiver , orders_phone ,    orders_zipcode ,
+		orders_address , orders_sub_address ,    orders_total_price ,
+		orders_payment , orders_request , payment_status , orders_date ,  buyer ,    
+		
+		order_seq_no , order_amount  , orders_no_2 ,  product_id_1  ,option_id_1 , 
+		seller_store_no_1 , order_product_status ,        
+		
+		product_Id_2 , product_name , product_price, product_stock,   
+		product_main_image, product_info, product_like, seller_store_no ,  
+		
+		seller_store_no_2 , seller_store_name, seller_tax_id, seller_industry,    
+		seller_sub_industry, seller_zipcode, seller_address, seller_sub_address,     
+		seller_store_image, seller_product1, seller_product2, seller_product3,    
+		seller_introduction, seller_assign, member_id  ,        
+				
+		option_id_2 , option_name , option_sub_name , option_stock , 
+		option_add_price ,  product_id 
+		
+	FROM ( 
+	
+		SELECT   
+		orders_no_1 , orders_receiver , orders_phone ,    orders_zipcode ,
+		orders_address , orders_sub_address ,    orders_total_price ,
+		orders_payment , orders_request , payment_status , orders_date ,  buyer ,    
+		
+		order_seq_no , order_amount  , orders_no_2 ,  product_id_1  ,option_id_1 , 
+		seller_store_no_1 , order_product_status ,        
+		
+		product_Id_2 , product_name , product_price, product_stock,   
+		product_main_image, product_info, product_like, seller_store_no ,  
+		
+		
+		seller_store_no_2 , seller_store_name, seller_tax_id, seller_industry,    
+		seller_sub_industry, seller_zipcode, seller_address, seller_sub_address,     
+		seller_store_image, seller_product1, seller_product2, seller_product3,    
+		seller_introduction, seller_assign, member_id  ,        
+		
+		option_id_2 , option_name , option_sub_name , option_stock , 
+		option_add_price ,  product_id  ,  ceil(rownum / 3) page  
+	
+		FROM (   
+		
+		
+			SELECT    o.orders_no orders_no_1 , o.orders_receiver , o.orders_phone ,
+			o.orders_zipcode , o.orders_address , o.orders_sub_address ,   
+			o.orders_total_price , o.orders_payment , o.orders_request ,    
+			o.payment_status , o.orders_date ,    o.member_id buyer ,     
+			
+			op.order_seq_no  , op.order_amount  , op.orders_no orders_no_2 ,  
+			op.product_id product_id_1  ,op.option_id option_id_1  ,    
+			op.seller_store_no seller_store_no_1 , op.order_product_status ,   
+			
+		
+			p.product_Id product_id_2 , p.product_name, p.product_price, p.product_stock,   
+			p.product_main_image, p.product_info, p.product_like,   p.seller_store_no  ,       
+			
+			s.seller_store_no seller_store_no_2 , s.seller_store_name, s.seller_tax_id, s.seller_industry,    
+			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address,     
+			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3,     
+			s.seller_introduction, s.seller_assign, s.member_id  ,       
+			
+			po.option_id option_id_2,  po.option_name , po.option_sub_name ,
+			po.option_stock , po.option_add_price , po.product_id        
+		
+		FROM   orders o ,  order_product op , product p  ,seller s  , product_option po 
+		
+		WHERE  o.member_id =   'admin@admin.com'   
+		AND    o.orders_no =  op.orders_no(+)   
+		AND    op.product_id =  p.product_Id  
+		AND    op.seller_store_no =  s.seller_store_no   
+		AND    op.option_id  =  po.option_id  
+		AND    op.order_product_status IN (0,1,2,3,4)   
+		ORDER BY o.orders_date DESC 
+		) 
+	)WHERE page = 4
+	
+	--
+	
+
+	
+	
+SELECT count(*) FROM order_product 
+	WHERE order_product_status IN (0,1,2,3,4)    

@@ -26,5 +26,7 @@ public interface MemberService {
 	
 	//회원가입 id 중복체크
 	Member selectById(String memberId);
+
+	int deleteMemberByMemberId(String memberId);
 }
 

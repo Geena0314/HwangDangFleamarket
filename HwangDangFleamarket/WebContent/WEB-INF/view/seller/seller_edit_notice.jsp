@@ -42,11 +42,13 @@ span{
 					<input type="text" name="sellerNoticeTitle" size="70" value="${requestScope.sellerNotice.sellerNoticeTitle}">
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2" class="error">
-					<form:errors path="sellerNotice.sellerNoticeTitle"/>
-				</td>
-			</tr>
+			<c:if test="${not empty requestScope.errors}">
+				<tr>
+					<td colspan="2" class="error">
+						<form:errors path="sellerNotice.sellerNoticeTitle"/>
+					</td>
+				</tr>
+			</c:if>
 		</thead>
 		<tbody>
 			<tr>
@@ -54,11 +56,13 @@ span{
 					<textarea rows="30" cols="70" name="sellerNoticeContent">${requestScope.sellerNotice.sellerNoticeContent}</textarea>
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2" class="error">
-					<form:errors path="sellerNotice.sellerNoticeContent"/>
-				</td>
-			</tr>
+			<c:if test="${not empty requestScope.errors}">
+				<tr>
+					<td colspan="2" class="error">
+						<form:errors path="sellerNotice.sellerNoticeContent"/>
+					</td>
+				</tr>
+			</c:if>
 		</tbody>
 	</table>
 	<p align="right">

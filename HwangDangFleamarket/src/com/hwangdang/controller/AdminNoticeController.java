@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +51,9 @@ public class AdminNoticeController{
 	}
 	
 	@RequestMapping("/adminRegisterNotice")
-	public ModelAndView registerNotice(@ModelAttribute @Valid Notice notice, BindingResult errors, int page){
+	public ModelAndView registerNotice(@ModelAttribute @Valid Notice notice, BindingResult errors, int page, HttpServletRequest request){
 		if(errors.hasErrors()){
+			request.setAttribute("errors", errors);
 			return new ModelAndView("admin/admin_register_notice.tiles");
 		}
 		notice.setNoticeDate(new Date());
@@ -73,8 +75,9 @@ public class AdminNoticeController{
 	}
 
 	@RequestMapping("/adminEditNotice")
-	public ModelAndView editNotice(@ModelAttribute @Valid Notice notice, BindingResult errors, int page){
+	public ModelAndView editNotice(@ModelAttribute @Valid Notice notice, BindingResult errors, int page, HttpServletRequest request){
 		if(errors.hasErrors()){
+			request.setAttribute("errors", errors);
 			return new ModelAndView("admin/admin_edit_notice.tiles");
 		}
 		notice.setNoticeDate(new Date());

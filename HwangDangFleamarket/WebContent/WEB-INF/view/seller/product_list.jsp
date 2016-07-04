@@ -53,7 +53,7 @@
 				float : left;
 				margin-left : 50px;
 			}
-			img 
+			.mainImage 
 			{
 			    opacity: 0.5;
 			    filter: alpha(opacity=50); /* For IE8 and earlier */
@@ -72,6 +72,9 @@
 				align: center;
 				text-align: center;
 			}
+			.registerProductBtn{
+				float: right;
+			}
 		</style>
 	
 		<h2 align="center">상품 리스트 보기</h2>
@@ -80,7 +83,7 @@
 				<div id="product${ no.count }">
 					<div style='height: 170px; width: 200px'>
 						<a href="/HwangDangFleamarket/product/detail.go?page=${ param.page }&productId=${ list.productId }&sellerStoreNo=${ param.sellerStoreNo }&sellerStoreImage=${ param.sellerStoreImage }">
-							<img src="../image_storage/${ list.productMainImage }"  style="width:200px;height:170px;">
+							<img class="mainImage" src="../image_storage/${ list.productMainImage }"  style="width:200px;height:170px;">
 						</a>
 					</div>
 					<div style='height: 30px; width: 200px'>상품 명 : ${ list.productName }<br>상품 가격 : ${ list.productPrice }</div>
@@ -129,4 +132,10 @@
 						</lee:otherwise>
 					</lee:choose>
 				</div>
+				<p>
+				<lee:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
+					<span class="registerProductBtn">
+						<input type="button" value="상품 등록" id="removeBtn" onclick="window.location='/HwangDangFleamarket/product/registerProductForm.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }'">&nbsp;&nbsp;
+					</span>
+				</lee:if>
 		</div>

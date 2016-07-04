@@ -70,7 +70,9 @@
 	</div>
 	<div id="memberWithdrawal">
 		<lee:if test="${ sessionScope.login_info.memberId != 'kinghwang' }">
-			<img src="../image_storage/withdrawal.jpg">
+			<a href="/HwangDangFleamarket/member/memberWithdrawal.go?memberId=${sessionScope.login_info.memberId}">
+				<img src="../image_storage/withdrawal.jpg">
+			</a>
 		</lee:if>
 	</div>
 </div>

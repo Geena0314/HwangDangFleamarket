@@ -118,7 +118,7 @@ insert into member values ('admin@admin.com', '12341234', '관리자', '010-9977
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 1);
 
 
-delete from member where member_id = 'hwanghwang'					
+delete from member where member_id = 'hwangg'					
 select * from member
 
 
@@ -327,7 +327,7 @@ drop table product_option
 CREATE TABLE product_option (
 	option_id NUMBER primary key, /* 상품옵션ID */
 	option_name VARCHAR2(30) NOT NULL, /* 옵션명 */
-	option_sub_name VARCHAR2(60) NOT NULL, /* 세부 옵션명 */
+	option_sub_name VARCHAR2(60) NOT NULL unique , /* 세부 옵션명 */
 	option_stock NUMBER(4) NOT NULL, /* 재고량 */
 	option_add_price NUMBER(7) not null, /* 추가가격 */
 	product_id VARCHAR2(30) NOT NULL, /* 상품ID */
@@ -384,10 +384,6 @@ CREATE TABLE admin_QnA (
 	admin_qna_published VARCHAR2(3) NOT NULL /* 관리자QnA 공개여부 */
 );
 
-
-
-
-
 drop sequence admin_qna_no_seq
 create sequence admin_qna_no_seq nocache;
 
@@ -417,9 +413,6 @@ SELECT  admin_qna_no ,
 FROM  ADMIN_QNA
 ORDER BY  admin_qna_no DESC
 )WHERE page = 3
-
-
-
 
 /* 관리자QnA댓글 vvvvvvv*/
 CREATE TABLE admin_QnA_reply (

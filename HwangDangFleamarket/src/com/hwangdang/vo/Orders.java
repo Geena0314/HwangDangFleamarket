@@ -26,11 +26,11 @@ public class Orders implements Serializable
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
 			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
-			String ordersRequest, int paymentStatus, int ordersStatus, Date orders_date, String memberId)
-	{
-		//오더정보만.
+			String ordersRequest, int paymentStatus, Date orders_date, String memberId) {
 		super();
 		this.ordersNo = ordersNo;
 		this.ordersReceiver = ordersReceiver;
@@ -45,6 +45,10 @@ public class Orders implements Serializable
 		this.orders_date = orders_date;
 		this.memberId = memberId;
 	}
+
+
+
+
 
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
 			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,

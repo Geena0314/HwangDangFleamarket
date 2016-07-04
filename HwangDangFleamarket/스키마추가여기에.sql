@@ -1,7 +1,6 @@
 
 --스키마 추가있으면 sql 여기에 !!
 
-
 --QnA게시판 비밀번호 컬럼추가 
 ALTER TABLE admin_QnA ADD admin_QnA_password char(4)
 
@@ -22,7 +21,7 @@ ALTER TABLE orders ADD orders_date date
 ALTER TABLE orders DROP COLUMN orders_date
 
 
-	--배송완료 -  구매확정 : -1 
+	--배송완료 -  구매확정 : 10 
 	--배송현황 - 입금대기중 : 0 
 	--배송현황 - 결제완료 : 1
 	--배송현황 - 배송준비중 : 2
@@ -33,10 +32,11 @@ ALTER TABLE orders DROP COLUMN orders_date
 	--교환/환불/취소 - 구매취소(배송전) :  7 
 	--교환/환불/취소 -   교환신청 승인 : 8 
 	--교환/환불/취소 -   환불신청 승인  : 9
+
 ALTER TABLE orders MODIFY  orders_status number(1);
     
+ALTER TABLE order_product MODIFY order_product_status number(2);
 
-      
 -- order_product TB 스키마 변경 
 --1
 drop table order_product
@@ -63,8 +63,6 @@ insert into order_product values (order_product_seq.nextval ,1, 'order_no11', '�
 insert into order_product values (order_product_seq.nextval , 1, 'order_no42', '상품id7', 18, 17);
 insert into order_product values (order_product_seq.nextval ,4, 'order_no34', '상품id1', 12, 17);
 
-
-
 -- cart TB 변경
 drop sequence cart_no_seq;
 create sequence cart_no_seq nocache;
@@ -86,6 +84,9 @@ CREATE TABLE cart (
 
 select * from cart
 insert into cart values(cart_no_seq.nextval,2,'230/검','상품id133','hwang',6)
+insert into cart values(cart_no_seq.nextval,2,'230/검','상품id1','hwang',14)
+insert into cart values(cart_no_seq.nextval,2,'230/검','상품id1','hwang',1)
+
 
 select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.member_id, c.option_id,
 			   p.product_Id, p.product_name, p.product_price, p.product_stock, p.product_main_image, p.product_info, p.product_like, p.seller_store_no, 
@@ -97,4 +98,19 @@ select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.
 		and    p.product_id = '상품id133'
 		and    s.seller_store_no = 8
 		and    c.member_id = 'hwang'
+		
+----------
+--Member TB  마일리지 컬럼 추가
+ ALTER TABLE member ADD  member_mileage number
 
+ --  프로덕트옵션 TB option_sub_name 컬럼 유니크 추가 
+ drop table product_option
+CREATE TABLE product_option (
+	option_id NUMBER primary key, /* 상품옵션ID */
+	option_name VARCHAR2(30) NOT NULL, /* 옵션명 */
+	option_sub_name VARCHAR2(60) NOT NULL unique , /* 세부 옵션명 */
+	option_stock NUMBER(4) NOT NULL, /* 재고량 */
+	option_add_price NUMBER(7) not null, /* 추가가격 */
+	product_id VARCHAR2(30) NOT NULL, /* 상품ID */
+	foreign key(product_id) references product(product_id) on delete cascade
+);

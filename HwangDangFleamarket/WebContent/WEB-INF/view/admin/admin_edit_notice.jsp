@@ -1,7 +1,5 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <style type="text/css">
 table, td {
@@ -43,11 +41,13 @@ span{
 					<input type="text" name="noticeTitle" size="70" value="${requestScope.notice.noticeTitle}">
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2" class="error">
-					<form:errors path="notice.noticeTitle" delimiter=" & "/>
-				</td>
-			</tr>
+			<c:if test="${not empty requestScope.errors}">
+				<tr>
+					<td colspan="2" class="error">
+						<form:errors path="notice.noticeTitle" delimiter=" & "/>
+					</td>
+				</tr>
+			</c:if>
 		</thead>
 		<tbody>
 			<tr>
@@ -55,11 +55,13 @@ span{
 					<textarea rows="30" cols="70" name="noticeContent">${requestScope.notice.noticeContent}</textarea>
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2" class="error">
-					<form:errors path="notice.noticeContent"/>
-				</td>
-			</tr>
+			<c:if test="${not empty requestScope.errors}">
+				<tr>
+					<td colspan="2" class="error">
+						<form:errors path="notice.noticeContent"/>
+					</td>
+				</tr>
+			</c:if>
 		</tbody>
 	</table>
 	<p align="right">
