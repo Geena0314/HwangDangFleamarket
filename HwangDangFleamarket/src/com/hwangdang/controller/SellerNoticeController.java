@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +53,9 @@ public class SellerNoticeController {
 			}
 			
 			@RequestMapping("/sellerRegisterNotice")
-			public ModelAndView sellerRegisterNotice(@ModelAttribute @Valid SellerNotice sellerNotice,  BindingResult errors, int page, int sellerStoreNo){
+			public ModelAndView sellerRegisterNotice(@ModelAttribute @Valid SellerNotice sellerNotice,  BindingResult errors, int page, int sellerStoreNo, HttpServletRequest request){
 				if(errors.hasErrors()){
+					request.setAttribute("errors", errors);
 					return new ModelAndView("seller/seller/seller_register_notice.tiles");
 				}
 				sellerNotice.setSellerNoticeDate(new Date());
@@ -77,8 +79,9 @@ public class SellerNoticeController {
 			}
 		
 			@RequestMapping("/sellerEditNotice")
-			public ModelAndView sellerEditNotice(@ModelAttribute @Valid SellerNotice sellerNotice, BindingResult errors, int page, int sellerStoreNo){
+			public ModelAndView sellerEditNotice(@ModelAttribute @Valid SellerNotice sellerNotice, BindingResult errors, int page, int sellerStoreNo, HttpServletRequest request){
 				if(errors.hasErrors()){
+					request.setAttribute("errors", errors);
 					return new ModelAndView("seller/seller/seller_edit_notice.tiles");
 				}
 				sellerNotice.setSellerNoticeDate(new Date());

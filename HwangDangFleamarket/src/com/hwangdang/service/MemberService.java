@@ -13,5 +13,7 @@ public interface MemberService {
 	
 	//스토어 이름으로 중복체크
 	int selectSellerStoreName(String sellerStoreName);
+	
+	int deleteMemberByMemberId(String memberId);
 }
 

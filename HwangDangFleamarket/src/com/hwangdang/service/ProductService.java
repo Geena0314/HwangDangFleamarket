@@ -1,10 +1,12 @@
 package com.hwangdang.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import com.hwangdang.vo.Category;
 import com.hwangdang.vo.Product;
+import com.hwangdang.vo.ProductDetailImage;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.StoreQnA;
 
@@ -48,4 +50,13 @@ public interface ProductService
 	
 	//second 카테고리조회.
 	List<Category> selectSecondCategory(String categoryIdRef);
+	
+	//상품 등록하기
+	int insertProduct(Product product);
+	
+	//상품 옵션 등록하기
+	int insertOption(ProductOption productOption);
+	
+	//상품 상세 이미지 등록하기
+	int insertDetailImage(ProductDetailImage productDetailImage);
 }
