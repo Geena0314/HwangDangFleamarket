@@ -30,4 +30,8 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>*.go</url-pattern>
   </filter-mapping>
+  
+  
+  
+  
 </web-app>

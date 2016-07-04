@@ -603,6 +603,10 @@ select 	count(op.orders_no)
 		from 		order_product op, orders o, product p 
 		where		op.orders_no = o.orders_no
 		and		op.product_id = p.product_id
+
+		and		op.seller_store_no = 1
+		
+
 		and		op.seller_store_no = 1
 
 select orders_no from orders

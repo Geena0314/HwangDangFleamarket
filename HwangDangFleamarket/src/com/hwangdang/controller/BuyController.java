@@ -1,6 +1,8 @@
 package com.hwangdang.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,16 +55,14 @@ public class BuyController {
 	
 	/**
 	 * 비로그인상태이면 로그인페이지로 이동
-	 * 로그인 상태이면  buyForm.jsp이동  
+	 * 로그인 상태이면  buyForm.jsp이동 !!
 	 * //?page=1&productId=상품id4&sellerStoreNo=2&sellerStoreImage=꿀빵#
 	 */
 	@RequestMapping("/moveBuyPage.go")
 	public String moveBuyPage(@RequestParam(value="page" ,defaultValue="1") int page  ,
-			String productId ,int sellerStoreNo , String sellerStoreImage , int amount ,
+			String productId  ,@RequestParam(value="productIdList" ,required=false) ArrayList<String> productIdList ,int sellerStoreNo , String sellerStoreImage , int amount ,
 			@RequestParam(value="memberId" ,required=false) String memberId , String option , Model model){
-		//System.out.println("구매할 상품아이디 : "+productId +",셀러스토어넘버 :" + sellerStoreNo);
-		//System.out.println("page :" + page + ", 셀러스토어이미지:"+sellerStoreImage);
-		//System.out.println("멤버아이디:"+memberId);
+		
 		String url = "";
 		if(memberId.isEmpty()){ 
 			//로그인이 안된상태 로그인페이지로 이동 !! 
@@ -70,14 +70,18 @@ public class BuyController {
 			model.addAttribute("errorMsg", "로그인이 필요한서비스입니다. 로그인해주세요");
 			model.addAttribute("queryString" ,"page="+page+"&productId="+productId);
 		}else{ // 로그인상태! - 바로구매페이지로 이동 
-			
-			url ="buyer/buyForm.tiles";
+				
+			//바로구매일때
 			Product product = service.getProductInfo(productId);
-			model.addAttribute("product" ,product);
 			ProductOption productOption = service.getProductOptionInfo(option);
-			model.addAttribute("productOption" ,productOption);
 			String storeName = service.getSellerStoreName(sellerStoreNo);
+			url ="buyer/buyForm.tiles";
+			/*List<Product> productList = new  ArrayList<Product>();
+			productList.add(product);*/
+			model.addAttribute("product" ,product);
+			model.addAttribute("productOption" ,productOption);
 			model.addAttribute("sellerStoreName",storeName);
+				
 		}
 		return url;
 	}  
@@ -97,10 +101,10 @@ public class BuyController {
 		OrderProduct op = new OrderProduct(orderAmount, ordersNo, productId, optionId, sellerStoreNo, orderProductStatus);
 		int cnt = service.addProductOne(orders ,op);
 		String url = "";
-		if(cnt ==1){
-			System.out.println("성공"); //   "*/*.tiles"
-			String address= ordersAddress + ordersSubAddress;
-			url = "redirect:/buy/addProductPage.go?cnt="+cnt+"&ordersReceiver="+ordersReceiver+"&address="+address +"&phone="+ordersPhone;
+		if(cnt == 1){
+			//System.out.println("성공"); //   "*/*.tiles"
+			//String address= ordersAddress + ordersSubAddress;
+			url = "redirect:/buy/addProductPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&productId="+productId;
 		}else{
 			url = "redirect:/error.tiles"; 
 		}
@@ -108,11 +112,12 @@ public class BuyController {
 	}  
 	
 	@RequestMapping("/addProductPage.go")
-	public String addProductPage(int cnt ,String ordersReceiver ,String address,String phone ,Model model ){
+	public String addProductPage(int cnt ,String ordersNo ,String productId ,Model model ){
 		String url = "/";
 		if(cnt == 1){
 			url = "buyer/buy_product_one_success.tiles";
-			
+			model.addAttribute("ordersNo" ,ordersNo);
+			model.addAttribute("productId",productId);
 		}else{
 			url = "error.tiles"; 
 			model.addAttribute("errorMsg","결제가실패하였습니다. 관리자에게 문의하세요.");
