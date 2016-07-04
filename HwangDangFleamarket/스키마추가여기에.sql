@@ -1,7 +1,6 @@
 
 --스키마 추가있으면 sql 여기에 !!
 
-
 --QnA게시판 비밀번호 컬럼추가 
 ALTER TABLE admin_QnA ADD admin_QnA_password char(4)
 
@@ -17,7 +16,6 @@ ALTER TABLE orders DROP COLUMN orders_status
 --order_product 테이블 order_product_status 타입변경
 ALTER TABLE order_product MODIFY (order_product_status number(2))
 
-
 	--배송완료 -  구매확정 : -1 
 	--배송현황 - 입금대기중 : 0 
 	--배송현황 - 결제완료 : 1
@@ -30,8 +28,6 @@ ALTER TABLE order_product MODIFY (order_product_status number(2))
 	--교환/환불/취소 -   교환신청 승인 : 8 
 	--교환/환불/취소 -   환불신청 승인  : 9
 ALTER TABLE orders MODIFY  orders_status number(1);
-    
-
       
 -- order_product TB 스키마 변경 
 --1
@@ -58,8 +54,6 @@ insert into order_product values (order_product_seq.nextval ,2, 'order_no13', '�
 insert into order_product values (order_product_seq.nextval ,1, 'order_no11', '상품id6', 17, 16);
 insert into order_product values (order_product_seq.nextval , 1, 'order_no42', '상품id7', 18, 17);
 insert into order_product values (order_product_seq.nextval ,4, 'order_no34', '상품id1', 12, 17);
-
-
 
 -- cart TB 변경
 drop sequence cart_no_seq;
@@ -93,4 +87,3 @@ select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.
 		and    p.product_id = '상품id133'
 		and    s.seller_store_no = 8
 		and    c.member_id = 'hwang'
-

@@ -27,7 +27,7 @@ public class CartServiceImpl implements CartService{
 	}
 
 	@Override
-	public List getAllCart(String memberId) {
+	public List<Cart> getAllCart(String memberId) {
 		return dao.selectAllCart(memberId);
 	}
 
