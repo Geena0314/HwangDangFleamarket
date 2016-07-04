@@ -1,0 +1,25 @@
+@CHARSET "UTF-8";
+header{
+	background-color:pink;
+	text-align:center;
+	padding: 5px;
+}
+nav{
+	line-height: 50px;
+	padding: 15px;
+	padding-top: 50px;
+	min-height:600px;
+	width:200px;
+	float:left;
+} 
+section{
+	padding: 15px;
+	min-height:500px;
+	float:left;
+}
+footer{
+	margin-bottom:10px;
+	text-align:center;
+	height:20px;
+	clear:both;
+}

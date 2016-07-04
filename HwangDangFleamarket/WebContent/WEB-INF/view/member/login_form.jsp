@@ -84,7 +84,14 @@
 						<tr>
 							<td>아이디</td>
 							<td><input type="text" name="memberId" id="id" size="10" autofocus="autofocus">@
-								  <input type="text" name="email" id="email" size="10"> 
+									<input type="text" name="domain" id="domain" size=13 readonly="readonly">
+									<select id="selectEmail">
+										<option>이메일을 선택하세요.</option>
+										<lee:forEach items="${requestScope.emailList}" var="email">
+											<option>${ email.codeName }</option>
+										</lee:forEach>
+										<option>직접입력</option>
+									</select>
 							</td>
 						</tr>
 						<tr>

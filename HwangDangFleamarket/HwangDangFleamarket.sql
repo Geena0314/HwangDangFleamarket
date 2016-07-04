@@ -295,7 +295,7 @@ CREATE TABLE cart (
 create sequence cart_no_seq nocache;
 
 /* 주문vvvvvvvvvvvvvv */
-drop table orders
+drop table orders cascade constraints
 
 CREATE TABLE orders (
 	orders_no VARCHAR2(10) primary key, /* 주문번호 */
@@ -308,17 +308,17 @@ CREATE TABLE orders (
 	orders_payment VARCHAR2(21) NOT NULL, /* 결제방식 */
 	orders_request VARCHAR2(51), /* 요청사항 */
 	payment_status NUMBER(1) NOT NULL, /* 결제여부 */
-	orders_status number(1) NOT NULL, /* 주문현황 */
+	orders_date date not null,
 	member_id VARCHAR2(30) NOT NULL,/* 아이디 */
 	foreign key(member_id) references member(member_id)
 );
 
-insert into orders values ('m', '받는사람1', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 0, 'asdfasdf');
-insert into orders values ('n', '받는사람2', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 1, 'asdfasdf');
-insert into orders values ('o', '받는사람3', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 2, 'asdfasdf');
-insert into orders values ('p', '받는사람4', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 3, 'asdfasdf');
-insert into orders values ('q', '받는사람5', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, 4, 'asdfasdf');
-insert into orders values ('r', '받는사람6', '123-123-1234', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, 5, 'asdfasdf');
+insert into orders values ('ggg', '수취인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'lsj421678');
+insert into orders values ('hhh', '수신인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'lsj421678');
+insert into orders values ('iii', '이성준', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'lsj421678');
+insert into orders values ('jjj', '주변인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'lsj421678');
+insert into orders values ('kkk', '너', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'lsj421678');
+insert into orders values ('lll', '나', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'lsj421678');
 
 
 
@@ -482,7 +482,7 @@ CREATE TABLE order_product  (
 	foreign key(seller_store_no) references seller(seller_store_no) on delete set null
 );
 create sequence order_seq_no_seq 
-
+drop sequence order_seq_no_seq
 
 SELECT * FROM product_option;
 SELECT * FROM order_product
@@ -493,11 +493,13 @@ insert into order_product values (2, 'order_no13', '상품id132', 10);
 insert into order_product values (1, 'order_no17', '상품id132', 11);
 insert into order_product values (1, 'order_no43', '상품id133', 6);
 
-insert into order_product values (order_seq_no_seq.nextval, 5, 'a', '상품id29', 2, 1, 0);
-insert into order_product values (order_seq_no_seq.nextval, 2, 'b', '상품id34', 9, 1, 1);
-insert into order_product values (order_seq_no_seq.nextval, 3, 'c', '상품id33', 8, 1, 2);
-insert into order_product values (order_seq_no_seq.nextval, 1, 'd', '상품id33', 8, 2, 0);
-insert into order_product values (order_seq_no_seq.nextval, 1, 'e', '상품id34', 9, 2, 0);
+insert into order_product values (order_seq_no_seq.nextval, 5, 'jjj', '상품id29', 2, 3, 0);
+insert into order_product values (order_seq_no_seq.nextval, 2, 'kkk', '상품id34', 9, 3, 1);
+insert into order_product values (order_seq_no_seq.nextval, 3, 'lll', '상품id33', 8, 3, 2);
+insert into order_product values (order_seq_no_seq.nextval, 1, 'kkk', '상품id33', 8, 3, 3);
+insert into order_product values (order_seq_no_seq.nextval, 1, 'jjj', '상품id34', 3, 3, 4);
+insert into order_product values (order_seq_no_seq.nextval, 1, 'lll', '상품id34', 9, 3, 5);
+
 select count(orders_no)
 		from order_product
 		where orders_no='a'
@@ -601,7 +603,17 @@ select 	count(op.orders_no)
 		from 		order_product op, orders o, product p 
 		where		op.orders_no = o.orders_no
 		and		op.product_id = p.product_id
+
 		and		op.seller_store_no = 1
 		
-		
 
+		and		op.seller_store_no = 1
+
+select orders_no from orders
+where member_id = 'isj4216'
+and payment_status = 1
+
+select count(orders_no)
+from order_product
+where orders_no='aaa'
+and	product_id='상품id29'

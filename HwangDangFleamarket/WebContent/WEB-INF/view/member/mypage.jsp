@@ -4,6 +4,7 @@
 	#all
 	{
 		margin: 50px;
+		
 	}
 	#sellerRegister
 	{
@@ -20,10 +21,11 @@
 		margin: 50px;
 		float : left;
 	}
+	
 </style>
 
 <div id="all">
-	<div id="sellerRegister">
+	<div id="sellerRegister" >
 		<lee:choose>
 			<lee:when test="${ sessionScope.login_info.memberId == 'kinghwang' }">
 					<a href="/HwangDangFleamarket/admin/sellerRegisterStatus.go?page=1">

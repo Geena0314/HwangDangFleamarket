@@ -42,7 +42,7 @@ public interface ProductDao
 	//회원 id로 주문내역 검색.(주문번호조회.)
 	List<String> selectOrderNo(String memberId);
 	//주문번호로 주문상품 여부확인(상품id 비교.)
-	int selectOrderProduct(String ordersNo);
+	int selectOrderProduct(HashMap<String, Object> map);
 	
 	//리뷰 등록.
 	int insertReview(Review review);

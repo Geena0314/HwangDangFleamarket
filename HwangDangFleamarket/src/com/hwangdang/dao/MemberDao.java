@@ -2,8 +2,10 @@ package com.hwangdang.dao;
 
 import java.util.List;
 
+import com.hwangdang.vo.Code;
 import com.hwangdang.vo.Member;
 import com.hwangdang.vo.Seller;
+import com.hwangdang.vo.Zipcode;
 
 public interface MemberDao {
 	/**
@@ -46,4 +48,10 @@ public interface MemberDao {
 	
 	//멤버어싸인 1로변경(판매자등록승인)
 	int updateMemberAssign(String memberId);
+	
+	//이메일 리스트.
+	List<Code> selectEmailList();
+	
+	//동명으로 검색한 주소 리스트.
+	List<Zipcode> selectZipcode(String dong);
 }

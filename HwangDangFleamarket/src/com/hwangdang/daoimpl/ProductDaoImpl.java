@@ -97,10 +97,10 @@ public class ProductDaoImpl implements ProductDao
 	}
 
 	@Override
-	public int selectOrderProduct(String ordersNo)
+	public int selectOrderProduct(HashMap<String, Object> map)
 	{
 		// TODO Auto-generated method stub
-		return session.selectOne("productMapper.selectOrderProduct", ordersNo);
+		return session.selectOne("productMapper.selectOrderProduct", map);
 	}
 
 	@Override

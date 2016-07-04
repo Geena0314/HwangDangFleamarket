@@ -4,34 +4,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/template.css">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
 <meta charset="UTF-8">
 <title>황당마켓</title>
-<style type="text/css">
-header{
-	background-color:pink;
-	text-align:center;
-	padding: 5px;
-}
-nav{
-	line-height: 50px;
-	padding: 15px;
-	padding-top: 50px;
-	min-height:600px;
-	width:200px;
-	float:left;
-} 
-section{
-	padding: 15px;
-	min-height:500px;
-	float:left;
-}
-footer{
-	margin-bottom:10px;
-	text-align:center;
-	height:20px;
-	clear:both;
-}
-</style>
+<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
+<script type="text/javascript">
+ $(document).ready(function(){
+	 $(window).resize(function(){
+		//console.log('resize event !!', this.innerWidth);
+		var size = (this.innerWidth)*0.85 - 250;
+ 		$('section').css('width',size);
+	 });
+ });
+</script>
 </head>
 <body>
 

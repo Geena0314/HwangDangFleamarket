@@ -952,6 +952,8 @@
 								}else if(msg =="재고수량가능"){
 									
 									$("form").prop("action","/HwangDangFleamarket/buy/moveBuyPage.go?page=${param.page}&productId=${param.productId }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&amount="+amount+"&memberId=${sessionScope.login_info.memberId}&option="+option );
+									//$("form").prop("action","/HwangDangFleamarket/buy/moveBuyPage.go?page=3&productId=${param.productId }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&amount="+amount+"&memberId=${sessionScope.login_info.memberId}");
+									
 									$("form").submit();
 								
 								}
