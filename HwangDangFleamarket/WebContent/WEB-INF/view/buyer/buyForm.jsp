@@ -26,6 +26,12 @@
 <script>
 	$(document).ready(function(){
 		
+		var temp_ordersReceiver ="";
+		var temp_ordersPhone ="";
+		var temp_ordersZipcode ="";
+		var temp_ordersAddress ="";
+		var temp_ordersSubAddress ="";
+		
 		//배송옵션 선택시 자동입력
 		$("#requestOption").on("change", function(){
 			//alert(this.value); 
@@ -195,13 +201,26 @@
 				"beforeSend" : function(){
 					//alert("TEST ID: "+$("#hiddenMemberId").val().trim());
 				},
-				"success" : function(obj){
+				"success" : function(orders){
 					
-					alert(obj);
-					append("<span id='currentAddress'>" +obj.ordersReceiver
+					//alert(orders.ordersPhone);
 					
-					"</span>");
+					temp_ordersReceiver = $("#memberName").html().trim();
+					$("#memberName").html(orders.ordersReceiver);
 					
+					temp_currentAddress = $("#memberAddress").html().trim();
+					$("#memberAddress").html(orders.currentAddress);
+					
+					temp_ordersPhone = $("#memberPhone").html().trim();
+					$("#memberPhone").html(orders.ordersPhone);
+					
+					temp_ordersSubAddress = $("#memberSubAddress").html().trim();
+					$("#memberSubAddress").html(orders.ordersSubAddress);
+					
+					temp_ordersZipcode = $("#memberZipcode").html().trim();
+					$("#memberZipcode").html(orders.ordersZipcode);
+					
+					 
 				} ,
 				"error" : function( a , status, HttpErrorMsg ){
 					alert("ajax:통신실패:" + status + HttpErrorMsg);
@@ -211,6 +230,20 @@
 			
 		});
 		
+		//배송지선택 -원상복귀 - memberTB의 주소정보로 변경 
+		$("#diliverAddress").on("click" ,function(){
+			
+			$("#memberName").html(temp_ordersReceiver);
+			
+			$("#memberAddress").html(temp_currentAddress);
+			
+			$("#memberPhone").html(temp_ordersPhone);
+			
+			$("#memberSubAddress").html(temp_ordersSubAddress);
+			
+			$("#memberZipcode").html(temp_ordersZipcode);
+			
+		});
 		
 		
 		$("#testBtn").click(function(){

@@ -90,6 +90,25 @@ SELECT  orders_no
 FROM    orders  
 WHERE   orders_date = (  
 	SELECT MAX(orders_date) FROM orders WHERE member_id ='admin@admin.com' 
-);  
- 
+);
 
+
+SELECT  	option_id , option_name , option_sub_name ,
+			product_id , option_stock , option_add_price
+			
+FROM 		product_option
+WHERE 		option_sub_name = '270/흰색'
+
+
+DELETE FROM PRODUCT_OPTION
+WHERE option_id = 18;
+
+  SELECT * FROM  order_product
+  WHERE  option_id = 18;
+
+DELETE FROM order_product
+WHERE order_seq_no = 154
+
+
+ALTER TABLE  product_option  
+MODIFY option_sub_name 

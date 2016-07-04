@@ -93,13 +93,12 @@ public class BuyController {
 		//주문번호 생성로직
 		int n = (int) (Math.random() * 9999) + 1;
 		ordersNo = ordersNo +"" + n;
-		//System.out.println(ordersNo);
 		Orders orders = new Orders(ordersNo, ordersReceiver, ordersPhone, ordersZipcode, ordersAddress, ordersSubAddress, ordersTotalPrice, ordersPayment, ordersRequest, paymentStatus, new Date(), memberId);
 		OrderProduct op = new OrderProduct(orderAmount, ordersNo, productId, optionId, sellerStoreNo, orderProductStatus);
 		int cnt = service.addProductOne(orders ,op);
 		String url = "";
 		if(cnt ==1){
-			//System.out.println("성공"); //   "*/*.tiles"
+			System.out.println("성공"); //   "*/*.tiles"
 			String address= ordersAddress + ordersSubAddress;
 			url = "redirect:/buy/addProductPage.go?cnt="+cnt+"&ordersReceiver="+ordersReceiver+"&address="+address +"&phone="+ordersPhone;
 		}else{
@@ -133,7 +132,7 @@ public class BuyController {
 		}  
 
 
-	//최근배송지 조회 
+	//최근배송지 조회   
 	@RequestMapping("/currentDeliveryAddress.go")
 	@ResponseBody
 	public Orders currentDeliveryAddress(String memberId){

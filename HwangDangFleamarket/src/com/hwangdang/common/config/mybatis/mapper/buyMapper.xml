@@ -106,10 +106,12 @@ WHERE  product_id = #{productId}
 
 
 <select id="select-product-option-by-like" resultMap="basic-productOption-resultmap" parameterType="string">
+
 SELECT  	option_id , option_name , option_sub_name ,
 			product_id , option_stock , option_add_price
-	FROM 	product_option
-	WHERE 	option_sub_name = #{optionName } 
+			
+FROM 		product_option
+WHERE 		option_sub_name = #{optionName } 
 </select>
 
 
