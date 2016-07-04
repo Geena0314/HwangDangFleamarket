@@ -196,5 +196,5 @@
 				<input type="reset" value="다시 작성">
 			</td>
 		</tr>
-		</table>
+		</table> 
 </form>
