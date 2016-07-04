@@ -84,6 +84,8 @@ CREATE TABLE cart (
 
 select * from cart
 insert into cart values(cart_no_seq.nextval,2,'230/검','상품id133','hwang',6)
+insert into cart values(cart_no_seq.nextval,2,'230/검','상품id1','hwang',14)
+
 
 select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.member_id, c.option_id,
 			   p.product_Id, p.product_name, p.product_price, p.product_stock, p.product_main_image, p.product_info, p.product_like, p.seller_store_no, 
@@ -96,4 +98,4 @@ select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.
 		and    s.seller_store_no = 8
 		and    c.member_id = 'hwang'
 
->>>>>>> branch 'master' of https://github.com/Geena0314/HwangDangFleamarket.git
+

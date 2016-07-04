@@ -329,6 +329,15 @@ insert into product_option values (option_id_seq.nextval, '사이즈/색상', '2
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '270/흰색', 10, 3000, '상품id7');
 
 
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '210/검정색', 5, 0, '상품id5');
+
+delete FROM 	product_option
+WHERE  			option_id IN (16 ,26)
+
+
+delete FROM order_product
+WHERE    order_seq_no 152;
+
 -------------- 나의주문
 select * FROM member;
 SELECT * FROM orders 
