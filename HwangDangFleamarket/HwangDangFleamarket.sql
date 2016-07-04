@@ -617,3 +617,37 @@ select count(orders_no)
 from order_product
 where orders_no='aaa'
 and	product_id='상품id29'
+
+
+select * FROM product_detail_image;
+
+
+INSERT INTO  product_detail_image
+values (  '1466996325514김준현.jpg' , '상품id1')
+INSERT INTO  product_detail_image
+values (  '1466996488095alo.jpeg' , '상품id1')
+INSERT INTO  product_detail_image
+values (  '1467440050871nike.jpg' , '상품id1')
+INSERT INTO  product_detail_image
+values (  '1466996325514김준현.jpg' , '상품id2')
+INSERT INTO  product_detail_image
+values (  '1467159669150apple.jpg' , '상품id2')
+
+
+INSERT INTO  product_detail_image
+values (  '1466996325514김준현.jpg' , '상품id3');
+INSERT INTO  product_detail_image
+values (  '1467159669150apple.jpg' , '상품id3');
+
+
+INSERT INTO  product_detail_image
+values (  '1466996325514김준현.jpg' , '상품id4');
+INSERT INTO  product_detail_image
+values (  '1467159669150apple.jpg' , '상품id5');
+
+INSERT INTO  product_detail_image
+values (  '1466996325514김준현.jpg' , '상품id6');
+INSERT INTO  product_detail_image
+values (  '1467159669150apple.jpg' , '상품id7');
+
+

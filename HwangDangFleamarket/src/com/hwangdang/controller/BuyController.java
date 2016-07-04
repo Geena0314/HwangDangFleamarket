@@ -76,8 +76,8 @@ public class BuyController {
 			ProductOption productOption = service.getProductOptionInfo(option);
 			String storeName = service.getSellerStoreName(sellerStoreNo);
 			url ="buyer/buyForm.tiles";
-			/*List<Product> productList = new  ArrayList<Product>();
-			productList.add(product);*/
+			List<Product> productList = new  ArrayList<Product>();
+			productList.add(product);
 			model.addAttribute("product" ,product);
 			model.addAttribute("productOption" ,productOption);
 			model.addAttribute("sellerStoreName",storeName);
@@ -104,20 +104,25 @@ public class BuyController {
 		if(cnt == 1){
 			//System.out.println("성공"); //   "*/*.tiles"
 			//String address= ordersAddress + ordersSubAddress;
-			url = "redirect:/buy/addProductPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&productId="+productId;
+			url = "redirect:/buy/addProductSuccessPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&productId="+productId;
 		}else{
 			url = "redirect:/error.tiles"; 
 		}
 	return url; 
 	}  
-	
-	@RequestMapping("/addProductPage.go")
+	//구매성공 : 결제성공 페이지 이동 
+	@RequestMapping("/addProductSuccessPage.go")
 	public String addProductPage(int cnt ,String ordersNo ,String productId ,Model model ){
 		String url = "/";
-		if(cnt == 1){
+		//System.out.println(ordersNo +", "+ productId);
+		
+		if(cnt == 1){//구매성공하였을 경우 
 			url = "buyer/buy_product_one_success.tiles";
-			model.addAttribute("ordersNo" ,ordersNo);
-			model.addAttribute("productId",productId);
+			Product product = service.getProductInfo(productId);
+			Orders orders = service.getOrdersByOrdersNo(ordersNo);
+			model.addAttribute("orders" ,orders);
+			model.addAttribute("product",product);
+			
 		}else{
 			url = "error.tiles"; 
 			model.addAttribute("errorMsg","결제가실패하였습니다. 관리자에게 문의하세요.");

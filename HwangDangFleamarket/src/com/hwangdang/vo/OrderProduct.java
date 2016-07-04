@@ -83,6 +83,9 @@ public class OrderProduct implements Serializable
 		this.seller = seller;
 	}
 
+	
+	
+	
 	public int getOrderSeqNo()
 	{
 		return orderSeqNo;

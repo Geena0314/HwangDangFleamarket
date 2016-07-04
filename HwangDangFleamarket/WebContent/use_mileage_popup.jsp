@@ -12,7 +12,7 @@
 		
 		
  		$("#btn").click(function(){
- 			var useMileage = $("#mileage").val().trim();
+ 			var useMileage = $("#mileage").val();
  			var cutline = $(opener.document).find("#memberMileage").text().trim();
  			//alert(useMileage.length);
  			if(useMileage > cutline){
@@ -24,7 +24,9 @@
  				alert("1점보다 큰 마일리지를 입력하세요.");
  				return false;
  			}else if(useMileage <= cutline ){
+ 				
  				$(opener.document).find("#useMileage").text(useMileage); //방식 3
+ 				$(opener.location).attr("href", "javascript:addMileage(useMileage);");
  				window.close(); 
  			
  			}
