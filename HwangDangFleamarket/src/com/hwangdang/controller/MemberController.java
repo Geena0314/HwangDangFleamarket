@@ -190,4 +190,12 @@ public class MemberController {
 			request.setAttribute("result", "등록에 성공했습니다.");
 		return "member/seller_register_success.tiles";
 	}
+	
+	@RequestMapping("memberWithdrawal")
+	public String memberWithdrawal(String memberId, HttpSession session)
+	{
+		session.invalidate();
+		service.deleteMemberByMemberId(memberId);
+		return "member/member_withdrawal.tiles";
+	}
 }

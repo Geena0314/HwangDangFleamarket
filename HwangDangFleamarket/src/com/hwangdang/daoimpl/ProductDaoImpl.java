@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.hwangdang.dao.ProductDao;
 import com.hwangdang.vo.Category;
 import com.hwangdang.vo.Product;
+import com.hwangdang.vo.ProductDetailImage;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.Review;
 import com.hwangdang.vo.StoreQnA;
@@ -197,5 +198,11 @@ public class ProductDaoImpl implements ProductDao
 	public Product selectProductSellerJoin(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return session.selectOne("productMapper.selectProductSellerJoin", map);
+	}
+
+	@Override
+	public int insertProduct(Product product) {
+		// TODO Auto-generated method stub
+		return session.insert("productMapper.insertProduct", product);
 	}
 }

@@ -118,7 +118,7 @@ insert into member values ('admin@admin.com', '12341234', '관리자', '010-9977
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 1);
 
 
-delete from member where member_id = 'hwanghwang'					
+delete from member where member_id = 'hwangg'					
 select * from member
 
 
@@ -384,10 +384,6 @@ CREATE TABLE admin_QnA (
 	admin_qna_published VARCHAR2(3) NOT NULL /* 관리자QnA 공개여부 */
 );
 
-
-
-
-
 drop sequence admin_qna_no_seq
 create sequence admin_qna_no_seq nocache;
 
@@ -417,9 +413,6 @@ SELECT  admin_qna_no ,
 FROM  ADMIN_QNA
 ORDER BY  admin_qna_no DESC
 )WHERE page = 3
-
-
-
 
 /* 관리자QnA댓글 vvvvvvv*/
 CREATE TABLE admin_QnA_reply (
@@ -609,3 +602,6 @@ select 	count(op.orders_no)
 		where		op.orders_no = o.orders_no
 		and		op.product_id = p.product_id
 		and		op.seller_store_no = 1
+		
+		
+

@@ -60,11 +60,9 @@ public class BuyController {
 	 */
 	@RequestMapping("/moveBuyPage.go")
 	public String moveBuyPage(@RequestParam(value="page" ,defaultValue="1") int page  ,
-			String productId ,int sellerStoreNo , String sellerStoreImage , int amount ,
+			String productId  ,@RequestParam(value="productIdList" ,required=false) ArrayList<String> productIdList ,int sellerStoreNo , String sellerStoreImage , int amount ,
 			@RequestParam(value="memberId" ,required=false) String memberId , String option , Model model){
-		//System.out.println("구매할 상품아이디 : "+productId +",셀러스토어넘버 :" + sellerStoreNo);
-		//System.out.println("page :" + page + ", 셀러스토어이미지:"+sellerStoreImage);
-		//System.out.println("멤버아이디:"+memberId);
+		
 		String url = "";
 		if(memberId.isEmpty()){ 
 			//로그인이 안된상태 로그인페이지로 이동 !! 
@@ -72,16 +70,18 @@ public class BuyController {
 			model.addAttribute("errorMsg", "로그인이 필요한서비스입니다. 로그인해주세요");
 			model.addAttribute("queryString" ,"page="+page+"&productId="+productId);
 		}else{ // 로그인상태! - 바로구매페이지로 이동 
-			
-			url ="buyer/buyForm.tiles";
-			List<Product> productList = new  ArrayList<Product>();
+				
+			//바로구매일때
 			Product product = service.getProductInfo(productId);
-			productList.add(product);
-			model.addAttribute("productList" ,productList);
 			ProductOption productOption = service.getProductOptionInfo(option);
-			model.addAttribute("productOption" ,productOption);
 			String storeName = service.getSellerStoreName(sellerStoreNo);
+			url ="buyer/buyForm.tiles";
+			/*List<Product> productList = new  ArrayList<Product>();
+			productList.add(product);*/
+			model.addAttribute("product" ,product);
+			model.addAttribute("productOption" ,productOption);
 			model.addAttribute("sellerStoreName",storeName);
+				
 		}
 		return url;
 	}  

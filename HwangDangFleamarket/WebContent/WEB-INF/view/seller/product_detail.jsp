@@ -894,7 +894,7 @@
 						"data":{
 								//"productName": "${ requestScope.product.productName }",
 								//"productPrice": "${ requestScope.product.productPrice }",
-								"cartProductAmount": $("#optionStock option:selected").val(),
+								"cartProductAmount": $("#optionStock").val(),
 								"cartProductOption": $("#optionName option:selected").val(),
 								"sellerStoreName":"${requestScope.product.seller.sellerStoreName}",
 								"memberId":"${sessionScope.login_info.memberId}",
@@ -907,7 +907,7 @@
 								alert("옵션을 선택해주세요.");
 								return false;
 							}
-							if($("#optionStock option:selected").val() == '수량선택'){
+							if($("#optionStock").val() == 0){
 								alert("수량을 선택해주세요.");
 								return false;
 							}
@@ -952,8 +952,6 @@
 								}else if(msg =="재고수량가능"){
 									
 									$("form").prop("action","/HwangDangFleamarket/buy/moveBuyPage.go?page=${param.page}&productId=${param.productId }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&amount="+amount+"&memberId=${sessionScope.login_info.memberId}&option="+option );
-									//$("form").prop("action","/HwangDangFleamarket/buy/moveBuyPage.go?page=3&productId=${param.productId }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&amount="+amount+"&memberId=${sessionScope.login_info.memberId}");
-									
 									$("form").submit();
 								
 								}
@@ -1198,7 +1196,6 @@
 					<td colspan = "3" align="right"><input type="button" id="qnaRegister" value="문의 하기." onClick="if(${empty sessionScope.login_info.memberId }){if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');}}else{window.open('/HwangDangFleamarket/storeQnA/storeQnARegisterForm.go?productId=${param.productId}&memberId=${ sessionScope.login_info.memberId }','문의하기','resizable=no width=600 height=600');};"></td>
 				</tr>
 			</table>
-			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		</div>
 		<div id="cartLayer" title="장바구니 담기">

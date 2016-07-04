@@ -1,5 +1,8 @@
 
 SELECT * FROM cart
+SELECT * FROM product
+SELECT * FROM product_option
+
 
 /* 장바구니vvvvvvv */
 CREATE TABLE cart (

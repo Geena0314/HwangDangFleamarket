@@ -1,6 +1,9 @@
 package com.hwangdang.vo;
 
 import java.io.Serializable;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class Product implements Serializable
 {
@@ -15,6 +18,9 @@ public class Product implements Serializable
 	
 	private Seller seller;
 	private ProductOption productOption;
+	private ProductDetailImage productDetailImage;
+	
+	private List<MultipartFile> images;
 	
 	public Product()
 	{
@@ -62,6 +68,33 @@ public class Product implements Serializable
 		this.sellerStoreNo = sellerStoreNo;
 		this.seller = seller;
 		this.productOption = productOption;
+	}
+	
+	public Product(String productId, String productName, int productPrice, int productStock, String productMainImage,
+			String productInfo, int productLike, int sellerStoreNo, Seller seller, ProductOption productOption,
+			ProductDetailImage productDetailImage) {
+		super();
+		this.productId = productId;
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.productStock = productStock;
+		this.productMainImage = productMainImage;
+		this.productInfo = productInfo;
+		this.productLike = productLike;
+		this.sellerStoreNo = sellerStoreNo;
+		this.seller = seller;
+		this.productOption = productOption;
+		this.productDetailImage = productDetailImage;
+	}
+
+	
+
+	public ProductDetailImage getProductDetailImage() {
+		return productDetailImage;
+	}
+
+	public void setProductDetailImage(ProductDetailImage productDetailImage) {
+		this.productDetailImage = productDetailImage;
 	}
 
 	public Seller getSeller() {
@@ -112,13 +145,11 @@ public class Product implements Serializable
 		this.productStock = productStock;
 	}
 
-	public String getProductMainImage()
-	{
+	public String getProductMainImage() {
 		return productMainImage;
 	}
 
-	public void setProductMainImage(String productMainImage)
-	{
+	public void setProductMainImage(String productMainImage) {
 		this.productMainImage = productMainImage;
 	}
 
@@ -160,10 +191,20 @@ public class Product implements Serializable
 		this.productOption = productOption;
 	}
 
+	public List<MultipartFile> getImages() {
+		return images;
+	}
+
+	public void setImages(List<MultipartFile> images) {
+		this.images = images;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((images == null) ? 0 : images.hashCode());
+		result = prime * result + ((productDetailImage == null) ? 0 : productDetailImage.hashCode());
 		result = prime * result + ((productId == null) ? 0 : productId.hashCode());
 		result = prime * result + ((productInfo == null) ? 0 : productInfo.hashCode());
 		result = prime * result + productLike;
@@ -186,6 +227,16 @@ public class Product implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
+		if (images == null) {
+			if (other.images != null)
+				return false;
+		} else if (!images.equals(other.images))
+			return false;
+		if (productDetailImage == null) {
+			if (other.productDetailImage != null)
+				return false;
+		} else if (!productDetailImage.equals(other.productDetailImage))
+			return false;
 		if (productId == null) {
 			if (other.productId != null)
 				return false;
@@ -232,6 +283,7 @@ public class Product implements Serializable
 		return "Product [productId=" + productId + ", productName=" + productName + ", productPrice=" + productPrice
 				+ ", productStock=" + productStock + ", productMainImage=" + productMainImage + ", productInfo="
 				+ productInfo + ", productLike=" + productLike + ", sellerStoreNo=" + sellerStoreNo + ", seller="
-				+ seller + ", productOption=" + productOption + "]";
+				+ seller + ", productOption=" + productOption + ", productDetailImage=" + productDetailImage
+				+ ", images=" + images + "]";
 	}
 }

@@ -19,7 +19,7 @@
 	</resultMap>
 	
 	<resultMap type="cart" id="cart-product-join" extends="cart-basic-resultmap">
-		<collection property="productList" ofType="product" resultMap="productMapper.product-seller-join"/>
+		<collection property="productList" ofType="product" resultMap="productMapper.product-seller-productImage-join"/>
 	</resultMap>
 	
 	<insert id="insertCart" parameterType="cart">
