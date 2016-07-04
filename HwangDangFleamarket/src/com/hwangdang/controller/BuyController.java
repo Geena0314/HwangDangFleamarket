@@ -2,7 +2,9 @@ package com.hwangdang.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -92,8 +94,16 @@ public class BuyController {
 	public String buyProductOne(String ordersNo, String ordersReceiver , String ordersPhone, String ordersZipcode ,
 			String ordersAddress , String ordersSubAddress , int ordersTotalPrice ,
 			String ordersPayment , String ordersRequest , int paymentStatus , String memberId ,
-			int orderAmount , String productId , int optionId , int sellerStoreNo , int orderProductStatus ) throws Exception{ // 0 결재대기 , 1 결재완료  
+			int orderAmount , String productId , int optionId , int sellerStoreNo , int orderProductStatus ,@RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage) throws Exception{ // 0 결재대기 , 1 결재완료  
 		
+		//마일리지 사용했다면 변경하는 로직 
+		if(usedMileage != 0){
+			Map<String,Object> param = new HashMap<>();
+			param.put("memberId", memberId);
+			param.put("mileage", usedMileage);
+			service.setMemberMileage(param);
+		}
+		//System.out.println("사용한 마일리지 : int :" + usedMileage);
 		//주문번호 생성로직
 		int n = (int) (Math.random() * 9999) + 1;
 		ordersNo = ordersNo +"" + n;

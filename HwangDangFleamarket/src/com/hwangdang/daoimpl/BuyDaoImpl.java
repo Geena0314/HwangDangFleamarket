@@ -1,5 +1,7 @@
 package com.hwangdang.daoimpl;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,28 +39,36 @@ public class BuyDaoImpl {
 		return session.insert("buy.insert-order-product" ,orderProduct);
 	}	
 	//product select
+	@Transactional
 	public Product selectProductByProductId(String productId){
 		return session.selectOne("buy.select-product-by-productId" ,productId);
 	}	
 	//제품옵션조회
+	@Transactional
 	public ProductOption selectProductOptionByLike(String optionSubName){
 		return session.selectOne("buy.select-product-option-by-like", optionSubName);
 	}
 	//셀러상호명 조회 
+	@Transactional
 	public String selectSellerStoreNameByNo(int sellerStoreNo){
 		return session.selectOne("buy.select-seller-by-seller-store-no", sellerStoreNo);
 	}
 	
 	//최근배송주소지 조회  
+	@Transactional
 	public Orders selectCurrentDeliveryAddress(String memberId){
 		return session.selectOne("buy.select-orders-by-date", memberId);
 	}
 	//
+	@Transactional
 	public Orders selectOrdersByOrdersNo(String ordersNo){
 		return session.selectOne("buy.select-orders-by-ordersNo", ordersNo);
 	}
 	
-	
+	@Transactional
+	public void updateMemberMileage(Map param){ 
+		session.update("buy.update-mileage-by-id", param);
+	}
 	
 	
 }

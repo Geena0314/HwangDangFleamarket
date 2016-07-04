@@ -1,5 +1,7 @@
 package com.hwangdang.serviceimpl;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,4 +57,8 @@ public class BuyServiceImpl {
 		return dao.selectOrdersByOrdersNo(ordersNo);
 	}
 	
+	// 구매시 마일리지 사용하면 마일리지 수정  
+	public void setMemberMileage(Map param){
+		dao.updateMemberMileage(param);
+	}
 }

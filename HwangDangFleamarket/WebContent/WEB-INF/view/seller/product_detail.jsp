@@ -938,7 +938,7 @@
 					//alert("재고량:"+amount);
 					//?page=1&productId=상품id4&sellerStoreNo=2&sellerStoreImage=꿀빵#
 					 var option = $("#optionName option:selected").val();
-					
+						
 						$.ajax({
 							"url" : "/HwangDangFleamarket/buy/checkStock.go?page=${param.page}&productId=${param.productId }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&amount="+amount ,
 							"type" : "GET" , 
@@ -968,8 +968,10 @@
 									return false;
 								}
 							}
-							
-					});
+					});  
+						
+					//alert("딜레이");
+					$.delay(2000);
 				}); //btn 
 				
 				

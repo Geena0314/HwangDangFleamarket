@@ -197,7 +197,7 @@
 					 +"&ordersTotalPrice="+ordersTotalPrice+"&ordersPayment="+ordersPayment
 					 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId+
 					 "&orderAmount=${param.amount }&productId=${param.productId  }&sellerStoreNo=${param.sellerStoreNo }&orderProductStatus="
-					 +orderProductStatus+"&optionId= ${requestScope.productOption.optionId }";	
+					 +orderProductStatus+"&optionId= ${requestScope.productOption.optionId }&usedMileage="+$("#useMileage").html();	
 					 
 			 alert(queryString);				
 			$("form").prop("action", "/HwangDangFleamarket/buy/buyProductOne.go"+queryString);
@@ -321,7 +321,7 @@ seller_store_no : ${param.sellerStoreNo  }
 구매수량 : ${param.amount }
 옵션명 : ${param.option } 
 옵션ID: ${requestScope.productOption.optionId }
-
+총추가가격 : ${requestScope.productOption.optionAddPrice * param.amount  }
 
 <form action="" method="POST" name="buy_form" >
 
@@ -395,16 +395,24 @@ seller_store_no : ${param.sellerStoreNo  }
 			옵션명 : <span id="option">${param.option }</span><br/>
 			가격/구매수랑 : 
 			<span id="productPrice"><fmt:formatNumber type="currency">${requestScope.product.productPrice }</fmt:formatNumber></span>원 /<span id="amount">${param.amount }</span>개<br/>
-			
-			총주문건 :<br/>
+			옵션추가가격 : 
+			<span>
+				<fmt:formatNumber type="currency">${requestScope.productOption.optionAddPrice } </fmt:formatNumber>
+			</span>원<br/>
+			총주문건 :    <br/>
 		<hr>
 			
 			
 		<hr>
 		<h4>최종결제 정보</h4>
-			주문가격 :
+			주문가격 : 
 			<span id="productPrice">${requestScope.product.productPrice  * param.amount  }</span>원<br/>
+			옵션추가가격 : 
+			<span id="addPrice">
+				${requestScope.productOption.optionAddPrice * param.amount  }
+			</span>원<br/>
 			보유 마일리지 :<span id="useMileage" ></span><br/>
+			
 			배송비 : 
 			<span id="deriveryCharge">
 			
@@ -422,10 +430,10 @@ seller_store_no : ${param.sellerStoreNo  }
 			<span id="ordersTotalPrice">
 			<c:choose>
 				<c:when test="${ (requestScope.product.productPrice*param.amount ) >= 50000 }">
-					${ (requestScope.product.productPrice*param.amount ) } 
-				</c:when>
+					${ (requestScope.product.productPrice*param.amount ) + (requestScope.productOption.optionAddPrice * param.amount ) } 
+				</c:when>  
 				<c:otherwise>
-					${ (requestScope.product.productPrice*param.amount ) + 3000}  
+					${ (requestScope.product.productPrice*param.amount ) + 3000  + (requestScope.productOption.optionAddPrice * param.amount )}  
 				</c:otherwise>
 			</c:choose>
 			</span>원<br/>

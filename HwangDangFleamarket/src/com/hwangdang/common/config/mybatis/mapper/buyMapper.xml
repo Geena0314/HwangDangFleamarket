@@ -138,5 +138,17 @@ WHERE orders_no = #{ordersNo}
 
 </select>
 
+<update id="update-mileage-by-id" parameterType="map">
+
+<selectKey order="BEFORE" keyProperty="memberMileage" resultType="_int" >
+  SELECT member_mileage
+  FROM member
+  WHERE  member_id = #{memberId}
+</selectKey>
+UPDATE member 
+SET member_mileage = #{memberMileage} - #{mileage}
+WHERE member_id = #{memberId}
+</update>
+
 
 </mapper>
