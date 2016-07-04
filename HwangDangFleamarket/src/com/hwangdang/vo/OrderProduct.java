@@ -22,6 +22,21 @@ public class OrderProduct implements Serializable
 		// TODO Auto-generated constructor stub
 	}
 
+	public OrderProduct(int orderAmount, String ordersNo, String productId, int optionId,
+			int sellerStoreNo, int orderProductStatus)
+	{
+		//주문상품 정보만
+		super();
+		this.orderAmount = orderAmount;
+		this.ordersNo = ordersNo;
+		this.productId = productId;
+		this.optionId = optionId;
+		this.sellerStoreNo = sellerStoreNo;
+		this.orderProductStatus = orderProductStatus;
+	}
+
+	
+	
 	public OrderProduct(int orderSeqNo, int orderAmount, String ordersNo, String productId, int optionId,
 			int sellerStoreNo, int orderProductStatus)
 	{

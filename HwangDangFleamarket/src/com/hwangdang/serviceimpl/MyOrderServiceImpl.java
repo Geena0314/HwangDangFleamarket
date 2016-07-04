@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.daoimpl.MyOrderDaoImpl;
 import com.hwangdang.service.MyOrderService;
 import com.hwangdang.vo.Orders;

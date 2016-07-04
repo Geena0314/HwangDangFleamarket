@@ -38,20 +38,7 @@
 			s.seller_introduction, s.seller_assign
 </sql>
 
-<!-- Orders객체 : 주문자아이디까지
-<id  column="orders_no"   property="ordersNo" />
-	<result column="orders_receiver"   property="ordersReceiver" />
-	<result column="orders_phone" property="ordersPhone" />
-	<result column="orders_zipcode" property="ordersZipcode" />
-	<result column="orders_address" property="ordersAddress" />
-	<result column="orders_sub_address" property="ordersSubAddress" />
-	<result column="orders_total_price" property="ordersTotalPrice" />
-	<result column="orders_payment" property="ordersPayment" />
-	<result column="orders_request" property="ordersRequest" />
-	<result column="orders_payment_status" property="paymentStatus" />
-	<result column="orders_date" property="orders_date" /> 
-	<result column="buyer" property="memberId" />
- -->
+
 <resultMap type="com.hwangdang.vo.Orders" id="order-select-basic-resultmap">
 	<id  column="orders_no_1"   property="ordersNo" />
 	<result column="orders_receiver"   property="ordersReceiver" />
@@ -67,15 +54,7 @@
 	<result column="buyer" property="memberId" />
 </resultMap>
 
-	<!-- 주문상품 리절트맵. 
-	<id column="order_seq_no" property="orderSeqNo"/>
-		<result column="order_amount" property="orderAmount"/>
-		<result column="orders_no" property="ordersNo"/>
-		<result column="product_id" property="productId"/>
-		<result column="option_id" property="optionId"/>
-		<result column="seller_store_no" property="sellerStoreNo"/>
-		<result column="order_product_status" property="orderProductStatus"/>
-	-->
+
 	<resultMap type="orderProduct" id="orderProduct-basic-resultmap">
 		<id column="order_seq_no" property="orderSeqNo"/>
 		<result column="order_amount" property="orderAmount"/>
@@ -158,21 +137,8 @@
 	교환/환불/취소 -  교환신청 : 5
 	교환/환불/취소 -  환불신청 :  6 
 	교환/환불/취소 - 구매취소(배송전) :  7 
-	
  -->	
- <!-- 배송현황 조회     AND op.order_product_status IN (0,1,2,3,4) 
- SELECT	 <include refid="join-column"/>
-	FROM   orders o ,  order_product op , product p  ,seller s  , product_option po
 	
-	WHERE  o.member_id =  #{id}
-	AND    o.orders_no =  op.orders_no(+)
-	AND    op.product_id =  p.product_Id
-	AND    op.seller_store_no =  s.seller_store_no
-	AND    op.option_id  =  po.option_id
-	AND     op.order_product_status IN (0,1,2,3,4) 
-	ORDER BY o.orders_date DESC
- 
- -->		
 <select id="select-diliver-status" parameterType="map"  resultMap="orders-orderProduct-join" >
 	
 	SELECT 
@@ -180,7 +146,7 @@
 		orders_address , orders_sub_address ,    orders_total_price ,
 		orders_payment , orders_request , payment_status , orders_date ,  buyer ,    
 		
-		order_amount  , orders_no_2 ,  product_id_1  ,option_id_1 , 
+		order_seq_no , order_amount  , orders_no_2 ,  product_id_1  ,option_id_1 , 
 		seller_store_no_1 , order_product_status ,        
 		
 		product_Id_2 , product_name , product_price, product_stock,   
@@ -194,14 +160,12 @@
 		option_id_2 , option_name , option_sub_name , option_stock , 
 		option_add_price ,  product_id 
 		
-	FROM ( 
-	
-		SELECT   
+	FROM ( SELECT   
 		orders_no_1 , orders_receiver , orders_phone ,    orders_zipcode ,
 		orders_address , orders_sub_address ,    orders_total_price ,
 		orders_payment , orders_request , payment_status , orders_date ,  buyer ,    
 		
-		order_amount  , orders_no_2 ,  product_id_1  ,option_id_1 , 
+		order_seq_no , order_amount  , orders_no_2 ,  product_id_1  ,option_id_1 , 
 		seller_store_no_1 , order_product_status ,        
 		
 		product_Id_2 , product_name , product_price, product_stock,   
@@ -214,21 +178,18 @@
 		seller_introduction, seller_assign, member_id  ,        
 		
 		option_id_2 , option_name , option_sub_name , option_stock , 
-		option_add_price ,  product_id  ,  ceil(rownum / #{itemPerPage} ) page  
+		option_add_price ,  product_id  ,  ceil( rownum / #{itemPerPage} ) page  
 	
-		FROM (   
-		
-		
-			SELECT    o.orders_no orders_no_1 , o.orders_receiver , o.orders_phone ,
+		FROM (  SELECT    
+			o.orders_no orders_no_1 , o.orders_receiver , o.orders_phone ,
 			o.orders_zipcode , o.orders_address , o.orders_sub_address ,   
 			o.orders_total_price , o.orders_payment , o.orders_request ,    
 			o.payment_status , o.orders_date ,    o.member_id buyer ,     
 			
-			op.order_amount  , op.orders_no orders_no_2 ,  
+			op.order_seq_no , op.order_amount  , op.orders_no orders_no_2 ,  
 			op.product_id product_id_1  ,op.option_id option_id_1  ,    
 			op.seller_store_no seller_store_no_1 , op.order_product_status ,   
 			
-		
 			p.product_Id product_id_2 , p.product_name, p.product_price, p.product_stock,   
 			p.product_main_image, p.product_info, p.product_like,   p.seller_store_no  ,       
 			
@@ -247,12 +208,12 @@
 		AND    op.product_id =  p.product_Id  
 		AND    op.seller_store_no =  s.seller_store_no   
 		AND    op.option_id  =  po.option_id  
-		AND     op.order_product_status IN (0,1,2,3,4)    
+		AND    op.order_product_status IN (0,1,2,3,4)  
 		ORDER BY o.orders_date DESC 
-		) 
+		)  
 	)WHERE page = #{page}
-	
 </select>
+<!-- AND  op.order_product_status IN (0,1,2,3,4)     -->
 
 <!-- 배송 완료 조회 -->		
 <select id="select-diliver-success" parameterType="string"  resultMap="orders-orderProduct-join" >
@@ -281,12 +242,6 @@
 	ORDER BY o.orders_date DESC
 </select>
 
-<!-- 주문취소  : 주문TB에 해당주문번호로 삭제  => 자식TB order_product TB에서도 삭제됨   -->
-<delete id="delete-by-orderNo" parameterType="string">
-	DELETE FROM orders 
-	WHERE orders_no = #{value} 
-</delete>
-
 
 <!-- 환불신청 : order_product TB orders_status 6 으로 상태 변경 -->
 <!-- 교환신청 : order_product TB orders_status 5 으로 상태 변경 -->
@@ -294,7 +249,7 @@
 <update id="update-by-orderNo"  parameterType="map">
 	update order_product
 	SET order_product_status = #{status}
-	WHERE orders_no = #{no} 
+	WHERE order_seq_no = #{no} 
 </update>
 
 <!-- 셀러명으로 셀러정보 조회 -->

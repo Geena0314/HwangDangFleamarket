@@ -18,7 +18,7 @@ ALTER TABLE orders DROP COLUMN orders_status
 ALTER TABLE order_product MODIFY (order_product_status number(2))
 
 
-	--배송완료 -  구매확정 : -1 
+	--배송완료 -  구매확정 : 10 
 	--배송현황 - 입금대기중 : 0 
 	--배송현황 - 결제완료 : 1
 	--배송현황 - 배송준비중 : 2
@@ -30,9 +30,7 @@ ALTER TABLE order_product MODIFY (order_product_status number(2))
 	--교환/환불/취소 -   교환신청 승인 : 8 
 	--교환/환불/취소 -   환불신청 승인  : 9
     
-<<<<<<< HEAD
 ALTER TABLE order_product MODIFY order_product_status number(2);
-=======
 
       
 -- order_product TB 스키마 변경 
@@ -85,6 +83,7 @@ CREATE TABLE cart (
 select * from cart
 insert into cart values(cart_no_seq.nextval,2,'230/검','상품id133','hwang',6)
 insert into cart values(cart_no_seq.nextval,2,'230/검','상품id1','hwang',14)
+insert into cart values(cart_no_seq.nextval,2,'230/검','상품id1','hwang',1)
 
 
 select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.member_id, c.option_id,
@@ -99,3 +98,9 @@ select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.
 		and    c.member_id = 'hwang'
 
 
+		
+----------
+--Member TB  마일리지 컬럼 추가
+ ALTER TABLE member ADD  member_mileage number
+
+		

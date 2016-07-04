@@ -21,12 +21,6 @@ c. extends : 기존 definition 태그의 내용을 상속받아 사용할때 사
 		<put-attribute name="footer"  value="/WEB-INF/view/layout/footer.jsp" />
 	</definition>
 
-	<!-- wild cart(*)를 이용한 설정방식 
-		name의 * 는 핸들러메소드의 리턴타입 String문자열로 view-name을 이용하여 만듬 
-		return "member/join_form.tiles";  라면 
-		1번 * : membe   , 2번 * : join_form 문자열로 대체됨 
-	-->
-
 	<definition name="*/*.tiles"  extends="template">
 		<put-attribute name="body"  value="/WEB-INF/view/{1}/{2}.jsp" />
 	</definition>
@@ -40,13 +34,5 @@ c. extends : 기존 definition 태그의 내용을 상속받아 사용할때 사
 		<put-attribute name="body"  value="/WEB-INF/view/{1}.jsp" />
 	</definition>
 
-<!-- 	 <definition name="member/join_form.tiles"  extends="template">
-		<put-attribute name="body"  value="/WEB-INF/view/body/member/join_form.jsp" />
-	</definition>
-	
-	<definition name="main.tiles" extends="template" >
-		<put-attribute name="body"  value="/WEB-INF/view/body/main.jsp" />
-	</definition> -->
-	
 </tiles-definitions>
 
