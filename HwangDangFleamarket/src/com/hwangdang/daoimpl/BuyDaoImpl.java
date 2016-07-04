@@ -53,6 +53,12 @@ public class BuyDaoImpl {
 	public Orders selectCurrentDeliveryAddress(String memberId){
 		return session.selectOne("buy.select-orders-by-date", memberId);
 	}
+	//
+	public Orders selectOrdersByOrdersNo(String ordersNo){
+		return session.selectOne("buy.select-orders-by-ordersNo", ordersNo);
+	}
+	
+	
 	
 	
 }

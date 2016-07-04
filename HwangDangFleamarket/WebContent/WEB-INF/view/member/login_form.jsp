@@ -11,13 +11,38 @@
 		margin-top: 100px;
 		margin-left: 27px;
 	}
+	#domain
+	{
+		display: none;
+	}
 </style>
 
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
+	$(document).ready(function()
+	{
+		$("#selectEmail").on("change", function()
+		{
+			var index = this.selectedIndex;
+			if(index == 0)
+			{
+				$("#domain").empty().hide();
+				return false;
+			}
+			else if(index == 15)
+			{
+				$("#domain").val("").removeAttr("readonly").show();
+				return false;
+			}
+			else
+			{
+				$("#domain").empty().val($("#selectEmail option:selected").val()).hide();
+				return true;
+			}
+		});
 		
-		$("#login").on("click", function(){
+		$("#login").on("click", function()
+		{
 			if($("#id").val() == null || ($("#id").val() + $("#email").val()).length > 29 || $("#id").val().trim().length == 0)
 			{
 				//id가 비었거나, 30글자보다 크거나, id값에 공백만 있는경우.
@@ -65,10 +90,17 @@
 		}); //btn
 		
 		
-		
 	});//ready
 	
-	
+	function idCheck(obj)
+	{
+		 //좌우 방향키, 백스페이스, 딜리트, 탭키에 대한 예외
+        if(event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39
+        || event.keyCode == 46 ) return;
+        //obj.value = obj.value.replace(/[\a-zㄱ-ㅎㅏ-ㅣ가-힣]/g, '');
+        obj.value = obj.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');
+        obj.value = obj.value.replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(]/gi, '');
+	}
 </script>
 </head>
 	<body>
@@ -83,7 +115,7 @@
 					<table align='center'>
 						<tr>
 							<td>아이디</td>
-							<td><input type="text" name="memberId" id="id" size="10" autofocus="autofocus">@
+							<td><input type="text" name="memberId" id="id" size="10" autofocus="autofocus" onkeydown="idCheck(this)">@
 									<input type="text" name="domain" id="domain" size=13 readonly="readonly">
 									<select id="selectEmail">
 										<option>이메일을 선택하세요.</option>

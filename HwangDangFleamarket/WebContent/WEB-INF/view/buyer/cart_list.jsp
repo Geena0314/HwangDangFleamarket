@@ -100,6 +100,14 @@ $( document ).ready( function() {
 			"error":error
     	}); 
     });
+    
+    $("#buyBtn").on("click",function(){
+    	
+		 alert("buyBtn TEST");  	
+    	
+    });
+    
+    
 });
 function getRemoveCartList(){
 	var queryString = "";
@@ -147,6 +155,8 @@ function error(xhr, status, err)
 					<th scope="col"><span>배송정보</span></th>
 				</tr>
 			</thead>
+				<form action="" method="POST" id="cart_form">
+				
 				<tbody>
 					<c:forEach items="${requestScope.cartList}" var="list">
 						<c:forEach items="${list.productList}" var="product">
@@ -200,6 +210,8 @@ function error(xhr, status, err)
 	<p>
 	<span class="bottomBtn">
 	<input type="button" value="선택상품삭제" id="removeBtn">&nbsp;&nbsp;
-	<input type="button" value="결제정보입력">
+	<input type="button" value="구매하기" id="buyBtn">
 	</span>
+	</form>
 </div>
+
