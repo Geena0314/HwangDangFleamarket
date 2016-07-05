@@ -246,22 +246,24 @@ public class BuyController {
 		for(int i=0; i < amountSplitList.size(); i++){
 			OrderProduct op = new OrderProduct(Integer.parseInt(amountSplitList.get(i)), 
 					ordersNo, productIdSplitList.get(i) , Integer.parseInt(optoinIdSplitList.get(i)), Integer.parseInt(sellerStoreNoSplitList.get(i)), orderProductStatus );
-			System.out.println(op);
+			//System.out.println(op);
 			
 			//List에 add()
 			orderProductList.add(op);
-			//DB에 INSERT
-			int cnt = service.addProductN(op);
-			if(cnt == 0){
-				throw new Exception("addProductN(OrderProduct) 메소드에서 예외발생");
-			}
 		
 		}
 		//****************************************
 		 //orders TB , orders product TB INSERT 
 		int cnt = service.addProductN(orders);
 		
-				
+		for(OrderProduct op : orderProductList ){
+			//DB에 INSERT
+			cnt = service.addProductN(op);
+			if(cnt == 0){
+				throw new Exception("addProductN(OrderProduct) 메소드에서 예외발생");
+			}
+			
+		}
 		/*
 		Product product = service.getProductInfo(productId);
 		Seller seller = service.getSellerByNo(sellerStoreNo);
@@ -274,13 +276,9 @@ public class BuyController {
 		*/
 		
 		
-		
-		
-		
-		
 		String url = "";
 		if(cnt == 1){
-			//System.out.println("성공"); //   "*/*.tiles"
+			System.out.println("성공"); //   "*/*.tiles"
 			/*//뒤로가기이슈 해결 
 			//response.setHeader("Cache-Control", "no-store");
 			response.setHeader("Cache-Control","no-store");   
