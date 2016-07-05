@@ -88,20 +88,16 @@ WHERE product_id = #{productId}
 
 </select>
 
-<!-- 
-	orders TB INSERT
- -->
+<!-- orders TB INSERT -->
 <insert id="insert-orders" parameterType="orders">
 INSERT INTO orders 
-
 VALUES ( 
  #{ordersNo },#{ordersReceiver },#{ordersPhone },#{ordersZipcode },
  #{ordersAddress },#{ordersSubAddress },#{ordersTotalPrice },#{ordersPayment },
  #{ordersRequest },#{paymentStatus },#{orders_date },#{memberId }
- 
 )
-</insert>
 
+</insert>
 <!-- order_product TB INSERT   -->
 <insert id="insert-order-product" parameterType="OrderProduct">
 <selectKey order="BEFORE" keyProperty="orderSeqNo" resultType="_int" >
@@ -124,7 +120,7 @@ WHERE  product_id = #{productId}
 </select>
 
 
-<select id="select-product-option-by-like" resultMap="basic-productOption-resultmap" parameterType="string">
+<select id="select-productOption-by-OptionSubName" resultMap="basic-productOption-resultmap" parameterType="string">
 
 SELECT  	option_id , option_name , option_sub_name ,
 			product_id , option_stock , option_add_price

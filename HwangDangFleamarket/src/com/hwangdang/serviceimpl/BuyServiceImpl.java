@@ -30,9 +30,22 @@ public class BuyServiceImpl {
 	public int addProductOne(Orders orders , OrderProduct orderProduct){
 		int flag = dao.insertOrdersOne(orders);
 		flag = dao.insertOrderProductOne(orderProduct);
-		
 		return flag;
 	}
+	
+	/*** 1 ***/
+	//장바구니 구매하기 - 1개 Orders
+	public int addProductN(Orders orders){
+		int flag = dao.insertOrdersOne(orders);
+		return flag;
+	}
+	/*** 2 ***/
+	//장바구니 구매하기 - N개 Order_product INSERT
+	public int addProductN(OrderProduct orderProduct){
+		int flag = dao.insertOrderProductOne(orderProduct);
+		return flag;
+	}
+	
 	
 	
 	//상품 정보 조회 - Product TB 
@@ -40,8 +53,8 @@ public class BuyServiceImpl {
 		return dao.selectProductByProductId(productId);
 	}
 	//상품옵션 조회 - product_option TB  : 옵션명으로 조회 
-	public ProductOption getProductOptionInfo(String optionSubName){
-		return dao.selectProductOptionByLike(optionSubName);
+	public ProductOption getProductOptionByOptionSubName(String optionSubName){
+		return dao.selectProductOptionByOptionSubName(optionSubName);
 	}
 	//상품옵션 조회 - product_option TB  :옵션NO 로조회 
 		public ProductOption getProductOptionInfoByoptionNo(int optionNo){

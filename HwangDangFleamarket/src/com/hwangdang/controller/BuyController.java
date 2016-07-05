@@ -3,6 +3,7 @@ package com.hwangdang.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,7 +85,7 @@ public class BuyController {
 				//System.out.println(sellerStoreNo);
 				Member member = memberService.findById(memberId);
 				Product product = service.getProductInfo(productId);
-				ProductOption productOption = service.getProductOptionInfo(option);
+				ProductOption productOption = service.getProductOptionByOptionSubName(option);
 				Seller seller = service.getSellerByNo(sellerStoreNo);
 				long randomNumber = (int) (Math.random() * 999999999) + 1;
 				String ordersNo = "" + randomNumber;
@@ -100,7 +101,7 @@ public class BuyController {
 	}  
 	
 	/**
-	 * 장바구니 구매  N 개 : 상품결제 페이지로 이동 
+	 * 장바구니 구매  N개 : 상품결제 페이지로 이동 
 	 */
 	@RequestMapping("/buyCarts.go")
 	public String buyCarts(String cartNoList , Model model){
@@ -148,7 +149,6 @@ public class BuyController {
 		}
 		
 		//System.out.println("사용한 마일리지 : int :" + usedMileage);
-		
 		//2.마일리지 사용했다면 변경하는 로직 
 		if(usedMileage != 0){
 			Map<String,Object> param = new HashMap<>();
@@ -171,10 +171,13 @@ public class BuyController {
 		orders.setOrderProductList(orderProductList);
 		*/
 		
+		
+		
 		//****************************************
-		 //orders TB , orders product TB INSERT 
+		//orders TB , orders product TB INSERT 
 		int cnt = service.addProductOne(orders ,op);
 			
+		
 		
 		String url = "";
 		if(cnt == 1){
@@ -201,23 +204,24 @@ public class BuyController {
 	/**
 	 * 	상품구매 로직   N개 : 
 	 */
+	//optoinIdList:"+optionIdList+" , sellerStoreNoList :" + sellerStoreNoList +",
+		//productIdList: "+ productIdList + ",amountList "+amountList
 	@RequestMapping("/buyProducts.go")
 	public String buyProducts(@RequestParam(value="ordersNo" ,required=false) String ordersNo ,    
 			String ordersReceiver , String ordersPhone, String ordersZipcode ,
 			String ordersAddress , String ordersSubAddress , int ordersTotalPrice ,
 			String ordersPayment , @RequestParam(value="ordersRequest" ,required=false) String ordersRequest , int paymentStatus , String memberId ,
-			int orderAmount , String productId , int optionId , int sellerStoreNo , int orderProductStatus ,
+			String amountList , String productIdList , String optionIdList , String sellerStoreNoList , int orderProductStatus ,
 			@RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage  ,  HttpSession session , 
 			HttpServletResponse response , HttpServletRequest request ) throws Exception{ // 0 결재대기 , 1 결재완료  
 		
+		//1.주문번호 생성
 		if(ordersNo == null){
-			//1.주문번호 생성
 			long randomNumber = (int) (Math.random() * 999999999) + 1;
 			ordersNo = "" + randomNumber;
 		}
 		
 		//System.out.println("사용한 마일리지 : int :" + usedMileage);
-		
 		//2.마일리지 사용했다면 변경하는 로직 
 		if(usedMileage != 0){
 			Map<String,Object> param = new HashMap<>();
@@ -225,10 +229,39 @@ public class BuyController {
 			param.put("mileage", usedMileage);
 			service.setMemberMileage(param);
 		}
+		  
 		
+		//3. 매개변수 split
+		ArrayList<String> amountSplitList =  listSplit(amountList);
+		ArrayList<String> productIdSplitList =  listSplit(productIdList);
+		ArrayList<String> optoinIdSplitList =  listSplit(optionIdList);
+		ArrayList<String> sellerStoreNoSplitList =  listSplit(sellerStoreNoList);
+		
+		
+		
+		// 4. 객체생성
+		ArrayList<OrderProduct> orderProductList = new ArrayList<>();
 		Orders orders = new Orders(ordersNo, ordersReceiver, ordersPhone, ordersZipcode, ordersAddress, ordersSubAddress, ordersTotalPrice, ordersPayment, ordersRequest, paymentStatus, new Date(), memberId);
-		OrderProduct op = new OrderProduct(orderAmount, ordersNo, productId, optionId, sellerStoreNo, orderProductStatus );
 		
+		for(int i=0; i < amountSplitList.size(); i++){
+			OrderProduct op = new OrderProduct(Integer.parseInt(amountSplitList.get(i)), 
+					ordersNo, productIdSplitList.get(i) , Integer.parseInt(optoinIdSplitList.get(i)), Integer.parseInt(sellerStoreNoSplitList.get(i)), orderProductStatus );
+			System.out.println(op);
+			
+			//List에 add()
+			orderProductList.add(op);
+			//DB에 INSERT
+			int cnt = service.addProductN(op);
+			if(cnt == 0){
+				throw new Exception("addProductN(OrderProduct) 메소드에서 예외발생");
+			}
+		
+		}
+		//****************************************
+		 //orders TB , orders product TB INSERT 
+		int cnt = service.addProductN(orders);
+		
+				
 		/*
 		Product product = service.getProductInfo(productId);
 		Seller seller = service.getSellerByNo(sellerStoreNo);
@@ -240,10 +273,10 @@ public class BuyController {
 		orders.setOrderProductList(orderProductList);
 		*/
 		
-		//****************************************
-		 //orders TB , orders product TB INSERT 
-		int cnt = service.addProductOne(orders ,op);
-			
+		
+		
+		
+		
 		
 		String url = "";
 		if(cnt == 1){
@@ -258,7 +291,7 @@ public class BuyController {
 			}*/
 			
 			session.setAttribute("orders", orders);
-			url = "redirect:/buy/addProductSuccessPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&productId="+productId;
+			url = "redirect:/buy/addProductSuccessPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&orderProductList="+orderProductList;
 			
 		}else{
 			url = "redirect:/error.tiles"; 
@@ -272,14 +305,16 @@ public class BuyController {
 	 * 	구매성공 : 결제성공 페이지 이동 
 	 */
 	@RequestMapping("/addProductSuccessPage.go")
-	public String addProductPage(String ordersNo ,String productId ,Model model ){
+	public String addProductPage(String ordersNo ,@RequestParam(value="productId" ,required=false ) String productId 
+			,@RequestParam(value="orderProductList" ,required=false ) List orderProductList ,Model model ){
 		String url = "/";
 		//System.out.println(ordersNo +", "+ productId);
 		
 			url = "buyer/buy_product_one_success.tiles";
 			Orders orders = service.getOrdersByOrdersNo(ordersNo);
-			//model.addAttribute("orders" ,orders);
-			//model.addAttribute("product",product);
+			model.addAttribute("orders" ,orders);
+			model.addAttribute("product",productId);
+			model.addAttribute("orderProductList",orderProductList);
 			/*url = "error.tiles"; 
 			model.addAttribute("errorMsg","결제가실패하였습니다. 관리자에게 문의하세요.");*/
 		
@@ -310,4 +345,15 @@ public class BuyController {
 	}
 	
 
+	/**
+	 * 세션의 회원의  마일리지 실시간 조회를 위한 메소드 
+	 */
+	@RequestMapping("/getMemberMileageAjax.go")
+	@ResponseBody
+	public int getMemberMileageAjax(String memberId){
+		Member member = memberService.findById(memberId);
+		return member.getMemberMileage();
+	}
+	
+	
 }

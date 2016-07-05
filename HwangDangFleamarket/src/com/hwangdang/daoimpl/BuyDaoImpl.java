@@ -47,8 +47,8 @@ public class BuyDaoImpl {
 	}	
 	//제품옵션조회
 	@Transactional
-	public ProductOption selectProductOptionByLike(String optionSubName){
-		return session.selectOne("buy.select-product-option-by-like", optionSubName);
+	public ProductOption selectProductOptionByOptionSubName(String optionSubName){
+		return session.selectOne("buy.select-productOption-by-OptionSubName", optionSubName);
 	}
 	//셀러TB 조회 
 	@Transactional
