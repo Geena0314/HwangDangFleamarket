@@ -287,6 +287,12 @@ SELECT * FROM orders;
 delete FROM orders;
 delete FROM order_product;
 
+
+SELECT  order_product_seq.nextval
+FROM dual
+
+
+
 -- 주문상품 TB                           //PK              주문수량  , 주문번호  , 상품ID   , 상품옵션 ,  판매자스토어NO  , 상품상태 0~10      
 insert into order_product values (order_product_seq.nextval , 5, 'order_no1', '상품id1', 12 , 15 , 0 ); 
 insert into order_product values (order_product_seq.nextval ,4, 'order_no2', '상품id2', 13, 15 ,1);  
@@ -311,8 +317,12 @@ insert into order_product values (order_product_seq.nextval ,4, 'order_no8', '�
 insert into order_product values (order_product_seq.nextval ,4, 'order_no1', '상품id3', 6, 4 , 7);
 insert into order_product values (order_product_seq.nextval ,4, 'order_no9', '상품id2', 5, 2 , 3);
 
-select * FROM orders;
+SELECT * FROM cart
 
+
+
+select * FROM orders;
+select * FROM seller
 drop table order_product
 create sequence order_product_seq nocache;
 
@@ -655,7 +665,7 @@ SELECT * FROM member;
  ALTER TABLE member ADD  member_mileage number
 
  UPDATE MEMBER
- SET member_mileage = 5000
+ SET member_mileage = 15000
  WHERE member_id ='admin@admin.com' 
  
  
@@ -700,3 +710,10 @@ SELECT * FROM
 UPDATE member 
 SET member_mileage =  15000
 WHERE member_id = 'admin@admin.com'
+
+
+
+-----------
+SELECT  *
+FROM cart
+WHERE cart_no = #{cartNo} 

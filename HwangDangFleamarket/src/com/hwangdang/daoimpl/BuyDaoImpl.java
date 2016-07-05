@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hwangdang.vo.Cart;
 import com.hwangdang.vo.OrderProduct;
 import com.hwangdang.vo.Orders;
 import com.hwangdang.vo.Product;
 import com.hwangdang.vo.ProductOption;
+import com.hwangdang.vo.Seller;
 
 @Repository
 public class BuyDaoImpl {
@@ -48,10 +50,10 @@ public class BuyDaoImpl {
 	public ProductOption selectProductOptionByLike(String optionSubName){
 		return session.selectOne("buy.select-product-option-by-like", optionSubName);
 	}
-	//셀러상호명 조회 
+	//셀러TB 조회 
 	@Transactional
-	public String selectSellerStoreNameByNo(int sellerStoreNo){
-		return session.selectOne("buy.select-seller-by-seller-store-no", sellerStoreNo);
+	public Seller selectSellerBySellerStoreNo(int sellerStoreNo){
+		return session.selectOne("buy.select-seller-by-sellerStoreNo", sellerStoreNo);
 	}
 	
 	//최근배송주소지 조회  
@@ -68,6 +70,20 @@ public class BuyDaoImpl {
 	@Transactional
 	public void updateMemberMileage(Map param){ 
 		session.update("buy.update-mileage-by-id", param);
+	}
+	
+	@Transactional
+	public Cart selectCartByCartNo(int cartNo){ 
+		return session.selectOne("buy.select-cart-by-cartNo", cartNo);
+	}
+	
+	@Transactional
+	public ProductOption selectProductOptionByOptionNo(int optionNo){
+		return session.selectOne("buy.select-product-option-by-optionNo", optionNo);
+	}
+	@Transactional
+	public int selectOrderProductSeq(){
+		return session.selectOne("buy.select_orderProduct_seq");
 	}
 	
 	

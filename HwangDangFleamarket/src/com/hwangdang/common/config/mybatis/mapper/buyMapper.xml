@@ -9,9 +9,9 @@
 
 <sql id="seller-column">
 	seller_store_no , seller_store_name , seller_tax_id , seller_industry ,
-	seller_sub_industry , seller_zipcode , seller_address , selelr_sub_address ,
-	seller_sub_address , seller_store_image , seller_product1,seller_store_image , seller_product2,
-	seller_store_image , seller_product3 , seller_introduction , member_id AS 'seller'
+	seller_sub_industry , seller_zipcode , seller_address , seller_sub_address ,
+	seller_store_image , seller_product1  , seller_product2, seller_product3 , 
+	seller_introduction , seller_assign ,  member_id 
 
 </sql>
 
@@ -57,6 +57,25 @@
 		<result column="payment_status" property="paymentStatus"/>
 		<result column="member_id" property="memberId"/>
 		<result column="orders_date"  property="orders_date"/>
+	</resultMap>
+
+<!-- 주문 기본 리절트맵 -->
+	<resultMap type="seller" id="seller-basic-resultmap">
+		<id column="seller_store_no" property="sellerStoreNo"/>
+		<result column="seller_store_name" property="sellerStoreName"/>
+		<result column="seller_tax_id" property="sellerTaxId"/>
+		<result column="seller_industry" property="sellerIndustry"/>
+		<result column="seller_sub_industry" property="sellerSubIndustry"/>
+		<result column="seller_zipcode" property="sellerZipcode"/>
+		<result column="seller_address" property="sellerAddress"/>
+		<result column="seller_sub_address" property="sellerSubAddress"/>
+		<result column="seller_store_image" property="sellerStoreImage"/>
+		<result column="seller_product1" property="sellerProduct1"/>
+		<result column="seller_product2" property="sellerProduct2"/>
+		<result column="seller_product3" property="sellerProduct3"/>
+		<result column="seller_introduction" property="sellerIntroduction"/>
+		<result column="seller_assign" property="sellerAssign"/>
+		<result column="member_id" property="memberId"/>
 	</resultMap>
 
 
@@ -115,8 +134,18 @@ WHERE 		option_sub_name = #{optionName }
 </select>
 
 
-<select id="select-seller-by-seller-store-no" parameterType="_int" resultType="string">
-	SELECT seller_store_name  
+<select id="select-product-option-by-optionNo" resultMap="basic-productOption-resultmap" parameterType="_int">
+
+SELECT  	option_id , option_name , option_sub_name ,
+			product_id , option_stock , option_add_price
+			
+FROM 		product_option
+WHERE 		option_id  = #{optionNo } 
+</select>
+
+
+<select id="select-seller-by-sellerStoreNo" parameterType="_int" resultMap="seller-basic-resultmap">
+	SELECT  <include refid="seller-column"/>
 	FROM   seller
 	WHERE  seller_store_no = #{value}
 </select>
@@ -151,4 +180,18 @@ WHERE member_id = #{memberId}
 </update>
 
 
+<!-- Cart TB 조회  -->
+<select id="select-cart-by-cartNo" parameterType="_int" resultType="cart">
+SELECT  cart_no cartNo, cart_product_Amount cartProductAmount , 
+		 cart_product_option cartProductOption , product_id productId ,
+		 member_id memberId , option_id optionId
+FROM cart
+WHERE cart_no = #{cartNo} 
+</select>
+
+<!-- order_product 시퀀스 조회 -->
+<select id="select_orderProduct_seq" resultType="_int">
+SELECT  order_product_seq.nextval
+FROM dual
+</select>
 </mapper>

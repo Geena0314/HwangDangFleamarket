@@ -13,7 +13,9 @@
 		
  		$("#btn").click(function(){
  			var useMileage = $("#mileage").val();
- 			var cutline = $(opener.document).find("#memberMileage").text().trim();
+ 			var cutline $("#memberMileage").text().trim();
+ 		
+ 			
  			parseInt(cutline);
  			parseInt(useMileage);
  			console.log(useMileage);
@@ -52,7 +54,7 @@
 
 <body>
 	<h4>마일리지 선택 </h4>
-	 사용할 마일리지 선택 : <input type="number" name="mileage" id="mileage" /><br/>
+	 
 	 <input type="button" id="btn" value="선택"/>
 	
 </body>

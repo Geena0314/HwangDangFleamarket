@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hwangdang.daoimpl.BuyDaoImpl;
+import com.hwangdang.vo.Cart;
 import com.hwangdang.vo.OrderProduct;
 import com.hwangdang.vo.Orders;
 import com.hwangdang.vo.Product;
 import com.hwangdang.vo.ProductOption;
+import com.hwangdang.vo.Seller;
 
 @Service
 public class BuyServiceImpl {
@@ -37,14 +39,18 @@ public class BuyServiceImpl {
 	public Product getProductInfo(String productId){
 		return dao.selectProductByProductId(productId);
 	}
-	//상품옵션 조회 - product_option TB 
+	//상품옵션 조회 - product_option TB  : 옵션명으로 조회 
 	public ProductOption getProductOptionInfo(String optionSubName){
 		return dao.selectProductOptionByLike(optionSubName);
 	}
+	//상품옵션 조회 - product_option TB  :옵션NO 로조회 
+		public ProductOption getProductOptionInfoByoptionNo(int optionNo){
+			return dao.selectProductOptionByOptionNo(optionNo);
+		}
 		
 	// 셀러의 스토어상호명 조회 
-	public String getSellerStoreName(int sellerStoreNo){
-		return dao.selectSellerStoreNameByNo(sellerStoreNo);
+	public Seller getSellerByNo(int sellerStoreNo){
+		return dao.selectSellerBySellerStoreNo(sellerStoreNo);
 	}
 	
 	//상품옵션 조회 
@@ -61,4 +67,14 @@ public class BuyServiceImpl {
 	public void setMemberMileage(Map param){
 		dao.updateMemberMileage(param);
 	}
+	
+	// 카드정보조회   
+	public Cart getCartByCartNo(int cartNo){
+		return dao.selectCartByCartNo(cartNo);
+	}
+	// order_product TB 시퀀스 조회    
+	public int getOrderProductSeq(){
+		return dao.selectOrderProductSeq();
+	}
+	
 }
