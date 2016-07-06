@@ -35,6 +35,7 @@
 		<result column="seller_product2" property="sellerProduct2"/>
 		<result column="seller_product3" property="sellerProduct3"/>
 		<result column="seller_introduction" property="sellerIntroduction"/>
+		<result column="seller_assign" property="sellerAssign"/>
 		<result column="member_id" property="memberId"/>
 	</resultMap>
 	
@@ -105,7 +106,7 @@
 	<!-- memberId로 Seller정보 찾기. -->
 	<select id="selectSellerById" resultMap="seller-basic-resultMap" parameterType="string">
 		select 	seller_store_no, seller_store_name, seller_tax_id, seller_industry, seller_sub_industry, seller_zipcode, seller_address, seller_sub_address,
-				 	seller_store_image, seller_product1, seller_product2, seller_product3, seller_introduction, member_id
+				 	seller_store_image, seller_product1, seller_product2, seller_product3, seller_introduction, seller_assign, member_id
 	 	from		seller
 	 	where		member_id=#{memberId}
 	</select>

@@ -3,21 +3,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>황당마켓</title>
+	<link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/template.css">
+    <!-- Bootstrap core CSS -->
+    <link href="/HwangDangFleamarket/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/HwangDangFleamarket/styles/dashboard.css" rel="stylesheet">
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
+    <script src="/HwangDangFleamarket/js/bootstrap.min.js"></script>
+    <script src="/HwangDangFleamarket/js/vendor/holder.js"></script>
 <title>황당마켓</title>
-<style type="text/css">
-	div
-	{
-		margin-top: 100px;
-		margin-left: 27px;
-	}
-	#domain
-	{
-		display: none;
-	}
-</style>
-
-<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
 <script type="text/javascript">
 	$(document).ready(function()
 	{
@@ -102,58 +104,80 @@
         obj.value = obj.value.replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(]/gi, '');
 	}
 </script>
+<style type="text/css">
+#domain
+{
+	display: none;
+}
+#selectEmail
+{
+	width: 140px;
+}
+</style>
 </head>
 	<body>
-		
-		<h2>로그인</h2>
-		
-		<div>
-			<fieldset style="width:350px">
-				<legend>로그인 폼</legend>   
-				<form action="/HwangDangFleamarket/member/loginResult.go" method="post" name="login_form">
+		<div class="container">
+			<h2 class="form-signin-heading" align="center">Please sign in</h2>
+				<form class="form-signin" action="/HwangDangFleamarket/member/loginResult.go" method="post" name="login_form">
 					<input type="hidden" id="queryString" name="queryString" value="${requestScope.queryString}" />
-					<table align='center'>
-						<tr>
-							<td>아이디</td>
-							<td><input type="text" name="memberId" id="id" size="10" autofocus="autofocus" onkeydown="idCheck(this)">@
-									<input type="text" name="domain" id="domain" size=13 readonly="readonly">
-									<select id="selectEmail">
-										<option>이메일을 선택하세요.</option>
-										<lee:forEach items="${requestScope.emailList}" var="email">
-											<option>${ email.codeName }</option>
-										</lee:forEach>
-										<option>직접입력</option>
-									</select>
+					<table>
+						<tr class="trInput">
+							<td class='tdName'>I&nbsp&nbsp&nbsp&nbsp&nbspD</td>
+							<td>
+								<lee:choose>
+									<lee:when test="${ not empty requestScope.loginId }">
+										<input type="text" name="memberId" id="id" size="10" autofocus="autofocus" onkeydown="idCheck(this)" value="${ requestScope.loginId }">
+									</lee:when>
+									<lee:otherwise>
+										<input type="text" name="memberId" id="id" size="10" autofocus="autofocus" onkeydown="idCheck(this)">
+									</lee:otherwise>
+								</lee:choose>
+								@<input type="text" name="domain" id="domain" size=13 readonly="readonly">
+								<select id="selectEmail">
+									<option>이메일을 선택</option>
+									<lee:forEach items="${requestScope.emailList}" var="email">
+										<lee:choose>
+											<lee:when test="${ requestScope.domain == email.codeName }">
+												<option selected="selected">${ email.codeName }</option>
+											</lee:when>
+											<lee:otherwise>
+												<option>${ email.codeName }</option>
+											</lee:otherwise>
+										</lee:choose>
+									</lee:forEach>
+									<option>직접입력</option>
+								</select>
 							</td>
 						</tr>
-						<tr>
+						<tr class="trInput">
 							<td colspan="2" id="idError">
 								<lee:if test="${not empty requestScope.idError }">
 									${ requestScope.idError }
 								</lee:if>
 							</td>
 						</tr>
-						<tr>
-							<td>패스워드</td>
-							<td><input type="password" name="memberPassword" id="password" size="20"></td>
+						<tr class="trInput">
+							<td class='tdName'>PASSWORD</td>
+							<td colspan="1" >
+								<input type="password" name="memberPassword" id="password" placeholder="Password" size="20">
+							</td>
 						</tr>
-						<tr>
+						<tr class="trInput">
 							<td colspan="2" id="passwordError">
 								<lee:if test="${not empty requestScope.passwordError }">
 									${ requestScope.passwordError }
 								</lee:if>
 							</td>
 						</tr>
-						<tr>
+						<tr class="trInput">
 							<td colspan="2" align="center">
-								<input type="submit" value="로그인" id="login"/>
-								<input type="reset" value="초기화"/>
+								<input class="btn btn-lg btn-success btn-block"  type="submit" value="로그인" id="login"/>
+								<input class="btn btn-lg btn-primary btn-block" type="reset" value="초기화"/>
 							</td>
 						</tr>
 					</table>	
 				</form>
 				<font size="2" color="red" id="errorMsg">${requestScope.errorMsg }</font>
-			</fieldset>
 		</div>
 	</body>
 </html>

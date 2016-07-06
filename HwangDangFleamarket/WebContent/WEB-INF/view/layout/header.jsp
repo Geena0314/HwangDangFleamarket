@@ -1,51 +1,49 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<style type="text/css">
-#home
-{
-	margin-left:10px;
-	float:left;
-}
-#menuLinks
-{
-	margin-right:10px;
-	float:right;
-}
-#navBar
-{
-	height:20px;
-}
-</style>
-	<c:choose>
-		<c:when test="${requestScope.seller.sellerStoreName==null}">
-			<h2>황당 플리마켓</h2>
-		</c:when>
-		<c:otherwise>
-			<h2>${requestScope.seller.sellerStoreName}</h2>
-		</c:otherwise>
-	</c:choose>
-	<div id="navBar">
-		<div id="home">
-			<a href="/HwangDangFleamarket/main.go">메인</a>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/HwangDangFleamarket/main.go">
+				<c:choose>
+					<c:when test="${requestScope.seller.sellerStoreName==null}">
+					황당 플리마켓
+					</c:when>
+					<c:otherwise>
+					${requestScope.seller.sellerStoreName}
+					</c:otherwise>
+				</c:choose>
+			</a>
 		</div>
-		<div id="menuLinks">
-		<c:choose>
-			<c:when test="${not empty sessionScope.login_info }">
-				<a href="/HwangDangFleamarket/member/logout.go" onclick="return confirm('로그아웃할꺼?')">로그아웃</a>&nbsp;&nbsp;
-				<a href="/HwangDangFleamarket/member/mypage.go">my page</a>&nbsp;&nbsp;
-				<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">나의주문</a>&nbsp;&nbsp;
-				<a href="/HwangDangFleamarket/cart/cartList.go?memberId=${sessionScope.login_info.memberId}">장바구니</a>&nbsp;&nbsp;
-			</c:when>
-			<c:otherwise> 
-				<a href="#" onClick="window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');">로그인</a>&nbsp;&nbsp;
-				<a href="/HwangDangFleamarket/member/register.go">회원가입</a>&nbsp;&nbsp;
-				<a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');};">my page</a>&nbsp;&nbsp;
-				<a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');};">나의주문</a>&nbsp;&nbsp;
-				<a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');};">장바구니</a>&nbsp;&nbsp;
-			</c:otherwise> 
-		</c:choose>
-		<c:if test="${ sessionScope.login_info.memberAssign == 1}">
-			<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${sessionScope.seller.sellerStoreNo}&sellerStoreImage=${sessionScope.seller.sellerStoreImage}">내 스토어</a>
-		</c:if>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<c:choose>
+					<c:when test="${not empty sessionScope.login_info }">
+						<li><a href="/HwangDangFleamarket/member/logout.go" onclick="return confirm('로그아웃할꺼?')">로그아웃</a></li>
+						<li><a href="/HwangDangFleamarket/member/mypage.go">my page</a></li>
+						<li><a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">나의주문</a></li>
+						<li><a href="/HwangDangFleamarket/cart/cartList.go?memberId=${sessionScope.login_info.memberId}">장바구니</a></li>
+					</c:when>
+					<c:otherwise> 
+						<li><a href="#" onClick="window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=700 height=450 left=500 top=200');">로그인</a></li>
+						<li><a href="/HwangDangFleamarket/member/register.go">회원가입</a></li>
+						<li><a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=700 height=450 left=500 top=200');};">my page</a></li>
+						<li><a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=700 height=450 left=500 top=200');};">나의주문</a></li>
+						<li><a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=700 height=450 left=500 top=200');};">장바구니</a></li>
+					</c:otherwise> 
+				</c:choose>
+				<c:if test="${ sessionScope.login_info.memberAssign == 1 && sessionScope.seller.sellerAssign == 1}}">
+					<li><a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${sessionScope.seller.sellerStoreNo}&sellerStoreImage=${sessionScope.seller.sellerStoreImage}">내 스토어</a></li>
+				</c:if>
+			</ul>
+<!--           <form class="navbar-form navbar-right">
+<input type="text" class="form-control" placeholder="Search...">
+</form> -->
 		</div>
 	</div>
+</nav>
