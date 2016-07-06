@@ -1,5 +1,6 @@
 package com.hwangdang.daoimpl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -95,6 +96,9 @@ public class BuyDaoImpl {
 	public int updateOptionStockByOptionId(Map param ){
 		return session.update("buy.update-optionStock-by-optionId" , param);
 	}
-	
+	@Transactional
+	public List<Product> selectProductByLikeKeyword(String keyword ){
+		return session.selectList("buy.select-product-by-like" , keyword);
+	}
 	
 }

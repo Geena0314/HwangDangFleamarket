@@ -205,4 +205,6 @@ public class ProductDaoImpl implements ProductDao
 		// TODO Auto-generated method stub
 		return session.insert("productMapper.insertProduct", product);
 	}
+	
+	
 }
