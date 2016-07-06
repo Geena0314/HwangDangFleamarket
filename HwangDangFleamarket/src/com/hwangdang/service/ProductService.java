@@ -55,8 +55,17 @@ public interface ProductService
 	int insertProduct(Product product);
 	
 	//상품 옵션 등록하기
-	int insertOption(ProductOption productOption);
+	int insertOption(List<ProductOption> productOptionList, String productId);
 	
 	//상품 상세 이미지 등록하기
 	int insertDetailImage(ProductDetailImage productDetailImage);
+	
+	//상품 ID로 상품 조회하기
+	HashMap<String, Object> selectProductById(String productId);
+	
+	//옵션아이디로 옵션 수정
+	int updateProductById(HashMap<String, Object> map);
+	
+	//상품ID로 상품 삭제
+	int deleteProductById(String productId);
 }

@@ -1,6 +1,5 @@
 package com.hwangdang.serviceimpl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +48,7 @@ public class ProductServiceImpl implements ProductService
 		map.put("sellerStoreNo", sellerStoreNo);
 		map.put("productList", dao.selectAllProduct(map));
 		map.put("bean", bean);
+		map.put("allItems", dao.selectCountProductByNo(sellerStoreNo));
 		
 		return map;
 	}
@@ -231,13 +231,56 @@ public class ProductServiceImpl implements ProductService
 	}
 
 	@Override
-	public int insertOption(ProductOption productOption) {
-		return optionDao.insertOption(productOption);
+	public int insertOption(List<ProductOption> productOptionList, String productId) {
+		for(ProductOption options : productOptionList){
+			options.setProductId(productId);
+			optionDao.insertOption(options);
+		}
+		return 0;
 	}
 
 	@Override
 	public int insertDetailImage(ProductDetailImage productDetailImage) {
 		// TODO Auto-generated method stub
 		return detailImageDao.insertDetailImage(productDetailImage);
+	}
+
+	@Override
+	public HashMap<String, Object> selectProductById(String productId) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("product", dao.selectProductById(productId));
+		map.put("optionList", dao.selectOptionById(productId));
+		return map;
+	}
+
+	@Override
+	public int updateProductById(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		Product product = (Product) map.get("product");
+		dao.updateProductById(product);
+		List<ProductOption> oldList = (List<ProductOption>) map.get("oldList");
+		for(int idx=0; idx<oldList.size(); idx++){
+			oldList.get(idx).setProductId(product.getProductId());
+			dao.updateProductOptionById(oldList.get(idx));
+		}
+		List<ProductOption> newList = (List<ProductOption>) map.get("newList");
+		if(map.get("newList")!=null){
+			for(int idx=0; idx<newList.size(); idx++){
+				newList.get(idx).setProductId(product.getProductId());
+				optionDao.insertOption(newList.get(idx));
+			}
+		}
+		if( map.get("image")!=null){
+			ProductDetailImage image = ((ProductDetailImage) map.get("image"));
+			dao.updateDetailImageById(image);
+		}
+		return 0;
+	}
+
+	@Override
+	public int deleteProductById(String productId) {
+		// TODO Auto-generated method stub
+		return dao.deleteProductById(productId);
 	}
 }

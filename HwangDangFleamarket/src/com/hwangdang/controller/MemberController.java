@@ -80,7 +80,7 @@ public class MemberController {
 	
 	@RequestMapping("/loginResult.go") //로그인 후 화면
 	public ModelAndView loginResult(String memberId, String domain, String memberPassword, HttpSession session){
-		memberId = memberId + "@" + domain;
+		memberId = memberId;// + "@" + domain;
 		Member member = service.findById(memberId);
 		if(member!=null){
 			//아이디가 존재함.
