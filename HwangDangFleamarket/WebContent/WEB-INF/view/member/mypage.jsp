@@ -23,7 +23,20 @@
 	}
 	
 </style>
-
+<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#withdtawalBtn').on("click", function(){
+		if(confirm("정말 탈퇴하실건가요ㅠㅠ?")){
+			if(confirm("진짜로ㅠㅠ?")){
+				alert("빠염...ㅠㅠ");
+				location.href='/HwangDangFleamarket/member/memberWithdrawal.go?memberId=${sessionScope.login_info.memberId}';
+			}			
+		}
+		return false;
+	});
+});
+</script>
 <div id="all">
 	<div id="sellerRegister" >
 		<lee:choose>
@@ -70,7 +83,7 @@
 	</div>
 	<div id="memberWithdrawal">
 		<lee:if test="${ sessionScope.login_info.memberId != 'kinghwang' }">
-			<a href="/HwangDangFleamarket/member/memberWithdrawal.go?memberId=${sessionScope.login_info.memberId}">
+			<a id="withdtawalBtn" href="#">
 				<img src="../image_storage/withdrawal.jpg">
 			</a>
 		</lee:if>
