@@ -112,22 +112,31 @@ public class MemberController {
 	
 	//로그인 이후 상품 디테일페이지로 이동 
 	@RequestMapping("/loginAfterProductDetailPage.go") //로그인 후 화면
-	public String loginAfterProductDetailPage(String memberId, String memberPassword, HttpSession session , @RequestParam(value="page" ,defaultValue="1") int page  ,
-		 String productId , String sellerStoreNo   , String sellerStoreImage , String amount , String option){
-		
-		//System.out.println(memberId +" , " + memberPassword);
+	public String loginAfterProductDetailPage(String memberId ,String domain, String memberPassword, HttpSession session , @RequestParam(value="page" ,defaultValue="1") int page  ,
+		 String productId , String sellerStoreNo   , String sellerStoreImage , String amount , String option , Model model){
+		memberId = memberId +"@" + domain;
+		System.out.println(memberId +" , " + memberPassword);
 		//System.out.println("page :" +page +", productId:"+productId + ",sellerStoreNo:" +sellerStoreNo  +",sellerSotreImage:"+sellerStoreImage+", amount:"+amount + ",option" +option);
 		Member member = service.findById(memberId);
+		String url ="";    
 		if(member!=null){
 			//아이디가 존재함.
 			if(memberPassword.equals(member.getMemberPassword())){ 
 				//아이디와 패스워드가 맞는 경우
 				session.setAttribute("login_info", member);
+				url = "buyer/buyForm.tiles";
+			}else{
+				url ="member/login_form.tiles";
+				model.addAttribute("idError" ,"패스워드가 틀렸습니다!");
 			}
+		}else{
+			//아이디 비존재 
+			url ="member/login_form.tiles";
+			model.addAttribute("errorMsg" ,"아이디를 잘못입력하였습니다!");
 		}
-		
+		 
 		// 구매페이지로 이동 
-		return "buyer/buyForm.tiles";
+		return url;
 	}
 	@RequestMapping("/logout")
 	public String logout(HttpSession session)

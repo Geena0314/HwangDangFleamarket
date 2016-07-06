@@ -1,7 +1,24 @@
 select * FROM admin_QnA 
 ORDER BY admin_qna_no DESC;
+select * FROM PRODUCT_OPTION
+DELETE FROM PRODUCT_OPTION
 
-SELECT count(*) FROM  admin_qna
+DROP TABLE product_option 
+	CASCADE CONSTRAINTS;
+/* 상품옵션vvvvvvvv */
+drop table product_option
+CREATE TABLE product_option (
+	option_id NUMBER primary key, /* 상품옵션ID */
+	option_name VARCHAR2(30) NOT NULL, /* 옵션명 */
+	option_sub_name VARCHAR2(60) NOT NULL unique , /* 세부 옵션명 */
+	option_stock NUMBER(4) NOT NULL, /* 재고량 */
+	option_add_price NUMBER(7) not null, /* 추가가격 */
+	product_id VARCHAR2(30) NOT NULL, /* 상품ID */
+	foreign key(product_id) references product(product_id) on delete cascade
+);
+drop sequence option_id_seq
+create sequence option_id_seq nocache;
+
 
 
 select * FROM member;
@@ -270,6 +287,12 @@ SELECT * FROM orders;
 delete FROM orders;
 delete FROM order_product;
 
+
+SELECT  order_product_seq.nextval
+FROM dual
+
+
+
 -- 주문상품 TB                           //PK              주문수량  , 주문번호  , 상품ID   , 상품옵션 ,  판매자스토어NO  , 상품상태 0~10      
 insert into order_product values (order_product_seq.nextval , 5, 'order_no1', '상품id1', 12 , 15 , 0 ); 
 insert into order_product values (order_product_seq.nextval ,4, 'order_no2', '상품id2', 13, 15 ,1);  
@@ -294,8 +317,12 @@ insert into order_product values (order_product_seq.nextval ,4, 'order_no8', '�
 insert into order_product values (order_product_seq.nextval ,4, 'order_no1', '상품id3', 6, 4 , 7);
 insert into order_product values (order_product_seq.nextval ,4, 'order_no9', '상품id2', 5, 2 , 3);
 
-select * FROM orders;
+SELECT * FROM cart
 
+
+
+select * FROM orders;
+select * FROM seller
 drop table order_product
 create sequence order_product_seq nocache;
 
@@ -344,17 +371,35 @@ insert into product values ('productid7', '금도끼', 10000, 70, 'abc7.jpg', '�
 
 delete FROM product
 
+INSERT INTO PRODUCT_DETAIL_IMAGE
+VALUES ('abc1.jpg' , 'productid1'); 
+INSERT INTO PRODUCT_DETAIL_IMAGE
+VALUES ('abc2.jpg' , 'productid2'); 
+INSERT INTO PRODUCT_DETAIL_IMAGE
+VALUES ('abc3.jpg' , 'productid3'); 
+INSERT INTO PRODUCT_DETAIL_IMAGE
+VALUES ('abc4.jpg' , 'productid4'); 
+INSERT INTO PRODUCT_DETAIL_IMAGE
+VALUES ('abc5.jpg' , 'productid5'); 
+INSERT INTO PRODUCT_DETAIL_IMAGE
+VALUES ('abc6.jpg' , 'productid6'); 
+INSERT INTO PRODUCT_DETAIL_IMAGE
+VALUES ('abc7.jpg' , 'productid8'); 
+INSERT INTO PRODUCT_DETAIL_IMAGE
+VALUES ('abc8.jpg' , 'productid7'); 
+
+select * FROM member;
 
 
 SELECT * FROM product_option
 --상품 옵션TB                        // 옵션아이디                옵션네임            옵션서브네임    수량       추가가격   , 상품ID  
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '250/흰색', 10, 1000, '상품id1');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '240/검정색', 5, 5000, '상품id2');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '230/흰색', 10, 3000, '상품id3');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '220/흰색', 10, 0, '상품id4');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '210/검정색', 5, 0, '상품id5');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '260/흰색', 10, 2000, '상품id6');
-insert into product_option values (option_id_seq.nextval, '사이즈/색상', '270/흰색', 10, 3000, '상품id7');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '250/흰색', 10, 1000, 'productid7');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '240/검정색', 5, 5000, 'productid6');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '230/흰색', 10, 3000, 'productid5');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '220/흰색', 10, 0, 'productid4');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '210/검정색', 5, 0, 'productid3');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '260/흰색', 10, 2000, 'productid2');
+insert into product_option values (option_id_seq.nextval, '사이즈/색상', '270/흰색', 10, 3000, 'productid1');
 
 
 insert into product_option values (option_id_seq.nextval, '사이즈/색상', '210/검정색', 5, 0, '상품id5');
@@ -530,8 +575,161 @@ SELECT
 	
 	--
 	
-
-	
-	
 SELECT count(*) FROM order_product 
 	WHERE order_product_status IN (0,1,2,3,4)    
+
+	
+	---buy!!-----------------------------------------
+	
+	
+	
+SELECT * FROM cart
+SELECT * FROM product
+SELECT * FROM product_option
+
+
+/* 장바구니vvvvvvv */
+CREATE TABLE cart (
+	cart_no NUMBER primary key,/* 장바구니 번호 */
+	cart_product_amount NUMBER(4) NOT NULL, /* 장바구니 상품수량 */
+	cart_product_option VARCHAR2(100) NOT NULL, /* 장바구니 선택옵션 */
+	product_id VARCHAR2(30) NOT NULL, /* 상품ID */
+	member_id VARCHAR2(30) NOT NULL, /* 아이디 */
+	foreign key(product_id) references product(product_id),
+	foreign key(member_id) references member(member_id)
+);
+
+
+SELECT * FROM  notice
+SELECT * FROM  product_detail_image
+
+
+
+
+SELECT * FROM store_QnA_reply 
+CREATE TABLE store_QnA_reply (
+	store_reply_writer VARCHAR2(30) NOT NULL, /* 작성자 */
+	store_reply_content varchar2(4000) NOT NULL, /* 내용 */
+	store_reply_date DATE NOT NULL, /* 작성일 */
+	storeQnA_no NUMBER primary key /* QnA번호 */,
+	foreign key(storeQnA_no) references store_qna(storeQnA_no) on delete cascade
+);
+
+
+
+SELECT * FROM store_QnA  
+CREATE TABLE store_QnA (
+	storeQnA_no NUMBER primary key, /* QnA번호 */
+	storeQnA_title VARCHAR2(30) NOT NULL, /* 문의 제목 */
+	storeQnA_content VARCHAR2(4000) NOT NULL, /* 문의 내용 */
+	storeQnA_hit NUMBER NOT NULL, /* 문의 조회수 */
+	storeQnA_published number(1) NOT NULL, /* 문의 공개 여부 */
+	storeQnA_writer VARCHAR2(30) NOT NULL,/*문의 작성자*/
+	storeQnA_date DATE NOT NULL, /* 문의 작성일 */
+	product_id VARCHAR2(30) not null, /* 상품ID */
+	foreign key(product_id) references product(product_id) on delete cascade
+);
+
+SELECT * FROM review   
+
+SELECT * FROM exchange_request 
+SELECT * FROM  refund_request
+SELECT * FROM  code
+
+SELECT * FROM category
+SELECT * FROM  seller_notice 
+
+SELECT * FROM PRODUCT
+select * FROM member;
+
+SELECT product_stock 
+FROM   product
+WHERE product_id = '상품id4'
+
+update PRODUCT
+SET product_stock = 3
+WHERE product_id = '상품id4'
+
+SELECT * FROM orders
+SELECT * FROM PRODUCT
+
+SELECT  order_product_seq.nextval
+FROM dual
+
+	SELECT  option_id , option_name , option_sub_name ,
+			product_id , option_stock , option_add_price
+	FROM 	product_option
+	WHERE 	option_sub_name = '220/흰색'
+
+SELECT * FROM member;
+ ALTER TABLE member ADD  member_mileage number
+
+ UPDATE MEMBER
+ SET member_mileage = 15000
+ WHERE member_id ='admin@admin.com' 
+ 
+ 
+ update orders 
+ SET  orders_date = '2011-11-23'
+ WHERE orders_no = 'order_no8'
+ 
+SELECT  rownum ,orders_no, orders_receiver, orders_phone, orders_zipcode, orders_address, orders_sub_address,
+		orders_total_price, orders_payment,orders_request, payment_status, member_id ,orders_date 
+FROM    orders  
+WHERE   orders_date = (  
+	SELECT MAX(orders_date) FROM orders WHERE member_id ='admin@admin.com' 
+);
+
+
+
+SELECT  	option_id , option_name , option_sub_name ,
+			product_id , option_stock , option_add_price
+			
+FROM 		product_option
+WHERE 		option_sub_name = '270/흰색'
+
+
+DELETE FROM PRODUCT_OPTION
+WHERE option_id = 18;
+
+  SELECT * FROM  order_product
+  WHERE  option_id = 18;
+
+DELETE FROM order_product
+WHERE order_seq_no = 154
+
+
+ALTER TABLE  product_option  
+MODIFY option_sub_name 
+
+SELECT * FROM member;
+SELECT * FROM product_option;
+
+SELECT * FROM  
+
+UPDATE member 
+SET member_mileage =  15000
+WHERE member_id = 'admin@admin.com'
+
+
+
+-----------
+SELECT  *
+FROM cart
+WHERE cart_no = #{cartNo} 
+
+SELECT  *
+FROM cart
+WHERE member_id = 'admin@admin.com'
+
+SELECT  *
+FROM product
+WHERE product_id ='productid1'
+
+SELECT * FROM product_option
+WHERE product_id ='productid1'
+
+
+UPDATE  product_option  
+SET     option_stock =  option_stock - 1
+WHERE   product_id =  

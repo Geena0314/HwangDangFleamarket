@@ -3,6 +3,9 @@
 DROP TABLE member 
 	CASCADE CONSTRAINTS;
 
+	DROP TABLE cart 
+	CASCADE CONSTRAINTS;
+	
 /* 판매자 */
 DROP TABLE seller 
 	CASCADE CONSTRAINTS;
@@ -321,7 +324,8 @@ insert into orders values ('kkk', '너', '010-9977-2905', '123-123', '주소', '
 insert into orders values ('lll', '나', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, '19901126', 'hwang3');
 
 
-
+DROP TABLE product_option 
+	CASCADE CONSTRAINTS;
 /* 상품옵션vvvvvvvv */
 drop table product_option
 CREATE TABLE product_option (

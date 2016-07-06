@@ -13,10 +13,22 @@
 		
  		$("#btn").click(function(){
  			var useMileage = $("#mileage").val();
- 			var cutline = $(opener.document).find("#memberMileage").text().trim();
+ 			var cutline $("#memberMileage").text().trim();
+ 		
+ 			
+ 			parseInt(cutline);
+ 			parseInt(useMileage);
+ 			console.log(useMileage);
+ 			console.log(cutline);
+ 			
+ 			alert("사용할려고하는 마일리지:" + useMileage);
+ 			alert("커트라인:" + cutline);
  			//alert(useMileage.length);
- 			if(useMileage > cutline){
+ 			if(useMileage > cutline ){
+ 				
  				alert("가용포인트 :"+cutline+"점 입니다.");
+ 				return false;
+ 				
  			}else if(useMileage.length == 0){  
  				alert("사용할 마일리지를 입력하세요.");
  				return false;
@@ -29,6 +41,8 @@
  				$(opener.location).attr("href", "javascript:addMileage(useMileage);");
  				window.close(); 
  			
+ 			}else{
+ 				
  			}
  			
  			
@@ -40,7 +54,7 @@
 
 <body>
 	<h4>마일리지 선택 </h4>
-	 사용할 마일리지 선택 : <input type="number" name="mileage" id="mileage" /><br/>
+	 
 	 <input type="button" id="btn" value="선택"/>
 	
 </body>

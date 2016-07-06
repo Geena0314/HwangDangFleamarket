@@ -26,5 +26,6 @@ insert into code values ('email', 'live.com');
 insert into code values ('email', 'outlook.com');
 insert into code values ('email', 'msn.com');
 insert into code values ('email', 'outlook.co.kr');
+insert into code values ('email', 'admin.com');
 
 select * from zipcode where dong like '청담%'
