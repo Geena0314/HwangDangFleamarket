@@ -52,6 +52,11 @@
 			<tiles:insertAttribute name="body"/>
 		</div>
 	</div>
+
+	<header>
+		<tiles:insertAttribute name="header"/> <!-- name 속성에 put-attribute 태그의 name 속성값을 호출 -->
+		<tiles:insertAttribute name="searchBar"/>
+	</header>
 	
 	<div>
 		<footer class="blog-footer">

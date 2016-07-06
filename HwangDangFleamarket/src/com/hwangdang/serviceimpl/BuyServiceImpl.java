@@ -1,5 +1,6 @@
 package com.hwangdang.serviceimpl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,4 +100,8 @@ public class BuyServiceImpl {
 		return dao.updateOptionStockByOptionId(param);
 	}
 	
+	// 상품명으로 제품들 조회 LIKE keyword
+	public List<Product> getProductByLikeKeyword(String keyword){
+		return dao.selectProductByLikeKeyword(keyword);
+	}
 }

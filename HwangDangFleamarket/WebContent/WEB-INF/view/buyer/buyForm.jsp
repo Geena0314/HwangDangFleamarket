@@ -495,8 +495,8 @@ orderProductList : ${requestScope.orderProductList }
 			 
 			<hr>
 			<h4>결제수단 선택</h4>
-			<input type="radio" name="payment" value="0">무통장현금
-			<input type="radio" name="payment" value="1" checked="checked">카드
+			<input type="radio" name="payment" value="0">무통장입금
+			<input type="radio" name="payment" value="1" checked="checked">카드결제
 			<input type="radio" name="payment" value="2">자동이체
 			<input type="radio" name="payment" value="3">간편결제
 			<hr>

@@ -66,7 +66,7 @@ $(document).ready(function(){
 	});
 	$("#addImageBtn").on("click", function(){
 		if(!$('#imgFile').val()){
-			alert("사진을 등록해주세요.");
+			alert("상품 상세 사진을 등록해주세요.");
 			return false;
 		}
 		$("#mainImg").after('<tr><th>상품 상세 사진</th><td colspan="2"><input type="file" name="images" class="imgFile">&nbsp;&nbsp;'

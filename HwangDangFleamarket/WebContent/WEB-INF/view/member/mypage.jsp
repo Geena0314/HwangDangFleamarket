@@ -22,7 +22,20 @@
 		float : left;
 	} */
 </style>
-
+<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#withdtawalBtn').on("click", function(){
+		if(confirm("정말 탈퇴하실건가요ㅠㅠ?")){
+			if(confirm("진짜로ㅠㅠ?")){
+				alert("빠염...ㅠㅠ");
+				location.href='/HwangDangFleamarket/member/memberWithdrawal.go?memberId=${sessionScope.login_info.memberId}';
+			}			
+		}
+		return false;
+	});
+});
+</script>
 <div class="row placeholders"  id="all">
 	<lee:choose>
 		<lee:when test="${ sessionScope.login_info.memberId == 'kinghwang@gmail.com' }">
@@ -79,7 +92,9 @@
 	<div id="memberWithdrawal">
 		<lee:if test="${ sessionScope.login_info.memberId != 'kinghwang@gmail.com' }">
 			<div class="col-sm-4" id="memberWithdrawal">
-				<img src="../image_storage/withdrawal.jpg">
+				<a id="withdtawalBtn" href="#">
+					<img src="../image_storage/withdrawal.jpg">
+				</a>
 			</div>
 		</lee:if>
 	</div>

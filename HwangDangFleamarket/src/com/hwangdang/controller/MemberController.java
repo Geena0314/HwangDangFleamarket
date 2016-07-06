@@ -28,7 +28,6 @@ import com.hwangdang.vo.Member;
 import com.hwangdang.vo.Seller;
 import com.hwangdang.vo.Zipcode;
 
-
 @Controller
 @RequestMapping("/member")
 public class MemberController {
@@ -243,9 +242,9 @@ public class MemberController {
 	}
 	@RequestMapping("memberWithdrawal")
 	public String memberWithdrawal(String memberId, HttpSession session)
-	{
+	{	
 		session.invalidate();
 		service.deleteMemberByMemberId(memberId);
-		return "member/member_withdrawal.tiles";
+		return "redirect:/main.go";
 	}
 }
