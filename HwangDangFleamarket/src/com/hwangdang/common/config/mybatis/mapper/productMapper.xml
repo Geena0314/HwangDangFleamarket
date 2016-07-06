@@ -261,6 +261,9 @@
 	
 	<!-- 상품 옵션 등록 -->
 	<insert id="insertOption" parameterType="productOption">
+		<selectKey keyProperty="optionId" resultType="_int" order="BEFORE">
+			select option_id_seq.nextval from dual
+		</selectKey>
 		insert into product_option values(#{optionId},#{optionName},#{optionSubName},#{optionStock},#{optionAddPrice},#{productId})
 	</insert>
 	
@@ -269,4 +272,31 @@
 		insert into product_detail_image values(#{imagePath},#{productId})
 	</insert>
 	
+	<!-- 옵션 아이디로 옵션 수정 -->
+	<update id="updateProductOptionById" parameterType="ProductOption">
+		update product_option
+		set	   option_stock = #{optionStock}, 
+			   option_add_price = #{optionAddPrice}
+		where  option_id = #{optionId}
+	</update>
+	
+	<!-- 아이디로 상품 수정 -->
+	<update id="updateProductById" parameterType="product">
+		update	product
+		set		product_name = #{productName},
+				Product_price = #{productPrice},
+				product_main_image = #{productMainImage},
+				product_info = #{productInfo}
+		where	product_id = #{productId}	
+	</update>
+	
+	<update id="updateDetailImageById" parameterType="ProductDetailImage">
+		update	product_detail_image
+		set		image_path = #{imagePath}
+		where	product_id = #{productId}
+	</update>
+	
+	<delete id="deleteProductById" parameterType="string">
+		delete from product where product_id = #{value}
+	</delete>
 </mapper>

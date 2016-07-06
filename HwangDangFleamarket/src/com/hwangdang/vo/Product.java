@@ -87,7 +87,23 @@ public class Product implements Serializable
 		this.productDetailImage = productDetailImage;
 	}
 
-	
+	public Product(String productId, String productName, int productPrice, int productStock, String productMainImage,
+			String productInfo, int productLike, int sellerStoreNo, Seller seller, ProductOption productOption,
+			ProductDetailImage productDetailImage, List<MultipartFile> images) {
+		super();
+		this.productId = productId;
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.productStock = productStock;
+		this.productMainImage = productMainImage;
+		this.productInfo = productInfo;
+		this.productLike = productLike;
+		this.sellerStoreNo = sellerStoreNo;
+		this.seller = seller;
+		this.productOption = productOption;
+		this.productDetailImage = productDetailImage;
+		this.images = images;
+	}
 
 	public ProductDetailImage getProductDetailImage() {
 		return productDetailImage;

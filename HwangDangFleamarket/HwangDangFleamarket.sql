@@ -316,12 +316,12 @@ CREATE TABLE orders (
 	foreign key(member_id) references member(member_id)
 );
 
-insert into orders values ('ggg', '수취인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'lsj421678');
-insert into orders values ('hhh', '수신인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'lsj421678');
-insert into orders values ('iii', '이성준', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'lsj421678');
-insert into orders values ('jjj', '주변인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'lsj421678');
-insert into orders values ('kkk', '너', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'lsj421678');
-insert into orders values ('lll', '나', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'lsj421678');
+insert into orders values ('ggg', '수취인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, '19901126', 'hwang3');
+insert into orders values ('hhh', '수신인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, '19901126', 'hwang3');
+insert into orders values ('iii', '이성준', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, '19901126', 'hwang3');
+insert into orders values ('jjj', '주변인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, '19901126', 'hwang3');
+insert into orders values ('kkk', '너', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, '19901126', 'hwang3');
+insert into orders values ('lll', '나', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, '19901126', 'hwang3');
 
 
 DROP TABLE product_option 

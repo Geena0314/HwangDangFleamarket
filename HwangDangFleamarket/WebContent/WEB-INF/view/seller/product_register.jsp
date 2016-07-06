@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
 <script type="text/javascript">
-var j = 0;
+var j = 1;
 $(document).ready(function(){
 	var idx = 1;
 	$('table').on("click", '#addOptionBtn',function(){
@@ -9,11 +9,13 @@ $(document).ready(function(){
 			alert("필수입력사항을 입력해주세요.");
 			return false;
 		}else{
-			if(window.j == 0){
-				window.j++;
+			if(!$("#optionName1").val()){
+				$("#optionName").attr("readonly", "readonly");
 				$("#optionSubName").attr("readonly", "readonly");
 				$("#optionStock").attr("readonly", "readonly");
 			}
+			
+			
 			var optionSubName = $('.optionSubName');
 			var optionStock = $('.optionStock');
 			if(optionSubName.length != 1){
@@ -48,7 +50,6 @@ $(document).ready(function(){
 								 +'<tr id="endOption"><th colspan="3"><hr></th></tr>');
 			idx++;
 			window.j++;
-			
 			}
 	});
 	$("table").on("click",".deleteOptionBtn", function(){
@@ -58,6 +59,7 @@ $(document).ready(function(){
 		$(this).parent().parent().prev().remove();
 		$(this).parent().parent().remove();
 		if($('.optionSubName').length == 1){
+			$("#optionName").removeProp("readonly");
 			$("#optionSubName").removeProp("readonly");
 			$("#optionStock").removeProp("readonly");
 		}
@@ -67,7 +69,7 @@ $(document).ready(function(){
 			alert("사진을 등록해주세요.");
 			return false;
 		}
-		$("#mainImg").after('<tr><th>상품 상세 사진</th><td colspan="2"><input type="file" name="productDetailImage" class="imgFile">&nbsp;&nbsp;'
+		$("#mainImg").after('<tr><th>상품 상세 사진</th><td colspan="2"><input type="file" name="images" class="imgFile">&nbsp;&nbsp;'
 							+'<input type="button" value="사진삭제" class="deleteImgBtn"></td></tr>');
 	});
 	$("table").on("click",".deleteImgBtn",function(){
@@ -127,6 +129,8 @@ $(document).ready(function(){
 	<h2 align="center">상품 등록</h2>
 	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/product/registerProduct.go">
 		<input type="hidden" name="sellerStoreNo" value="${param.sellerStoreNo}">
+		<input type="hidden" name="page" value="${param.page}">
+		<input type="hidden" name="sellerStoreImage" value="${param.sellerStoreImage}">
 			<table id="table">
 				<tr>
 					<th>상품 ID</th>
@@ -141,18 +145,11 @@ $(document).ready(function(){
 					<td colspan="2"><input type="number" name="productPrice" id="productPrice"></td>
 				</tr>
 				<tr>
-					<th>총 재고량</th>
-					<td colspan="2">
-						<input type="number" name="productStock" value="0">&nbsp;
-						※ 총 재고량은 자동 합산됩니다.
-					</td>
-				</tr>
-				<tr>
 					<th colspan="3"><hr></th>
 				</tr>
 				<tr>
 					<th>상품 옵션</th>
-					<td colspan="2"><input type="text" name="optionList[0].optionName" class="optionName" placeholder="필수 입력 사항"></td>
+					<td colspan="2"><input type="text" name="optionList[0].optionName" class="optionName" placeholder="필수 입력 사항" id="optionName"></td>
 				</tr>
 				<tr>
 					<th>상품 세부 옵션</th>

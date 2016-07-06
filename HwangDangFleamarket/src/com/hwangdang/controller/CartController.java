@@ -33,7 +33,8 @@ public class CartController {
 				for(int idx=0; idx<list.size(); idx++){
 					cart = (Cart)list.get(idx);
 					int amount = cart.getCartProductAmount();
-					sum = sum + amount * cart.getProductList().get(0).getProductPrice();
+					int addPrice = amount*cart.getProductList().get(0).getProductOption().getOptionAddPrice();
+					sum = sum + amount * cart.getProductList().get(0).getProductPrice() +addPrice;
 				}
 				map.put("sum", sum);
 				return new ModelAndView("buyer/cart_list.tiles", map);
