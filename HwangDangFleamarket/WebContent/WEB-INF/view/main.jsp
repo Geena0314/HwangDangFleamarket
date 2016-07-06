@@ -1,2 +1,2 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-야호 메인
+황당플리마켓 메인
