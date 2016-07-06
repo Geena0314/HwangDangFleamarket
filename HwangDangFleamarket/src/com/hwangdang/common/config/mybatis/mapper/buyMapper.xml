@@ -21,7 +21,6 @@
 	</sql>
 
 <resultMap type="product" id="basic-productmap">
-
 	<id column="product_id" property="productId" />
 	<result column="product_name" property="productName"/>
 	<result column="product_price" property="productPrice"/>
@@ -205,6 +204,23 @@
 	WHERE    product_id = #{productId}
 </update>
 
+<!-- 키워드로 상품,또는 스토어 조회 
+	OR seller_store_name LIKE '%' || #{keyword } || '%'  
+	OR seller_product1 LIKE '%' || #{keyword } || '%'  
+	OR seller_product2 LIKE '%' || #{keyword } || '%'  
+	OR seller_product3 LIKE '%' || #{keyword } || '%' 
+		OR product_info LIKE ''%' || #{keyword } || '%'  
+	
+-->
+<select id="select-product-by-like" parameterType="string"  resultMap="basic-productmap" >
+	SELECT  <include refid="product-column"/>
+	FROM product 
+	WHERE  product_name LIKE '%' || #{keyword } || '%'  
 
+</select>
 
+	
+	
+
+  
 </mapper>

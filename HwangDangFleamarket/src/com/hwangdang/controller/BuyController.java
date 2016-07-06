@@ -85,8 +85,6 @@ public class BuyController {
 			model.addAttribute("queryString" ,"page="+page+"&productId="+productId);
 		}else{ 
 			// *********로그인상태! - 바로구매페이지로 이동 ***************
-			
-	
 			if(productId != null){
 				ArrayList<OrderProduct> orderProductList = new ArrayList<>();
 				//System.out.println(sellerStoreNo);
@@ -169,38 +167,43 @@ public class BuyController {
 		
 		Orders orders = new Orders(ordersNo, ordersReceiver, ordersPhone, ordersZipcode, ordersAddress, ordersSubAddress, ordersTotalPrice, ordersPayment, ordersRequest, paymentStatus, new Date(), memberId);
 		OrderProduct op = new OrderProduct(orderAmount, ordersNo, productId, optionId, sellerStoreNo, orderProductStatus );
-		
-		/*
 		Product product = service.getProductInfo(productId);
 		Seller seller = service.getSellerByNo(sellerStoreNo);
+		ProductOption po = service.getProductOptionInfoByoptionNo(optionId);
 		op.setProduct(product);
 		op.setSeller(seller);
-		op.setProductOption(productOption);
+		op.setProductOption(po);
 		ArrayList<OrderProduct> orderProductList = new ArrayList<>();
 		orderProductList.add(op);
 		orders.setOrderProductList(orderProductList);
+		
+		/* 뒤로가기이슈 해결 
+		//response.setHeader("Cache-Control", "no-store");
+		response.setHeader("Cache-Control","no-store");   
+		response.setHeader("Pragma","no-cache");   
+		response.setDateHeader("Expires",0);   
+		if (request.getProtocol().equals("HTTP/1.1")) {
+			   response.setHeader("Cache-Control", "no-cache"); 
+		}
 		*/
 		
 		//****************************************
 		//orders TB , orders product TB INSERT 
 		int cnt = service.addProductOne(orders ,op);
-			
-		
 		String url = "";
 		if(cnt == 1){
-			//System.out.println("성공"); //   "*/*.tiles"
-			/*//뒤로가기이슈 해결 
-			//response.setHeader("Cache-Control", "no-store");
-			response.setHeader("Cache-Control","no-store");   
-			response.setHeader("Pragma","no-cache");   
-			response.setDateHeader("Expires",0);   
-			if (request.getProtocol().equals("HTTP/1.1")) {
-			        response.setHeader("Cache-Control", "no-cache"); 
-			}*/
+			//System.out.println("성공"); 
+			//1.개별optionStock Minus
+			Map<String,Object> param = new HashMap<String,Object>();
+				param.put("buyStock", orderAmount);
+				param.put("optionId", optionId);
+				param.put("productId",productId );
+				service.setOptionStockByOptionId(param);
+				service.setProductStockByProductId(param);
 			
 			session.setAttribute("orders", orders);
 			url = "redirect:/buy/addProductSuccessPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&productId="+productId;
-			
+			 
 		}else{
 			url = "redirect:/error.tiles"; 
 		}
@@ -211,8 +214,6 @@ public class BuyController {
 	/**
 	 * 	상품구매 로직   N개 : 
 	 */
-	//optoinIdList:"+optionIdList+" , sellerStoreNoList :" + sellerStoreNoList +",
-		//productIdList: "+ productIdList + ",amountList "+amountList
 	@RequestMapping("/buyProducts.go")
 	public String buyProducts(@RequestParam(value="ordersNo" ,required=false) String ordersNo ,    
 			String ordersReceiver , String ordersPhone, String ordersZipcode ,
@@ -290,7 +291,6 @@ public class BuyController {
 		if(cnt == 1){
 			//1.개별optionStock Minus
 			Map<String,Object> param = new HashMap<String,Object>();
-			
 			for(int i=0; i < amountSplitList.size(); i++){
 				int optionStock = Integer.parseInt(amountSplitList.get(i));
 				param.put("buyStock", optionStock);
@@ -298,11 +298,7 @@ public class BuyController {
 				param.put("productId", productIdSplitList.get(i));
 				service.setOptionStockByOptionId(param);
 				service.setProductStockByProductId(param);
-				//System.out.println("옵션수량:"+optionStock);
-				//System.out.println("옵션TB의 ID:"+orders.getOrderProductList().get(i).getProductOption().getOptionId());
-				  
 			}
-			
 		}
 		
 		String url = "";
@@ -370,8 +366,6 @@ public class BuyController {
 		}
 		return param;
 	}
-	
-
 	/**
 	 * 세션의 회원의  마일리지 실시간 조회를 위한 메소드 
 	 */
@@ -381,6 +375,24 @@ public class BuyController {
 		Member member = memberService.findById(memberId);
 		return member.getMemberMileage();
 	}
+	
+	
+	/**
+	 메인페이지 상품검색 기능 : 키워드로 상품이나 스토어 검색!
+	 * */
+	@RequestMapping("/findProductByKeyword.go")
+	public String findProductByKeyword(Model model,
+					@RequestParam(value="keyword" ,required=false) String keyword){
+		
+		List<Product> productList = service.getProductByLikeKeyword(keyword);
+		for(Product p : productList){
+			System.out.println(p);
+		}
+		model.addAttribute("productList", productList);
+		
+		return "buyer/product_list.tiles";
+	}
+	
 	
 	
 }
