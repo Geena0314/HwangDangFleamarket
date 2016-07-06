@@ -1,8 +1,314 @@
 @CHARSET "UTF-8";
-header{
-	background-color:pink;
-	text-align:center;
+/*****************login_form************/
+ .form-signin{
+  overflow-y: hidden;
+  width: 430px;
+  padding: 20px;
+  margin: 0 auto;
+  border: 3px solid #777;
+  border-radius: 4px;
+}
+ .form-signin h2{
+  display:block;
+}
+ .form-signin td{
+    width:330px;
+ }
+ .form-signin #id{
+ 	width: 100px;
+ }
+ .form-signin #email{
+ 	width: 150px;
+ }
+ .form-signin #password{
+ 	width: 275px;
+ }
+ .form-signin .tdName{
+ 	width: 100px;
+ }
+ .form-signin table{
+ 	margin: 15px;
+ }  
+.twoButtons td
+{
+	margin: 10px;
+	width:120px;
+	margin: 5px;
+}
+/********* register & login_form *********/
+.trInput .tdName{
+	text-align: center;
+	font-family: 'NanumGothic_Bold';
+}
+.trInput td input,
+.trInput td select{
+	margin:5px;
+    border-radius: 4px;
+ 	font-size: 12px;
+    line-height: 1.42857143;
+    padding: 5px 8px;
+    color: #444;
+    background-color: #fff;
+}
+.trInput input[type=submit].btn-block,
+.trInput input[type=reset].btn-block {
+	display: inline;
+	width: 25%;
 	padding: 5px;
+	margin: 5px 20px;
+	font-family: 'NanumGothic_Bold';
+}
+#registerForm
+{
+	max-width: 850px;
+	margin-left: 150px;
+	margin-top: 50px;
+}
+/***************** store_side_menu************/
+#sideMenu2 input[type=button].btn-block{
+	margin:15px;
+    border-radius: 8px;
+ 	font-size: 15px;
+    line-height: 3;
+    color: #444;
+    background-color: #fff;
+	width: 80%;
+	padding: 5px;
+	font-family: 'NanumGothic_Bold';
+	margin-left:22px;
+}
+#sideMenu2 .active{
+	margin-bottom: 40px;
+}
+/********* address & seller_address ********/
+ .form-post{
+  width: 430px;
+  padding: 10px;
+  margin: 0 auto;
+  border: 3px solid #777;
+  border-radius: 4px;
+  overflow-y: hidden;
+}
+.form-post .page-header {
+    padding-bottom: 9px;
+    margin: 20px 20px;
+    border-bottom: 1px solid #eee;
+}
+.form-post input,
+.form-post select{
+	display: inline;
+	padding: 5px;
+	border-radius:4px;
+}
+.form-post #findDong{
+	font-size: 13px;
+	margin-left: 15px;
+	line-height:1.5;
+	width: 80px;
+	color: #444;
+    background-color: #fff;
+	font-family: 'NanumGothic_Bold';
+}
+#write{
+	font-size: 13px;
+	line-height:1.7;
+	width: 200px;
+	font-family: 'NanumGothic_Bold';
+}
+
+.form-post .addresses{
+	display: none;
+}
+/********* seller_register ********/
+.form-seller{
+	min-width:600px;	
+}
+.form-seller th{
+	font-family: 'NanumGothic_Bold';
+	width: 150px;
+	vertical-align: middle;
+}
+.form-seller input,
+.form-seller selelct,
+.form-seller textarea{
+	margin:5px;
+    border-radius: 4px;
+ 	font-size: 12px;
+    padding: 5px;
+    min-width: 200px;
+}
+.form-seller input[type=submit].btn-block,
+.form-seller input[type=reset].btn-block {
+	display: inline;
+	width: 25%;
+	padding: 5px;
+	margin: 5px 20px;
+	line-height: 1.5;
+	font-family: 'NanumGothic_Bold';
+	color: #444;
+    background-color: #fff;
+}
+#sameAddress,
+#btnZipcode{
+	min-width:30px;
+}
+#sellerSubAddress
+{
+	width: 94%;
+}
+#sellerIntroduction{
+	width: 80%;
+}
+.form-seller input[type=submit].btn-block:hover
+{
+	background-color: rgb(76, 174, 76); 
+    color: white;
+}
+.form-seller input[type=reset].btn-block:hover {
+	background-color: rgb(46, 109, 164); 
+    color: white;
+}
+.form-seller input[type=button]
+{
+	background-color: #FFFFD2;
+	width: 50px;
+}
+#sellerIndustry
+{
+	padding: 5px;
+	margin: 5px 15px;
+	min-with:150px;
+	width: 90%;
+}
+#sellerSubIndustry
+{
+	padding: 5px;
+	margin: 5px 0px;
+	min-with:150px;
+	width: 40%;
+}
+
+.form-seller
+{
+	max-width: 850px;
+	margin-left: 150px;
+	margin-top: 50px;
+}
+/********* mypage ********/
+#sellerRegister,
+#memberEdit,
+#memberWithdrawal{
+    position: relative;
+    margin-top: 50px;
+}
+#memberWithdrawal{
+	margin-top: 25px;
+}
+/********* product_list ********/
+.product-content{
+	position:relative;
+	margin-bottom: 60px;
+}
+#page{
+  bottom: 0;
+  padding: 0;
+  text-align: center;
+  height: 60px;
+}
+.products{
+	margin-bottom: 30px;
+	padding:10px;
+}
+/********* product_detail ********/
+.reviewPageGroup
+{
+	font-size: 15px;
+}
+#reviewContent
+{
+	width: 500px;
+	height: 123px;
+}
+#optionId
+{
+	display: none;
+}
+.product-row{
+	border-bottom: 1px solid #eee;
+}
+.margins{
+	margin-top: 30px;
+	margin-bottom: 30px;
+	padding:10px;
+}
+.productTB{
+	width: 400px;
+}
+.productTB tr td{
+	text-align: center;
+	font-family: 'NanumGothic_Bold';
+	padding: 5px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.productTB tr td input,
+.productTB tr td select{
+	margin:5px;
+    border-radius: 4px;
+ 	font-size: 12px;
+    padding: 5px;
+    min-width: 50px;
+}
+ .form-product{
+  overflow-y: hidden;
+  width: 420px;
+  padding:5px;
+  margin: 0 auto;
+  border: 3px solid #777;
+  border-radius: 4px;
+}
+.detailInfo{
+	min-height: 400px;
+	border-bottom: 1px solid #eee;	
+	width: 80%;
+}
+.reviewTable{
+	/* min-height: 400px; */
+	width:80%;
+}
+.reviewTable tr td{
+	text-align: center;
+	font-family: 'NanumGothic_Bold';
+	padding: 5px;
+	padding-left: 20px;
+	padding-right: 20px;	
+}
+.reviewTable input[type=button],
+.reviewTable input[type=text]{
+	margin:5px;
+    border-radius: 4px;
+ 	font-size: 12px;
+    padding: 5px;
+    min-width: 50px;
+	font-family: 'NanumGothic';
+}
+
+/* header{
+	background-color:pink;
+	padding: 5px;
+	font-family: 'NanumGothic';
+	height:150px;
+	
+}
+header h2{
+	text-align:center;
+	font-family:'NanumGothic_Bold';
+	margin-top: 50px;
+}
+<!--header-->
+#navBar
+{
+	margin-top:150px;
 }
 nav{
 	line-height: 50px;
@@ -11,15 +317,66 @@ nav{
 	min-height:600px;
 	width:200px;
 	float:left;
+	position:static;
 } 
 section{
 	padding: 15px;
 	min-height:500px;
 	float:left;
+	position:absolute;
 }
 footer{
 	margin-bottom:10px;
 	text-align:center;
 	height:20px;
 	clear:both;
+}
+
+#home
+{
+	margin-left:10px;
+	float:left;
+}
+#menuLinks
+{
+	margin-right:10px;
+	float:right;
+} */
+/**************스토어둘러보기*****************/
+/* 이미지 크기고정. */
+.col-sm-4
+{
+	float: left;
+}
+.sellerListImage
+{
+	width: 300px;
+	height: 300px;
+}
+
+/*소개글 크기고정 및 글자숨김처리.*/
+li .introduction
+{
+	max-height: 300px;
+	width: 300px; 
+	/*글자수가 범위를 넘어가면 숨김.*/
+	overflow:hidden;
+}
+
+li
+{
+	 list-style-type : none;
+}
+
+/*페이지 그룹*/
+.pageGroup
+{
+	font-size: 20px;
+}
+
+/*사이드바*/
+#storeMainImage
+{
+	width: 220px;
+	height: 350px;
 }

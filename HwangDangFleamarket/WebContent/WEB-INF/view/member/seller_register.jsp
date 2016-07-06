@@ -8,10 +8,10 @@
 		{
 			var password = '${sessionScope.login_info.memberPassword}';
 			//처음 입력한 패스워드가 로그인한 회원의 패스워드와 일치하지 않는경우.
-			$("#passwordError1").empty();
+			$("#passwordError1").empty().hide();
 			if(password != this.value)
 			{
-				$("#passwordError1").append("패스워드가 일치하지 않습니다.");
+				$("#passwordError1").append("패스워드가 일치하지 않습니다.").show();
 				$("#password1").val("");
 			}
 		});
@@ -19,10 +19,10 @@
 		$("#password2").on("focus", function()
 		{
 			//패스워드를 입력하지않고 패스워드 확인창 클릭시.
-			$("#passwordError2").empty();
+			$("#passwordError2").empty().hide();
 			if(!$("#password1").val())
 			{
-				$("#passwordError2").append("위의 패스워드를 먼저 입력하세요.");
+				$("#passwordError2").append("위의 패스워드를 먼저 입력하세요.").show();
 				$("#password1").focus();
 				return false;
 			}
@@ -30,7 +30,7 @@
 			{
 				$("#password2").on("blur", function()
 				{
-					$("#passwordError2").empty();
+					$("#passwordError2").empty().hide();
 					//패스워드는 맞고 패스워드확인창 입력 후
 					if($("#password1").val() == $("#password2").val())
 					{
@@ -40,7 +40,7 @@
 					else
 					{
 						//패스워드 확인이 틀릴경우.
-						$("#passwordError2").append("패스워드가 다릅니다.");
+						$("#passwordError2").append("패스워드가 다릅니다.").show();
 						$("#password2").val("");
 					}
 				});
@@ -48,12 +48,12 @@
 		});
 		$("#sellerStoreName").on("blur", function()
 		{
-			$("#sellerStoreNameError").empty();
+			$("#sellerStoreNameError").empty().hide();
 			if(this.value == null || this.value.trim().length < 3 || this.value.length > 20)
 			{
 				//널이거나 3글자보다 작거나 20글자보다 큰경우.
 				$("#sellerStoreName").val("");
-				$("#sellerStoreNameError").append("3글자 이상, 20글자 이하로 입력.");
+				$("#sellerStoreNameError").append("3글자 이상, 20글자 이하로 입력.").show();
 				return false;
 			}
 			else
@@ -73,13 +73,13 @@
 					{
 						if(text == 0)
 						{
-							$("#sellerStoreNameError").append("등록가능한 이름입니다.");
+							$("#sellerStoreNameError").append("등록가능한 이름입니다.").show();
 							return true;
 						}
 						else
 						{
 							$("#sellerStoreName").val("");
-							$("#sellerStoreNameError").append("중복된 이름입니다.");
+							$("#sellerStoreNameError").append("중복된 이름입니다.").show();
 							return false;
 						}
 					},
@@ -90,7 +90,7 @@
 		
 		$("#sellerTaxId").on("blur", function()
 		{
-			$("#sellerTaxIdError").empty();
+			$("#sellerTaxIdError").empty().hide();
 			if(this.value.trim().length != 11)
 			{
 				if(this.value.trim().length == 0)
@@ -98,7 +98,7 @@
 				else
 				{
 					$("#sellerTaxId").val("");
-					$("#sellerTaxIdError").append("11자리 숫자를 입력해주세요.");
+					$("#sellerTaxIdError").append("11자리 숫자를 입력해주세요.").show();
 				}
 			}
 		});
@@ -153,66 +153,70 @@
 		
 		$("#submits").on("click", function()
 		{
-			$("#sellerMainImageError").empty();
+			$("#sellerMainImageError").empty().hide();
 			var fileName = document.getElementById("sellerMainImage").value
 			if(!fileName)
 			{
-				$("#sellerMainImageError").append("사진을 등록해주세요.");
+				$("#sellerMainImageError").append("사진을 등록해주세요.").show();
 				return false;
 			}
 			var ext = fileName.slice(fileName.indexOf(".")+1).toLowerCase();
 			if(ext != "jpg" && ext != "png" && ext != "jpeg")
 			{
-				$("#sellerMainImageError").append("jpg, png 파일만 등록 가능합니다.");
+				$("#sellerMainImageError").append("jpg, png, jpeg 파일만 등록 가능합니다.").show();
 				return false;
 			}
 			
 			//패스워드가널일경우.
-			$("#passwordError1").empty();
+			$("#passwordError1").empty().hide();
 			if(!$("#password1").val())
 			{
-				$("#passwordError1").append("필수 입력사항입니다..");
+				$("#passwordError1").append("필수 입력사항입니다..").show();
+				$("#password1").focus();
 				return false;
 			}
 			
 			//패스워드확인이 널일경우.
-			$("#passwordError2").empty();
+			$("#passwordError2").empty().hide();
 			if(!$("#password2").val())
 			{
-				$("#passwordError2").append("필수 입력사항입니다..");
+				$("#passwordError2").append("필수 입력사항입니다..").show();
+				$("#password2").focus();
 				return false;
 			}
 			
 			//상호명을 안적었을경우.
-			$("#sellerStoreNameError").empty();
+			$("#sellerStoreNameError").empty().hide();
 			if(!$("#sellerStoreName").val())
 			{
-				alert("asdf")
-				$("#sellerStoreNameError").append("필수 입력사항입니다.");
+				$("#sellerStoreNameError").append("필수 입력사항입니다.").show();
+				$("#sellerStoreName").focus();
 				return false;
 			}
 			
 			//업종 미선택시
-			$("#sellerIndustryError").empty();
+			$("#sellerIndustryError").empty().hide();
 			if($("#sellerIndustry").val() == "대분류")
 			{
-				$("#sellerIndustryError").append("필수 입력사항입니다.");
+				$("#sellerIndustryError").append("필수 입력사항입니다.").show();
+				$("#sellerIndustry").focus();
 				return false;
 			}
 			
 			//주소미입력
-			$("#addressError").empty();
+			$("#addressError").empty().hide();
 			if(!$("#sellerZipcode").val() || !$("#sellerAddress").val() || !$("#sellerSubAddress").val())
 			{
-				$("#addressError").append("필수 입력사항입니다.");
+				$("#addressError").append("필수 입력사항입니다.").show();
 				return false;
 			}
 			
 			//소개 미입력.
-			$("#sellerIntroductionError").empty();
+			$("#sellerIntroductionError").empty().hide();
 			if(!$("#sellerIntroduction").val())
 			{
-				$("#sellerIntroductionError").append("필수 입력사항입니다.");
+				$("#sellerIntroductionError").append("필수 입력사항입니다.").show();
+				$("#sellerIntroduction").focus();
 				return false;
 			}
 		});
@@ -223,60 +227,70 @@
 		};
 	});
 </script>
+<style type="text/css">
+	table
+	{
+		max-width: 
+	}
+	.registerError
+	{
+		display: none;
+	}
+</style>
 <div>
-	<h1 align="center">판매자 등록 신청</h1>
-	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/member/sellerRegisterRequest.go" name="sellerForm">
-		<table id="table">
-			<tr>
-				<th>아이디</th>
+	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/member/sellerRegisterRequest.go" class="form-seller" name="sellerForm">
+	<h2 class="page-header">판매자 등록 신청</h2>
+		<table id="table" width='600' class="table table-striped">
+			<tr class="trInput">
+				<th class='tdName'>아이디</th>
 				<td colspan="2"><input type="text" name="memberId" value="${ sessionScope.login_info.memberId }" readonly="readonly"></td>
 			</tr>
-			<tr>
-				<th rowspan="2">패스워드</th>
+			<tr class="trInput">
+				<th rowspan="2" class='tdName'>패스워드</th>
 				<td colspan="2"><input type="password" id="password1" name="memberPassword1"></td>
 			</tr>
 			<tr>
-				<td colspan="2" id="passwordError1"></td>
+				<td colspan="2" id="passwordError1" class="registerError"></td>
 			</tr>
-			<tr>
-				<th rowspan="2">패스워드 확인</th>
+			<tr class="trInput">
+				<th rowspan="2" class='tdName'>패스워드 확인</th>
 				<td colspan="2"><input type="password" id="password2" name="memberPassword2"></td>
 			</tr>
 			<tr>
-				<td colspan="2" id="passwordError2"></td>
+				<td colspan="2" id="passwordError2" class="registerError"></td>
 			</tr>
-			<tr>
-				<th>이름</th>
+			<tr class="trInput">
+				<th class='tdName'>이름</th>
 				<td colspan="2">${ sessionScope.login_info.memberName }</td>
 			</tr>
-			<tr>
-				<th>전화번호</th>
+			<tr class="trInput">
+				<th class='tdName'>전화번호</th>
 				<td colspan="2">${ sessionScope.login_info.memberPhone }</td>
 			</tr>
-			<tr >
-				<th rowspan="2">주소</th>
+			<tr class="trInput">
+				<th rowspan="2" class='tdName'>주소</th>
 				<td width="45px" id="memberZipcode">${ sessionScope.login_info.memberZipcode }</td>
 				<td id="memberAddress">${ sessionScope.login_info.memberAddress }</td>
 			</tr>
 			<tr>
 				<td colspan="2" id="memberSubAddress">${ sessionScope.login_info.memberSubAddress }</td>
 			</tr>
-			<tr>
-				<th rowspan="2">상호명</th>
+			<tr class="trInput">
+				<th rowspan="2" class='tdName'>상호명</th>
 				<td colspan="2"><input type="text" name="sellerStoreName" id="sellerStoreName" size="20" placeholder="3글자 이상 20자 이하"></td>
 			</tr>
 			<tr>
-				<td colspan="2" id="sellerStoreNameError"></td>
+				<td colspan="2" id="sellerStoreNameError" class="registerError"></td>
 			</tr>
-			<tr>
-				<th rowspan="2">사업자 번호</th>
+			<tr class="trInput">
+				<th rowspan="2" class='tdName'>사업자 번호</th>
 				<td colspan="2"><input type="number" name="sellerTaxId" id="sellerTaxId" size="20"></td>
 			</tr>
 			<tr>
-				<td colspan="2" id="sellerTaxIdError"></td>
+				<td colspan="2" id="sellerTaxIdError" class="registerError"></td>
 			</tr>
-			<tr>
-				<th rowspan="2">업종</th>
+			<tr class="trInput">
+				<th rowspan="2" class='tdName'>업종</th>
 				<td>
 					<select name="sellerIndustry" id="sellerIndustry">
 						<option>대분류</option>
@@ -292,10 +306,10 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" id="sellerIndustryError"></td>
+				<td colspan="2" id="sellerIndustryError" class="registerError"></td>
 			</tr>
-			<tr>
-				<th rowspan="4">매장 주소</th>
+			<tr class="trInput">
+				<th rowspan="4" class='tdName'>매장 주소</th>
 				<td colspan="2" align="right">위의 주소와 동일<input type="checkbox" id="sameAddress"></td>
 			</tr>
 			<tr>
@@ -304,7 +318,7 @@
 				</td>
 				<td>
 					<input type="text" name="sellerAddress" id="sellerAddress" size="13" readonly="readonly">
-					<input type="button" value="우편번호검색" onclick="window.open('/HwangDangFleamarket/member/findSellerAddress.go', '주소검색', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');">
+					<input id="button" type="button" value="우편번호검색" onclick="window.open('/HwangDangFleamarket/member/findSellerAddress.go', '주소검색', 'resizable=no scrollbars=yes width=700 height=500 left=500 top=200');">
 				</td>
 			</tr>
 			<tr>
@@ -313,31 +327,34 @@
 			<tr>
 				<td colspan="2" id="addressError"></td>
 			</tr>
-			<tr>
-				<th rowspan="2">사진 등록</th>
+			<tr class="trInput">
+				<th rowspan="2" class='tdName'>사진 등록</th>
 				<td colspan="2"><input type="file" name="sellerMainImage" id="sellerMainImage"></td>
 			</tr>
 			<tr>
-				<td colspan="2" id="sellerMainImageError"></td>
+				<td colspan="2" id="sellerMainImageError" class="registerError"></td>
 			</tr>
-			<tr>
-				<th>판매 물품 1</th>
+			<tr class="trInput">
+				<th class='tdName'>판매 물품 1</th>
 				<td colspan="2"><input type="text" name="sellerProduct1"></td>
 			</tr>
-			<tr>
-				<th>판매 물품 2</th>
+			<tr class="trInput">
+				<th class='tdName'>판매 물품 2</th>
 				<td colspan="2"><input type="text" name="sellerProduct2"></td>
 			</tr>
-			<tr>
-				<th>판매 물품 3</th>
+			<tr class="trInput">
+				<th class='tdName'>판매 물품 3</th>
 				<td colspan="2"><input type="text" name="sellerProduct3"></td>
 			</tr>
-			<tr>
-				<th rowspan="2">스토어 소개글</th>
+			<tr class="trInput">
+				<th rowspan="2" class='tdName'>스토어 소개글</th>
 				<td colspan="2"><textarea id="sellerIntroduction" name="sellerIntroduction" cols="45" rows="10"></textarea></td>
 			</tr>
 			<tr>
-				<td colspan="3"><input type="submit" value="등록하기" id="submits"><input type="reset" value="다시입력."></td>
+				<td colspan="3">
+					<input class="btn btn-lg btn-success btn-block"  type="submit" value="등록하기" id="submits">
+					<input class="btn btn-lg btn-primary btn-block"  type="reset" value="다시입력.">
+				</td>
 			</tr>
 			<tr>
 				<td colspan="2" id="sellerIntroductionError"></td>

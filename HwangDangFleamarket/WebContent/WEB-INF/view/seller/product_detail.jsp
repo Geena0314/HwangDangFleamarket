@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-<%@ taglib prefix="lee"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="lee" uri="http://java.sun.com/jsp/jstl/core"%>
 		<style type="text/css">
 			#main
 			{
@@ -143,7 +143,7 @@
 							}
 							else
 							{
-								$("#optionAddPriceTr").html("<td>추가 가격</td><td id='optionAddPrice'>" + json.optionAddPrice + "원</td>").show();
+								$("#optionAddPriceTr").html("<td>추가 가격</td><td id='optionAddPrice' name='optionAddPrice'>" + json.optionAddPrice + "원</td>").show();
 								$("#optionStockError").empty().append(json.optionStock).hide();
 							}
 						},		
@@ -931,52 +931,22 @@
 					});
 				});
 				
-				
 				//바로구매 
 				$("#buyBtn").on("click",function(){
 					var amount = $("#optionStock").val();
 					//alert("재고량:"+amount);
-					//?page=1&productId=상품id4&sellerStoreNo=2&sellerStoreImage=꿀빵#
 					 var option = $("#optionName option:selected").val();
-					
-						$.ajax({
-							"url" : "/HwangDangFleamarket/buy/checkStock.go?page=${param.page}&productId=${param.productId }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&amount="+amount ,
-							"type" : "GET" , 
-							"dataType" : "text" , 
-							"success" : function(msg){
-								//alert(msg);
-								if(msg == '재고수량부족'){
-									var errorMsg = "구매실패 : 상품변경/재고수량 등의 이유로 구매불가한 상품이 있습니다. 구매상태를 확인해주세요.";		
-								  	alert(errorMsg);
-								  	
-								}else if(msg =="재고수량가능"){
-									
-									$("form").prop("action","/HwangDangFleamarket/buy/moveBuyPage.go?page=${param.page}&productId=${param.productId }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&amount="+amount+"&memberId=${sessionScope.login_info.memberId}&option="+option );
-									//$("form").prop("action","/HwangDangFleamarket/buy/moveBuyPage.go?page=3&productId=${param.productId }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&amount="+amount+"&memberId=${sessionScope.login_info.memberId}");
-									
-									$("form").submit();
-								
-								}
-								
-							},
-							"error" : function(xhr, status, errorMsg){
-								alert("ajax faild : " + status + "," + errorMsg);
-							} ,
-							"beforeSend" : function(){
-								if(amount < 1){
-									alert("구매수량은 1개이상입니다.");
-									return false;
-								}
-							}
-							
-					});
+					 $("form").prop("action","/HwangDangFleamarket/buy/moveBuyPage.go?page=${param.page}&productId=${param.productId }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&amount="+amount+"&memberId=${sessionScope.login_info.memberId}&option="+option );
+					 $("form").submit();
 				}); //btn 
-				
-				
-				
-				
+				$('#deleteBtn').on("click", function(){
+					var answer = confirm("이 상품을 정말 삭제하시겠습니까?");
+					if(answer == false){
+						return false;
+					}
+				});
 			}); //reday
-			
+
 			function error(xhr, status, err)
 			{
 				alert(status+", "+xhr.readyState+" "+err);
@@ -1041,6 +1011,12 @@
 						<tr>
 							<td colspan="2"><input type="button" value="리스트로 돌아가기" onclick="window.location='/HwangDangFleamarket/product/list.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }'"></td>
 						</tr>
+						<lee:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
+							<tr>
+								<td><input type="button" value="상품 수정" onclick="window.location='/HwangDangFleamarket/product/editProductForm.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }&productId=${ requestScope.product.productId }'"></td>
+								<td><input type="button" value="상품 삭제" id="deleteBtn" onclick="window.location='/HwangDangFleamarket/product/deleteProduct.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }&productId=${ requestScope.product.productId }'"></td>
+							</tr>
+						</lee:if>
 					</table>
 				</form>
 			</div>

@@ -136,11 +136,12 @@
 		display: none;
 	}
 </style>
-<form method="post" action="/HwangDangFleamarket/member/registerresult.go" name="register">
-<h1 align="center">회원가입</h1>
-	<table width='600'>
-		<tr>
-			<td width='150' align='center'>I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D</td>
+<form method="post" action="/HwangDangFleamarket/member/registerresult.go" name="register" id="registerForm">
+<h2 class="page-header">황당 플리마켓 회원가입</h2>
+<div class="table-responsive" >
+	<table width='600' class="table table-striped">
+		<tr class="trInput">
+			<td width='150' class='tdName'>I&nbsp&nbsp&nbsp&nbsp&nbspD</td>
 			<td>
 				<input type="text" name="memberId" size=13 id="memberId" onkeydown="idCheck(this);">
 				@
@@ -154,20 +155,20 @@
 				</select>
 			</td>
 		</tr>
-		<tr>
-			<td align='center'>Password</td>
+		<tr class="trInput">
+			<td class='tdName'>Password</td>
 			<td>
 				<input type="password" name="memberPassword" size="20" id="memberPassword">
 			</td>
 		</tr>
-		<tr>
-			<td align='center'>이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</td>
+		<tr class="trInput">
+			<td class='tdName'>이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</td>
 			<td>
 				<input type="text" name="memberName" size="20" id="memberName" onkeydown="nameCheck(this);">
 			</td>
 		</tr>
-		<tr>
-			<td align="center">전화번호</td>
+		<tr class="trInput">
+			<td class='tdName'>전화번호</td>
 			<td>
 				<select id="hp1" name="hp1">
 	    	        <option>010</option>
@@ -183,14 +184,14 @@
 				<input type="text" name="hp3" size="10" id="hp3">
 			</td>
 		</tr>
-		<tr>
-			<td align='center'>우편번호</td>
+		<tr class="trInput">
+			<td class='tdName'>우편번호</td>
 			<td>
 				<input type="text" name="memberZipcode" size="30" readonly="readonly" id="memberZipcode">
-				<input type="button" value="주소검색" id="findAddress" onclick="window.open('/HwangDangFleamarket/member/findAddress.go', '주소검색', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');">
+				<input type="button" value="주소검색" id="findAddress" onclick="window.open('/HwangDangFleamarket/member/findAddress.go', '주소검색', 'resizable=no scrollbars=yes width=700 height=500 left=500 top=200');">
 			</td>
 		</tr>
-		<tr>
+		<tr class="trInput">
 			<td align='center'> 주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소 </td>
 			<td>
 				<input type="text" name="memberAddress" size="60" readonly="readonly" id="memberAddress">
@@ -198,12 +199,12 @@
 				<input type="text" name="memberSubAddress" size="60" id="memberSubAddress">
 			</td>
 		</tr>
-		<tr>
-		
-			<td colspan="2" align="center">
-				<input type="submit" value="가입" id="submit">
-				<input type="reset" value="다시 작성">
+		<tr class="trInput">
+			<td colspan="2" align="left">
+				<input class="btn btn-lg btn-success btn-block" type="submit" value="가입" id="submit">
+				<input class="btn btn-lg btn-primary btn-block" type="reset" value="다시 작성">
 			</td>
 		</tr>
-		</table> 
+	</table> 
+</div>
 </form>

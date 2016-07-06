@@ -205,4 +205,34 @@ public class ProductDaoImpl implements ProductDao
 		// TODO Auto-generated method stub
 		return session.insert("productMapper.insertProduct", product);
 	}
+
+	@Override
+	public Product selectProductById(String productId) {
+		// TODO Auto-generated method stub
+		return session.selectOne("productMapper.selectProductById", productId);
+	}
+
+	@Override
+	public int updateProductOptionById(ProductOption productOption) {
+		// TODO Auto-generated method stub
+		return session.update("productMapper.updateProductOptionById", productOption);
+	}
+
+	@Override
+	public int updateProductById(Product product) {
+		// TODO Auto-generated method stub
+		return session.update("productMapper.updateProductById", product);
+	}
+
+	@Override
+	public int updateDetailImageById(ProductDetailImage productDetailImage) {
+		// TODO Auto-generated method stub
+		return session.update("productMapper.updateDetailImageById", productDetailImage);
+	}
+
+	@Override
+	public int deleteProductById(String productId) {
+		// TODO Auto-generated method stub
+		return session.delete("productMapper.deleteProductById", productId);
+	}
 }

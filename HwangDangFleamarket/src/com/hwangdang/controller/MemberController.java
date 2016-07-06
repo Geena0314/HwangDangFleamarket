@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -114,22 +115,31 @@ public class MemberController {
 	
 	//로그인 이후 상품 디테일페이지로 이동 
 	@RequestMapping("/loginAfterProductDetailPage.go") //로그인 후 화면
-	public String loginAfterProductDetailPage(String memberId, String memberPassword, HttpSession session , @RequestParam(value="page" ,defaultValue="1") int page  ,
-		 String productId , String sellerStoreNo   , String sellerStoreImage , String amount , String option){
-		
-		//System.out.println(memberId +" , " + memberPassword);
+	public String loginAfterProductDetailPage(String memberId ,String domain, String memberPassword, HttpSession session , @RequestParam(value="page" ,defaultValue="1") int page  ,
+		 String productId , String sellerStoreNo   , String sellerStoreImage , String amount , String option , Model model){
+		memberId = memberId +"@" + domain;
+		System.out.println(memberId +" , " + memberPassword);
 		//System.out.println("page :" +page +", productId:"+productId + ",sellerStoreNo:" +sellerStoreNo  +",sellerSotreImage:"+sellerStoreImage+", amount:"+amount + ",option" +option);
 		Member member = service.findById(memberId);
+		String url ="";    
 		if(member!=null){
 			//아이디가 존재함.
 			if(memberPassword.equals(member.getMemberPassword())){ 
 				//아이디와 패스워드가 맞는 경우
 				session.setAttribute("login_info", member);
+				url = "buyer/buyForm.tiles";
+			}else{
+				url ="member/login_form.tiles";
+				model.addAttribute("idError" ,"패스워드가 틀렸습니다!");
 			}
+		}else{
+			//아이디 비존재 
+			url ="member/login_form.tiles";
+			model.addAttribute("errorMsg" ,"아이디를 잘못입력하였습니다!");
 		}
-		
+		 
 		// 구매페이지로 이동 
-		return "buyer/buyForm.tiles";
+		return url;
 	}
 	@RequestMapping("/logout")
 	public String logout(HttpSession session)
@@ -195,7 +205,10 @@ public class MemberController {
 	    seller.setSellerStoreImage(originalFileName);
 	    int result = sellerService.insertSeller(seller);
 	    if(result == 1)
+	    {
+	    	session.setAttribute("sellerRegister", 1);
 		    return new ModelAndView("redirect:/member/sellerRegisterSuccess.go?result=1");
+	    }
 	    else
 	    	return new ModelAndView("redirect:/member/sellerRegisterSuccess.go?result=0");
 	}

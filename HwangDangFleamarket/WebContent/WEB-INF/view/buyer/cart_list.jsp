@@ -58,7 +58,7 @@ $( document ).ready( function() {
             $("input[name=checkBasket]").prop("checked",true);
             var sum = 0;
             $('tbody td:nth-child(4)').each(function(){
-            	sum = sum + parseInt($(this).text());
+            	sum = sum + parseInt($(this).text().split("+")[0]) + parseInt($(this).text().split("+")[1]);
             });
             $('#checkedEstimatedPrice').html(sum);
         }else{
@@ -69,11 +69,13 @@ $( document ).ready( function() {
     $("input[name=checkBasket]").on("click", function(){
     	var totalPrice = parseInt($('#checkedEstimatedPrice').text());
     	$('#checkedEstimatedPrice').empty();
+    	var addPrice = $(this).parents().children("#price").text();
+ 		var price = addPrice.split("+");
     	if(this.checked){
-    		totalPrice = totalPrice + parseInt($(this).parents().children("#price").text());
+    		totalPrice = totalPrice + parseInt(price[0]) + parseInt(price[1]);
     		$('#checkedEstimatedPrice').append(totalPrice);
     	}else{
-    		totalPrice = totalPrice - parseInt($(this).parents().children("#price").text());
+    		totalPrice = totalPrice - parseInt(price[0]) - parseInt(price[1]);
     		$('#checkedEstimatedPrice').append(totalPrice);
     	}
     });
@@ -101,10 +103,14 @@ $( document ).ready( function() {
     	}); 
     });
     
+    
+    //구입하기 버튼 : 체그된 productId , productOptionId , sellerStoreNO 
+    //stock  , 
     $("#buyBtn").on("click",function(){
-    	
-		 alert("buyBtn TEST");  	
-    	
+    	console.log(getRemoveCartList());
+    	var url = "/HwangDangFleamarket/buy/buyCarts.go?cartNoList="+getRemoveCartList();
+		$("form").prop("action" , url);    	
+		$("form").submit();
     });
     
     
@@ -156,7 +162,6 @@ function error(xhr, status, err)
 				</tr>
 			</thead>
 				<form action="" method="POST" id="cart_form">
-				
 				<tbody>
 					<c:forEach items="${requestScope.cartList}" var="list">
 						<c:forEach items="${list.productList}" var="product">
@@ -190,9 +195,24 @@ function error(xhr, status, err)
 								</td>
 								<td id="price">
 									${product.productPrice*list.cartProductAmount}
+									<c:choose>
+										<c:when test="${product.productOption.optionAddPrice != 0}">
+											<p>&nbsp;+&nbsp;${list.cartProductAmount*product.productOption.optionAddPrice}
+										</c:when>
+										<c:otherwise>
+											<p style="display: none;">+0</p>
+										</c:otherwise>
+									</c:choose>
 								</td>
-								<td>
-									무료 배송
+								<td id="delivery">
+									<c:choose>
+										<c:when test="${((product.productPrice*list.cartProductAmount)+(list.cartProductAmount*product.productOption.optionAddPrice))>= 30000}">
+											무료배송
+										</c:when>
+										<c:otherwise>
+											2500원
+										</c:otherwise>
+									</c:choose>
 								</td>
 							</tr>
 						</c:forEach>
@@ -202,7 +222,7 @@ function error(xhr, status, err)
 	</div>
 	<p>
 	<div class="estimatedPrice">
-		결제 예상 금액&nbsp;&nbsp;
+		배송비를 제외한 결제 예상 금액&nbsp;&nbsp;
 		<hr>
 		<span id="checkedEstimatedPrice">${requestScope.sum}</span>
 		<span>원&nbsp;&nbsp;</span>

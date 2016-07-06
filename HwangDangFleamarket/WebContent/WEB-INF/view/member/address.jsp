@@ -2,9 +2,23 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title>Insert title here</title>
-		<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
+		<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    	<meta name="description" content="">
+    	<meta name="author" content="">
+    	<link rel="icon" href="../../favicon.ico">
+    	<title>주소 찾기</title>
+		<link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/template.css">
+    	<!-- Bootstrap core CSS -->
+    	<link href="/HwangDangFleamarket/css/bootstrap.min.css" rel="stylesheet">
+    	<!-- Custom styles for this template -->
+    	<link href="/HwangDangFleamarket/styles/dashboard.css" rel="stylesheet">
+    	<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    	<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
+    	<script src="/HwangDangFleamarket/js/bootstrap.min.js"></script>
+    	<script src="/HwangDangFleamarket/js/vendor/holder.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function()
 			{
@@ -77,26 +91,20 @@
 				
 			});
 		</script>
-		<style type="text/css">
-			.addresses
-			{
-				display: none;
-			}
-		</style>
 	</head>
 
 	<body leftmargin="0" topmargin="0">
-		<form name="form" id="form" method="POST" action="#">
+		<form class="form-post" name="form" id="form" method="POST" action="#">
 			<div align="center">
-				<h2 align="center">우편번호 검색</h2>
+				<h2 class="page-header" align="center">우편번호 검색</h2>
 				<p align="center">
 					찾으시는 지역의 동/읍/면을 입력해주세요.<br>
 					예) 강남구 청담동일 경우 "청담"만 입력하시면 됩니다.
 				</p>
-				<div>
-					지역 <input type="text" id="dong"><input type="button" value="검색" id="findDong">
+				<div style="margin:20px 20px 0px 20px;">
+				지&nbsp;역&nbsp;&nbsp;<input type="text" id="dong"><input type="button" value="검색" id="findDong">
 				</div>
-				<div style="margin-top: 20px;">
+				<div style="margin:30px 20px 30px 20px;">
 					<select name="address">
 						<option value='nope'>
 							지역을 검색해주세요.
@@ -106,10 +114,10 @@
 						</option>
 					</select>
 				</div>
-			</div>
-			<p align="right" style="margin-right: 50px; margin-top: 50px;">
-				<input type="button" value="입력하기" id="write">
-			</p>
+				<div align="right" style="margin-right: 50px; margin-top: 50px;">
+					<input class="btn btn-lg btn-success btn-block" type="button" value="입력하기" id="write">
+				</div>
+			</div>	
 			<input type="text" id="zipcode" class="addresses"><input type="text" id="address" class="addresses">
 		</form>
 	</body>

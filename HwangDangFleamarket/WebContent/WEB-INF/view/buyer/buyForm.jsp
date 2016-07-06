@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <style>
 	div {
 	 margin : 20px;
@@ -26,7 +26,6 @@
 <script>
 
 
-
 	function addMileage(mileage){
 		
 		var originalMileage = $("#memberMileage").text().trim();
@@ -49,17 +48,63 @@
 		
 	}  
 
+	/*
+	 멤버 마일리지 조회 
+	*/
+	function getMemberMileage(){
+		
+		$.ajax({
+			  
+			"url" : "/HwangDangFleamarket/buy/getMemberMileageAjax.go" ,
+			"type" : "POST"  ,
+			"data" : "memberId="+$("#hiddenMemberId").val().trim() ,
+			"dataType" : "text" ,
+			"beforeSend" : function(){
+				//alert("TEST ID: "+$("#hiddenMemberId").val().trim());
+			},
+			"success" : function(returnMileage){
+				//alert(returnMileage);
+				$("#memberMileage").html(returnMileage);
+			}, 
+			
+			"error"  : function(a ,status , httpErrorMsg){
+				alert("마일리지조회 ajax 예외: " + status +httpErrorMsg);
+			}
+			
+		});
+	}
+	
+	
 	$(document).ready(function(){
-
+		
+		//마일리지 ajax통신을 이용하여 조회
+		getMemberMileage();
+		   
+		var total = 0;  
+		//총 주문가격 조회  - productPrice   
+		$(".partProductPrice").each(function(index){
+			var oneProductPrice  = $(this).html().trim();
+			var price = parseInt(oneProductPrice);
+			total = total + price;
+		});
+		//계산한 결과를 반영
+		$("#productPrice").html(total);
+		$("#ordersTotalPrice").html(total);
+		 
+		
 		
 		// 주문자 정보를 임시로 저장할 변수들  
-		var temp_ordersReceiver ="";
-		var temp_ordersPhone ="";
-		var temp_ordersZipcode ="";
-		var temp_ordersAddress ="";
-		var temp_ordersSubAddress ="";
-		var totalTemp = 0;
-		var mileageTemp = 0;
+		var temp_ordersReceiver =$("#memberName").html().trim();
+		var temp_ordersPhone =$("#memberPhone").html().trim();
+		var temp_ordersZipcode =$("#memberZipcode").html().trim();
+		var temp_ordersAddress =$("#memberAddress").html().trim();
+		var temp_ordersSubAddress = $("#memberSubAddress").html().trim();
+		var temp_currentAddress = "";
+		
+		var ordersTotalPriceTemp  = 0;
+		var memberMileageTemp  = 0;
+		var productPriceTemp =0;
+		
 		//배송옵션 선택시 자동입력
 		$("#requestOption").on("change", function(){
 			//alert(this.value); 
@@ -86,36 +131,7 @@
 			  specs += ",toolbar=no,menubar=no,status=no,scrollbars=no,resizable=no";
 			window.open("/HwangDangFleamarket/popup.jsp","addressForm" ,specs);
 		});
-		
-		
-		//요일변환을 위한 로직 
-		String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
-		String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
-		Number.prototype.zf = function(len){return this.toString().zf(len);};
-		Date.prototype.format = function(f) {
-		    if (!this.valueOf()) return " ";
-		 
-		    var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
-		    var d = this;
-		     
-		    return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
-		        switch ($1) {
-		            case "yyyy": return d.getFullYear();
-		            case "yy": return (d.getFullYear() % 1000).zf(2);
-		            case "MM": return (d.getMonth() + 1).zf(2);
-		            case "dd": return d.getDate().zf(2);
-		            case "E": return weekName[d.getDay()];
-		            case "HH": return d.getHours().zf(2);
-		            case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
-		            case "mm": return d.getMinutes().zf(2);
-		            case "ss": return d.getSeconds().zf(2);
-		            case "a/p": return d.getHours() < 12 ? "오전" : "오후";
-		            default: return $1;
-		        }
-		    });
-		};
-		 
-		
+	
 		//결제버튼 클릭
 		$("#submitBtn").on("click",function(){
 			
@@ -181,7 +197,6 @@
 			var paymentStatus = 1;
 			/* var ordersDate = new Date().format("yyyy-MM-dd"); */
 			var memberId = $("#hiddenMemberId").val().trim();
-			var ordersNo = "" + new Date().format("MMdd");
 			
 			var ordersPayment = $(":radio[name=payment]:checked").val().trim();
 			var orderProductStatus = 0;
@@ -192,60 +207,66 @@
 			}
 			
 			
-			 var queryString = "?ordersNo="+ordersNo+"&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
+			 var queryString = "";
+			   
+			 if($("#oneOrN").html().trim() =='1'){
+				 	//한개구매
+				 	 queryString = "?&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
 					 +ordersZipcode+"&ordersAddress="+ordersAddress+"&ordersSubAddress="+ordersSubAddress
 					 +"&ordersTotalPrice="+ordersTotalPrice+"&ordersPayment="+ordersPayment
 					 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId+
 					 "&orderAmount=${param.amount }&productId=${param.productId  }&sellerStoreNo=${param.sellerStoreNo }&orderProductStatus="
-					 +orderProductStatus+"&optionId= ${requestScope.productOption.optionId }";	
-					 
-			 alert(queryString);				
-			$("form").prop("action", "/HwangDangFleamarket/buy/buyProductOne.go"+queryString);
+					 +orderProductStatus+"&optionId="+$("#optionId").val().trim() +"&usedMileage="+$("#useMileage").html();	
+					 alert(queryString);	
+					$("form").prop("action", "/HwangDangFleamarket/buy/buyProductOne.go"+queryString);
+		
+			 }else{
+				 	//N개구매
+				 	
+				 	//optionId sellerStoreNo  productId amount
+				 	var optionIdList = "";
+				 	var sellerStoreNoList ="";
+				 	var productIdList = "";
+				 	var amountList = "";
+				 	
+				 	$(".optionId").each( function(index){
+				 		optionIdList = optionIdList + this.value + ",";
+				 	});
+				 	
+				 	$(".sellerStoreNo").each( function(index){
+				 		sellerStoreNoList = sellerStoreNoList + this.value + ",";
+				 	});
+				 	
+					$(".productId").each( function(index){
+						productIdList = productIdList + this.value + ",";
+				 	});
+					
+					$(".amount").each( function(index){
+						amountList = amountList + $(this).html().trim() + ",";
+				 	});
+				 	
+					//alert("optoinIdList:"+optionIdList+" , sellerStoreNoList :" + sellerStoreNoList +", productIdList: "+ productIdList + ",amountList "+amountList);
+				 	
+				 	  queryString = "?&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
+					 +ordersZipcode+"&ordersAddress="+ordersAddress+"&ordersSubAddress="+ordersSubAddress
+					 +"&ordersTotalPrice="+ordersTotalPrice+"&ordersPayment="+ordersPayment
+					 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId+
+					 "&amountList="+ amountList + "&productIdList=" +productIdList+ "&sellerStoreNoList="+sellerStoreNoList +"&orderProductStatus="+orderProductStatus+
+					 "&optionIdList="+optionIdList  +"&usedMileage="+$("#useMileage").html().trim()+"&cartNoList=${requestScope.cartNoList }";	
+					 alert(queryString);
+					// queryString ="#";
+					$("form").prop("action", "/HwangDangFleamarket/buy/buyProducts.go"+queryString);
+			 }
+		
 			$("form").submit(); 
 			//return false;
 			
 		}); //결제버튼
 		
-		//마일리지 모두 사용버튼을 누르면 최종결제 정보에 show/hide
-		$("#mileageCheckbox").on("click",function(){
-			if( $("#mileageCheckbox").is(":checked") ){
-				var mileage = $("#memberMileage").text().trim();
-				$("#useMileage").text(mileage);
-				
-				//마일리지를 결제예상금액에 적용 
-				var sum = 0;
-				var beforeTotal = $("#ordersTotalPrice").html().trim();
-				totalTemp =  beforeTotal;
-				mileageTemp = mileage;
-				
-				parseInt(beforeTotal);
-				parseInt(mileage);
-				sum =  beforeTotal - mileage;
-				$("#ordersTotalPrice").html(sum);
-				$("#useMileageBtn").prop("disabled","disabled");
-				
-				//기존마일리값을 0으로 변경 
-				$("#memberMileage").text(0);
-				
-				
-			
-			}else{ 
-				//체크해재되면 마일리지 지움 
-				$("#useMileage").text("");
-				$("#ordersTotalPrice").html(totalTemp);
-				$("#useMileageBtn").prop("disabled",false);
-				
-				
-				//기존마일리지값을 원복   -temp 이용
-				$("#memberMileage").text(mileageTemp); 
-			}
-			
-		});
-	
 		
 		//ajax : 최근배송지 조회하기
 		$("#currentDeliveryAddress").on("click" ,function(){
-			
+			//alert($("#hiddenMemberId").val());
 			$.ajax({
 				"url" : "/HwangDangFleamarket/buy/currentDeliveryAddress.go" ,
 				"type" : "POST"  ,
@@ -273,10 +294,11 @@
 					temp_ordersZipcode = $("#memberZipcode").html().trim();
 					$("#memberZipcode").html(orders.ordersZipcode);
 					
-					 
+				   	 
 				} ,
 				"error" : function( a , status, HttpErrorMsg ){
 					alert("ajax:통신실패:" + status + HttpErrorMsg);
+					//console.log("ajax:통신실패:" + status + HttpErrorMsg);
 				}
 				
 			});
@@ -287,21 +309,106 @@
 		$("#diliverAddress").on("click" ,function(){
 			
 			$("#memberName").html(temp_ordersReceiver);
-			$("#memberAddress").html(temp_currentAddress);
+			$("#memberAddress").html(temp_ordersAddress);
 			$("#memberPhone").html(temp_ordersPhone);
 			$("#memberSubAddress").html(temp_ordersSubAddress);
 			$("#memberZipcode").html(temp_ordersZipcode);
 			
 		});
+		//마일리지 모두 사용!
+		$("#mileageCheckbox").on("click",function(){
+			if( $("#mileageCheckbox").is(":checked") ){
+				
+				//	productPrice -  useMileage = ordersTotalPrice
+				
+				var memberMileage = $("#memberMileage").text().trim();
+				var productPrice = $("#productPrice").html().trim();
+				 
+				productPrice = parseInt(productPrice);
+				memberMileage = parseInt(memberMileage);
+				
+				//화면 사용할 마일리지에 적용  
+				$("#useMileage").text(memberMileage);
+				
+			
+				//체크해제를 대비하여 temp변수들에 임시 저장 
+				
+				  
+				productPriceTemp =   productPrice;
+				memberMileageTemp  = memberMileage;
+				//ordersTotalPriceTemp  = ordersTotalPrice;
+				
+				var sum  =  productPrice - memberMileage;
+				
+				$("#ordersTotalPrice").html(sum);
+				$("#useMileageBtn").prop("disabled","disabled");
+				
+				//기존마일리값을 0으로 변경 
+				$("#memberMileage").text(0);
+			
+			}else{ 
+				//체크해재되면 마일리지 지움 
+				$("#useMileage").text("");
+				$("#ordersTotalPrice").html(productPriceTemp);
+				$("#useMileageBtn").prop("disabled",false);
+				//기존마일리지값을 원복   -temp 이용
+				$("#memberMileage").text(memberMileageTemp); 
+			}
+			
+		});
+		  
 		
-		//사용할 마일리지포인트 정하기  
+		//사용할 마일리지포인트 보이게하기!
 		$("#useMileageBtn").click(function(){
-			var specs = "left=100,top=100,width=600,height=500";
-			  specs += ",toolbar=no,menubar=no,status=no,scrollbars=no,resizable=no";
-		
-			window.open("/HwangDangFleamarket/use_mileage_popup.jsp" , "useMileage" ,specs );
+			$("#spanMileage").show();
 			
 		});	
+		
+		
+		//사용할 마일리지포인트 적용하기 !
+		$("#mileageUseBtn").click(function(){
+			var choiceMileage = $("#choiceMileage").val();
+			if(choiceMileage.length == 0 ){
+				alert("사용할 마일리지값을 입력하세요.");
+				return false;
+			}
+			choiceMileage = parseInt(choiceMileage);
+			
+			//검증
+			var cutline = $("#memberMileage").text().trim();
+			cutline = parseInt(cutline);
+			
+			if(cutline <  choiceMileage){
+				alert("현재보유마일리지는 "+cutline +"점 입니다. 보유마일리지만큼 사용가능합니다.");
+				return false;
+			}else if(choiceMileage <= 0) {
+				alert("사용할마일리지는 1이상되어야 합니다.");
+			}else {
+				//마일리지 적용 로직 
+				
+				//1. 마일리지 폼에 적용 
+				$("#useMileage").html(choiceMileage);
+				
+				//2. temp 에 보관
+				memberMileageTemp = cutline;
+				
+				//3.사용가능포인트 마이너스 
+				cutline = cutline - choiceMileage;
+				$("#choiceMileage").val(0);
+				$("#memberMileage").text(cutline);
+				
+				/* productPriceTemp =   productPrice;
+				memberMileageTemp  = memberMileage; */
+			}
+			
+		});
+		
+		//마일리지 적용취소 
+	$("#mileageCancelBtn").click(function(){
+		$("#memberMileage").text(memberMileageTemp)
+	});
+		
+		
 		$("#testBtn").click(function(){
 			
 			
@@ -313,7 +420,7 @@
 </script>
 
 <h2>구매페이지</h2>
-세션스코프 멤버정보 : ${sessionScope.login_info.memberAddress }
+<%-- 세션스코프 멤버정보 : ${sessionScope.login_info.memberAddress }
 page : ${param.page  }
 구매자아이디 : ${param.memberId } 
 product_id : ${param.productId  }
@@ -321,11 +428,16 @@ seller_store_no : ${param.sellerStoreNo  }
 구매수량 : ${param.amount }
 옵션명 : ${param.option } 
 옵션ID: ${requestScope.productOption.optionId }
-
+총추가가격 : ${requestScope.productOption.optionAddPrice * param.amount  }
+-------------------------------------------------------<br/>
+ --%>
+주문번호: ${requestScope.ordersNo}
+orderProductList : ${requestScope.orderProductList }
+카트리스트 ArrayList객체 ${requestScope.cartList }
 
 <form action="" method="POST" name="buy_form" >
 
-	<input type="hidden" value="${param.memberId }" id="hiddenMemberId"	/>
+	<input type="hidden" value="${sessionScope.login_info.memberId }" id="hiddenMemberId"	/>
 	<div id="left_lalyer">
 		<div id="address_div">
 			<h4>배송지 선택</h4>
@@ -372,9 +484,13 @@ seller_store_no : ${param.sellerStoreNo  }
 		  	
 		  	<hr>
 		  	<h4>할인 및 포인트 선택</h4>
-		  	사용가능 포인트 :<span id="memberMileage">${sessionScope.login_info.memberMileage }</span>점<br/>
-		  	모두사용하기 <input type="checkbox" id="mileageCheckbox" />
-		  	 <input type="button" value="사용하기" id="useMileageBtn" />
+		  	사용가능 포인트 :<span id="memberMileage"></span>점<br/>
+		  	모두사용하기 <input type="checkbox" id="mileageCheckbox" /><input type="button" value="마일리지 금액 선택" id="useMileageBtn" /><br/>
+		  	<span hidden="true" id="spanMileage">사용할 마일리지 입력 : 
+		  	<input type="number" name="choiceMileage" id="choiceMileage"   size="10" />
+		  		<input type="button" value="사용하기"  id="mileageUseBtn" /><input type="button" value="사용취소" id="mileageCancelBtn"/>
+		  	</span><br/>
+		  	 
 			<hr>
 			 
 			<hr>
@@ -390,45 +506,49 @@ seller_store_no : ${param.sellerStoreNo  }
 	<div id="right_layer">
 		<hr>
 		<h4>주문상품 정보</h4>
-			스토어명 : <span id="sellerStoreName">${requestScope.sellerStoreName }</span><br/>
-			제품이름(제품정보) : <span id="productName">${requestScope.product.productName  }</span><br/>
-			옵션명 : <span id="option">${param.option }</span><br/>
-			가격/구매수랑 : 
-			<span id="productPrice"><fmt:formatNumber type="currency">${requestScope.product.productPrice }</fmt:formatNumber></span>원 /<span id="amount">${param.amount }</span>개<br/>
+		<c:forEach  items="${requestScope.orderProductList }" var="op">
+			<input type="hidden" id="optionId"  class="optionId" value="${op.productOption.optionId }"/>
+			<input type="hidden"  class="sellerStoreNo" value="${op.seller.sellerStoreNo }"/>
+			<input type="hidden"   class="productId" value="${op.product.productId }"/>
 			
-			총주문건 :<br/>
-		<hr>
+			스토어명 : <span id="sellerStoreName" >${op.seller.sellerStoreName }</span><br/>
+			제품명 : <span id="productName">${op.product.productName  }</span><br/>
+			옵션명 : <span id="option">${op.productOption.optionSubName }</span><br/>
+			가격/구매수랑 : 
+			<span id="productPricePer"><fmt:formatNumber type="currency">${op.product.productPrice }</fmt:formatNumber></span>원 
+			/<span id="amount" class="amount">${op.orderAmount  }</span>개<br/>
+			상품당 추가가격 : 
+			<span>
+				<fmt:formatNumber type="currency">${op.productOption.optionAddPrice } </fmt:formatNumber>
+			</span>원<br/>
+			배송비 : 
+			<span id="deriveryCharge">
+			<c:choose>
+				<c:when test="${ (op.product.productPrice  + op.productOption.optionAddPrice  )  * op.orderAmount  >= 50000 }">0</c:when>
+				<c:otherwise>2500</c:otherwise>
+			</c:choose>
+			</span>원<br/>   
+			
+			상품가격 : <font color="blue" class="partProductPrice" > 
+			<c:choose>
+				<c:when test="${ (op.product.productPrice  + op.productOption.optionAddPrice )  * op.orderAmount  >= 50000 }">${(op.product.productPrice+op.productOption.optionAddPrice)*op.orderAmount }</c:when>
+				<c:otherwise>${(op.product.productPrice+op.productOption.optionAddPrice)*op.orderAmount + 2500 }  </c:otherwise>
+			</c:choose>
+			</font>
+			<hr>
+		</c:forEach>		
+			총상품갯수 : <span id="oneOrN">${fn:length(requestScope.orderProductList) } </span>개<br/>
+		
 			
 			
 		<hr>
 		<h4>최종결제 정보</h4>
-			주문가격 :
-			<span id="productPrice">${requestScope.product.productPrice  * param.amount  }</span>원<br/>
-			보유 마일리지 :<span id="useMileage" ></span><br/>
-			배송비 : 
-			<span id="deriveryCharge">
+		
+			결제예정금액 : <span id="productPrice"></span>원<br/>
+			사용할 마일리지 :<span id="useMileage" ></span><br/>
+			<hr>
+			 실제결제금액:<font size="15" color="red" ><span id="ordersTotalPrice"></span></font>원<br/>
 			
-			<c:choose>
-				<c:when test="${ (requestScope.product.productPrice*param.amount ) ge 50000 }">0</c:when>
-				<c:otherwise>3000</c:otherwise>
-			</c:choose>
-			</span>원<br/>   
-			
-		<%-- 	<fmt:formatNumber type="currency">
-			</fmt:formatNumber> --%>
-			
-			--------------------<br/>
-			결제예정액 :  
-			<span id="ordersTotalPrice">
-			<c:choose>
-				<c:when test="${ (requestScope.product.productPrice*param.amount ) >= 50000 }">
-					${ (requestScope.product.productPrice*param.amount ) } 
-				</c:when>
-				<c:otherwise>
-					${ (requestScope.product.productPrice*param.amount ) + 3000}  
-				</c:otherwise>
-			</c:choose>
-			</span>원<br/>
 			<input type="button" value="결제하기" id="submitBtn" />
 			<input type="button" value="test" id="testBtn" />
 		<hr>

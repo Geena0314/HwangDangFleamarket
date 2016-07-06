@@ -88,4 +88,19 @@ public interface ProductDao
 	
 	//상품 등록
 	int insertProduct(Product product);
+	
+	//상품 id로 상품 조회
+	Product selectProductById(String productId);
+	
+	//옵션아이디로 옵션 수정
+	int updateProductOptionById(ProductOption productOption);
+	
+	// 상품아이디로 상품 수정
+	int updateProductById(Product product);
+	
+	//상품아이디로 상세 이미지 수정
+	int updateDetailImageById(ProductDetailImage productDetailImage);
+	
+	//상품아이디로 상품 삭제
+	int deleteProductById(String productId);
 }

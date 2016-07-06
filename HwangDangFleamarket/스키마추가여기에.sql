@@ -103,7 +103,7 @@ select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.
 --Member TB  마일리지 컬럼 추가
  ALTER TABLE member ADD  member_mileage number
 
- drop table product_option
+ drop table product_option cascade constraints
 CREATE TABLE product_option (
 	option_id NUMBER primary key, /* 상품옵션ID */
 	option_name VARCHAR2(30) NOT NULL, /* 옵션명 */
@@ -113,3 +113,5 @@ CREATE TABLE product_option (
 	product_id VARCHAR2(30) NOT NULL, /* 상품ID */
 	foreign key(product_id) references product(product_id) on delete cascade
 );
+
+ALTER TABLE PRODUCT_DETAIL_IMAGE modify image_path varchar2(4000);

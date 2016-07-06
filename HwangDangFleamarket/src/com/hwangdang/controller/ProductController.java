@@ -1,6 +1,11 @@
 package com.hwangdang.controller;
 
-import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,15 +14,21 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hwangdang.common.util.Constants;
+import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.service.ProductService;
 import com.hwangdang.service.StoreQnAService;
 import com.hwangdang.vo.Category;
 import com.hwangdang.vo.Member;
 import com.hwangdang.vo.Product;
+import com.hwangdang.vo.ProductDetailImage;
 import com.hwangdang.vo.ProductOption;
 import com.hwangdang.vo.StoreQnA;
 
@@ -45,7 +56,7 @@ public class ProductController
 	}
 	
 	@RequestMapping("detail")
-	public ModelAndView productDetail(int page, String productId, int sellerStoreNo)
+	public ModelAndView productDetail(int page, String productId, int sellerStoreNo, String sellerStoreImage)
 	{
 		return new ModelAndView("seller/seller/product_detail.tiles", service.selectProductDetailById(page, productId, sellerStoreNo));
 	}
@@ -211,47 +222,151 @@ public class ProductController
 	}
 	
 	@RequestMapping("registerProduct") 
-	public ModelAndView registerProduct(Product product, ProductOption productOption, HttpServletRequest request) 
-																throws FileNotFoundException{
+	public ModelAndView registerProduct(@ModelAttribute Product product, ProductOption productOption, HttpServletRequest request, String sellerStoreImage) throws UnsupportedEncodingException {
 		
-		System.out.println(product);
+		String mainImage = "";
+		String detailImage = "";
+		List<MultipartFile>images = product.getImages();
 		
-		/*System.out.println(product);
-		System.out.println(productOption);
-		String originalFileName = productMainImage.getOriginalFilename(); //업로드 된 파일명
-
-		//임시 저장소에 저장된 업로드 된 파일을 최종 저장소로 이동.
-		//최종 저장소 디렉토리 조회.
-		//new File(디렉토리, 파일)
-		String path = "C:\\Users\\kosta\\git\\HwangDangFleamarket\\HwangDangFleamarket\\WebContent\\image_storage";
-		File image = new File(path, originalFileName);
+		for(int idx=0; idx<images.size()	; idx++){
+			String originalFileName = images.get(idx).getOriginalFilename();//업로드 된 파일명
 		
-		 //file중복체크
-	    if (image.exists())
-	    {
-			originalFileName = System.currentTimeMillis() + originalFileName;
-			image = new File(path, originalFileName);
-	    }
-	    
-	    //톰캣 경로의 image_storage로 파일복사.
+			//임시 저장소에 저장된 업로드 된 파일을 최종 저장소로 이동.
+			//최종 저장소 디렉토리 조회.
+			//new File(디렉토리, 파일)
+			String path = "C:\\Users\\kosta\\git\\HwangDangFleamarket\\HwangDangFleamarket\\WebContent\\image_storage";
+			File imageFile = new File(path, originalFileName);
+		
+			//file중복체크
+		    if (imageFile.exists()) {
+				originalFileName = System.currentTimeMillis() + originalFileName;
+				imageFile = new File(path, originalFileName);
+		    }
+		    
+		    //톰캣 경로의 image_storage로 파일복사.
     		String imageStorage = request.getServletContext().getRealPath("/image_storage");
-			try {
-				FileCopyUtils.copy(productMainImage.getInputStream(), new FileOutputStream(imageStorage+"/"+originalFileName));
-				productMainImage.transferTo(image);
-			} catch (IllegalStateException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				try {
+					FileCopyUtils.copy(images.get(idx).getInputStream(), new FileOutputStream(imageStorage+"/"+originalFileName));
+					images.get(idx).transferTo(imageFile);
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				if(idx==0){
+					mainImage = originalFileName;
+				}else{
+					detailImage = detailImage + originalFileName + "/";
+				}
+		}
+		
+		List<ProductOption> optionList = productOption.getOptionList();
+	
+		int productStock = 0;
+		for(ProductOption option : optionList){
+				productStock = productStock + option.getOptionStock();
+		}
 
-    	product.setProductMainImage(originalFileName);
+		product.setProductStock(productStock);
+		product.setProductMainImage(mainImage);
 		service.insertProduct(product);
 		
-		productOption.setProductId(product.getProductId());
-		service.insertOption(productOption);
+		ProductDetailImage detailImages = new ProductDetailImage(detailImage, product.getProductId());
+		service.insertDetailImage(detailImages);
+
+		service.insertOption(productOption.getOptionList(), product.getProductId());
 		
-		System.out.println(product);
-		System.out.println(productOption);*/
+		HashMap<String, Object> map = service.selectAllProduct(1, product.getSellerStoreNo());
+		int pages = (int) Math.ceil((double)((int)map.get("allItems"))/Constants.ITEMS_PER_PAGE);
+		return new ModelAndView("redirect:/product/list.go?page="+ pages +"&sellerStoreNo="+product.getSellerStoreNo()
+														+"&sellerStoreImage="+URLEncoder.encode(sellerStoreImage,"UTF-8"));
+	}
+	
+	@RequestMapping("editProductForm")
+	public ModelAndView editProductForm(String productId){
+		 return new ModelAndView("seller/seller/product_edit_form.tiles", service.selectProductById(productId));
+	}
+	
+	@RequestMapping("editProduct")
+	public ModelAndView editProduct(@ModelAttribute Product product, ProductOption productOption, HttpServletRequest request, String sellerStoreImage) throws UnsupportedEncodingException{
 		
-		return new ModelAndView("seller/seller/product_register_success.tiles");
+		String mainImage = "";
+		String detailImage = "";
+		
+		List<MultipartFile>images = product.getImages();
+		for(int idx=0; idx<images.size()	; idx++){
+			if(images.get(0).getOriginalFilename().equals("") && idx == 0){
+				mainImage = ((Product)service.selectProductById(product.getProductId()).get("product")).getProductMainImage();
+			}else if(images.get(1).getOriginalFilename().equals("") && idx != 0){
+				break;
+			}
+			
+			String originalFileName = images.get(idx).getOriginalFilename();//업로드 된 파일명
+		
+			//임시 저장소에 저장된 업로드 된 파일을 최종 저장소로 이동.
+			//최종 저장소 디렉토리 조회.
+			//new File(디렉토리, 파일)
+			String path = "C:\\Users\\kosta\\git\\HwangDangFleamarket\\HwangDangFleamarket\\WebContent\\image_storage";
+			File imageFile = new File(path, originalFileName);
+		
+			//file중복체크
+		    if (imageFile.exists()) {
+				originalFileName = System.currentTimeMillis() + originalFileName;
+				imageFile = new File(path, originalFileName);
+		    }
+		    
+		    //톰캣 경로의 image_storage로 파일복사.
+    		String imageStorage = request.getServletContext().getRealPath("/image_storage");
+				try {
+					FileCopyUtils.copy(images.get(idx).getInputStream(), new FileOutputStream(imageStorage+"/"+originalFileName));
+					images.get(idx).transferTo(imageFile);
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				if(mainImage.equals("")){
+					mainImage = originalFileName;
+				}
+				
+				if(idx!=0){
+					detailImage = detailImage + originalFileName + "/";
+				}
+		}
+
+		product.setProductMainImage(mainImage);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("product", product);
+		//map.put("productOption", productOption);
+		if(!images.get(1).getOriginalFilename().equals("")){
+			map.put("image", new ProductDetailImage(detailImage, product.getProductId()));
+		}
+		
+		List<ProductOption> list = (List<ProductOption>)service.selectProductById(product.getProductId()).get("optionList");
+		
+		ArrayList<ProductOption> oldList = new ArrayList<>();
+		ArrayList<ProductOption> newList = new ArrayList<>();
+		
+		for(int idx=0; idx<productOption.getOptionList().size(); idx++){
+			if(idx < list.size()){
+				oldList.add(productOption.getOptionList().get(idx));
+			}else{
+				newList.add(productOption.getOptionList().get(idx));
+			}
+		}
+		map.put("oldList", oldList);
+
+		if(newList.size() != 0){
+			map.put("newList", newList);
+		}
+		service.updateProductById(map);
+		return new ModelAndView("redirect:/product/detail.go?page="+request.getParameter("page")+"&sellerStoreNo="+product.getSellerStoreNo()
+														+"&productId="+product.getProductId()+"&sellerStoreImage="+URLEncoder.encode(sellerStoreImage,"UTF-8")); //파라미터 값 넘겨주기
+	}
+	
+	@RequestMapping("deleteProduct")
+	public String deleteProduct(String productId, String sellerStoreImage){
+		service.deleteProductById(productId);
+		return "redirect:/product/list.go";
 	}
 }

@@ -135,7 +135,7 @@
 				<p>
 				<lee:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
 					<span class="registerProductBtn">
-						<input type="button" value="상품 등록" id="removeBtn" onclick="window.location='/HwangDangFleamarket/product/registerProductForm.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }'">&nbsp;&nbsp;
+						<input type="button" value="상품 등록" id="removeBtn" onclick="window.location='/HwangDangFleamarket/product/registerProductForm.go?page=${requestScope.bean.endPage}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }'">&nbsp;&nbsp;
 					</span>
 				</lee:if>
 		</div>

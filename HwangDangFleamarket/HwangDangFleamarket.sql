@@ -3,6 +3,9 @@
 DROP TABLE member 
 	CASCADE CONSTRAINTS;
 
+	DROP TABLE cart 
+	CASCADE CONSTRAINTS;
+	
 /* 판매자 */
 DROP TABLE seller 
 	CASCADE CONSTRAINTS;
@@ -313,15 +316,25 @@ CREATE TABLE orders (
 	foreign key(member_id) references member(member_id)
 );
 
+<<<<<<< HEAD
 insert into orders values ('a', '수취인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'isj4216@gmail.com');
 insert into orders values ('b', '수신인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'isj4216@gmail.com');
 insert into orders values ('c', '이성준', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'isj4216@gmail.com');
 insert into orders values ('d', '주변인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'isj4216@gmail.com');
 insert into orders values ('e', '너', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'isj4216@gmail.com');
 insert into orders values ('f', '나', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'isj4216@gmail.com');
+=======
+insert into orders values ('ggg', '수취인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, '19901126', 'hwang3');
+insert into orders values ('hhh', '수신인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, '19901126', 'hwang3');
+insert into orders values ('iii', '이성준', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, '19901126', 'hwang3');
+insert into orders values ('jjj', '주변인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, '19901126', 'hwang3');
+insert into orders values ('kkk', '너', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, '19901126', 'hwang3');
+insert into orders values ('lll', '나', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, '19901126', 'hwang3');
+>>>>>>> branch 'master' of https://github.com/Geena0314/HwangDangFleamarket.git
 
 
-
+DROP TABLE product_option 
+	CASCADE CONSTRAINTS;
 /* 상품옵션vvvvvvvv */
 drop table product_option
 CREATE TABLE product_option (
