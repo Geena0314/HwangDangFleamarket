@@ -3,6 +3,8 @@ package com.hwangdang.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hwangdang.common.util.PagingBean;
+import com.hwangdang.service.OrderService;
 import com.hwangdang.serviceimpl.MyOrderServiceImpl;
 import com.hwangdang.vo.Orders;
+import com.hwangdang.vo.RefundRequest;
 import com.hwangdang.vo.Seller;
 
 @Controller
@@ -21,6 +25,9 @@ public class MyOrderController {
 	
 	@Autowired
 	MyOrderServiceImpl service;
+	
+	@Autowired
+	OrderService orderService;
 	
 	//나의주문 - 메인페이지 (배송현황 조회 ) 이동 
 	@RequestMapping("/main.go") 
@@ -119,6 +126,24 @@ public class MyOrderController {
 		return service.getSellerDetailBySellerName(sellerName);
 	}  
 	
+	@RequestMapping("/refundForm")
+	public String refundRegisterForm()
+	{
+		return "/WEB-INF/view/myorder/myorder_refund_form.jsp";
+	}
 	
+	@RequestMapping("/refundSuccess")
+	public String refundSuccessForm(RefundRequest refund, HttpServletRequest request)
+	{
+		int result = orderService.insertRefundRequest(refund);
+		if(result  == 1)
+		{
+			request.setAttribute("result", 1);
+			return "/WEB-INF/view/myorder/myorder_refund_success.jsp";
+		}
+		else
+		{
+			return "/WEB-INF/view/myorder/myorder_refund_success.jsp";
+		}
+	}
 }
- 

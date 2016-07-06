@@ -6,8 +6,8 @@
 		<title>Insert title here</title>
 		<script type="text/javascript">
 			alert("거부처리가 완료되었습니다.");
+			opener.opener.parent.location.reload();
 			opener.close();
-			opener.parent.location.reload();
 			window.close();
 		</script>
 	</head>

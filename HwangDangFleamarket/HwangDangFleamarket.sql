@@ -157,7 +157,7 @@ create sequence seller_store_no_seq nocache;
 
 insert into seller values(seller_store_no_seq.nextval, '해물나라', '12345-67890', '대분류업종', '소분류업종', '123-456', 
 							'경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '해물찜.jpg', '#전복', '#냉동문어', '#낙지', 
-							'아주아주 싱싱하고 맛있는 해산물을 산지직송해드립니다.',1, 'hwang');
+							'아주아주 싱싱하고 맛있는 해산물을 산지직송해드립니다.',0, 'aaaaaaaa@gmail.com');
 insert into seller values(seller_store_no_seq.nextval, '통영대표꿀빵', '12345-66789', '대분류업종', '소분류업종', '123-654', 
 							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵.jpg', '#원조꿀빵', '#유자꿀빵', '#고구마꿀빵', 
 							'넘나 맛있는 꿀빵을 만드는 꿀빵집입니다.',1, 'hwanghwang');
@@ -313,12 +313,12 @@ CREATE TABLE orders (
 	foreign key(member_id) references member(member_id)
 );
 
-insert into orders values ('ggg', '수취인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'lsj421678');
-insert into orders values ('hhh', '수신인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'lsj421678');
-insert into orders values ('iii', '이성준', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'lsj421678');
-insert into orders values ('jjj', '주변인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'lsj421678');
-insert into orders values ('kkk', '너', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'lsj421678');
-insert into orders values ('lll', '나', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'lsj421678');
+insert into orders values ('a', '수취인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'isj4216@gmail.com');
+insert into orders values ('b', '수신인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'isj4216@gmail.com');
+insert into orders values ('c', '이성준', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'isj4216@gmail.com');
+insert into orders values ('d', '주변인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'isj4216@gmail.com');
+insert into orders values ('e', '너', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'isj4216@gmail.com');
+insert into orders values ('f', '나', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'isj4216@gmail.com');
 
 
 
@@ -476,6 +476,7 @@ CREATE TABLE order_product  (
 	product_id VARCHAR2(30) not null, /* 상품ID FK */
 	option_id number not null ,      --  상품옵션ID_FK  
 	seller_store_no number not null,     -- 판매자스토어NO_FK
+	order_product_status number(2) not null,
 	foreign key(orders_no) references orders(orders_no) on delete cascade,
 	foreign key(product_id) references product(product_id) on delete set null ,
 	foreign key(option_id) references product_option(option_id) on delete set null ,
@@ -493,12 +494,12 @@ insert into order_product values (2, 'order_no13', '상품id132', 10);
 insert into order_product values (1, 'order_no17', '상품id132', 11);
 insert into order_product values (1, 'order_no43', '상품id133', 6);
 
-insert into order_product values (order_seq_no_seq.nextval, 5, 'jjj', '상품id29', 2, 3, 0);
-insert into order_product values (order_seq_no_seq.nextval, 2, 'kkk', '상품id34', 9, 3, 1);
-insert into order_product values (order_seq_no_seq.nextval, 3, 'lll', '상품id33', 8, 3, 2);
-insert into order_product values (order_seq_no_seq.nextval, 1, 'kkk', '상품id33', 8, 3, 3);
-insert into order_product values (order_seq_no_seq.nextval, 1, 'jjj', '상품id34', 3, 3, 4);
-insert into order_product values (order_seq_no_seq.nextval, 1, 'lll', '상품id34', 9, 3, 5);
+insert into order_product values (order_seq_no_seq.nextval, 5, 'a', '상품id29', 2, 3, 1);
+insert into order_product values (order_seq_no_seq.nextval, 2, 'a', '상품id34', 9, 3, 1);
+insert into order_product values (order_seq_no_seq.nextval, 3, 'a', '상품id33', 8, 3, 1);
+insert into order_product values (order_seq_no_seq.nextval, 1, 'a', '상품id33', 8, 3, 1);
+insert into order_product values (order_seq_no_seq.nextval, 1, 'a', '상품id34', 3, 3, 1);
+insert into order_product values (order_seq_no_seq.nextval, 1, 'a', '상품id34', 9, 3, 1);
 
 select count(orders_no)
 		from order_product

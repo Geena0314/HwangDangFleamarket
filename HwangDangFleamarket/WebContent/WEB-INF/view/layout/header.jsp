@@ -44,7 +44,7 @@
 				<a href="#" onClick="if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');};">장바구니</a>&nbsp;&nbsp;
 			</c:otherwise> 
 		</c:choose>
-		<c:if test="${ sessionScope.login_info.memberAssign == 1}">
+		<c:if test="${ sessionScope.login_info.memberAssign == 1 && sessionScope.seller.sellerAssign == 1}">
 			<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${sessionScope.seller.sellerStoreNo}&sellerStoreImage=${sessionScope.seller.sellerStoreImage}">내 스토어</a>
 		</c:if>
 		</div>

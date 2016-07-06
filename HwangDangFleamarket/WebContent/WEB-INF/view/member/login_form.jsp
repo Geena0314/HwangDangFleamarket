@@ -115,15 +115,30 @@
 					<table align='center'>
 						<tr>
 							<td>아이디</td>
-							<td><input type="text" name="memberId" id="id" size="10" autofocus="autofocus" onkeydown="idCheck(this)">@
-									<input type="text" name="domain" id="domain" size=13 readonly="readonly">
-									<select id="selectEmail">
-										<option>이메일을 선택하세요.</option>
-										<lee:forEach items="${requestScope.emailList}" var="email">
-											<option>${ email.codeName }</option>
-										</lee:forEach>
-										<option>직접입력</option>
-									</select>
+							<td>
+								<lee:choose>
+									<lee:when test="${ not empty requestScope.loginId }">
+										<input type="text" name="memberId" id="id" size="10" autofocus="autofocus" onkeydown="idCheck(this)" value="${ requestScope.loginId }">
+									</lee:when>
+									<lee:otherwise>
+										<input type="text" name="memberId" id="id" size="10" autofocus="autofocus" onkeydown="idCheck(this)">
+									</lee:otherwise>
+								</lee:choose>
+								@<input type="text" name="domain" id="domain" size=13 readonly="readonly">
+								<select id="selectEmail">
+									<option>이메일을 선택하세요.</option>
+									<lee:forEach items="${requestScope.emailList}" var="email">
+										<lee:choose>
+											<lee:when test="${ requestScope.domain == email.codeName }">
+												<option selected="selected">${ email.codeName }</option>
+											</lee:when>
+											<lee:otherwise>
+												<option>${ email.codeName }</option>
+											</lee:otherwise>
+										</lee:choose>
+									</lee:forEach>
+									<option>직접입력</option>
+								</select>
 							</td>
 						</tr>
 						<tr>

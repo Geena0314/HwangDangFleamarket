@@ -29,7 +29,10 @@ div .parent  {
 	border : 3px dotted pink;
 	float : left;
 }
-
+#orderSeqNo
+{
+	display: none;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
@@ -109,13 +112,21 @@ div .parent  {
 		
 		// 환불신청 
 		$("#btnRequestRefund").on("click",function(){
-			var yesNO = confirm("정말 환불 신청을 하시겠습니까?");
-			if(yesNO){
-				checkboxValidation(4 ,4, -1  , "배송완료상품만 환불을 신청할수 있습니다.");
-				url	="/HwangDangFleamarket/myorder/orderStatusChange.go?orderList="+orderCancelList+"&loginId="+loginId +"&status="+6;
-				sendForm(url);
+			if($(":checkbox:checked").length == 0)
+			{
+				alert("환불할 상품을 1개 선택해 주세요.")
+				return false;
 			}
-			
+			if($(":checkbox:checked").length != 1)
+			{
+				alert("한번에 하나의 상품만 환불 가능합니다.");
+				$(":checkbox:checked").removeAttr("checked");
+				return false;
+			}
+			else
+			{
+				window.open('/HwangDangFleamarket/myorder/refundForm.go?orderSeqNo='+$(":checkbox:checked").val(), '환불신청', 'resizable=no scrollbars=yes width=500 height=500 left=500 top=200')
+			}	
 		});
 		
 		// 교환신청 
@@ -274,8 +285,8 @@ div .parent  {
 				<button>구매확정</button>
 			</c:if>
 		</div>
+		
 	</c:forEach> 
-
 	<font size="14px" color="green" >총가격 :<fmt:formatNumber value="${order.ordersTotalPrice }" type="currency" /> </font>
 		<hr>
 	</div>

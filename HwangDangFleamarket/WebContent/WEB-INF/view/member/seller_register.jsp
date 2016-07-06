@@ -6,9 +6,10 @@
 	{
 		$("#password1").on("blur", function()
 		{
+			var password = '${sessionScope.login_info.memberPassword}';
 			//처음 입력한 패스워드가 로그인한 회원의 패스워드와 일치하지 않는경우.
 			$("#passwordError1").empty();
-			if(${sessionScope.login_info.memberPassword} != this.value)
+			if(password != this.value)
 			{
 				$("#passwordError1").append("패스워드가 일치하지 않습니다.");
 				$("#password1").val("");
@@ -186,6 +187,7 @@
 			$("#sellerStoreNameError").empty();
 			if(!$("#sellerStoreName").val())
 			{
+				alert("asdf")
 				$("#sellerStoreNameError").append("필수 입력사항입니다.");
 				return false;
 			}
@@ -221,14 +223,6 @@
 		};
 	});
 </script>
-
-<style type="text/css">
-	#table
-	{
-		
-	}
-</style>
-
 <div>
 	<h1 align="center">판매자 등록 신청</h1>
 	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/member/sellerRegisterRequest.go" name="sellerForm">
@@ -328,15 +322,15 @@
 			</tr>
 			<tr>
 				<th>판매 물품 1</th>
-				<td colspan="2"><input type="text" name="sellerProduct"></td>
+				<td colspan="2"><input type="text" name="sellerProduct1"></td>
 			</tr>
 			<tr>
 				<th>판매 물품 2</th>
-				<td colspan="2"><input type="text" name="sellerProduct"></td>
+				<td colspan="2"><input type="text" name="sellerProduct2"></td>
 			</tr>
 			<tr>
 				<th>판매 물품 3</th>
-				<td colspan="2"><input type="text" name="sellerProduct"></td>
+				<td colspan="2"><input type="text" name="sellerProduct3"></td>
 			</tr>
 			<tr>
 				<th rowspan="2">스토어 소개글</th>

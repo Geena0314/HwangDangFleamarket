@@ -27,7 +27,7 @@
 <div id="all">
 	<div id="sellerRegister" >
 		<lee:choose>
-			<lee:when test="${ sessionScope.login_info.memberId == 'kinghwang' }">
+			<lee:when test="${ sessionScope.login_info.memberId == 'kinghwang@gmail.com' }">
 					<a href="/HwangDangFleamarket/admin/sellerRegisterStatus.go?page=1">
 						<!-- 판매자 신청 현황.(관리자) -->
 						<img src="../image_storage/sellerRegisterStatus.jpg">
@@ -59,7 +59,7 @@
 	</div>
 	<div id="memberEdit">
 		<lee:choose>
-			<lee:when test="${ sessionScope.login_info.memberId == 'kinghwang' }">
+			<lee:when test="${ sessionScope.login_info.memberId == 'kinghwang@gmail.com' }">
 				<img src="../image_storage/memberList.jpg"><!-- 회원 목록 조회(관리자). -->
 			</lee:when>
 			<lee:otherwise>
@@ -69,7 +69,7 @@
 		
 	</div>
 	<div id="memberWithdrawal">
-		<lee:if test="${ sessionScope.login_info.memberId != 'kinghwang' }">
+		<lee:if test="${ sessionScope.login_info.memberId != 'kinghwang@gmail.com' }">
 			<a href="/HwangDangFleamarket/member/memberWithdrawal.go?memberId=${sessionScope.login_info.memberId}">
 				<img src="../image_storage/withdrawal.jpg">
 			</a>
