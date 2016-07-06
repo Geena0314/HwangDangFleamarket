@@ -84,6 +84,22 @@ public class OrderProduct implements Serializable
 	}
 
 	
+	public OrderProduct( int orderAmount, String ordersNo, String productId, int optionId,
+			int sellerStoreNo, int orderProductStatus, Product product, ProductOption productOption, Seller seller)
+	{
+		super();
+		this.orderAmount = orderAmount;
+		this.ordersNo = ordersNo;
+		this.productId = productId;
+		this.optionId = optionId;
+		this.sellerStoreNo = sellerStoreNo;
+		this.orderProductStatus = orderProductStatus;
+		this.product = product;
+		this.productOption = productOption;
+		this.seller = seller;
+	}
+
+	
 	
 	
 	public int getOrderSeqNo()

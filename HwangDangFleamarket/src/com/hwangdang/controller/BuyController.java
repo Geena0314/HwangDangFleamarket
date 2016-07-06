@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hwangdang.service.CartService;
 import com.hwangdang.service.MemberService;
 import com.hwangdang.serviceimpl.BuyServiceImpl;
 import com.hwangdang.vo.Cart;
@@ -38,22 +39,26 @@ public class BuyController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
+	private CartService cartService;
+	
+	
 	//구매전 재고수량 확인 로직 - ajax 
 	@ResponseBody
 	@RequestMapping("/checkStock.go")
-	public String checkStock(@RequestParam(value="page" ,defaultValue="1") int page ,
-			String productId ,int sellerStoreNo , String sellerStoreImage , int amount){
-		//System.out.println("구매할 상품아이디 : "+productId +",셀러스토어넘버 :" + sellerStoreNo);
-		//System.out.println("page :" + page + ", 셀러스토어이미지:"+sellerStoreImage);
+	public String checkStock( String productId , int amount , String optionSubName){
 		
 		//재고확인로직
-		int stock = service.getProductStockByProductId(productId);
+		Map<String , Object> param = new HashMap<>();
+		param.put("productId", productId);
+		param.put("optionSubName", optionSubName);
+		int stock = service.getProductStockByProductId(param);
+		System.out.println("재고량 조회:" + stock);
 		String msg = "";
 		if(amount > stock){
 			//주문수량이 재고량보다 큼 
 			//System.out.println("주문수량이 재고량보다 큼 : 주문실패 ");
 			 msg = "재고수량부족";
-			
 			
 		}else if(amount <= stock){
 			//주문수량이 재고량보다 작거나 같을때 : 주문가능 
@@ -80,6 +85,8 @@ public class BuyController {
 			model.addAttribute("queryString" ,"page="+page+"&productId="+productId);
 		}else{ 
 			// *********로그인상태! - 바로구매페이지로 이동 ***************
+			
+	
 			if(productId != null){
 				ArrayList<OrderProduct> orderProductList = new ArrayList<>();
 				//System.out.println(sellerStoreNo);
@@ -104,18 +111,20 @@ public class BuyController {
 	 * 장바구니 구매  N개 : 상품결제 페이지로 이동 
 	 */
 	@RequestMapping("/buyCarts.go")
-	public String buyCarts(String cartNoList , Model model){
-		System.out.println("카트리스트:"+ cartNoList);
+	public String buyCarts(String cartNoList , Model model , HttpSession session ){
+		//System.out.println("카트리스트:"+ cartNoList);
 		
 		//1.주문번호 생성
 		long randomNumber = (int) (Math.random() * 999999999) + 1;
 		String ordersNo = "" + randomNumber;
+		
+		
 		ArrayList<String> listParam = listSplit(cartNoList);
-		ArrayList<Cart> cartList = new ArrayList<>();
+		//ArrayList<Cart> cartList = new ArrayList<>();
 		ArrayList<OrderProduct> orderProductList = new ArrayList<>();
 		for(int i =0;  i < listParam.size();  i++){
 			Cart cart = service.getCartByCartNo(Integer.parseInt(listParam.get(i)) );
-			Member member = memberService.findById(cart.getMemberId());
+			//Member member = memberService.findById(cart.getMemberId());
 			Product product = service.getProductInfo(cart.getProductId());
 			ProductOption productOption = service.getProductOptionInfoByoptionNo(cart.getOptionId());
 			Seller seller = service.getSellerByNo(product.getSellerStoreNo());
@@ -125,6 +134,7 @@ public class BuyController {
 		}
 		model.addAttribute("ordersNo",ordersNo );
 		model.addAttribute("orderProductList",orderProductList);
+		model.addAttribute("cartNoList",cartNoList);
 		
 		String url ="buyer/buyForm.tiles";	
 		return url;
@@ -140,7 +150,7 @@ public class BuyController {
 			String ordersPayment , @RequestParam(value="ordersRequest" ,required=false) String ordersRequest , int paymentStatus , String memberId ,
 			int orderAmount , String productId , int optionId , int sellerStoreNo , int orderProductStatus ,
 			@RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage  ,  HttpSession session , 
-			HttpServletResponse response , HttpServletRequest request ) throws Exception{ // 0 결재대기 , 1 결재완료  
+			HttpServletResponse response , HttpServletRequest request  ) throws Exception{ // 0 결재대기 , 1 결재완료  
 		
 		if(ordersNo == null){
 			//1.주문번호 생성
@@ -171,13 +181,10 @@ public class BuyController {
 		orders.setOrderProductList(orderProductList);
 		*/
 		
-		
-		
 		//****************************************
 		//orders TB , orders product TB INSERT 
 		int cnt = service.addProductOne(orders ,op);
 			
-		
 		
 		String url = "";
 		if(cnt == 1){
@@ -213,7 +220,7 @@ public class BuyController {
 			String ordersPayment , @RequestParam(value="ordersRequest" ,required=false) String ordersRequest , int paymentStatus , String memberId ,
 			String amountList , String productIdList , String optionIdList , String sellerStoreNoList , int orderProductStatus ,
 			@RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage  ,  HttpSession session , 
-			HttpServletResponse response , HttpServletRequest request ) throws Exception{ // 0 결재대기 , 1 결재완료  
+			HttpServletResponse response , HttpServletRequest request ,String cartNoList) throws Exception{ // 0 결재대기 , 1 결재완료  
 		
 		//1.주문번호 생성
 		if(ordersNo == null){
@@ -230,30 +237,34 @@ public class BuyController {
 			service.setMemberMileage(param);
 		}
 		  
-		
 		//3. 매개변수 split
 		ArrayList<String> amountSplitList =  listSplit(amountList);
 		ArrayList<String> productIdSplitList =  listSplit(productIdList);
 		ArrayList<String> optoinIdSplitList =  listSplit(optionIdList);
 		ArrayList<String> sellerStoreNoSplitList =  listSplit(sellerStoreNoList);
 		
-		
-		
 		// 4. 객체생성
 		ArrayList<OrderProduct> orderProductList = new ArrayList<>();
 		Orders orders = new Orders(ordersNo, ordersReceiver, ordersPhone, ordersZipcode, ordersAddress, ordersSubAddress, ordersTotalPrice, ordersPayment, ordersRequest, paymentStatus, new Date(), memberId);
 		
+		
 		for(int i=0; i < amountSplitList.size(); i++){
+			//System.out.println("판매자가 결제한 수량 : "+amountSplitList.get(i));
+			Product product = service.getProductInfo(productIdSplitList.get(i));
+			Seller seller = service.getSellerByNo(Integer.parseInt(sellerStoreNoSplitList.get(i)));
+			ProductOption productOption = service.getProductOptionInfoByoptionNo(Integer.parseInt(optoinIdSplitList.get(i)));
+			
 			OrderProduct op = new OrderProduct(Integer.parseInt(amountSplitList.get(i)), 
-					ordersNo, productIdSplitList.get(i) , Integer.parseInt(optoinIdSplitList.get(i)), Integer.parseInt(sellerStoreNoSplitList.get(i)), orderProductStatus );
-			//System.out.println(op);
+					ordersNo, productIdSplitList.get(i) , Integer.parseInt(optoinIdSplitList.get(i)), Integer.parseInt(sellerStoreNoSplitList.get(i)), orderProductStatus ,product ,productOption , seller );
 			
 			//List에 add()
 			orderProductList.add(op);
-		
 		}
+		orders.setOrderProductList(orderProductList);
+		
+		
 		//****************************************
-		 //orders TB , orders product TB INSERT 
+		 // 5.orders TB , orders product TB INSERT 
 		int cnt = service.addProductN(orders);
 		
 		for(OrderProduct op : orderProductList ){
@@ -264,17 +275,35 @@ public class BuyController {
 			}
 			
 		}
-		/*
-		Product product = service.getProductInfo(productId);
-		Seller seller = service.getSellerByNo(sellerStoreNo);
-		op.setProduct(product);
-		op.setSeller(seller);
-		op.setProductOption(productOption);
-		ArrayList<OrderProduct> orderProductList = new ArrayList<>();
-		orderProductList.add(op);
-		orders.setOrderProductList(orderProductList);
-		*/
 		
+		//6-1. DB에 INSERT  : 결재완료라면 Cart에서 삭제
+		if(cnt == 1){
+				ArrayList<String> cartList = null;
+				cartList = listSplit(cartNoList);
+				for(String temp : cartList){
+					int cartNo = Integer.parseInt(temp);
+					cartService.removeCart(cartNo);
+				}
+		} //if
+	
+		// 6-2결재완료라면  구매한 상품 수량 마이너스 
+		if(cnt == 1){
+			//1.개별optionStock Minus
+			Map<String,Object> param = new HashMap<String,Object>();
+			
+			for(int i=0; i < amountSplitList.size(); i++){
+				int optionStock = Integer.parseInt(amountSplitList.get(i));
+				param.put("buyStock", optionStock);
+				param.put("optionId",orders.getOrderProductList().get(i).getProductOption().getOptionId() );
+				param.put("productId", productIdSplitList.get(i));
+				service.setOptionStockByOptionId(param);
+				service.setProductStockByProductId(param);
+				//System.out.println("옵션수량:"+optionStock);
+				//System.out.println("옵션TB의 ID:"+orders.getOrderProductList().get(i).getProductOption().getOptionId());
+				  
+			}
+			
+		}
 		
 		String url = "";
 		if(cnt == 1){

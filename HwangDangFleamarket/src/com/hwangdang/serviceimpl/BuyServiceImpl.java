@@ -22,8 +22,8 @@ public class BuyServiceImpl {
 	public BuyServiceImpl () { }
 	
 	//바로구매페이지 이동전 재고량조회
-	public int getProductStockByProductId(String productId){
-		return dao.selectProductStockByProductId(productId);
+	public int getProductStockByProductId(Map param){
+		return dao.selectProductStockByProductId(param);
 	}
 	
 	//바로구매하기 - Orders , Order_product INSERT 
@@ -88,6 +88,15 @@ public class BuyServiceImpl {
 	// order_product TB 시퀀스 조회    
 	public int getOrderProductSeq(){
 		return dao.selectOrderProductSeq();
+	}
+	
+	// product TB 전체상품 수량 변경 (마이너스) 
+	public int setProductStockByProductId(Map param){
+		return dao.updateProductStockByProductId(param);
+	}
+	// product_option TB 개별상품 수량 변경 (마이너스) 
+	public int setOptionStockByOptionId(Map param){
+		return dao.updateOptionStockByOptionId(param);
 	}
 	
 }

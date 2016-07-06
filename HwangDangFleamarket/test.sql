@@ -717,3 +717,19 @@ WHERE member_id = 'admin@admin.com'
 SELECT  *
 FROM cart
 WHERE cart_no = #{cartNo} 
+
+SELECT  *
+FROM cart
+WHERE member_id = 'admin@admin.com'
+
+SELECT  *
+FROM product
+WHERE product_id ='productid1'
+
+SELECT * FROM product_option
+WHERE product_id ='productid1'
+
+
+UPDATE  product_option  
+SET     option_stock =  option_stock - 1
+WHERE   product_id =  

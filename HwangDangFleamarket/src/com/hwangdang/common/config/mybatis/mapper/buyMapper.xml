@@ -80,63 +80,62 @@
 
 
 <!-- 재고량 조회 -->
-<select id="product-stock-by-productId" parameterType="string" resultType="_int">
-
-SELECT product_stock 
-FROM   product
-WHERE product_id = #{productId} 
-
+<select id="product-stock-by-productId" parameterType="map" resultType="_int">
+	SELECT option_stock 
+	FROM   product_option
+	WHERE product_id = #{productId} 
+	AND   option_sub_name =  #{optionSubName}
 </select>
 
 <!-- orders TB INSERT -->
 <insert id="insert-orders" parameterType="orders">
-INSERT INTO orders 
-VALUES ( 
- #{ordersNo },#{ordersReceiver },#{ordersPhone },#{ordersZipcode },
- #{ordersAddress },#{ordersSubAddress },#{ordersTotalPrice },#{ordersPayment },
- #{ordersRequest },#{paymentStatus },#{orders_date },#{memberId }
-)
-
+	INSERT INTO orders 
+	VALUES ( 
+	 #{ordersNo },#{ordersReceiver },#{ordersPhone },#{ordersZipcode },
+	 #{ordersAddress },#{ordersSubAddress },#{ordersTotalPrice },#{ordersPayment },
+	 #{ordersRequest },#{paymentStatus },#{orders_date },#{memberId }
+	)
 </insert>
+
 <!-- order_product TB INSERT   -->
 <insert id="insert-order-product" parameterType="OrderProduct">
-<selectKey order="BEFORE" keyProperty="orderSeqNo" resultType="_int" >
-	SELECT  order_product_seq.nextval
-	FROM dual
-</selectKey>
-INSERT INTO order_product
-VALUES ( 
- #{orderSeqNo },#{orderAmount }, #{ordersNo }, #{productId },
- #{optionId }, #{sellerStoreNo },#{orderProductStatus }
- 
-)
+	<selectKey order="BEFORE" keyProperty="orderSeqNo" resultType="_int" >
+		SELECT  order_product_seq.nextval
+		FROM dual
+	</selectKey>
+	INSERT INTO order_product
+	VALUES ( 
+	 #{orderSeqNo },#{orderAmount }, #{ordersNo }, #{productId },
+	 #{optionId }, #{sellerStoreNo },#{orderProductStatus }
+	 
+	)
 </insert>
 
 <select id="select-product-by-productId" parameterType="string" resultMap="basic-productmap">
-SELECT <include refid="product-column"/>
-FROM   product
-WHERE  product_id = #{productId} 
-	
+	SELECT <include refid="product-column"/>
+	FROM   product
+	WHERE  product_id = #{productId} 
+		
 </select>
 
 
 <select id="select-productOption-by-OptionSubName" resultMap="basic-productOption-resultmap" parameterType="string">
 
-SELECT  	option_id , option_name , option_sub_name ,
-			product_id , option_stock , option_add_price
-			
-FROM 		product_option
-WHERE 		option_sub_name = #{optionName } 
+	SELECT  	option_id , option_name , option_sub_name ,
+				product_id , option_stock , option_add_price
+				
+	FROM 		product_option
+	WHERE 		option_sub_name = #{optionName } 
 </select>
 
 
 <select id="select-product-option-by-optionNo" resultMap="basic-productOption-resultmap" parameterType="_int">
-
-SELECT  	option_id , option_name , option_sub_name ,
-			product_id , option_stock , option_add_price
-			
-FROM 		product_option
-WHERE 		option_id  = #{optionNo } 
+	
+	SELECT  	option_id , option_name , option_sub_name ,
+				product_id , option_stock , option_add_price
+				
+	FROM 		product_option
+	WHERE 		option_id  = #{optionNo } 
 </select>
 
 
@@ -147,47 +146,65 @@ WHERE 		option_id  = #{optionNo }
 </select>
 
 <select id="select-orders-by-date" parameterType="string" resultMap="orders-basic-resultmap">
-SELECT <include refid="orders-column"/>
-FROM orders  
-WHERE orders_date = 
-(  
-	SELECT MAX(orders_date) FROM orders WHERE member_id =  #{memberId}  
-)    
+	SELECT <include refid="orders-column"/>
+	FROM orders  
+	WHERE orders_date = 
+	(  
+		SELECT MAX(orders_date) FROM orders WHERE member_id =  #{memberId}  
+	)    
 </select>
 
 
 <select id="select-orders-by-ordersNo" parameterType="string" resultMap="orders-basic-resultmap">
-SELECT <include refid="orders-column"/>
-FROM orders  
-WHERE orders_no = #{ordersNo} 
+	SELECT <include refid="orders-column"/>
+	FROM orders  
+	WHERE orders_no = #{ordersNo} 
 
 </select>
 
 <update id="update-mileage-by-id" parameterType="map">
 
 <selectKey order="BEFORE" keyProperty="memberMileage" resultType="_int" >
-  SELECT member_mileage
-  FROM member
-  WHERE  member_id = #{memberId}
+	  SELECT member_mileage
+	  FROM member
+	  WHERE  member_id = #{memberId}
 </selectKey>
-UPDATE member 
-SET member_mileage = #{memberMileage} - #{mileage}
-WHERE member_id = #{memberId}
+	UPDATE member 
+	SET member_mileage = #{memberMileage} - #{mileage}
+	WHERE member_id = #{memberId}
 </update>
 
 
 <!-- Cart TB 조회  -->
 <select id="select-cart-by-cartNo" parameterType="_int" resultType="cart">
-SELECT  cart_no cartNo, cart_product_Amount cartProductAmount , 
-		 cart_product_option cartProductOption , product_id productId ,
-		 member_id memberId , option_id optionId
-FROM cart
-WHERE cart_no = #{cartNo} 
+	SELECT  cart_no cartNo, cart_product_Amount cartProductAmount , 
+			 cart_product_option cartProductOption , product_id productId ,
+			 member_id memberId , option_id optionId
+	FROM cart
+	WHERE cart_no = #{cartNo} 
 </select>
 
 <!-- order_product 시퀀스 조회 -->
 <select id="select_orderProduct_seq" resultType="_int">
-SELECT  order_product_seq.nextval
-FROM dual
+	SELECT  order_product_seq.nextval
+	FROM dual
 </select>
+
+<!-- 상품추가후 Product_option TB 개별옵션상품별 재고량 마이너스  -->
+<update id="update-optionStock-by-optionId" parameterType="map">
+	UPDATE   product_option
+	SET      option_stock =  option_stock - #{buyStock}
+	WHERE    option_id = #{optionId}
+	
+</update>
+
+<!-- 상품추가후  product TB의 전체 재고량 마이너스  -->
+<update id="update-productStock-by-productId" parameterType="map">
+	UPDATE   product 
+	SET      product_stock =  product_stock - #{buyStock}
+	WHERE    product_id = #{productId}
+</update>
+
+
+
 </mapper>

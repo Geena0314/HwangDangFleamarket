@@ -26,8 +26,8 @@ public class BuyDaoImpl {
 	
 	//재고량 조회
 	@Transactional
-	public int selectProductStockByProductId(String productId){
-		return session.selectOne("buy.product-stock-by-productId" ,productId);
+	public int selectProductStockByProductId(Map param){
+		return session.selectOne("buy.product-stock-by-productId" ,param);
 	}
 	
 	//orders INSERT
@@ -84,6 +84,16 @@ public class BuyDaoImpl {
 	@Transactional
 	public int selectOrderProductSeq(){
 		return session.selectOne("buy.select_orderProduct_seq");
+	}
+	
+	@Transactional
+	public int updateProductStockByProductId(Map param ){
+		return session.update("buy.update-productStock-by-productId" ,param);
+	}
+	
+	@Transactional
+	public int updateOptionStockByOptionId(Map param ){
+		return session.update("buy.update-optionStock-by-optionId" , param);
 	}
 	
 	

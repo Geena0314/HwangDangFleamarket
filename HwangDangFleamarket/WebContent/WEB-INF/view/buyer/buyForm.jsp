@@ -252,7 +252,7 @@
 					 +"&ordersTotalPrice="+ordersTotalPrice+"&ordersPayment="+ordersPayment
 					 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId+
 					 "&amountList="+ amountList + "&productIdList=" +productIdList+ "&sellerStoreNoList="+sellerStoreNoList +"&orderProductStatus="+orderProductStatus+
-					 "&optionIdList="+optionIdList  +"&usedMileage="+$("#useMileage").html().trim();	
+					 "&optionIdList="+optionIdList  +"&usedMileage="+$("#useMileage").html().trim()+"&cartNoList=${requestScope.cartNoList }";	
 					 alert(queryString);
 					// queryString ="#";
 					$("form").prop("action", "/HwangDangFleamarket/buy/buyProducts.go"+queryString);
@@ -420,7 +420,7 @@
 </script>
 
 <h2>구매페이지</h2>
-세션스코프 멤버정보 : ${sessionScope.login_info.memberAddress }
+<%-- 세션스코프 멤버정보 : ${sessionScope.login_info.memberAddress }
 page : ${param.page  }
 구매자아이디 : ${param.memberId } 
 product_id : ${param.productId  }
@@ -430,10 +430,10 @@ seller_store_no : ${param.sellerStoreNo  }
 옵션ID: ${requestScope.productOption.optionId }
 총추가가격 : ${requestScope.productOption.optionAddPrice * param.amount  }
 -------------------------------------------------------<br/>
-
+ --%>
 주문번호: ${requestScope.ordersNo}
 orderProductList : ${requestScope.orderProductList }
-
+카트리스트 ArrayList객체 ${requestScope.cartList }
 
 <form action="" method="POST" name="buy_form" >
 
