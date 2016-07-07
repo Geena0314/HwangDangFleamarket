@@ -26,7 +26,7 @@
 	padding: 5px;
 	margin-bottom: 50px;
 	margin-left: 25px;
-} */
+} 
 button.basic{
 	width: 150px;
 	height: 50px;
@@ -56,12 +56,12 @@ table ,tr{
 <div class="col-sm-3 col-md-2 sidebar" id="sideMenu2">
 	<ul class="nav nav-sidebar">
 		<li class="active">
-			<div class="store_img">
+			<div class="store_imgs">
 			<a href="#"><img id="storeMainImage" src="../image_storage/${param.sellerStoreImage}"></a>
 			</div>
 		</li>
         <li><input class="btn btn-lg btn-default btn-block" type="button" value="스토어 소개"></li>
         <li><input class="btn btn-lg btn-default btn-block" type="button" value="상품 목록" onclick="window.location='/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'"></li>
         <li><input class="btn btn-lg btn-default btn-block" type="button" value="스토어 소식" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=1&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'"></li>
-        </ul>
+    </ul>
 </div>

@@ -2,10 +2,23 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title>Insert title here</title>
-		
-		<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+	    <title>황당마켓</title>
+		<link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/template.css">
+	    <!-- Bootstrap core CSS -->
+	    <link href="/HwangDangFleamarket/css/bootstrap.min.css" rel="stylesheet">
+	    <!-- Custom styles for this template -->
+	    <link href="/HwangDangFleamarket/styles/dashboard.css" rel="stylesheet">
+	    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+	    <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
+	    <script src="/HwangDangFleamarket/js/bootstrap.min.js"></script>
+	    <script src="/HwangDangFleamarket/js/vendor/holder.js"></script>
+		<title>환불 신청</title>
 		<script type="text/javascript">
 			$(document).ready(function()
 			{
@@ -30,23 +43,29 @@
 				});
 			});
 		</script>	
+		<style type="text/css">
+			.page-header
+			{
+				margin-top: 0px;
+			}
+		</style>
 	</head>
 
 	<body>
 		<form method="POST" action="/HwangDangFleamarket/myorder/refundSuccess.go?orderSeqNo=${ param.orderSeqNo }">
-			<div align="center">
-				<h2>환 불 신 청</h2>
-				<table>
-					<tr>
-						<th>신청 제목</th>
+			<div align="center" class="refund-div">
+				<h2 class="page-header">환 불 신 청</h2>
+				<table class="table table-striped refundTB">
+					<tr class="trInput">
+						<th class='tdName' >신청 제목</th>
 						<td colspan="2"><input type="text" name="refundTitle" size="28" id="refundTitle"></td>
 					</tr>
 					<tr>
 						<td colspan="2" align="center" id="refundTitleError">
 						</td>
 					</tr>
-					<tr>
-						<th>신청 내용</th>
+					<tr class="trInput">
+						<th class='tdName'>신청 내용</th>
 						<td colspan="2">
 							<textarea name="refundContent" cols="30" rows="15" id="refundContent"></textarea>
 						</td>
@@ -55,7 +74,7 @@
 						<td colspan="2" align="center" id="refundContentError">
 						</td>
 					</tr>
-					<tr>
+					<tr class="trInput">
 						<td colspan="2" align="right">
 							<input type="submit" value="등록하기" id="submit">
 							<input type="button" value="취소하기" onclick="window.close();">

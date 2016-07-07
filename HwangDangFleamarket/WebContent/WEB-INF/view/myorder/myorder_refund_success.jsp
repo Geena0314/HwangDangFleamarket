@@ -12,7 +12,6 @@
 			alert("환불신청에 실패했습니다.");
 		
 			opener.parent.location.reload();
-			alert(opener.parent.location);
 			window.close();
 		</script>
 	</head>

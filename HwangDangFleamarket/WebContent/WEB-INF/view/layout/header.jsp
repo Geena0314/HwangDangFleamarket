@@ -1,5 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<<<<<<< HEAD
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
 
@@ -16,6 +17,12 @@
 		
 	});
 </script>
+<style type="text/css">
+.homeMainImage{
+	width: 180px;
+	height: 80
+}
+</style>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -25,15 +32,8 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/HwangDangFleamarket/main.go">
-				<c:choose>
-					<c:when test="${requestScope.seller.sellerStoreName==null}">
-					황당 플리마켓
-					</c:when>
-					<c:otherwise>
-					${requestScope.seller.sellerStoreName}
-					</c:otherwise>
-				</c:choose>
+			<a class="brand" href="/HwangDangFleamarket/main.go">
+				<img class="homeMainImage" src="/HwangDangFleamarket/image_storage/home_logo.png">
 			</a>
 		</div>
 		
