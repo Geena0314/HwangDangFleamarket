@@ -177,7 +177,7 @@
 						</tr>
 					</table>	
 				</form>
-				<font size="2" color="red" id="errorMsg">${requestScope.errorMsg }</font>
+				<font size="2" color="red" id="errorMsg">${requestScope.errorMsg}</font>
 		</div>
 	</body>
 </html>

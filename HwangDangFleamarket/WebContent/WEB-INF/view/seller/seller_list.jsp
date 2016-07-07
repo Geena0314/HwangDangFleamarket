@@ -1,67 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<style type="text/css">
-div.seller_listing{
-	float: left;
-	border-top: 1px solid gray;
-	border-bottom: 1px solid gray;
-	margin: 20px 20px 20px 20px;
-	padding: 20px 20px 20px 20px;
-	max-width: 800px;
-}
-ul{
-	display: block;
-	list-style: none;
-}
-div.seller_listing li#list_block{
-	float: left;
-	overflow: hidden;
-	position: relative;
-	height: 150px;
-	min-width: 800px;
-	padding: 15px 15px 15px 15px;
-}
-li{
-	display: list-item;
-	margin: 0px;
-}
-
-div{
-	display: block;
-}
-.thmb{
-	float: left;
-	width: 150px;
-	height: 150px;
-}
-.store_info{
-	float: left;
-	width: 400px;
-	height: 150px;
-	border-right: 1px solid gray;
-}
-.store_products{
-	float: left;
-	width: 150px;
-	height: 150px;
-}
-p{
-	clear: both;
-}
-b{
-	font-size: 15pt;
-}
-img{
-	width: 150px;
-	height: 150px;
-}
-.store_img{
-	border-radius: 30px;
-	overflow: hidden;
-}
-
-</style>
 <h2>황당 플리마켓 Stores</h2>
 <div class="seller_listing">
 	<ul>
