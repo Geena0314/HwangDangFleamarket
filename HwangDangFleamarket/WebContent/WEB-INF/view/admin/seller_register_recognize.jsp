@@ -6,6 +6,7 @@
 		<title>Insert title here</title>
 		<script type="text/javascript">
 			alert("승인처리가 완료되었습니다.");
+		    window.history.forward(0);
 			opener.parent.location.reload();
 			window.close();
 		</script>

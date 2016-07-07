@@ -75,10 +75,17 @@
 	width: 80%;
 	padding: 5px;
 	font-family: 'NanumGothic_Bold';
-	margin-left:22px;
+	margin-left:10%;
 }
 #sideMenu2 .active{
 	margin-bottom: 40px;
+}
+
+/*스토어 사이드바 이미지*/
+#storeMainImage
+{
+	width: 100%;
+	height: 350px;
 }
 /********* address & seller_address ********/
  .form-post{
@@ -208,16 +215,31 @@
 .product-content{
 	position:relative;
 	margin-bottom: 60px;
+	min-height: 570px;
 }
 #page{
   bottom: 0;
   padding: 0;
   text-align: center;
   height: 60px;
+  position: absolute; 
+  left: 44%;
 }
 .products{
 	margin-bottom: 30px;
 	padding:10px;
+}
+.registerProductBtn
+{
+	float: right;
+	margin-right: 100px;
+	position: absolute; 
+	bottom: 0px;
+	left: 80%;
+ 	padding: 0;
+	text-align: center;
+	height: 60px;
+	font-size: large;
 }
 /********* product_detail ********/
 .reviewPageGroup
@@ -227,7 +249,7 @@
 #reviewContent
 {
 	width: 500px;
-	height: 123px;
+	height: 150px;
 }
 #optionId
 {
@@ -266,6 +288,7 @@
   margin: 0 auto;
   border: 3px solid #777;
   border-radius: 4px;
+  font-size: large;
 }
 .detailInfo{
 	min-height: 400px;
@@ -274,7 +297,8 @@
 }
 .reviewTable{
 	/* min-height: 400px; */
-	width:80%;
+	width: 65%;
+	font-size: medium;
 }
 .reviewTable tr td{
 	text-align: center;
@@ -293,6 +317,32 @@
 	font-family: 'NanumGothic';
 }
 
+/*페이지 그룹*/
+.pageGroup
+{
+	font-size: large;
+}
+
+#main
+{
+	width:80%;
+	margin-left: 5%;
+}
+
+#mainImage
+{
+	margin-top: 80px;
+}
+
+#qnaRegisterTD
+{
+	text-align: right;
+}
+
+#qnaRegister
+{
+	margin-right: 50px;
+}
 /* header{
 	background-color:pink;
 	padding: 5px;
@@ -343,40 +393,75 @@ footer{
 	float:right;
 } */
 /**************스토어둘러보기*****************/
-/* 이미지 크기고정. */
-.col-sm-4
+.list-margins
 {
-	float: left;
+	padding-left: 30px;
 }
+.store_look_around
+{
+	padding-left: 50px;
+	padding-top: 30px;
+}
+/* 이미지 크기고정. */
 .sellerListImage
 {
-	width: 300px;
-	height: 300px;
+	width: 100%;
+	height: 100%;
+}
+
+.store_img
+{
+	width: 250px;
+	height: 250px;
 }
 
 /*소개글 크기고정 및 글자숨김처리.*/
-li .introduction
+div .introduction
 {
-	max-height: 300px;
-	width: 300px; 
+	height: 300px;
+	width: 250px; 
 	/*글자수가 범위를 넘어가면 숨김.*/
 	overflow:hidden;
+	text-align: center;
+	/* display:table-cell; */
+	vertical-align: middle;
 }
 
+/*li태그 마크 삭제.*/
 li
 {
 	 list-style-type : none;
 }
 
-/*페이지 그룹*/
-.pageGroup
+.seller-list
 {
-	font-size: 20px;
+	margin-top: 30px;
+	height: 600px;
+	display:table-cell;
+	margin-bottom: 50px;
 }
 
-/*사이드바*/
-#storeMainImage
+.store_info
 {
-	width: 220px;
-	height: 350px;
+	width: 80%;
+	height: 300px;
 }
+
+.product_list
+{
+	max-height: 80px;
+	margin-top: 30px;
+	text-align: center;
+	width: 250px;
+}
+
+/*환불신청 폼*/
+.refund-div
+{
+	width: 450px;
+}
+.refundTB
+{
+	width: 500px;
+}
+/*판매자 등록 신청 현황 폼*/
