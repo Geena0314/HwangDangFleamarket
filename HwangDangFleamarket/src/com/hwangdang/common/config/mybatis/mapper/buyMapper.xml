@@ -247,7 +247,6 @@ FROM (
 			SELECT     product_id , product_name ,product_price ,product_stock ,
 			     	   product_main_image  , product_info , product_like , p.seller_store_no ,rownum
 			FROM 	   product p  
-			WHERE      product_stock > 0 
 			ORDER BY   product_like DESC	
 		) p , seller s
 		WHERE     p.seller_store_no = s.seller_store_no 
@@ -265,7 +264,6 @@ SELECT  count(*)
 			SELECT     product_id , product_name ,product_price ,product_stock ,
 			     	   product_main_image  , product_info , product_like , p.seller_store_no ,rownum
 			FROM 	   product p  
-			WHERE      product_stock > 0 
 			ORDER BY   product_like DESC	
 		) p , seller s
 		WHERE     p.seller_store_no = s.seller_store_no 

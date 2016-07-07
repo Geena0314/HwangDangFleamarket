@@ -843,23 +843,6 @@ FROM (
 
 
 
-
-
-select member_id 
-	FROM 
-	(
-		select member_id , ceil(rownum / 2) page
-		FROM 
-		(
-			select * 
-			FROM  member
-		)	
-)where page = 1
-
-
-
-
-
 SELECT  count(*)
 		FROM   
 		(
