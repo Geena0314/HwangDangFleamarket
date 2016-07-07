@@ -66,9 +66,9 @@
 
 
 
-<!-- 주문 기본 리절트맵 -->
+<!-- seller 기본 리절트맵 -->
 	<resultMap type="seller" id="seller-basic-resultmap">
-		<id column="seller_store_no" property="sellerStoreNo"/>
+		<id column="s_seller_store_no" property="sellerStoreNo"/>
 		<result column="seller_store_name" property="sellerStoreName"/>
 		<result column="seller_tax_id" property="sellerTaxId"/>
 		<result column="seller_industry" property="sellerIndustry"/>
@@ -219,30 +219,58 @@
 	OR seller_product3 LIKE '%' || #{keyword } || '%' 
 	OR product_info LIKE ''%' || #{keyword } || '%'  
 -->
-<select id="select-product-by-like" parameterType="string"  resultMap="product-seller-join" >
-	
-SELECT   product_id , product_name ,product_price ,product_stock ,
-	     product_main_image  , product_info , product_like , p.seller_store_no ,
-	    
-	     s.seller_store_no , seller_store_name , seller_tax_id , seller_industry ,
-		 seller_sub_industry , seller_zipcode , seller_address , seller_sub_address ,
-		 seller_store_image , seller_product1  , seller_product2, seller_product3 , 
-		 seller_introduction , seller_assign ,  member_id 
+<select id="select-product-by-like" parameterType="map"  resultMap="product-seller-join" >
 
-FROM   
-(
-	SELECT  product_id , product_name ,product_price ,product_stock ,
-	     	product_main_image  , product_info , product_like , p.seller_store_no
-	FROM 	product p  
-	WHERE   product_stock > 0 	
-) p , seller s
+SELECT  product_id , product_name ,product_price ,product_stock ,
+		product_main_image  , product_info , product_like , p_seller_store_no ,
+		s_seller_store_no , seller_store_name , seller_tax_id , seller_industry ,
+		seller_sub_industry , seller_zipcode , seller_address , seller_sub_address ,
+		seller_store_image , seller_product1  , seller_product2, seller_product3 , 
+		seller_introduction , seller_assign ,  member_id 
+FROM (
 
-WHERE     p.seller_store_no = s.seller_store_no 
-AND       product_name LIKE '%' || #{keyword } || '%'  
+SELECT 	product_id , product_name ,product_price ,product_stock ,
+		product_main_image  , product_info , product_like , p_seller_store_no ,
+		s_seller_store_no , seller_store_name , seller_tax_id , seller_industry ,
+		seller_sub_industry , seller_zipcode , seller_address , seller_sub_address ,
+		seller_store_image , seller_product1  , seller_product2, seller_product3 , 
+		seller_introduction , seller_assign ,  member_id  , ceil(rownum / #{itemPerPage} ) page 
+FROM (
+		SELECT    product_id , product_name ,product_price ,product_stock ,
+		product_main_image  , product_info , product_like , p.seller_store_no p_seller_store_no ,
+		s.seller_store_no s_seller_store_no , seller_store_name , seller_tax_id , seller_industry ,
+		seller_sub_industry , seller_zipcode , seller_address , seller_sub_address ,
+		seller_store_image , seller_product1  , seller_product2, seller_product3 , 
+		seller_introduction , seller_assign ,  member_id 
+		FROM   
+		(
+			SELECT     product_id , product_name ,product_price ,product_stock ,
+			     	   product_main_image  , product_info , product_like , p.seller_store_no ,rownum
+			FROM 	   product p  
+			WHERE      product_stock > 0 
+			ORDER BY   product_like DESC	
+		) p , seller s
+		WHERE     p.seller_store_no = s.seller_store_no 
+		AND        product_name LIKE '%' || #{keyword } || '%'  
+)
+
+) WHERE page = #{page}
 
 </select>
 
-	
+<select id="select-product-by-totalItemsCount" resultType="_int"  parameterType="string">
+SELECT  count(*)
+		FROM   
+		(
+			SELECT     product_id , product_name ,product_price ,product_stock ,
+			     	   product_main_image  , product_info , product_like , p.seller_store_no ,rownum
+			FROM 	   product p  
+			WHERE      product_stock > 0 
+			ORDER BY   product_like DESC	
+		) p , seller s
+		WHERE     p.seller_store_no = s.seller_store_no 
+		AND       product_name LIKE '%' || #{keyword } || '%'  
+</select>
 	
 
   

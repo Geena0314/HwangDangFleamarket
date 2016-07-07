@@ -11,12 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.style.DefaultValueStyler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hwangdang.common.util.Constants;
+import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.service.CartService;
 import com.hwangdang.service.MemberService;
 import com.hwangdang.serviceimpl.BuyServiceImpl;
@@ -382,13 +385,25 @@ public class BuyController {
 	 * */
 	@RequestMapping("/findProductByKeyword.go")
 	public String findProductByKeyword(Model model,
-					@RequestParam(value="keyword" ,required=false) String keyword){
-		
-		List<Product> productList = service.getProductByLikeKeyword(keyword);
-		for(Product p : productList){
-			System.out.println(p);
-		}
-		model.addAttribute("productList", productList);
+					@RequestParam(value="keyword" ,required=false) String keyword , 
+					@RequestParam(value="page" , defaultValue="1") int page){
+		System.out.println("키워드:"+keyword);
+		if(!keyword.isEmpty()){
+			Map<String ,Object> param = new HashMap<String,Object>();
+			param.put("keyword", keyword);
+			param.put("itemPerPage", Constants.ITEMS_PER_PAGE);
+			param.put("page" , page);
+			List<Product> productList = service.getProductByLikeKeyword(param);
+			for(Product p : productList){
+				System.out.println(p);
+			}
+			int totalItems = service.getProductTotalByLikeKeyword(keyword);
+			PagingBean pagingBean = new PagingBean(totalItems, page);
+			
+			model.addAttribute("pagingBean", pagingBean);
+			model.addAttribute("productList", productList);
+			model.addAttribute("keyword" ,keyword);
+		}		
 		
 		return "buyer/product_list.tiles";
 	}

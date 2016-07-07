@@ -101,7 +101,12 @@ public class BuyServiceImpl {
 	}
 	
 	// 상품명으로 제품들 조회 LIKE keyword
-	public List<Product> getProductByLikeKeyword(String keyword){
-		return dao.selectProductByLikeKeyword(keyword);
+	public List<Product> getProductByLikeKeyword(Map param){
+		return dao.selectProductByLikeKeyword(param);
 	}
+	
+	// 키워드로 조회한 아이템의 토탈갯수 
+		public int getProductTotalByLikeKeyword(String keyword){
+			return dao.selectProductCountByLike(keyword);
+		}
 }

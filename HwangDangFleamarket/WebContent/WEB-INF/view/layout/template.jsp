@@ -22,8 +22,8 @@
     <script src="/HwangDangFleamarket/js/bootstrap.min.js"></script>
     <script src="/HwangDangFleamarket/js/vendor/holder.js"></script>
     <script type="text/javascript">
-/*   $(document).ready(function(){
-	 $(window).resize(function(){
+    /*$(document).ready(function(){
+	  $(window).resize(function(){
 		console.log('resize event !!', this.innerWidth);
 		 var size = (this.innerWidth)*0.85 - 250;
 		if(size < 300){
@@ -33,10 +33,15 @@
 		} 
 		 var size = (this.innerHeight);
 		 $('section').css('height',size);
-			
-	 });
- }); */ 
-</script>
+			  
+	 }); 
+	 
+ }); */
+     
+ </script>
+
+   		
+   
 </head>
 <body>
 	<div class="container-fluid">
@@ -55,7 +60,6 @@
 
 	<header>
 		<tiles:insertAttribute name="header"/> <!-- name 속성에 put-attribute 태그의 name 속성값을 호출 -->
-		<tiles:insertAttribute name="searchBar"/>
 	</header>
 	
 	<div>

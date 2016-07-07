@@ -355,6 +355,38 @@ insert into product values ('productid5', '북한냉면', 80000, 40, 'abc4.jpg',
 insert into product values ('productid4', '여수밤바다', 30000, 50, 'abc5.jpg', '상품정보5', 7, 15);
 insert into product values ('productid6', '금사빠', 20000, 60, 'abc6.jpg', '상품정보6', 2, 16);
 insert into product values ('productid7', '금도끼', 10000, 70, 'abc7.jpg', '상품정보7', 11,15);
+insert into product values ('productid10', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 111,15);
+insert into product values ('productid11', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 121,15);
+insert into product values ('productid12', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 131,15);
+insert into product values ('productid13', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 141,15);
+insert into product values ('productid14', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 151,15);
+insert into product values ('productid15', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 111,15);
+insert into product values ('productid16', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 121,15);
+insert into product values ('productid17', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 131,15);
+insert into product values ('productid18', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 141,15);
+insert into product values ('productid19', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 151,15);
+insert into product values ('productid20', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 111,15);
+insert into product values ('productid21', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 121,15);
+insert into product values ('productid22', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 131,15);
+insert into product values ('productid23', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 141,15);
+insert into product values ('productid24', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 151,15);
+insert into product values ('productid25', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 111,15);
+insert into product values ('productid26', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 121,15);
+insert into product values ('productid27', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 131,15);
+insert into product values ('productid28', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 141,15);
+insert into product values ('productid29', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 151,15);
+insert into product values ('productid30', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 111,15);
+insert into product values ('productid31', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 121,15);
+insert into product values ('productid32', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 131,15);
+insert into product values ('productid33', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 141,15);
+insert into product values ('productid34', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 151,15);
+insert into product values ('productid35', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 111,15);
+insert into product values ('productid36', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 121,15);
+insert into product values ('productid37', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 131,15);
+insert into product values ('productid38', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 141,15);
+insert into product values ('productid39', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 151,15);
+
+
 
 select * FROM product_detail_image
 
@@ -757,7 +789,7 @@ OR    seller_product3 LIKE '%새우깡%'
  
 
 select * FROM product
-WHERE  product_name LIKE '%새우깡%' 
+WHERE  product_name LIKE '%생새우%' 
 
 select 	*
 FROM 	seller 
@@ -771,3 +803,71 @@ productid2 새우깡
 productid3 새우깡
 해물나라 
 
+
+SELECT  product_id , product_name ,product_price ,product_stock ,
+		product_main_image  , product_info , product_like , p_seller_store_no ,
+		s_seller_store_no , seller_store_name , seller_tax_id , seller_industry ,
+		seller_sub_industry , seller_zipcode , seller_address , seller_sub_address ,
+		seller_store_image , seller_product1  , seller_product2, seller_product3 , 
+		seller_introduction , seller_assign ,  member_id 
+FROM (
+
+SELECT 	product_id , product_name ,product_price ,product_stock ,
+		product_main_image  , product_info , product_like , p_seller_store_no ,
+		s_seller_store_no , seller_store_name , seller_tax_id , seller_industry ,
+		seller_sub_industry , seller_zipcode , seller_address , seller_sub_address ,
+		seller_store_image , seller_product1  , seller_product2, seller_product3 , 
+		seller_introduction , seller_assign ,  member_id  , ceil(rownum / 1) page 
+FROM (
+		SELECT    product_id , product_name ,product_price ,product_stock ,
+		product_main_image  , product_info , product_like , p.seller_store_no p_seller_store_no ,
+		s.seller_store_no s_seller_store_no , seller_store_name , seller_tax_id , seller_industry ,
+		seller_sub_industry , seller_zipcode , seller_address , seller_sub_address ,
+		seller_store_image , seller_product1  , seller_product2, seller_product3 , 
+		seller_introduction , seller_assign ,  member_id 
+		FROM   
+		(
+			SELECT     product_id , product_name ,product_price ,product_stock ,
+			     	   product_main_image  , product_info , product_like , p.seller_store_no ,rownum
+			FROM 	   product p  
+			WHERE      product_stock > 0 
+			ORDER BY   product_like DESC	
+		) p , seller s
+		WHERE     p.seller_store_no = s.seller_store_no 
+		AND       product_name LIKE '%생새우%'
+)
+
+) WHERE page = 1
+
+
+
+
+
+
+
+select member_id 
+	FROM 
+	(
+		select member_id , ceil(rownum / 2) page
+		FROM 
+		(
+			select * 
+			FROM  member
+		)	
+)where page = 1
+
+
+
+
+
+SELECT  count(*)
+		FROM   
+		(
+			SELECT     product_id , product_name ,product_price ,product_stock ,
+			     	   product_main_image  , product_info , product_like , p.seller_store_no ,rownum
+			FROM 	   product p  
+			WHERE      product_stock > 0 
+			ORDER BY   product_like DESC	
+		) p , seller s
+		WHERE     p.seller_store_no = s.seller_store_no 
+		AND       product_name LIKE '%새우깡%'
