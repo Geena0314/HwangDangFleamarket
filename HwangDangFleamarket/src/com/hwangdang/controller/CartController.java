@@ -42,11 +42,9 @@ public class CartController {
 			
 			@RequestMapping("/addCart")
 			@ResponseBody
-			public HashMap<String, Object> addCart(Cart cart){
+			public Cart addCart(Cart cart){
 				service.addCart(cart);
-				HashMap map = new HashMap<>();
-				map.put("cart", cart);
-				return map; 
+				return cart; 
 			}
 			
 			@RequestMapping("/removeCart")

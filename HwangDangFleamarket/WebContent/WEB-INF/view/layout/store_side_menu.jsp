@@ -63,5 +63,5 @@ table ,tr{
         <li><input class="btn btn-lg btn-default btn-block" type="button" value="스토어 소개"></li>
         <li><input class="btn btn-lg btn-default btn-block" type="button" value="상품 목록" onclick="window.location='/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'"></li>
         <li><input class="btn btn-lg btn-default btn-block" type="button" value="스토어 소식" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=1&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'"></li>
-        </ul>
+    </ul>
 </div>

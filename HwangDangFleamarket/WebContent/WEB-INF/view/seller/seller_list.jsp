@@ -65,6 +65,7 @@ img{
 <h2 class="page-header store_look_around">황당 플리마켓 Stores</h2>
 <!-- <div class="seller_listing"> -->
 <div class="row placeholders store_look_around">
+<div class="seller_listing">
 	<ul>
 		<c:forEach items="${requestScope.list}" var="list">
 			<div class="col-sm-4 seller-list" id="list_block">
@@ -135,3 +136,4 @@ img{
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
 </p>
+</div>

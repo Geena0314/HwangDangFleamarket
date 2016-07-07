@@ -883,7 +883,7 @@ $(document).ready(function()
 		{
 			var result = confirm("로그인이 필요한 서비스입니다.\n로그인하시겠습니까?");
 			if(result){
-				return window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');
+				return window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=700 height=450 left=500 top=200');
 			}else{
 				return false;
 			}
@@ -1032,7 +1032,7 @@ function error(xhr, status, err)
 			<lee:forEach items="${ requestScope.detailimage }" var="image">
 				<img src="../image_storage/${ image }"  style="width:300px;height:200px;"><br>
 			</lee:forEach>
-	
+			
 			<br><br><br><br>${ requestScope.product.productInfo }<br>
 			<br><br><br><br>
 		</div>
@@ -1074,52 +1074,52 @@ function error(xhr, status, err)
 						<font color="#47C83E">◁</font>
 					</lee:otherwise>
 				</lee:choose>
-				
-				<!-- 
-					현재 페이지가 속한 페이지 그룹내의 페이지들 링크.
-					현재 페이지그룹의 시작페이지~ 끝페이지
-				 -->
-				 <!-- 만약 page가 현재페이지라면 링크 처리를 하지않고, 현재 페이지가 아니라면 링크처리. -->
-				<lee:forEach begin="${ requestScope.bean.beginPage }" end="${ requestScope.bean.endPage }" var="page" varStatus="no">
-					<lee:choose>
-						<lee:when test="${ page != requestScope.bean.page }">
-							<a class="movePage">${ page }</a>
-						</lee:when>
-						<lee:otherwise>
-							<a id="currentPage" ><font color="#47C83E">${ page }</font></a>
-						</lee:otherwise>
-					</lee:choose>
-				</lee:forEach>
-				
-				<!-- 
-					다음 페이지 그룹 처리.
-					만약, 다음페이지 그룹이 있으면 링크처리하고 없으면 화살표만 나오도록 처리. 
-				-->
-				<lee:choose>
-					<lee:when test="${ requestScope.bean.nextPageGroup }">
-						<a class="nextPage">▷</a>
-					</lee:when>
-					<lee:otherwise>
-						<font color="#47C83E">▷</font>
-					</lee:otherwise>
-				</lee:choose>
-			</td>
-		</tr>
-		<tr><td colspan="2" id="reviewError"></td></tr>
-		<tr>
-			<td>
-				<input id="reviewWrite" type="text" placeholder="본 상품을 구매한 구매자만 입력 가능합니다.(20글자 제한)" size="65">
-			</td>
-			<td>
-				<input type="button" id="reviewRegister" value="등록" ><input type="button" id="reviewDelete" value="내리뷰삭제" ><!-- style="width:120px;" -->
-			</td>
-		</tr>
-	</table>
+						<!-- 
+							현재 페이지가 속한 페이지 그룹내의 페이지들 링크.
+							현재 페이지그룹의 시작페이지~ 끝페이지
+						 -->
+						 <!-- 만약 page가 현재페이지라면 링크 처리를 하지않고, 현재 페이지가 아니라면 링크처리. -->
+						<lee:forEach begin="${ requestScope.bean.beginPage }" end="${ requestScope.bean.endPage }" var="page" varStatus="no">
+							<lee:choose>
+								<lee:when test="${ page != requestScope.bean.page }">
+									<a class="movePage">${ page }</a>
+								</lee:when>
+								<lee:otherwise>
+									<a id="currentPage" ><font color="#47C83E">${ page }</font></a>
+								</lee:otherwise>
+							</lee:choose>
+						</lee:forEach>
+						
+						<!-- 
+							다음 페이지 그룹 처리.
+							만약, 다음페이지 그룹이 있으면 링크처리하고 없으면 화살표만 나오도록 처리. 
+						-->
+						<lee:choose>
+							<lee:when test="${ requestScope.bean.nextPageGroup }">
+								<a class="nextPage">▷</a>
+							</lee:when>
+							<lee:otherwise>
+								<font color="#47C83E">▷</font>
+							</lee:otherwise>
+						</lee:choose>
+					</td>
+				</tr>
+				<tr><td colspan="2" id="reviewError"></td></tr>
+				<tr>
+					<td>
+						<input id="reviewWrite" type="text" placeholder="본 상품을 구매한 구매자만 입력 가능합니다.(20글자 제한)" size="65">
+					</td>
+					<td>
+						<input type="button" id="reviewRegister" value="등록" ><input type="button" id="reviewDelete" value="내리뷰삭제" ><!-- style="width:120px;" -->
+					</td>
+				</tr>
+			</table>
+			<hr><hr>
 	<hr width="65%"><hr width="65%">
 	<table id="qnaTable" class="table-striped reviewTable">
 		<tr><td colspan="3" align="center">QnA</td></tr>
 		<tr>
-			<td width="30"></td><td width="410" align="center">Q.문의제목.</td>
+			<td width="30"></td><td width="410" align="center">Q.문의제목</td>
 			<td align="center">작성자</td>
 		</tr>
 		
@@ -1174,7 +1174,7 @@ function error(xhr, status, err)
 		</tr>
 		<tr><td colspan="2" id="qnaError"></td></tr>
 		<tr>
-			<td colspan = "3" align="right" id="qnaRegisterTD"><input type="button" id="qnaRegister" value="문의 하기." onClick="if(${empty sessionScope.login_info.memberId }){if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=500 height=400 left=500 top=200');}}else{window.open('/HwangDangFleamarket/storeQnA/storeQnARegisterForm.go?productId=${param.productId}&memberId=${ sessionScope.login_info.memberId }','문의하기','resizable=no width=600 height=600');};"></td>
+			<td colspan = "3" align="right" id="qnaRegisterTD"><input type="button" id="qnaRegister" value="문의 하기" onClick="if(${empty sessionScope.login_info.memberId }){if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=700 height=450 left=500 top=200');}}else{window.open('/HwangDangFleamarket/storeQnA/storeQnARegisterForm.go?productId=${param.productId}&memberId=${ sessionScope.login_info.memberId }','문의하기','resizable=no width=600 height=600');};"></td>
 		</tr>
 	</table>
 	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
