@@ -729,29 +729,45 @@ WHERE product_id ='productid1'
 SELECT * FROM product_option
 WHERE product_id ='productid1'
 
-SELECT product_id , product_name ,product_price ,product_stock ,
-	   product_main_image  , product_info , product_like , p.seller_store_no 
-	   ,s.seller_store_no , seller_store_name , seller_tax_id , seller_industry ,
-		seller_sub_industry , seller_zipcode , seller_address , seller_sub_address ,
-		seller_store_image , seller_product1  , seller_product2, seller_product3 , 
-		seller_introduction , seller_assign ,  member_id 
-FROM   product p , seller s
-WHERE  product_name LIKE '%새우깡%' 
-OR 	   product_info LIKE '%새우깡%' 
-OR seller_store_name LIKE '%새우깡%' 
-OR seller_product1 LIKE '%새우깡%' 
-OR seller_product2 LIKE '%새우깡%' 
-OR seller_product3 LIKE '%새우깡%' 
+SELECT * FROM member;
 
+
+SELECT   product_id , product_name ,product_price ,product_stock ,
+	     product_main_image  , product_info , product_like , p.seller_store_no ,
+	     s.seller_store_no , seller_store_name , seller_tax_id , seller_industry ,
+		 seller_sub_industry , seller_zipcode , seller_address , seller_sub_address ,
+		 seller_store_image , seller_product1  , seller_product2, seller_product3 , 
+		 seller_introduction , seller_assign ,  member_id 
+
+FROM   
+(
+	SELECT  product_id , product_name ,product_price ,product_stock ,
+	     	product_main_image  , product_info , product_like , p.seller_store_no
+	FROM 	product p  
+	WHERE   product_stock > 0 	
+) p , seller s
+
+WHERE     p.seller_store_no = s.seller_store_no 
+AND     product_name LIKE '%새우깡%' 
+OR 	   product_info LIKE '%새우깡%' 
+OR    seller_store_name LIKE '%새우깡%' 
+OR    seller_product1 LIKE '%새우깡%' 
+OR    seller_product2 LIKE '%새우깡%' 
+OR    seller_product3 LIKE '%새우깡%' 
+ 
 
 select * FROM product
 WHERE  product_name LIKE '%새우깡%' 
 
-select * FROM seller 
-WHERE  seller_product1 LIKE '%새우깡%' 
-OR seller_product2 LIKE '%새우깡%' 
-OR seller_product3 LIKE '%새우깡%' 
+select 	*
+FROM 	seller 
+WHERE 	seller_product1 LIKE '%새우깡%' 
+OR 		seller_product2 LIKE '%새우깡%' 
+OR 		seller_product3 LIKE '%새우깡%' 
 
 
-
+productid1 새우깡
+productid2 새우깡
+productid3 새우깡
+해물나라 
 

@@ -31,7 +31,11 @@
 	<result column="seller_store_no" property="sellerStoreNo"/>
 </resultMap>
 
-
+ <!-- product : seller 조인  -->
+<resultMap type="Product" id="product-seller-join"  extends="basic-productmap">
+	<association property="seller" javaType="seller" resultMap="seller-basic-resultmap" />
+</resultMap> 
+	
 <resultMap type="ProductOption" id="basic-productOption-resultmap">
 	<id column="option_id" property="optionId" />
 	<result column="option_name" property="optionName"/>
@@ -39,8 +43,10 @@
 	<result column="product_id" property="productId"/>
 	<result column="option_stock" property="optionStock"/>
 	<result column="option_add_price" property="optionAddPrice"/>
-	
 </resultMap>
+
+
+
 
 <!-- 주문 기본 리절트맵 -->
 	<resultMap type="orders" id="orders-basic-resultmap">
@@ -57,6 +63,8 @@
 		<result column="member_id" property="memberId"/>
 		<result column="orders_date"  property="orders_date"/>
 	</resultMap>
+
+
 
 <!-- 주문 기본 리절트맵 -->
 	<resultMap type="seller" id="seller-basic-resultmap">
@@ -209,13 +217,28 @@
 	OR seller_product1 LIKE '%' || #{keyword } || '%'  
 	OR seller_product2 LIKE '%' || #{keyword } || '%'  
 	OR seller_product3 LIKE '%' || #{keyword } || '%' 
-		OR product_info LIKE ''%' || #{keyword } || '%'  
-	
+	OR product_info LIKE ''%' || #{keyword } || '%'  
 -->
-<select id="select-product-by-like" parameterType="string"  resultMap="basic-productmap" >
-	SELECT  <include refid="product-column"/>
-	FROM product 
-	WHERE  product_name LIKE '%' || #{keyword } || '%'  
+<select id="select-product-by-like" parameterType="string"  resultMap="product-seller-join" >
+	
+SELECT   product_id , product_name ,product_price ,product_stock ,
+	     product_main_image  , product_info , product_like , p.seller_store_no ,
+	    
+	     s.seller_store_no , seller_store_name , seller_tax_id , seller_industry ,
+		 seller_sub_industry , seller_zipcode , seller_address , seller_sub_address ,
+		 seller_store_image , seller_product1  , seller_product2, seller_product3 , 
+		 seller_introduction , seller_assign ,  member_id 
+
+FROM   
+(
+	SELECT  product_id , product_name ,product_price ,product_stock ,
+	     	product_main_image  , product_info , product_like , p.seller_store_no
+	FROM 	product p  
+	WHERE   product_stock > 0 	
+) p , seller s
+
+WHERE     p.seller_store_no = s.seller_store_no 
+AND       product_name LIKE '%' || #{keyword } || '%'  
 
 </select>
 
