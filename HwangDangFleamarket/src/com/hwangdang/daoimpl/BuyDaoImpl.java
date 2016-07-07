@@ -97,8 +97,12 @@ public class BuyDaoImpl {
 		return session.update("buy.update-optionStock-by-optionId" , param);
 	}
 	@Transactional
-	public List<Product> selectProductByLikeKeyword(String keyword ){
-		return session.selectList("buy.select-product-by-like" , keyword);
+	public List<Product> selectProductByLikeKeyword(Map param ){
+		return session.selectList("buy.select-product-by-like" , param);
+	}
+	@Transactional
+	public int selectProductCountByLike(String keyword){
+		return session.selectOne("buy.select-product-by-totalItemsCount" , keyword);
 	}
 	
 }

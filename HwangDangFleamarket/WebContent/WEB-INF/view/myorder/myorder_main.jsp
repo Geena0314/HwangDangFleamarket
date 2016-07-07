@@ -162,7 +162,7 @@ div .parent  {
 			
 		}); 
 		
-		//seller세부정보
+/* 		//seller세부정보
 		$(".sellerDetail").on("click",function(){
 			var sellerName = $(this).text(); 
 			$.ajax({
@@ -190,7 +190,7 @@ div .parent  {
 				}
 			});
 			
-		});
+		}); */
 		
 		
 		 //주문세부정보
@@ -261,14 +261,16 @@ div .parent  {
 		<!--  체크박스   -->
 		<input type="checkbox" name="items" value="${orderProduct.orderSeqNo}" />
 		
-		<!-- 주문정보  -->
+		<!-- 주문정보  
+			<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${p.seller.sellerStoreNo }&sellerImage=${p.seller.sellerStoreImage }">${p.seller.sellerStoreName }</a>
+		-->
 			<img src="/HwangDangFleamarket/product_img/${orderProduct.product.productMainImage }" />
-			<a class="sellerDetail">${orderProduct.seller.sellerStoreName }</a>
+			<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${orderProduct.seller.sellerStoreNo }&sellerImage=${orderProduct.seller.sellerStoreImage }">${orderProduct.seller.sellerStoreName }</a>
 			${orderProduct.product.productName } 주문수량 : ${orderProduct.orderAmount}개
 			옵션 :${orderProduct.productOption.optionSubName }
 			옵션수량 :${orderProduct.productOption.optionStock }개 <font color="lightgray">(+${orderProduct.productOption.optionAddPrice})</font>
-			상품가격 :<fmt:formatNumber value="${orderProduct.product.productPrice }" type="currency" />
-				
+			상품가격 :<fmt:formatNumber value="${orderProduct.product.productPrice }" pattern="###,#원" />
+				   
 		<!-- 배송상태  -->
 		<font color="blue" size="9px">
 			<c:choose>
