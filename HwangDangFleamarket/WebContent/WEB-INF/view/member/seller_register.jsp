@@ -228,10 +228,6 @@
 	});
 </script>
 <style type="text/css">
-	table
-	{
-		max-width: 
-	}
 	.registerError
 	{
 		display: none;
