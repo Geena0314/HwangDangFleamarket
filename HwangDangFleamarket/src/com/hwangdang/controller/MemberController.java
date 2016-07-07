@@ -28,7 +28,6 @@ import com.hwangdang.vo.Member;
 import com.hwangdang.vo.Seller;
 import com.hwangdang.vo.Zipcode;
 
-
 @Controller
 @RequestMapping("/member")
 public class MemberController {
@@ -60,7 +59,7 @@ public class MemberController {
 	public ModelAndView member(@ModelAttribute @Valid Member member, BindingResult result, HttpSession session, String domain,String hp1, String hp2, String hp3) throws Exception{
 		
 		
-		member.setMemberPhone(hp1+hp2+hp3);
+		member.setMemberPhone(hp1+"-"+hp2+"-"+hp3);
 		member.setMemberId(member.getMemberId()+"@"+domain);
 		service.add(member);
 		return new ModelAndView("redirect:/member/registerSuccess.go");
@@ -79,23 +78,24 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/loginResult.go") //로그인 후 화면
-	public ModelAndView loginResult(String memberId, String domain, String memberPassword, HttpSession session){
-		memberId = memberId;// + "@" + domain;
-		Member member = service.findById(memberId);
+	public ModelAndView loginResult(String memberId, String domain, String memberPassword, HttpSession session, HttpServletRequest request){
+		String memberIds = memberId + "@" + domain;
+		Member member = service.findById(memberIds);
 		if(member!=null){
 			//아이디가 존재함.
 			if(memberPassword.equals(member.getMemberPassword())){ //아이디와 패스워드가 맞는 경우
 				if(member.getMemberAssign() == 1)
 				{
 					//판매자인경우
-					session.setAttribute("seller", service.selectSellerById(memberId));
+					session.setAttribute("seller", service.selectSellerById(memberIds));
 				}
 				else
 				{
 					//판매자가 아닌데 셀러신청을 한경우.
-					if(service.selectSellerById(memberId) != null)
+					if(service.selectSellerById(memberIds) != null)
 					{
 						session.setAttribute("sellerRegister", 1);
+						session.setAttribute("seller", service.selectSellerById(memberIds));
 					}
 				}
 				session.setAttribute("login_info", member);
@@ -103,6 +103,8 @@ public class MemberController {
 				
 				
 			}else{//패스워드가 틀린 경우
+				request.setAttribute("loginId", memberId);
+				request.setAttribute("domain", domain);
 				return new ModelAndView("/member/login.go", "passwordError", "패스워드가 일치하지 않습니다.");
 			}
 		}else{//id가 없는 경우
@@ -166,30 +168,30 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/sellerRegisterRequest")
-	public ModelAndView sellerRegisterRequest(Seller seller, MultipartFile sellerMainImage, HttpServletRequest request, HttpSession session, String[] sellerProduct)
+	public ModelAndView sellerRegisterRequest(Seller seller, MultipartFile sellerMainImage, HttpServletRequest request, HttpSession session)
 	{
 		//셀러 등록 신청.
 		//대표이미지 저장처리.(sellerMainImage -> setSellerStoreImage)이름만 저장.
-	    String OriginalfileName = sellerMainImage.getOriginalFilename();//업로드 된 파일명.
+	    String originalFileName = sellerMainImage.getOriginalFilename();//업로드 된 파일명.
 		
 		//임시 저장소에 저장된 업로드 된 파일을 최종 저장소로 이동.
 		//최종 저장소 디렉토리 조회.
 		//new File(디렉토리, 파일)
 		String path = "C:\\Users\\kosta\\gits\\HwangDangFleamarket\\HwangDangFleamarket\\WebContent\\image_storage";
-		File image = new File(path, OriginalfileName);
+		File image = new File(path, originalFileName);
 		
 	    //file중복체크
 	    if (image.exists())
 	    {
-			OriginalfileName = System.currentTimeMillis() + OriginalfileName;
-			image = new File(path, OriginalfileName);
+			originalFileName = System.currentTimeMillis() + originalFileName;
+			image = new File(path, originalFileName);
 	    }
 	    // /는 application의 루트경로 => 파일경로로 알려준다.
 	    try
 		{
 	    	//톰캣 경로의 image_storage로 파일복사.
 	    	String imageStorage = request.getServletContext().getRealPath("/image_storage");
-	    	FileCopyUtils.copy(sellerMainImage.getInputStream(), new FileOutputStream(imageStorage+"/"+OriginalfileName));
+	    	FileCopyUtils.copy(sellerMainImage.getInputStream(), new FileOutputStream(imageStorage+"/"+originalFileName));
 	    	
 	    	//gits경로로 이미지 이동.
  			sellerMainImage.transferTo(image);
@@ -199,10 +201,13 @@ public class MemberController {
 			e.printStackTrace();
 		}
 	    
-	    seller.setSellerStoreImage(OriginalfileName);
+	    seller.setSellerStoreImage(originalFileName);
 	    int result = sellerService.insertSeller(seller);
 	    if(result == 1)
+	    {
+	    	session.setAttribute("sellerRegister", 1);
 		    return new ModelAndView("redirect:/member/sellerRegisterSuccess.go?result=1");
+	    }
 	    else
 	    	return new ModelAndView("redirect:/member/sellerRegisterSuccess.go?result=0");
 	}
@@ -237,9 +242,9 @@ public class MemberController {
 	}
 	@RequestMapping("memberWithdrawal")
 	public String memberWithdrawal(String memberId, HttpSession session)
-	{
+	{	
 		session.invalidate();
 		service.deleteMemberByMemberId(memberId);
-		return "member/member_withdrawal.tiles";
+		return "redirect:/main.go";
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.hwangdang.dao.OrderDao;
 import com.hwangdang.service.OrderService;
+import com.hwangdang.vo.RefundRequest;
 
 @Service
 public class OrderServiceImpl implements OrderService
@@ -26,5 +27,13 @@ public class OrderServiceImpl implements OrderService
 		dao.updateOrderProductStatus(orderSeqNo);
 		HashMap<String, Object> map = dao.selectOptionAmount(orderSeqNo);
 		return dao.updateOptionStock(map);
+	}
+
+	@Override
+	public int insertRefundRequest(RefundRequest refund)
+	{
+		// TODO Auto-generated method stub
+		dao.updateOrderProductRefundStatus(refund.getOrderSeqNo());
+		return dao.insertRefundRequest(refund);
 	}
 }

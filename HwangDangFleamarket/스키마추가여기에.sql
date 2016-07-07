@@ -114,4 +114,5 @@ CREATE TABLE product_option (
 	foreign key(product_id) references product(product_id) on delete cascade
 );
 
+-- 상품 상세이미지 경로 크기 최대치로 늘려줌
 ALTER TABLE PRODUCT_DETAIL_IMAGE modify image_path varchar2(4000);

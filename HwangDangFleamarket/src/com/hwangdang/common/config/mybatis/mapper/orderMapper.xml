@@ -116,4 +116,17 @@
 		where		option_id = #{OPTION_ID}
 	</update>
 	<!-- 여기까지 -->
+	
+	<!-- 환불요청 정보저장. -->
+	<insert id="insertRefundRequest" parameterType="refundRequest">
+		insert into refund_request values (#{refundTitle}, #{refundContent}, #{orderSeqNo})
+	</insert>
+	
+	<!-- 환불 신청 처리. -->
+	<!-- 주문상품 주문현황 변경.(환불신청상태 6번) -->
+	<update id="updateOrderProductRefundStatus" parameterType="_int">
+		update 	order_product
+		set			order_product_status = 6
+		where 	order_seq_no = #{orderSeqNo}
+	</update>
 </mapper>
