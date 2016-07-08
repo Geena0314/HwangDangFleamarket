@@ -31,7 +31,7 @@
 				$("#domain").empty().hide();
 				return false;
 			}
-			else if(index == 15)
+			else if(index == 16)
 			{
 				$("#domain").val("").removeAttr("readonly").show();
 				return false;

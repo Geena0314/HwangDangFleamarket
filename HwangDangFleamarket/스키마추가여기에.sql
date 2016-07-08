@@ -63,6 +63,14 @@ insert into order_product values (order_product_seq.nextval ,1, 'order_no11', '�
 insert into order_product values (order_product_seq.nextval , 1, 'order_no42', '상품id7', 18, 17);
 insert into order_product values (order_product_seq.nextval ,4, 'order_no34', '상품id1', 12, 17);
 
+select order_product_seq.nextval FROM dual
+
+
+order_seq_no_seq
+
+
+order_seq_no_seq
+
 -- cart TB 변경
 drop sequence cart_no_seq;
 create sequence cart_no_seq nocache;
