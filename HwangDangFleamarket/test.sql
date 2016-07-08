@@ -858,6 +858,8 @@ select member_id
 
 
 
+select * FROM product
+
 
 
 SELECT  count(*)
