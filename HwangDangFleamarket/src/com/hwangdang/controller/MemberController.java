@@ -183,7 +183,7 @@ public class MemberController {
 	@ResponseBody
 	public boolean oldPasswordChecked(String oldPassword , HttpSession session){	
 		boolean flag = false;
-		System.out.println(oldPassword);
+		//System.out.println(oldPassword);
 		Member member = (Member) session.getAttribute("login_info");
 		if(member!=null && member.getMemberPassword().equals(oldPassword)){
 			 flag = true;
@@ -291,9 +291,59 @@ public class MemberController {
 	
 	//회원정보수정
 	@RequestMapping("/setMember.go")
-	public String setMember(){
+	public String setMember(@RequestParam(value="memberName",required=false) String memberName ,
+			@RequestParam(value="oldPassword",required=false) String oldPassword,
+			@RequestParam(value="newPassword1",required=false) String newPassword1,
+			@RequestParam(value="newPassword2",required=false) String newPassword2 , 
+			@RequestParam(value="hp1",required=false) String hp1 ,
+			@RequestParam(value="hp2",required=false) String hp2 , 
+			@RequestParam(value="hp3",required=false) String hp3 , 
+			@RequestParam(value="memberZipcode",required=false) String memberZipcode ,
+			@RequestParam(value="memberAddress",required=false) String memberAddress ,  Model model ,
+			@RequestParam(value="memberSubAddress",required=false) String memberSubAddress ,HttpSession session ){
+		 
+		String url = "/";
+		String memberPhone = hp1+"-"+hp2+"-"+hp3;
+		//System.out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n",memberName ,oldPassword ,newPassword1 ,newPassword2, hp1,hp2,hp3,memberZipcode , memberAddress, memberSubAddress);
+		Member oldMember = (Member) session.getAttribute("login_info");
 		
-		return "";
+		  
+		if(memberName.isEmpty()){
+			memberName = oldMember.getMemberName();
+		}
+		if(!oldPassword.isEmpty() && !oldPassword.equals(oldMember.getMemberPassword())){
+			model.addAttribute("passwordError1" , "기존 비밀번호가 틀렸습니다.");
+			url = "member/member_info_update.go";
+		}
+		if(!newPassword1.isEmpty() && !newPassword2.isEmpty() && !newPassword1.equals(newPassword2)){
+			model.addAttribute("passwordError2" , "비밀번호1과 비밀번호2과 같지않습니다.");
+			url = "member/member_info_update.go";
+		}
+		if(newPassword1.isEmpty()){
+			newPassword1 = oldMember.getMemberPassword();
+		}
+		if(hp1.isEmpty() ||  hp2.isEmpty()|| hp3.isEmpty()){
+			memberPhone = oldMember.getMemberPhone();
+		}
+		if(memberZipcode.isEmpty()){
+			memberZipcode = oldMember.getMemberZipcode();
+		}
+		if(memberAddress.isEmpty() ){
+			memberAddress = oldMember.getMemberAddress();
+		}
+		if( memberSubAddress.isEmpty()){
+			memberSubAddress =oldMember.getMemberSubAddress();
+		}
+		Member setMember = new Member(oldMember.getMemberId(), newPassword1, memberName, memberPhone, memberZipcode, memberAddress, memberSubAddress , oldMember.getMemberAssign(), oldMember.getMemberMileage());
+		  
+		//System.out.println(setMember);
+		int flag = service.setMemberInfoByMemberId(setMember);
+		if(flag == 1){ //회원정보 수정 
+			session.setAttribute("login_info", setMember);
+			url = "member/updateSuccess.tiles";
+		}  
+		
+		return url;
 	}
 	
 	

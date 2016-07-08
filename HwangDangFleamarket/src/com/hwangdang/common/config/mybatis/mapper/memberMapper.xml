@@ -142,7 +142,7 @@
 	
 	<update id="update-member-by-memberId"  parameterType="member">
 		UPDATE  member 
-		SET 	member_id = #{memberId} ,  member_password = #{memberPassword} ,
+		SET 	member_password = #{memberPassword} ,
 				member_name = #{memberName } , member_phone = #{memberPhone } , 
 				member_address = #{memberAddress } , member_sub_address =#{memberSubAddress } 
 		WHERE 	member_id = #{memberId }

@@ -4,8 +4,12 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		var passwordFlag = false;
+		var nameFlag = false;
+		var phoneFlag = false;
+		var addressFlag = false;
+		var oldPsswordFlag = false;
 		//기존비밀번호 맞는지 검증
-		
 		$("#oldPassword").on("blur", function(){
 			var oldPassword = $("#oldPassword").val().trim();
 			//alert(oldPassword);
@@ -15,19 +19,18 @@
 				"data" :  "oldPassword=" +oldPassword , 
 				"dataType" : "text"  ,
 				"sendBefore" : function(){
-					
 					if(oldPassword.length == 0){
 						alert("비밀번호를 입력해주세요.");
 						return false;
 					}else if(oldPassword.length < 8){
 						alert("비밀번호는 8자 이상 입니다.")
 					}
-					
 				} , 
 				"success" : function(flag){
 					if(flag == 'true'){
 						// 기존비밀번호와 입력비밀번호 일치
 						$("#currentPasswordMsg").html("비밀번호가 일치합니다.");
+						oldPsswordFlag = true;
 					}else{
 						//불일치
 						$("#currentPasswordMsg").html("비밀번호를 잘못입력 하였습니다.(불일치)");
@@ -36,152 +39,128 @@
 				"error" : function(a , status , httpErrorMsg){
 					alert("패스워드 Ajax 실패 :" + status +httpErrorMsg);
 				}
-				
 			});
-			
-			
-		});
+		}); // 패스워드 ajax func
 		
-		
-		
-		
-		$("#selectEmail").on("change", function()
-				{
+		$("#selectEmail").on("change", function(){
 					var index = this.selectedIndex;
-					if(index == 0)
-					{
+					if(index == 0){
 						$("#domain").empty().hide();
 						return false;
 					}
-					else if(index == 16)
-					{
+					else if(index == 16){
 						$("#domain").val("").removeAttr("readonly").show();
 						return false;
 					}
-					else
-					{
+					else{
 						$("#domain").empty().val($("#selectEmail option:selected").val()).hide();
 						return true;
 					}
 				});
 				
 				//submit 클릭시.
-				$("#submit").on("click", function()
-				{
+				$("#submit").on("click", function(){
 					var result;
-					if(!$("#memberId").val() || $("#memberId").val().trim().length < 6 || $("#memberId").val().trim().length > 12)
-					{
-						alert("id는 6글자 이상, 12글자 이하로 입력해 주세요.");
-						$("#memberId").val("").focus();
-						return false;
-					}
-
-					if($("#selectEmail option:selected").index() == 0 || !$("#domain").val())
-					{
-						alert("이메일을 선택 또는 입력해 주세요.");
-						$("#selectEmail option:selected").removeAttr('selected');
-						$("#selectEmail option:eq(0)").attr('selected', 'true');
-						$("#domain").val("");
-						return false;
-					}
-						
-					if($("#memberPassword").val().trim().length < 8 || $("#memberPassword").val().trim().length > 20)
-					{
-						alert("패스워드는 8자 이상 20자 이하로 입력해 주세요.");
-						$("#memberPassword").val("").focus();
+					if(!oldPsswordFlag && passwordFlag) {
+						//기존비밀번호불일치
+						alert("기존비밀번호가 틀립니다. 확인바랍니다.");
 						return false;
 					}
 					
-					if($("#memberName").val().trim().length < 2 || $("#memberName").val().trim().length > 6)
+					if( passwordFlag  && $("#newPassword1").val().trim().length < 8 || $("#newPassword1").val().trim().length > 20){
+						alert("패스워드는 8자 이상 20자 이하로 입력해 주세요.");
+						$("#newPassword1").val("").focus();
+						$("#newPassword2").val("");
+						return false;
+					}
+					if( passwordFlag  && $("#newPassword1").val().trim() != $("#newPassword2").val().trim()){
+						alert("패스워드1과 패스워드2가 틀립니다.");
+						$("#newPassword1").val("").focus();
+						$("#newPassword2").val("");
+						return false;
+					}
+					
+					
+					
+					if(nameFlag && $("#memberName").val().trim().length < 2 || $("#memberName").val().trim().length > 6)
 					{
 						alert("이름은 2자이상 6자 이하로 입력해 주세요.");
 						$("#memberName").val("").focus();
 						return false;
 					}
-					
-					if($("#hp2").val().trim().length < 3 || $("#hp2").val().trim().length > 4 || $("#hp3").val().trim().length != 4)
-					{
+					    
+					if(phoneFlag && ($("#hp2").val().trim().length < 3 || $("#hp2").val().trim().length > 4 || $("#hp3").val().trim().length != 4) ){	
 						alert("전화번호를 올바르게 입력해 주세요.")
 						$("#hp2").val("").focus();
 						$("#hp3").val("");
 						return false;
 					}
 					
-					if(!$("#memberZipcode").val())
+					if(addressFlag && addressFlag && !$("#memberZipcode").val())
 					{
 						alert("주소를 검색해 주세요.");
 						return false;
 					}
-					if($("#memberSubAddress").val().trim().length < 4 || $("#memberSubAddress").val().trim().length > 30)
+					if(addressFlag && $("#memberSubAddress").val().trim().length < 4 || $("#memberSubAddress").val().trim().length > 30)
 					{
 						alert("세부 주소는 4자 이상 30자 이하로 입력해 주세요.");
 						$("#memberSubAddress").val("").focus();
 						return false;
 					}
 					var id = $("#memberId").val()+"@"+$("#domain").val();
-					$.ajax(
-					{
+					$.ajax({
 						"url" : "/HwangDangFleamarket/member/registerIdCheck.go",
 						"type" : "POST",
 						"data" : "memberId=" + id,
 						"dataType" : "text",
 						"async" : false,
-						"beforeSend" : function()
-						{
+						"beforeSend" : function(){
 							
 						},
-						"success" : function(text)
-						{
-							if(text == "fail")
-							{
+						"success" : function(text){
+							if(text == "fail"){
 								alert("중복된 ID입니다.");
 								$("#memberId").val("").focus();
 								r = false;
 								return false;
 							}
-							else
-							{
+							else{
 								r = true;
+								//alert("비밀번호 중복아님다.!");
+								$("form").prop("action" , "/HwangDangFleamarket/member/setMember.go");
+								$("form").submit();
+								
 							}
 						},
-						"error" : function()
-						{
-							
+						"error" : function(a  , status , httpMsg){
+							alert("ajax실패:"+httpMsg);
 						}
 					});
+					
 					return r;
 				});
 		
-		
-				
-		//패스워드 변경 폼 view
-		$("#updatePasswordBtn").on("click",function(){
-			$("#hiddenPasswordSpan").show();
-		});
-		
-		
-		$("#updateIdBtn").on("click",function(){
-			$("#hiddenIdSpan").show();
-		});
-		
+	//패스워드 변경 폼 view
+	$("#updatePasswordBtn").on("click",function(){
+		$("#hiddenPasswordSpan").show();
+		passwordFlag = true;
+	});
 	$("#nameUpdateBtn").on("click",function(){
 			$("#hiddenNameSpan").show();
+			 nameFlag = true;
 		});
-	
 	$("#phoneUpdateBtn").on("click",function(){
 		$("#hiddenPhoneSpan").show();
-	});
+		 phoneFlag = true;
 	
+	});
 	$("#updateAddressBtn").on("click",function(){
 		$("#hiddenAddressSpan").show();
+		 addressFlag = true;
 	});
 		
-	//폼전송버튼
-	$("#submit").on("click",function(){
-			
-	});
 
-	});
+	}); //ready
 </script>
 
 <form method="post" action="/HwangDangFleamarket/member/setMember.go" name="register" id="registerForm">
@@ -192,20 +171,7 @@
 		
 			<td width='150' class='tdName'>I&nbsp&nbsp&nbsp&nbsp&nbspD</td>
 			<td>
-				 ${sessionScope.login_info.memberId } <input type="button" value="수정" id="updateIdBtn"/>
-				<br/>
-				<span hidden="true" id="hiddenIdSpan" >
-					<input type="text" name="memberId" size=13 id="memberId" onkeydown="idCheck(this);">
-				@
-				<input type="text" name="domain" id="domain" size=13 readonly="readonly">
-				<select id="selectEmail">
-					<option>이메일을 선택하세요.</option>
-					<c:forEach items="${requestScope.emailList}" var="email">
-						<option>${ email.codeName }</option>
-					</c:forEach>
-					<option>직접입력</option>
-				</select>
-				</span>				
+				 ${sessionScope.login_info.memberId } 
 			</td>
 		</tr>
 		<tr class="trInput">
@@ -277,7 +243,3 @@
 	</table> 
 </div>
 </form>
-
-
-
-${sessionScope.login_info }

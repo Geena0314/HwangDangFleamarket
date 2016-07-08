@@ -30,6 +30,6 @@ public interface MemberService {
 	int deleteMemberByMemberId(String memberId);
 	   
 	//회원정보수정 
-	public int updateMemberInfoByMemberId(String memberId);
+	public int setMemberInfoByMemberId(Member setMember);
 }
 

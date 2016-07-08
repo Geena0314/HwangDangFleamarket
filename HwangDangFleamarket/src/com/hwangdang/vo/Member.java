@@ -44,7 +44,6 @@ public class Member implements Serializable
 		this.memberSubAddress = memberSubAddress;
 		this.memberAssign = memberAssign;
 	}
-	
 	//마일리지 추가 
 	public Member(String memberId, String memberPassword, String memberName, String memberPhone, String memberZipcode,
 			String memberAddress, String memberSubAddress, int memberAssign, int memberMileage) {

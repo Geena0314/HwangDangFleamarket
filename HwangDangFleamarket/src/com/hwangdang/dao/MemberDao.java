@@ -56,5 +56,5 @@ public interface MemberDao {
 	List<Zipcode> selectZipcode(String dong);
 	
 	//회원정보 수정 
-	public int updateMemberInfoByMemberId(String memberId);
+	public int updateMemberInfoByMemberId(Member setMember);
 }

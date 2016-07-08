@@ -74,7 +74,7 @@ public class MemberServiceImpl implements MemberService{
 	
 	//회원정보수정
 	@Override
-	public int updateMemberInfoByMemberId(String memberId) {
-		return  dao.updateMemberInfoByMemberId(memberId);
+	public int setMemberInfoByMemberId(Member setMember) {
+		return  dao.updateMemberInfoByMemberId(setMember);
 	}
 }
