@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style type="text/css">
-table, td {
+/* table, td {
 	border: 1px solid gray;
 	text-align: center;
 }
@@ -14,85 +14,95 @@ table {
 
 td {
 	padding: 5px;
-}
-
+} */
 a {
 	text-decoration: none;
 }
-
 a:HOVER {
 	text-decoration: underline;
 }
 b {
 	font-size: 15pt;
 }
+.main{
+	min-height: 600px;
+}
+#adminTable{
+	width: 700px;
+	font-size: 13pt;
+}
+.table-responsive{
+	overflow-x: hidden; 
+}
 </style>
-<script type="text/javascript">
-
-</script>
 <h2 class="page-header store_look_around">스토어 소식통</h2>
-<p align="right">
-	<c:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
-	<input type="button" id="rgstBtn" value="소식글등록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRegisterNoticeForm.go?sellerStoreNo=${requestScope.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
-	</c:if>
-</p>
-<table>
-	<thead>
-		<tr>
-			<td>제목</td>
-			<td>등록일</td>
-			<td>조회수</td>
-		</tr>
-	</thead>
-	<tbody>
-		<c:forEach var="list" items="${requestScope.list}">
+<div class="table-responsive adminNotice">
+	<table class="table table-striped" id="adminTable">
+		<thead>
 			<tr>
 				<td>
-					<a href="/HwangDangFleamarket/sellerNotice/sellerNoticeDetail.go?page=${requestScope.pagingBean.page}&sellerNoticeNo=${list.sellerNoticeNo}&sellerStoreNo=${requestScope.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}">
-						${list.sellerNoticeTitle}
-					</a>
+					<c:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
+						<input type="button" id="rgstBtn" value="소식글등록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRegisterNoticeForm.go?sellerStoreNo=${requestScope.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
+					</c:if>
 				</td>
-				<td><fmt:formatDate value="${list.sellerNoticeDate}" pattern="yyyy-MM-dd" /></td>
-				<td>${list.sellerNoticeHit}</td>
 			</tr>
-		</c:forEach>
-	</tbody>
-</table>
+			<tr class="trInput">
+				<td width="375px" class="tdName">제목</td>
+				<td width="200px" class="tdName">등록일</td>
+				<td width="125px" class="tdName">조회수</td>
+			</tr>
+		</thead>
+		<tbody style="border-bottom: 1px solid lightgray;">
+			<c:forEach var="list" items="${requestScope.list}">
+				<tr class="trInput">
+					<td class="tdName">
+						<a href="/HwangDangFleamarket/sellerNotice/sellerNoticeDetail.go?page=${requestScope.pagingBean.page}&sellerNoticeNo=${list.sellerNoticeNo}&sellerStoreNo=${requestScope.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}">
+							${list.sellerNoticeTitle}
+						</a>
+					</td>
+					<td class="tdName"><fmt:formatDate value="${list.sellerNoticeDate}" pattern="yyyy-MM-dd" /></td>
+					<td class="tdName">${list.sellerNoticeHit}</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+
 	
 	<%-- 페이징 처리 --%>
-<p align="center">
-	<%-- ◀이전 페이지 그룹 처리 --%>
-<c:choose>
-	<c:when test="${requestScope.pagingBean.previousPageGroup}">
-		<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${requestScope.pagingBean.beginPage-1}">
-			◀ 
-		</a>
-	</c:when>
-	<c:otherwise>◀</c:otherwise>
-</c:choose>
-&nbsp;&nbsp;
-<%--페이지 처리 --%>
-<c:forEach begin="${requestScope.pagingBean.beginPage}"
-	end="${requestScope.pagingBean.endPage}" var="page">
+	<div class="pageGroup adminNoticePaging" align="center">
+		<%-- ◀이전 페이지 그룹 처리 --%>
 	<c:choose>
-		<c:when test="${page == requestScope.pagingBean.page}">
-  				<b>${page}</b>
- 			</c:when>
-		<c:otherwise>
-			<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${page}">
-				${page} 
-			</a>
-		</c:otherwise>
-	</c:choose>
-&nbsp;&nbsp;
-</c:forEach>
-	<%--다음 페이지 그룹 처리 ▶--%>
-	<c:choose>
-		<c:when test="${requestScope.pagingBean.nextPageGroup}">
-			<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${requestScope.pagingBean.endPage+1}">
-				▶
+		<c:when test="${requestScope.pagingBean.previousPageGroup}">
+			<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${requestScope.pagingBean.beginPage-1}">
+				◀ 
 			</a>
 		</c:when>
-		<c:otherwise>▶</c:otherwise>
+		<c:otherwise>◀</c:otherwise>
 	</c:choose>
-</p>
+	&nbsp;&nbsp;
+	<%--페이지 처리 --%>
+	<c:forEach begin="${requestScope.pagingBean.beginPage}"
+		end="${requestScope.pagingBean.endPage}" var="page">
+		<c:choose>
+			<c:when test="${page == requestScope.pagingBean.page}">
+	  				<b>${page}</b>
+	 			</c:when>
+			<c:otherwise>
+				<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${page}">
+					${page} 
+				</a>
+			</c:otherwise>
+		</c:choose>
+	&nbsp;&nbsp;
+	</c:forEach>
+		<%--다음 페이지 그룹 처리 ▶--%>
+		<c:choose>
+			<c:when test="${requestScope.pagingBean.nextPageGroup}">
+				<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${requestScope.pagingBean.endPage+1}">
+					▶
+				</a>
+			</c:when>
+			<c:otherwise>▶</c:otherwise>
+		</c:choose>
+	</div>
+</div>

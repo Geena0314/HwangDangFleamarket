@@ -19,7 +19,7 @@
 
 <%-- ${sessionScope.login_info.memberId }  --%>
 
-<h1>황당 플리마켓 QnA</h1>
+<h2 class="page-header store_look_around">황당 플리마켓 Q&A</h2>
 
 	<table>
 		<thead>
