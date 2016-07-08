@@ -102,14 +102,14 @@ insert into member values ('dddddddd', '52545856', '이종엽', '010-9977-2905',
 '경기도 성남시 정자동.', '음 무슨 아파트였드라', 0);
 insert into member values ('lsj4216', '52545856', '판매자', '010-9977-2905', '123-456',
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', 1);
-insert into member values ('hwang', 'dangdang', '황경희매니저', '010-9977-2905', '123-456',
-   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1);
+insert into member values ('hwangg@gmail.com', 'dangdang', '황경희매니저', '010-9977-2905', '123-456',
+   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1, 1000);
 insert into member values ('lsj42167', '52545856', '판매자', '010-9977-2905', '123-456',
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', 1);
 insert into member values ('lsj421678', 'dangdang', '황경희매니저', '010-9977-2905', '123-456',
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1); 
-insert into member values ('hwanghwang', 'dangdang', '황경희매니저', '010-9977-2905', '123-466',
-   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 1);
+insert into member values ('hwanghwang@naver.com', 'dangdang', '황경희매니저', '010-9977-2905', '123-466',
+   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 1, 900000);
    						
    										   
 insert into member values ('hwang@naver.com','dangdang', '황경희', '010-2387-0073','456-888','경기도 안산시 상록구','어디동 21번지',1) 

@@ -30,8 +30,8 @@ b {
 <script type="text/javascript">
 
 </script>
+<h2 class="page-header store_look_around">스토어 소식통</h2>
 <p align="right">
-	<b>스토어 소식통</b>
 	<c:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
 	<input type="button" id="rgstBtn" value="소식글등록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRegisterNoticeForm.go?sellerStoreNo=${requestScope.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
 	</c:if>

@@ -1,151 +1,163 @@
 @CHARSET "UTF-8";
 /*****************login_form************/
- .form-signin{
-  overflow-y: hidden;
-  width: 430px;
-  padding: 20px;
-  margin: 0 auto;
-  border: 3px solid #777;
-  border-radius: 4px;
+.form-signin {
+	overflow-y: hidden;
+	width: 430px;
+	padding: 20px;
+	margin: 0 auto;
+	border: 3px solid #777;
+	border-radius: 4px;
 }
- .form-signin h2{
-  display:block;
+
+.form-signin h2 {
+	display: block;
 }
- .form-signin td{
-    width:330px;
- }
- .form-signin #id{
- 	width: 100px;
- }
- .form-signin #email{
- 	width: 150px;
- }
- .form-signin #password{
- 	width: 275px;
- }
- .form-signin .tdName{
- 	width: 100px;
- }
- .form-signin table{
- 	margin: 15px;
- }  
-.twoButtons td
-{
+
+.form-signin td {
+	width: 330px;
+}
+
+.form-signin #id {
+	width: 100px;
+}
+
+.form-signin #email {
+	width: 150px;
+}
+
+.form-signin #password {
+	width: 275px;
+}
+
+.form-signin .tdName {
+	width: 100px;
+}
+
+.form-signin table {
+	margin: 15px;
+}
+
+.twoButtons td {
 	margin: 10px;
-	width:120px;
+	width: 120px;
 	margin: 5px;
 }
 /********* register & login_form *********/
-.trInput .tdName{
+.trInput .tdName {
 	text-align: center;
 	font-family: 'NanumGothic_Bold';
 }
-.trInput td input,
-.trInput td select{
-	margin:5px;
-    border-radius: 4px;
- 	font-size: 12px;
-    line-height: 1.42857143;
-    padding: 5px 8px;
-    color: #444;
-    background-color: #fff;
+
+.trInput td input, .trInput td select {
+	margin: 5px;
+	border-radius: 4px;
+	font-size: 12px;
+	line-height: 1.42857143;
+	padding: 5px 8px;
+	color: #444;
+	background-color: #fff;
 }
-.trInput input[type=submit].btn-block,
-.trInput input[type=reset].btn-block {
+
+.trInput input[type=submit].btn-block, .trInput input[type=reset].btn-block
+	{
 	display: inline;
 	width: 25%;
 	padding: 5px;
 	margin: 5px 20px;
 	font-family: 'NanumGothic_Bold';
 }
-#registerForm
-{
+
+#registerForm {
 	max-width: 850px;
 	margin-left: 150px;
 	margin-top: 50px;
 }
 /***************** store_side_menu************/
-#sideMenu2 input[type=button].btn-block{
-	margin:15px;
-    border-radius: 8px;
- 	font-size: 15px;
-    line-height: 3;
-    color: #444;
-    background-color: #fff;
+#sideMenu2 input[type=button].btn-block {
+	margin: 15px;
+	border-radius: 8px;
+	font-size: 15px;
+	line-height: 3;
+	color: #444;
+	background-color: #fff;
 	width: 80%;
 	padding: 5px;
 	font-family: 'NanumGothic_Bold';
-	margin-left:10%;
+	margin-left: 10%;
 }
-#sideMenu2 .active{
+
+#sideMenu2 .active {
 	margin-bottom: 40px;
 }
 
 /*스토어 사이드바 이미지*/
-#storeMainImage
-{
+#storeMainImage {
 	width: 100%;
 	height: 350px;
 }
 /********* address & seller_address ********/
- .form-post{
-  width: 430px;
-  padding: 10px;
-  margin: 0 auto;
-  border: 3px solid #777;
-  border-radius: 4px;
-  overflow-y: hidden;
+.form-post {
+	width: 430px;
+	padding: 10px;
+	margin: 0 auto;
+	border: 3px solid #777;
+	border-radius: 4px;
+	overflow-y: hidden;
 }
+
 .form-post .page-header {
-    padding-bottom: 9px;
-    margin: 20px 20px;
-    border-bottom: 1px solid #eee;
+	padding-bottom: 9px;
+	margin: 20px 20px;
+	border-bottom: 1px solid #eee;
 }
-.form-post input,
-.form-post select{
+
+.form-post input, .form-post select {
 	display: inline;
 	padding: 5px;
-	border-radius:4px;
+	border-radius: 4px;
 }
-.form-post #findDong{
+
+.form-post #findDong {
 	font-size: 13px;
 	margin-left: 15px;
-	line-height:1.5;
+	line-height: 1.5;
 	width: 80px;
 	color: #444;
-    background-color: #fff;
+	background-color: #fff;
 	font-family: 'NanumGothic_Bold';
 }
-#write{
+
+#write {
 	font-size: 13px;
-	line-height:1.7;
+	line-height: 1.7;
 	width: 200px;
 	font-family: 'NanumGothic_Bold';
 }
 
-.form-post .addresses{
+.form-post .addresses {
 	display: none;
 }
 /********* seller_register ********/
-.form-seller{
-	min-width:600px;	
+.form-seller {
+	min-width: 600px;
 }
-.form-seller th{
+
+.form-seller th {
 	font-family: 'NanumGothic_Bold';
 	width: 150px;
 	vertical-align: middle;
 }
-.form-seller input,
-.form-seller selelct,
-.form-seller textarea{
-	margin:5px;
-    border-radius: 4px;
- 	font-size: 12px;
-    padding: 5px;
-    min-width: 200px;
+
+.form-seller input, .form-seller selelct, .form-seller textarea {
+	margin: 5px;
+	border-radius: 4px;
+	font-size: 12px;
+	padding: 5px;
+	min-width: 200px;
 }
-.form-seller input[type=submit].btn-block,
-.form-seller input[type=reset].btn-block {
+
+.form-seller input[type=submit].btn-block, .form-seller input[type=reset].btn-block
+	{
 	display: inline;
 	width: 25%;
 	padding: 5px;
@@ -153,194 +165,195 @@
 	line-height: 1.5;
 	font-family: 'NanumGothic_Bold';
 	color: #444;
-    background-color: #fff;
+	background-color: #fff;
 }
-#sameAddress,
-#btnZipcode{
-	min-width:30px;
+
+#sameAddress, #btnZipcode {
+	min-width: 30px;
 }
-#sellerSubAddress
-{
+
+#sellerSubAddress {
 	width: 94%;
 }
-#sellerIntroduction{
+
+#sellerIntroduction {
 	width: 80%;
 }
-.form-seller input[type=submit].btn-block:hover
-{
-	background-color: rgb(76, 174, 76); 
-    color: white;
+
+.form-seller input[type=submit].btn-block:hover {
+	background-color: rgb(76, 174, 76);
+	color: white;
 }
+
 .form-seller input[type=reset].btn-block:hover {
-	background-color: rgb(46, 109, 164); 
-    color: white;
+	background-color: rgb(46, 109, 164);
+	color: white;
 }
-.form-seller input[type=button]
-{
+
+.form-seller input[type=button] {
 	background-color: #FFFFD2;
 	width: 50px;
 }
-#sellerIndustry
-{
+
+#sellerIndustry {
 	padding: 5px;
 	margin: 5px 15px;
-	min-with:150px;
+	min-with: 150px;
 	width: 90%;
 }
-#sellerSubIndustry
-{
+
+#sellerSubIndustry {
 	padding: 5px;
 	margin: 5px 0px;
-	min-with:150px;
+	min-with: 150px;
 	width: 40%;
 }
 
-.form-seller
-{
+.form-seller {
 	max-width: 850px;
 	margin-left: 150px;
 	margin-top: 50px;
 }
 /********* mypage ********/
-#sellerRegister,
-#memberEdit,
-#memberWithdrawal{
-    position: relative;
-    margin-top: 50px;
+#sellerRegister, #memberEdit, #memberWithdrawal {
+	position: relative;
+	margin-top: 50px;
 }
-#memberWithdrawal{
+
+#memberWithdrawal {
 	margin-top: 25px;
 }
 /********* product_list ********/
-.product-content{
-	position:relative;
+.product-content {
+	position: relative;
 	margin-bottom: 60px;
 	min-height: 570px;
 }
-#page{
-  bottom: 0;
-  padding: 0;
-  text-align: center;
-  height: 60px;
-  position: absolute; 
-  left: 44%;
-}
-.products{
+
+.products {
 	margin-bottom: 30px;
-	padding:10px;
+	padding: 10px;
 }
-.registerProductBtn
-{
+
+.registerProductBtn {
 	float: right;
 	margin-right: 100px;
-	position: absolute; 
+	position: absolute;
 	bottom: 0px;
 	left: 80%;
- 	padding: 0;
+	padding: 0;
 	text-align: center;
 	height: 60px;
 	font-size: large;
 }
 /********* product_detail ********/
-.reviewPageGroup
-{
+.reviewPageGroup {
 	font-size: 15px;
 }
-#reviewContent
-{
+
+#reviewContent {
 	width: 500px;
 	height: 150px;
 }
-#optionId
-{
+
+#optionId {
 	display: none;
 }
-.product-row{
+
+.product-row {
 	border-bottom: 1px solid #eee;
 }
-.margins{
+
+.margins {
 	margin-top: 30px;
 	margin-bottom: 30px;
-	padding:10px;
+	padding: 10px;
 }
-.productTB{
+
+.productTB {
 	width: 400px;
 }
-.productTB tr td{
+
+.productTB tr td {
 	text-align: center;
 	font-family: 'NanumGothic_Bold';
 	padding: 5px;
 	padding-left: 20px;
 	padding-right: 20px;
 }
-.productTB tr td input,
-.productTB tr td select{
-	margin:5px;
-    border-radius: 4px;
- 	font-size: 12px;
-    padding: 5px;
-    min-width: 50px;
+
+.productTB tr td input, .productTB tr td select {
+	margin: 5px;
+	border-radius: 4px;
+	font-size: 12px;
+	padding: 5px;
+	min-width: 50px;
 }
- .form-product{
-  overflow-y: hidden;
-  width: 420px;
-  padding:5px;
-  margin: 0 auto;
-  border: 3px solid #777;
-  border-radius: 4px;
-  font-size: large;
+
+.form-product {
+	overflow-y: hidden;
+	width: 420px;
+	padding: 5px;
+	margin: 0 auto;
+	border: 3px solid #777;
+	border-radius: 4px;
+	font-size: large;
 }
-.detailInfo{
+
+.detailInfo {
 	min-height: 400px;
-	border-bottom: 1px solid #eee;	
+	border-bottom: 1px solid #eee;
 	width: 80%;
 }
-.reviewTable{
+
+.reviewTable {
 	/* min-height: 400px; */
 	width: 65%;
 	font-size: medium;
 }
-.reviewTable tr td{
+
+.reviewTable tr td {
 	text-align: center;
 	font-family: 'NanumGothic_Bold';
 	padding: 5px;
 	padding-left: 20px;
-	padding-right: 20px;	
+	padding-right: 20px;
 }
-.reviewTable input[type=button],
-.reviewTable input[type=text]{
-	margin:5px;
-    border-radius: 4px;
- 	font-size: 12px;
-    padding: 5px;
-    min-width: 50px;
+
+.reviewTable input[type=button], .reviewTable input[type=text] {
+	margin: 5px;
+	border-radius: 4px;
+	font-size: 12px;
+	padding: 5px;
+	min-width: 50px;
 	font-family: 'NanumGothic';
 }
 
 /*페이지 그룹*/
-.pageGroup
-{
+.pageGroup {
 	font-size: large;
+	bottom: 0;
+	padding: 0;
+	text-align: center;
+	height: 60px;
+	position: absolute;
+	left: 44%;
 }
 
-#main
-{
-	width:80%;
+#main {
+	width: 80%;
 	margin-left: 5%;
 }
 
-#mainImage
-{
+#mainImage {
 	margin-top: 80px;
 }
 
-#qnaRegisterTD
-{
+#qnaRegisterTD {
 	text-align: right;
 }
 
-#qnaRegister
-{
+#qnaRegister {
 	margin-right: 50px;
 }
 /* header{
@@ -393,62 +406,54 @@ footer{
 	float:right;
 } */
 /**************스토어둘러보기*****************/
-.list-margins
-{
+.list-margins {
 	padding-left: 30px;
 }
-.store_look_around
-{
+
+.store_look_around {
 	padding-left: 50px;
 	padding-top: 30px;
 }
 /* 이미지 크기고정. */
-.sellerListImage
-{
+.sellerListImage {
 	width: 100%;
 	height: 100%;
 }
 
-.store_img
-{
+.store_img {
 	width: 250px;
 	height: 250px;
 }
 
 /*소개글 크기고정 및 글자숨김처리.*/
-div .introduction
-{
+div .introduction {
 	height: 300px;
-	width: 250px; 
+	width: 250px;
 	/*글자수가 범위를 넘어가면 숨김.*/
-	overflow:hidden;
+	overflow: hidden;
 	text-align: center;
 	/* display:table-cell; */
 	vertical-align: middle;
 }
 
 /*li태그 마크 삭제.*/
-li
-{
-	 list-style-type : none;
+li {
+	list-style-type: none;
 }
 
-.seller-list
-{
+.seller-list {
 	margin-top: 30px;
 	height: 600px;
-	display:table-cell;
-	margin-bottom: 50px;
+	display: table-cell;
+	margin-bottom: 70px;
 }
 
-.store_info
-{
+.store_info {
 	width: 80%;
 	height: 300px;
 }
 
-.product_list
-{
+.product_list {
 	max-height: 80px;
 	margin-top: 30px;
 	text-align: center;
@@ -456,12 +461,26 @@ li
 }
 
 /*환불신청 폼*/
-.refund-div
-{
+.refund-div {
 	width: 450px;
 }
-.refundTB
-{
+
+.refundTB {
 	width: 500px;
 }
 /*판매자 등록 신청 현황 폼*/
+
+/*header*/
+
+/*body*/
+
+/*게시판*/
+.adminNoticePaging{
+	margin-top: 500px;
+	left: 25%;
+}
+.adminNotice{
+	margin-top: 50px;
+	margin-left: 150px;
+	width: 80%;
+}

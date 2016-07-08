@@ -77,7 +77,7 @@
 	} */
 </style>
 
-<h2 class="page-header">상품 리스트 보기</h2>
+<h2 class="page-header store_look_around">상품 리스트 보기</h2>
 	<div class="row placeholders product-content">
 		<lee:forEach items="${ requestScope.productList }" var="list" varStatus="no">
 			<div id="product${ no.count }" class="col-sm-4 products">

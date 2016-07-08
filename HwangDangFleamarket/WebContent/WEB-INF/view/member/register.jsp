@@ -141,7 +141,7 @@
 <div class="table-responsive" >
 	<table width='600' class="table table-striped">
 		<tr class="trInput">
-			<td width='150' class='tdName'>I&nbsp&nbsp&nbsp&nbsp&nbspD</td>
+			<td width='150' class='tdName'>I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D</td>
 			<td>
 				<input type="text" name="memberId" size=13 id="memberId" onkeydown="idCheck(this);">
 				@

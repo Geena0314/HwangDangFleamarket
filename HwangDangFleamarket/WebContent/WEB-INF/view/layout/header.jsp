@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style type="text/css">
 .homeMainImage{
-	width: 180px;
-	height: 80
+	width: 250px;
+	height: 80px;
 }
 </style>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -20,7 +20,7 @@
 			</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
-			<ul class="nav navbar-nav navbar-right">
+			<ul class="nav navbar-nav navbar-right links">
 				<c:choose>
 					<c:when test="${not empty sessionScope.login_info }">
 						<li><a href="/HwangDangFleamarket/member/logout.go" onclick="return confirm('로그아웃할꺼?')">로그아웃</a></li>
