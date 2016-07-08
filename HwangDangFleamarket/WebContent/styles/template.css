@@ -415,6 +415,11 @@ footer{
 	float:right;
 } */
 /**************스토어둘러보기*****************/
+.store-names
+{
+	width: 250px;
+}
+
 .list-margins {
 	padding-left: 30px;
 }

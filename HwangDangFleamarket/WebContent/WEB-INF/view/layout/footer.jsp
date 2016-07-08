@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8"%>
-<hr>
+<hr width="1450px">
 <p class="text-muted">
 전화 1644-3930<br>
 주식회사 황당플리마켓 대표이사: 황경희 경기도 성남시 분당구 삼평동 유스페이스<br>
