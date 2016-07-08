@@ -161,26 +161,28 @@ function error(xhr, status, err)
 					<th scope="col"><span>배송정보</span></th>
 				</tr>
 			</thead>
-				<form action="" method="POST" id="cart_form">
+			<form action="" method="POST" id="cart_form">
 				<tbody>
 					<c:forEach items="${requestScope.cartList}" var="list">
 						<c:forEach items="${list.productList}" var="product">
 							<tr class="cartList">
-								<td class="first">
-									<input type="checkbox" name="checkBasket" checked="checked" title="장바구니 상품 선택" value="${list.cartNo}">
+								<td class="first"><input type="checkbox" name="checkBasket"
+									checked="checked" title="장바구니 상품 선택" value="${list.cartNo}">
 								</td>
 								<td>
-								<%-- 스토어 이름, 상품명, 선택한 옵션 --%>
+									<%-- 스토어 이름, 상품명, 선택한 옵션 --%>
 									<ul>
 										<li id="listBlock">
 											<div class="thmb">
 												<div class="storeImg">
-													<a href="/HwangDangFleamarket/product/detail.go?page=1&productId=${product.productId}&sellerStoreNo=${product.seller.sellerStoreNo}&sellerStoreImage=${product.seller.sellerStoreImage}"><img src="../image_storage/${product.productMainImage}"></a>
+													<a
+														href="/HwangDangFleamarket/product/detail.go?page=1&productId=${product.productId}&sellerStoreNo=${product.seller.sellerStoreNo}&sellerStoreImage=${product.seller.sellerStoreImage}"><img
+														src="../image_storage/${product.productMainImage}"></a>
 												</div>
 											</div>
 											<ul class="storeInfo">
-												<li>
-													<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${product.seller.sellerStoreNo}&sellerStoreImage=${product.seller.sellerStoreImage}">${product.seller.sellerStoreName}</a>
+												<li><a
+													href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${product.seller.sellerStoreNo}&sellerStoreImage=${product.seller.sellerStoreImage}">${product.seller.sellerStoreName}</a>
 												</li><br>
 												<li>
 													${product.productName}/${product.productOption.optionSubName}
@@ -190,12 +192,10 @@ function error(xhr, status, err)
 									</ul>
 								</td>
 								<td>
-								<%-- 수량 --%>
-									${list.cartProductAmount}
+									<%-- 수량 --%> ${list.cartProductAmount}
 								</td>
 								<td id="price">
-									${product.productPrice*list.cartProductAmount}
-									<c:choose>
+									${product.productPrice*list.cartProductAmount} <c:choose>
 										<c:when test="${product.productOption.optionAddPrice != 0}">
 											<p>&nbsp;+&nbsp;${list.cartProductAmount*product.productOption.optionAddPrice}
 										</c:when>
@@ -204,34 +204,33 @@ function error(xhr, status, err)
 										</c:otherwise>
 									</c:choose>
 								</td>
-								<td id="delivery">
-									<c:choose>
-										<c:when test="${((product.productPrice*list.cartProductAmount)+(list.cartProductAmount*product.productOption.optionAddPrice))>= 30000}">
-											무료배송
-										</c:when>
+								<td id="delivery"><c:choose>
+										<c:when
+											test="${((product.productPrice*list.cartProductAmount)+(list.cartProductAmount*product.productOption.optionAddPrice))>= 30000}">
+												무료배송
+											</c:when>
 										<c:otherwise>
-											2500원
-										</c:otherwise>
+												2500원
+											</c:otherwise>
 									</c:choose>
 								</td>
 							</tr>
 						</c:forEach>
 					</c:forEach>
 				</tbody>
+			</form>
 		</table>
 	</div>
 	<p>
 	<div class="estimatedPrice">
-		배송비를 제외한 결제 예상 금액&nbsp;&nbsp;
+		결제 예상 금액 - 배송비&nbsp;&nbsp;
 		<hr>
-		<span id="checkedEstimatedPrice">${requestScope.sum}</span>
-		<span>원&nbsp;&nbsp;</span>
+		<span id="checkedEstimatedPrice">${requestScope.sum}원&nbsp;&nbsp;</span> 
 	</div>
-	<p>
-	<span class="bottomBtn">
-	<input type="button" value="선택상품삭제" id="removeBtn">&nbsp;&nbsp;
-	<input type="button" value="구매하기" id="buyBtn">
+	<br>
+	<span class="bottomBtn"> 
+		<input type="button" value="선택상품삭제" id="removeBtn">&nbsp;&nbsp; 
+		<input type="button" value="구매하기" id="buyBtn">
 	</span>
-	</form>
 </div>
 

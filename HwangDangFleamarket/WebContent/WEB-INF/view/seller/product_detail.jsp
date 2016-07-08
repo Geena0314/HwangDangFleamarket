@@ -59,8 +59,6 @@
 		display : none;
 	}
 </style> -->
-<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <link rel="stylesheet" href="/HwangDangFleamarket/uiscripts/jquery-ui.min.css">
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
@@ -955,7 +953,7 @@ function error(xhr, status, err)
 </script>
 
 <div id="main" align="center">
-	<h2 class="page-header" align="left">상품 상세 정보 보기</h2>
+	<h2 class="page-header store_look_around" align="left">상품 상세 정보 보기</h2>
 	<div class="row placeholders product-row">
 		<div id="mainImage" align="center" class="col-sm-6 margins">
 			<img src="../image_storage/${ requestScope.product.productMainImage }"  style="width:300px;height:200px;">
@@ -1022,8 +1020,8 @@ function error(xhr, status, err)
 				</table>
 			</form>
 		</div>
-		<div id="like" class="margins" style="margin-right:50px;" align="right">
-			추천 수 : ${ requestScope.product.productLike }
+		<div id="like" class="margins" style="margin-right:50px; font-size: 15pt;" align="right">
+			추천 : ${ requestScope.product.productLike }&nbsp;&nbsp;&nbsp;&nbsp;
 		</div>
 	</div>
 	<div id="info" align="center">

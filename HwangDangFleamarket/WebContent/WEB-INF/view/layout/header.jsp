@@ -1,9 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<<<<<<< HEAD
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
-
 	$(document).ready(function(){
 			
 			   $("#searchBtn").on("click" , function(){
@@ -19,8 +16,8 @@
 </script>
 <style type="text/css">
 .homeMainImage{
-	width: 180px;
-	height: 80
+	width: 250px;
+	height: 80px;
 }
 </style>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -39,14 +36,13 @@
 		
 			
 		<div id="navbar" class="navbar-collapse collapse">
-			<ul class="nav navbar-nav navbar-right">
+			<ul class="nav navbar-nav navbar-right links">
 				<li>
 					<!-- 검색바 -->
 					<form action="/HwangDangFleamarket/buy/findProductByKeyword.go" method="POST" >
 						<input type="text"  size="30" name="keyword" placeholder="상품/판매자 검색" class="navbar-form navbar-right" >
 						<input class="btn btn-info" type="submit" value="검색"  id="searchBtn">
 					</form>   
-					
 				</li>
 				<c:choose>
 					<c:when test="${not empty sessionScope.login_info }">
@@ -67,9 +63,6 @@
 					<li><a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${sessionScope.seller.sellerStoreNo}&sellerStoreImage=${sessionScope.seller.sellerStoreImage}">내 스토어</a></li>
 				</c:if>
 			</ul>
-         
 		</div>
 	</div>
-	
-	
 </nav>

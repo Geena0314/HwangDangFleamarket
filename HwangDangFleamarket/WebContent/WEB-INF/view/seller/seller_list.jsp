@@ -100,7 +100,7 @@ img{
 	</ul>
 </div>
 
-<p align="center" class="pageGroup">
+<div align="center" class="pageGroup">
 	<%-- ◀이전 페이지 그룹 처리 --%>
 <c:choose>
 	<c:when test="${requestScope.pagingBean.previousPageGroup}">
@@ -135,5 +135,5 @@ img{
 		</c:when>
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
-</p>
+</div>
 </div>
