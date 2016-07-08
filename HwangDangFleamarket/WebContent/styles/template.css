@@ -356,6 +356,11 @@
 #qnaRegister {
 	margin-right: 50px;
 }
+
+#qnaTable
+{
+	width: 670px;
+}
 /* header{
 	background-color:pink;
 	padding: 5px;

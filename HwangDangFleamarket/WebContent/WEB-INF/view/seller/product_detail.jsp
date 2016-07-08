@@ -179,30 +179,30 @@ $(document).ready(function()
 				{
 					if(!json.bean.page == i)
 					{
-						$("#paging").prepend("<a id='currentPage'>" + endPage + "</a>");
+						$("#paging").prepend("<a id='currentPage'><b>" + endPage + "</b></a>");
 						endPage--;
 					}
 					else
 					{
-						$("#paging").prepend("<a class='movePage'>" + endPage + "</a>");
+						$("#paging").prepend("<a class='movePage'> " + endPage + " </a>");
 						endPage--;
 					}
 				}
 				if(!json.bean.previousPageGroup)
 				{
-					$("#paging").prepend("◁");
+					$("#paging").prepend("◀");
 				}
 				else
 				{
-					$("#paging").prepend("<a class='previousPage'>◁</a>");
+					$("#paging").prepend("<a class='previousPage'>◀</a>");
 				}
 				if(!json.bean.nextPageGroup)
 				{
-					$("#paging").append("▷");
+					$("#paging").append("▶");
 				}
 				else
 				{
-					$("#paging").append("<a class='nextPage'>▷</a>");
+					$("#paging").append("<a class='nextPage'>▶</a>");
 				}
 			},
 			"error" : error
@@ -234,30 +234,30 @@ $(document).ready(function()
 				{
 					if(!json.bean.page == i)
 					{
-						$("#paging").prepend("<a id='currentPage'>" + endPage + "</a>");
+						$("#paging").prepend("<a id='currentPage'><b>" + endPage + "</b></a>");
 						endPage--;
 					}
 					else
 					{
-						$("#paging").prepend("<a class='movePage'>" + endPage + "</a>");
+						$("#paging").prepend("<a class='movePage'> " + endPage + " </a>");
 						endPage--;
 					}
 				}
 				if(!json.bean.previousPageGroup)
 				{
-					$("#paging").prepend("◁");
+					$("#paging").prepend("◀");
 				}
 				else
 				{
-					$("#paging").prepend("<a class='previousPage'>◁</a>");
+					$("#paging").prepend("<a class='previousPage'>◀</a>");
 				}
 				if(!json.bean.nextPageGroup)
 				{
-					$("#paging").append("▷");
+					$("#paging").append("▶");
 				}
 				else
 				{
-					$("#paging").append("<a class='nextPage'>▷</a>");
+					$("#paging").append("<a class='nextPage'>▶</a>");
 				}
 			},
 			"error" : error
@@ -289,30 +289,30 @@ $(document).ready(function()
 				{
 					if(!json.bean.page == i)
 					{
-						$("#paging").prepend("<a id='currentPage'>" + endPage + "</a>");
+						$("#paging").prepend("<a id='currentPage'><b>" + endPage + "</b></a>");
 						endPage--;
 					}
 					else
 					{
-						$("#paging").prepend("<a class='movePage'>" + endPage + "</a>");
+						$("#paging").prepend("<a class='movePage'> " + endPage + " </a>");
 						endPage--;
 					}
 				}
 				if(!json.bean.previousPageGroup)
 				{
-					$("#paging").prepend("◁");
+					$("#paging").prepend("◀");
 				}
 				else
 				{
-					$("#paging").prepend("<a class='previousPage'>◁</a>");
+					$("#paging").prepend("<a class='previousPage'>◀</a>");
 				}
 				if(!json.bean.nextPageGroup)
 				{
-					$("#paging").append("▷");
+					$("#paging").append("▶");
 				}
 				else
 				{
-					$("#paging").append("<a class='nextPage'>▷</a>");
+					$("#paging").append("<a class='nextPage'>▶</a>");
 				}
 			},
 			"error" : error
@@ -397,30 +397,30 @@ $(document).ready(function()
 				{
 					if(!json.bean.page == i)
 					{
-						$("#paging").prepend("<a id='currentPage'>" + endPage + "</a>");
+						$("#paging").prepend("<a id='currentPage'><b>" + endPage + "</b></a>");
 						endPage--;
 					}
 					else
 					{
-						$("#paging").prepend("<a class='movePage'>" + endPage + "</a>");
+						$("#paging").prepend("<a class='movePage'> " + endPage + " </a>");
 						endPage--;
 					}
 				}
 				if(!json.bean.previousPageGroup)
 				{
-					$("#paging").prepend("◁");
+					$("#paging").prepend("◀");
 				}
 				else
 				{
-					$("#paging").prepend("<a class='previousPage'>◁</a>");
+					$("#paging").prepend("<a class='previousPage'>◀</a>");
 				}
 				if(!json.bean.nextPageGroup)
 				{
-					$("#paging").append("▷");
+					$("#paging").append("▶");
 				}
 				else
 				{
-					$("#paging").append("<a class='nextPage'>▷</a>");
+					$("#paging").append("<a class='nextPage'>▶</a>");
 				}
 			},
 			"error" : error
@@ -469,30 +469,30 @@ $(document).ready(function()
 				{
 					if(!json.bean.page == i)
 					{
-						$("#paging").prepend("<a id='currentPage'>" + endPage + "</a>");
+						$("#paging").prepend("<a id='currentPage'><b>" + endPage + "</b></a>");
 						endPage--;
 					}
 					else
 					{
-						$("#paging").prepend("<a class='movePage'>" + endPage + "</a>");
+						$("#paging").prepend("<a class='movePage'> " + endPage + " </a>");
 						endPage--;
 					}
 				}
 				if(!json.bean.previousPageGroup)
 				{
-					$("#paging").prepend("◁");
+					$("#paging").prepend("◀");
 				}
 				else
 				{
-					$("#paging").prepend("<a class='previousPage'>◁</a>");
+					$("#paging").prepend("<a class='previousPage'>◀</a>");
 				}
 				if(!json.bean.nextPageGroup)
 				{
-					$("#paging").append("▷");
+					$("#paging").append("▶");
 				}
 				else
 				{
-					$("#paging").append("<a class='nextPage'>▷</a>");
+					$("#paging").append("<a class='nextPage'>▶</a>");
 				}
 			},
 			"error" : function()
@@ -529,30 +529,30 @@ $(document).ready(function()
 				{
 					if(!json.qnaBean.page == i)
 					{
-						$("#qnaPaging").prepend("<a id='qnaCurrentPage'>" + endPage + "</a>");
+						$("#qnaPaging").prepend("<a id='qnaCurrentPage'><b>" + endPage + "</b></a>");
 						endPage--;
 					}
 					else
 					{
-						$("#qnaPaging").prepend("<a class='qnaMovePage'>" + endPage + "</a>");
+						$("#qnaPaging").prepend("<a class='qnaMovePage'> " + endPage + " </a>");
 						endPage--;
 					}
 				}
 				if(!json.qnaBean.previousPageGroup)
 				{
-					$("#qnaPaging").prepend("◁");
+					$("#qnaPaging").prepend("◀");
 				}
 				else
 				{
-					$("#qnaPaging").prepend("<a class='qnaPreviousPage'>◁</a>");
+					$("#qnaPaging").prepend("<a class='qnaPreviousPage'>◀</a>");
 				}
 				if(!json.qnaBean.nextPageGroup)
 				{
-					$("#qnaPaging").append("▷");
+					$("#qnaPaging").append("▶");
 				}
 				else
 				{
-					$("#qnaPaging").append("<a class='qnaNextPage'>▷</a>");
+					$("#qnaPaging").append("<a class='qnaNextPage'>▶</a>");
 				}
 			},
 			"error" : error
@@ -586,30 +586,30 @@ $(document).ready(function()
 				{
 					if(!json.qnaBean.page == i)
 					{
-						$("#qnaPaging").prepend("<a id='qnaCurrentPage'>" + endPage + "</a>");
+						$("#qnaPaging").prepend("<a id='qnaCurrentPage'><b>" + endPage + "</b></a>");
 						endPage--;
 					}
 					else
 					{
-						$("#qnaPaging").prepend("<a class='qnaMovePage'>" + endPage + "</a>");
+						$("#qnaPaging").prepend("<a class='qnaMovePage'> " + endPage + " </a>");
 						endPage--;
 					}
 				}
 				if(!json.qnaBean.previousPageGroup)
 				{
-					$("#qnaPaging").prepend("◁");
+					$("#qnaPaging").prepend("◀");
 				}
 				else
 				{
-					$("#qnaPaging").prepend("<a class='qnaPreviousPage'>◁</a>");
+					$("#qnaPaging").prepend("<a class='qnaPreviousPage'>◀</a>");
 				}
 				if(!json.qnaBean.nextPageGroup)
 				{
-					$("#qnaPaging").append("▷");
+					$("#qnaPaging").append("▶");
 				}
 				else
 				{
-					$("#qnaPaging").append("<a class='qnaNextPage'>▷</a>");
+					$("#qnaPaging").append("<a class='qnaNextPage'>▶</a>");
 				}
 			},
 			"error" : error
@@ -643,30 +643,30 @@ $(document).ready(function()
 				{
 					if(!json.qnaBean.page == i)
 					{
-						$("#qnaPaging").prepend("<a id='qnaCurrentPage'>" + endPage + "</a>");
+						$("#qnaPaging").prepend("<a id='qnaCurrentPage'><b>" + endPage + "</b></a>");
 						endPage--;
 					}
 					else
 					{
-						$("#qnaPaging").prepend("<a class='qnaMovePage'>" + endPage + "</a>");
+						$("#qnaPaging").prepend("<a class='qnaMovePage'> " + endPage + " </a>");
 						endPage--;
 					}
 				}
 				if(!json.qnaBean.previousPageGroup)
 				{
-					$("#qnaPaging").prepend("◁");
+					$("#qnaPaging").prepend("◀");
 				}
 				else
 				{
-					$("#qnaPaging").prepend("<a class='qnaPreviousPage'>◁</a>");
+					$("#qnaPaging").prepend("<a class='qnaPreviousPage'>◀</a>");
 				}
 				if(!json.qnaBean.nextPageGroup)
 				{
-					$("#qnaPaging").append("▷");
+					$("#qnaPaging").append("▶");
 				}
 				else
 				{
-					$("#qnaPaging").append("<a class='qnaNextPage'>▷</a>");
+					$("#qnaPaging").append("<a class='qnaNextPage'>▶</a>");
 				}
 			},
 			"error" : error
@@ -835,7 +835,7 @@ $(document).ready(function()
 									{
 										if(!json.qnaBean.page == i)
 										{
-											$("#qnaPaging").prepend("<a id='qnaCurrentPage'>" + endPage + "</a>");
+											$("#qnaPaging").prepend("<a id='qnaCurrentPage'><b>" + endPage + "</b></a>");
 											endPage--;
 										}
 										else
@@ -846,19 +846,19 @@ $(document).ready(function()
 									}
 									if(!json.qnaBean.previousPageGroup)
 									{
-										$("#qnaPaging").prepend("◁");
+										$("#qnaPaging").prepend("◀");
 									}
 									else
 									{
-										$("#qnaPaging").prepend("<a class='qnaPreviousPage'>◁</a>");
+										$("#qnaPaging").prepend("<a class='qnaPreviousPage'>◀</a>");
 									}
 									if(!json.qnaBean.nextPageGroup)
 									{
-										$("#qnaPaging").append("▷");
+										$("#qnaPaging").append("▶");
 									}
 									else
 									{
-										$("#qnaPaging").append("<a class='qnaNextPage'>▷</a>");
+										$("#qnaPaging").append("<a class='qnaNextPage'>▶</a>");
 									}
 								},
 								"error" : function()
@@ -1068,10 +1068,10 @@ function error(xhr, status, err)
 				-->
 				<lee:choose>
 					<lee:when test="${ requestScope.bean.previousPageGroup }">
-						<a class="previousPage">◁</a>
+						<a class="previousPage">◀</a>
 					</lee:when>
 					<lee:otherwise>
-						<font color="#47C83E">◁</font>
+						◀
 					</lee:otherwise>
 				</lee:choose>
 						<!-- 
@@ -1082,10 +1082,10 @@ function error(xhr, status, err)
 						<lee:forEach begin="${ requestScope.bean.beginPage }" end="${ requestScope.bean.endPage }" var="page" varStatus="no">
 							<lee:choose>
 								<lee:when test="${ page != requestScope.bean.page }">
-									<a class="movePage">${ page }</a>
+									<a class="movePage"><b>${ page }</b></a>
 								</lee:when>
 								<lee:otherwise>
-									<a id="currentPage" ><font color="#47C83E">${ page }</font></a>
+									<a id="currentPage" >${ page }</a>
 								</lee:otherwise>
 							</lee:choose>
 						</lee:forEach>
@@ -1096,10 +1096,10 @@ function error(xhr, status, err)
 						-->
 						<lee:choose>
 							<lee:when test="${ requestScope.bean.nextPageGroup }">
-								<a class="nextPage">▷</a>
+								<a class="nextPage">▶</a>
 							</lee:when>
 							<lee:otherwise>
-								<font color="#47C83E">▷</font>
+								▶
 							</lee:otherwise>
 						</lee:choose>
 					</td>
@@ -1114,13 +1114,12 @@ function error(xhr, status, err)
 					</td>
 				</tr>
 			</table>
-			<hr><hr>
-	<hr width="65%"><hr width="65%">
+			<hr width="670px"><hr width="670px">
 	<table id="qnaTable" class="table-striped reviewTable">
 		<tr><td colspan="3" align="center">QnA</td></tr>
 		<tr>
-			<td width="30"></td><td width="410" align="center">Q.문의제목</td>
-			<td align="center">작성자</td>
+			<td width="50"></td><td width="450" align="center">Q.문의제목</td>
+			<td align="center" width="100">작성자</td>
 		</tr>
 		
 		<lee:forEach items="${ requestScope.qnaMap.qna }" var="qna">
@@ -1135,10 +1134,10 @@ function error(xhr, status, err)
 			-->
 			<lee:choose>
 				<lee:when test="${ requestScope.qnaMap.qnaBean.previousPageGroup }">
-					<a class="qnaPreviousPage">◁</a>
+					<a class="qnaPreviousPage">◀</a>
 				</lee:when>
 				<lee:otherwise>
-					<font color="#47C83E">◁</font>
+					◀
 				</lee:otherwise>
 			</lee:choose>
 			
@@ -1150,10 +1149,10 @@ function error(xhr, status, err)
 			<lee:forEach begin="${ requestScope.qnaMap.qnaBean.beginPage }" end="${ requestScope.qnaMap.qnaBean.endPage }" var="page" varStatus="no">
 				<lee:choose>
 					<lee:when test="${ page != requestScope.qnaMap.qnaBean.page }">
-						<a class="qnaMovePage">${ page }</a>
+						<a class="qnaMovePage"><b> ${ page } </b></a>
 					</lee:when>
 					<lee:otherwise>
-						<a id="qnaCurrentPage" ><font color="#47C83E">${ page }</font></a>
+						<a id="qnaCurrentPage" > ${ page } </a>
 					</lee:otherwise>
 				</lee:choose>
 			</lee:forEach>
@@ -1164,10 +1163,10 @@ function error(xhr, status, err)
 			-->
 			<lee:choose>
 				<lee:when test="${ requestScope.qnaMap.qnaBean.nextPageGroup }">
-					<a class="qnaNextPage">▷</a>
+					<a class="qnaNextPage">▶</a>
 				</lee:when>
 				<lee:otherwise>
-					<font color="#47C83E">▷</font>
+					▶
 				</lee:otherwise>
 			</lee:choose>
 		</td><td></td>

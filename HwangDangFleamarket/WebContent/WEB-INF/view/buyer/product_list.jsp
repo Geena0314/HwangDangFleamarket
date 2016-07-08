@@ -1,13 +1,133 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <style>
 	img {
-		width : 150px;
-		height : 80 px;
+		width : 160px;
+		height : 160px;
 	}
+	
+	#layer {
+		border: 2px solid gray;
+		min-height:  300px;
+		min-width: 300px;
+	}   
+	/* .imgDiv , .priceDiv , .priceNameDiv , .priceInfoDiv  , .SellerNameDiv {
+		 float: left;
+	} */
+	
+	.media{
+		margin:  40px;
+		padding : 30px;
+	}
+	
 </style>
-조회결과
-<hr/>
-<c:forEach items="${requestScope.productList }" var="p">
-	<img src="/HwangDangFleamarket/image_storage/${p.productMainImage }"/> ${p.productName } ${p.productPrice }  ${p.productInfo } ${p.productLike }  <br/>
-</c:forEach>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		
+		
+		
+	});
+</script>
+조회결과  <span class="glyphicon glyphicon-heart-empty" aria-hidden="true">:::</span>
+
+
+<div id="layer">
+
+
+
+	
+	
+	<c:choose>
+	<c:when test="${!empty requestScope.productList }">
+		<c:forEach items="${requestScope.productList }" var="p">
+			<div class="media">    
+  				<div class="media-left">    
+  				<a href="/HwangDangFleamarket/product/detail.go?page=1&productId=${p.productId }&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage}">
+					<img src="/HwangDangFleamarket/image_storage/${p.productMainImage }"/>
+				</a>
+				</div>  
+				<div class="media-body">
+   					 <h2 class="media-heading"><a href="/HwangDangFleamarket/product/detail.go?page=1&productId=${p.productId }&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage}">${p.productName }  ${p.productInfo }</a></h2>
+					 <a href="/HwangDangFleamarket/product/detail.go?page=1&productId=${p.productId }&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage}"><fmt:formatNumber pattern="#,###원">${p.productPrice }</fmt:formatNumber> <font size="0.5em" color="lightgray">3만원이상 주문시 무료배송</font></a>
+					 <a href="/HwangDangFleamarket/product/detail.go?page=1&productId=${p.productId }&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage}">좋아요 : ${p.productLike }</a>
+					 <a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${p.seller.sellerStoreNo }&sellerImage=${p.seller.sellerStoreImage }">${p.seller.sellerStoreName }</a>
+					<c:if test="${p.productStock <= 0}">
+							<font color="red">품절상품</font>
+					</c:if>
+				</div>
+			</div>                                            
+		 
+		<%-- 
+			<ul>
+				<li>
+					<span class="imgDiv">
+						<a href="/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage }">
+							<img src="/HwangDangFleamarket/image_storage/${p.productMainImage }"/>
+						</a>
+						</span>
+
+					<a href="/HwangDangFleamarket/product/detail.go?page=1&productId=${p.productId }&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage}">
+						TEST
+					</a>
+					<span class="infoDiv"><a href="/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage }">${p.productName }  ${p.productInfo }</a></span>
+					<span class="priceDiv">
+						<a href="/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage }"><fmt:formatNumber pattern="#,###원">${p.productPrice }</fmt:formatNumber> <font size="0.5em" color="lightgray">3만원이상 주문시 무료배송</font></a>
+					</span>
+					<span class="likeDiv"><a href="/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage }">좋아요 : ${p.productLike }</a></span>
+				<span class="SellerNameDiv"><a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${p.seller.sellerStoreNo }&sellerImage=${p.seller.sellerStoreImage }">${p.seller.sellerStoreName }</a></span> 
+				</li>  
+			</ul>
+			--%>
+			<hr/>  
+		</c:forEach>
+	</c:when>
+	<c:otherwise>
+		"${requestScope.keyword }"에 대한 조회 상품이 없습니다.
+	</c:otherwise>
+</c:choose> 
+
+</div>
+
+
+
+
+<!-- *********************************************************************************** -->
+
+<!-- 버튼 -->
+<c:choose>
+	<c:when test="${requestScope.pagingBean.previousPageGroup }">
+		<a href="/HwangDangFleamarket/buy/findProductByKeyword.go?page=${requestScope.pagingBean.beginPage -1 }&keyword=${requestScope.keyword}">◀</a>
+	</c:when>
+	<c:otherwise>
+		◁
+	</c:otherwise>
+</c:choose>
+
+<!-- 페이징 -->
+	<c:forEach begin="${requestScope.pagingBean.beginPage }" 
+								end="${requestScope.pagingBean.endPage}" var="page" >
+		<c:choose>
+			<c:when test="${requestScope.pagingBean.page == page }">
+		 	[${page }]
+			</c:when>
+			<c:otherwise>
+				 <a href="/HwangDangFleamarket/buy/findProductByKeyword.go?page=${page }&keyword=${requestScope.keyword}">${page }</a>
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
+	
+<!-- 버튼 -->
+<c:choose>   
+	<c:when test="${requestScope.pagingBean.nextPageGroup}">
+		<a href="/HwangDangFleamarket/buy/findProductByKeyword.go?page=${requestScope.pagingBean.endPage+1 }&keyword=${requestScope.keyword}">▶</a>
+	</c:when>
+	<c:otherwise>
+		▷
+	</c:otherwise>
+</c:choose>
+
+
+
