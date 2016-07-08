@@ -54,4 +54,7 @@ public interface MemberDao {
 	
 	//동명으로 검색한 주소 리스트.
 	List<Zipcode> selectZipcode(String dong);
+	
+	//회원정보 수정 
+	public int updateMemberInfoByMemberId(String memberId);
 }

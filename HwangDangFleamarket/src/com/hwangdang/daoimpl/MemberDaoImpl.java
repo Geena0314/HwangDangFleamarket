@@ -104,6 +104,7 @@ public class MemberDaoImpl implements MemberDao{
 	}
 	  
 	@Transactional
+	@Override
 	public int updateMemberInfoByMemberId(String memberId){
 		return session.update("memberMapper.update-member-by-memberId", memberId);
 	}
