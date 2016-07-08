@@ -4,6 +4,14 @@
 <script type="text/javascript">
 	$(document).ready(function()
 	{
+		$("#sellerZipcode").on("click", function()
+		{
+			window.open('/HwangDangFleamarket/member/findSellerAddress.go', '주소검색', 'resizable=no scrollbars=yes width=700 height=500 left=500 top=200');
+		});
+		$("#sellerAddress").on("click", function()
+		{
+			window.open('/HwangDangFleamarket/member/findSellerAddress.go', '주소검색', 'resizable=no scrollbars=yes width=700 height=500 left=500 top=200');
+		});
 		$("#password1").on("blur", function()
 		{
 			var password = '${sessionScope.login_info.memberPassword}';
@@ -232,6 +240,10 @@
 	{
 		display: none;
 	}
+	table
+	{
+		width: 
+	}
 </style>
 <div>
 	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/member/sellerRegisterRequest.go" class="form-seller" name="sellerForm">
@@ -314,7 +326,7 @@
 				</td>
 				<td>
 					<input type="text" name="sellerAddress" id="sellerAddress" size="13" readonly="readonly">
-					<input id="button" type="button" value="우편번호검색" onclick="window.open('/HwangDangFleamarket/member/findSellerAddress.go', '주소검색', 'resizable=no scrollbars=yes width=700 height=500 left=500 top=200');">
+					<input style="width: 195px;" id="button" type="button" value="우편번호검색" onclick="window.open('/HwangDangFleamarket/member/findSellerAddress.go', '주소검색', 'resizable=no scrollbars=yes width=700 height=500 left=500 top=200');">
 				</td>
 			</tr>
 			<tr>

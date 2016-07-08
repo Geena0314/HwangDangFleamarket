@@ -153,7 +153,11 @@
 	border-radius: 4px;
 	font-size: 12px;
 	padding: 5px;
-	min-width: 200px;
+	width: 200px;
+}
+input#sellerZipcode
+{
+	width: 100px;
 }
 
 .form-seller input[type=submit].btn-block, .form-seller input[type=reset].btn-block
@@ -190,8 +194,13 @@
 	color: white;
 }
 
-.form-seller input[type=button] {
-	background-color: #FFFFD2;
+.form-seller input[type=button]{
+	background-color: white;
+	width: 50px;
+}
+
+.form-seller input[type=button]:hover{
+	background-color: #EAEAEA;
 	width: 50px;
 }
 
@@ -355,11 +364,6 @@
 
 #qnaRegister {
 	margin-right: 50px;
-}
-
-#qnaTable
-{
-	width: 670px;
 }
 /* header{
 	background-color:pink;
