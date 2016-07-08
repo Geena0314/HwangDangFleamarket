@@ -387,7 +387,7 @@ insert into product values ('productid38', '새우깡', 10000, 70, 'abc7.jpg', '
 insert into product values ('productid39', '새우깡', 10000, 70, 'abc7.jpg', '맛있는새우깡', 151,15);
 
 
-
+  
 select * FROM product_detail_image
 
 

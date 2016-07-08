@@ -38,7 +38,7 @@
 
 
 
-
+	
 	
 	<c:choose>
 	<c:when test="${!empty requestScope.productList }">
@@ -54,6 +54,9 @@
 					 <a href="/HwangDangFleamarket/product/detail.go?page=1&productId=${p.productId }&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage}"><fmt:formatNumber pattern="#,###원">${p.productPrice }</fmt:formatNumber> <font size="0.5em" color="lightgray">3만원이상 주문시 무료배송</font></a>
 					 <a href="/HwangDangFleamarket/product/detail.go?page=1&productId=${p.productId }&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage}">좋아요 : ${p.productLike }</a>
 					 <a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${p.seller.sellerStoreNo }&sellerImage=${p.seller.sellerStoreImage }">${p.seller.sellerStoreName }</a>
+					<c:if test="${p.productStock <= 0}">
+							<font color="red">품절상품</font>
+					</c:if>
 				</div>
 			</div>                                            
 		 

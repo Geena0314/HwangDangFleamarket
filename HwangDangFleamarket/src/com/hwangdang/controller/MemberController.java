@@ -147,11 +147,52 @@ public class MemberController {
 		return "redirect:/main.go";
 	}
 	
-	@RequestMapping("/mypage")
-	public String mypage(String memberPassword, HttpSession session)
-	{
-		return "member/mypage.tiles";
+	//패스워드 확인 페이지로 이동 
+	@RequestMapping("/passwordConfirm")
+	public String passwordConfirm()
+	{	
+		return "member/passwordConfirm.tiles";
 	}
+	//3가지 옵션 선택페이지 이동 
+	@RequestMapping("/mypage")
+	public String mypage(String memberPassword, HttpSession session , Model model)
+	{	
+		String url = "";
+		//입력한 비밀번호와 로그인한 회원의 실제 비밀번호가맞는지 검증 로직  
+		Member member = (Member) session.getAttribute("login_info");
+		if(member != null && member.getMemberPassword().equals(memberPassword)){
+			//패스워드 일치 
+			url = "member/mypage.tiles";
+		}else{
+			//패스워드 불일치
+			model.addAttribute("errorMsg" , "패스워드가 일치 하지 않습니다. 다시확인해주세요!");
+			url = "/member/passwordConfirm.go";
+		}
+		return url;
+	}	
+	
+	//회원정보 수정 페이지로 이동 
+	@RequestMapping("/member_info_update.go")
+	public String memberInfoUpdatePageMove(String memberPassword, HttpSession session , Model model)
+	{	
+		model.addAttribute("emailList", service.selectEmailList());
+		return "member/member_info_update.tiles";
+	}
+	//비밀번호  수정 : 예전 비밀번호 검증
+	@RequestMapping("/oldPasswordChecked.go")
+	@ResponseBody
+	public boolean oldPasswordChecked(String oldPassword , HttpSession session){	
+		boolean flag = false;
+		System.out.println(oldPassword);
+		Member member = (Member) session.getAttribute("login_info");
+		if(member!=null && member.getMemberPassword().equals(oldPassword)){
+			 flag = true;
+		}else{
+			flag = false;
+		}
+		return flag;
+	}
+	
 	
 	@RequestMapping("/sellerRegister")
 	public ModelAndView sellerRegister()
@@ -247,4 +288,16 @@ public class MemberController {
 		service.deleteMemberByMemberId(memberId);
 		return "redirect:/main.go";
 	}
+	
+	//회원정보수정
+	@RequestMapping("/setMember.go")
+	public String setMember(){
+		
+		return "";
+	}
+	
+	
+	
+	
+	
 }

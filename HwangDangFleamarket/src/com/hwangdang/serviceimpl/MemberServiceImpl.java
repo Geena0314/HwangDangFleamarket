@@ -71,4 +71,9 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return dao.deleteById(memberId);
 	}
+	//회원정보수정
+	public int setMemberInfoByMemberId(String memberId) {
+	
+		return dao.updateMember(memberId);
+	}
 }

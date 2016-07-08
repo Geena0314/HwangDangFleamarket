@@ -96,10 +96,10 @@
 		-->
 			<lee:choose>
 				<lee:when test="${ requestScope.bean.previousPageGroup }">
-					<a href = "/HwangDangFleamarket/product/list.go?page=${ requestScope.bean.beginPage-1 }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }">◁</a>
+					<a href = "/HwangDangFleamarket/product/list.go?page=${ requestScope.bean.beginPage-1 }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }">◀</a>
 				</lee:when>
 				<lee:otherwise>
-					<font color="#47C83E">◁</font>
+					◀
 				</lee:otherwise>
 			</lee:choose>
 			
@@ -111,10 +111,10 @@
 			<lee:forEach begin="${ requestScope.bean.beginPage }" end="${ requestScope.bean.endPage }" var="page">
 				<lee:choose>
 					<lee:when test="${ page != requestScope.bean.page }">
-						<a href = "/HwangDangFleamarket/product/list.go?page=${ page }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }">${ page }</a>
+						<a href = "/HwangDangFleamarket/product/list.go?page=${ page }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }"><b>${ page }</b></a>
 					</lee:when>
 					<lee:otherwise>
-						<font color="#47C83E">${ page }</font>
+						${ page }
 					</lee:otherwise>
 				</lee:choose>
 			</lee:forEach>
@@ -125,10 +125,10 @@
 			-->
 			<lee:choose>
 				<lee:when test="${ requestScope.bean.nextPageGroup }">
-					<a href = "/HwangDangFleamarket/product/list.go?page=${ requestScope.bean.endPage+1 }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }">▷</a>
+					<a href = "/HwangDangFleamarket/product/list.go?page=${ requestScope.bean.endPage+1 }&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }">▶</a>
 				</lee:when>
 				<lee:otherwise>
-					<font color="#47C83E">▷</font>
+					▶
 				</lee:otherwise>
 			</lee:choose>
 			<lee:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">

@@ -6,6 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hwangdang.dao.MemberDao;
 import com.hwangdang.vo.Code;
@@ -101,4 +102,10 @@ public class MemberDaoImpl implements MemberDao{
 		// TODO Auto-generated method stub
 		return session.selectList("memberMapper.selectZipcode", dong);
 	}
+	  
+	@Transactional
+	public int updateMemberInfoByMemberId(String memberId){
+		return session.update("memberMapper.update-member-by-memberId", memberId);
+	}
+	
 }
