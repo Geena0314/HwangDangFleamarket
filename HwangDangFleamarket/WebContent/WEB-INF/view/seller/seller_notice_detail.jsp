@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style type="text/css">
-table, td {
+/* table, td {
 	border: 1px solid gray;
 	text-align: center;
 }
@@ -19,33 +19,47 @@ td {
 #tbodyTR{
 	min-height: 400px;
 	height: auto;
+} */
+#adminTable{
+	width: 800px;
+	min-height: 500px;
+	font-size: 13pt;
+	border-top: 1px solid lightgray;
+	border-collapse: separate;
+}
+td{
+	text-align: left;
+	border-left: none;
+	border-right: none;
 }
 </style>
-<p align="right">
-	<input type="button" value="목록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${page}&sellerStoreNo=${requestScope.sellerNotice.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">&nbsp;&nbsp;
-	<c:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
-		<input type="button" value="공지수정" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerEditNoticeForm.go?page=${page}&sellerNoticeNo=${requestScope.sellerNotice.sellerNoticeNo}&sellerStoreNo=${requestScope.sellerNotice.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">&nbsp;&nbsp;
-		<input type="button" value="공지삭제" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRemoveNotice.go?page=${page}&sellerNoticeNo=${requestScope.sellerNotice.sellerNoticeNo}&sellerStoreNo=${requestScope.sellerNotice.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
-	</c:if>
-</P>
-<table>
-	<thead>
-		<tr>
-			<td>등록일</td>
-			<td><fmt:formatDate value="${requestScope.sellerNotice.sellerNoticeDate}" pattern="yyyy-MM-dd" /></td>
-			<td>조회수</td>
-			<td>${requestScope.sellerNotice.sellerNoticeHit}</td>
-		</tr>
-		<tr>
-			<td>제목</td>
-			<td colspan="5">${requestScope.sellerNotice.sellerNoticeTitle}</td>
-		</tr>
-	</thead>
-	<tbody>
-		<tr id="tbodyTR">
-			<td colspan="6">
-				${requestScope.sellerNotice.sellerNoticeContent}		
-			</td>
-		</tr>
-	</tbody>
-</table>
+<h2 class="page-header store_look_around">스토어 소식통</h2>
+<div class="table-responsive adminNotice">
+	<table class="table" id="adminTable">
+		<thead>
+			<tr style="background-color: whitesmoke;">
+				<td width="550px"><b> ${requestScope.sellerNotice.sellerNoticeTitle}</b></td>
+				<td width="150px" style="font-size: 10pt; vertical-align: middle;">등록일 │ <fmt:formatDate value="${requestScope.sellerNotice.sellerNoticeDate}" pattern="yyyy-MM-dd" /></td>
+				<td width="100px" style="font-size: 10pt; vertical-align: middle;">조회수 │ ${requestScope.sellerNotice.sellerNoticeHit}</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr id="tbodyTR">
+				<td colspan="3" style="border-bottom: 1px solid lightgray;">
+					${requestScope.sellerNotice.sellerNoticeContent}		
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="3" style="border-top: none;">
+					<input type="button" value="목록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${page}&sellerStoreNo=${requestScope.sellerNotice.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">&nbsp;&nbsp;
+					<c:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
+						<input type="button" value="공지수정" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerEditNoticeForm.go?page=${page}&sellerNoticeNo=${requestScope.sellerNotice.sellerNoticeNo}&sellerStoreNo=${requestScope.sellerNotice.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">&nbsp;&nbsp;
+						<input type="button" value="공지삭제" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRemoveNotice.go?page=${page}&sellerNoticeNo=${requestScope.sellerNotice.sellerNoticeNo}&sellerStoreNo=${requestScope.sellerNotice.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
+					</c:if>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>

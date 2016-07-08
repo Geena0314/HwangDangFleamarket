@@ -103,7 +103,7 @@ insert into member values ('dddddddd', '52545856', '이종엽', '010-9977-2905',
 insert into member values ('lsj4216', '52545856', '판매자', '010-9977-2905', '123-456',
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', 1);
 insert into member values ('hwangg@gmail.com', 'dangdang', '황경희매니저', '010-9977-2905', '123-456',
-   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 8층', 1, 1000);
+   										   '경기도 성남시 판교동 판교로', '유스페이스 B동 8층', 0, 1000);
 insert into member values ('lsj42167', '52545856', '판매자', '010-9977-2905', '123-456',
    										   '경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', 1);
 insert into member values ('lsj421678', 'dangdang', '황경희매니저', '010-9977-2905', '123-456',
@@ -114,14 +114,14 @@ insert into member values ('hwanghwang@naver.com', 'dangdang', '황경희매니�
    										   
 insert into member values ('hwang@naver.com','dangdang', '황경희', '010-2387-0073','456-888','경기도 안산시 상록구','어디동 21번지',1) 
 
-insert into member values ('kinghwang', 'kingdang', '퐝경', '010-9977-2905', '123-466',
-   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 0);
+insert into member values ('kinghwang@gmail.com', 'kingdang', '퐝경', '010-9977-2905', '123-466',
+   										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 0, 2000000);
    										   
 insert into member values ('admin@admin.com', '12341234', '관리자', '010-9977-2905', '123-466',
    										   '경기도 성남시 판교동 판교로.', '유스페이스 B동 7층', 1);
 
 
-delete from member where member_id = 'hwangg'					
+delete from member where member_id = 'hwanghwang'					
 select * from member
 
 
@@ -160,10 +160,10 @@ create sequence seller_store_no_seq nocache;
 
 insert into seller values(seller_store_no_seq.nextval, '해물나라', '12345-67890', '대분류업종', '소분류업종', '123-456', 
 							'경기도 성남시 분당구 야탑동.', '노블리치오피스텔 B동 313호', '해물찜.jpg', '#전복', '#냉동문어', '#낙지', 
-							'아주아주 싱싱하고 맛있는 해산물을 산지직송해드립니다.',0, 'aaaaaaaa@gmail.com');
+							'아주아주 싱싱하고 맛있는 해산물을 산지직송해드립니다.',1 ,'hwang88@gmail.com');
 insert into seller values(seller_store_no_seq.nextval, '통영대표꿀빵', '12345-66789', '대분류업종', '소분류업종', '123-654', 
-							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵.jpg', '#원조꿀빵', '#유자꿀빵', '#고구마꿀빵', 
-							'넘나 맛있는 꿀빵을 만드는 꿀빵집입니다.',1, 'hwanghwang');
+							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵.jpg', '원조꿀빵', '유자꿀빵', '고구마꿀빵', 
+							'넘나 맛있는 꿀빵을 만드는 꿀빵집입니다.',1, 'hwanghwang@naver.com');
 							
 insert into seller values(seller_store_no_seq.nextval, '매머드', '12345-66789', '대분류업종', '소분류업종', '123-654', 
 							'경기도 성남시 분당구 삼평동.', '유스페이스 B동 313호', '꿀빵.jpg', '#빅커피', '#꿀라떼', '#고구마라떼', 
@@ -171,7 +171,7 @@ insert into seller values(seller_store_no_seq.nextval, '매머드', '12345-66789
    		
 select * FROM member;
 select * from seller
-delete from seller where member_id = 'hwang3'
+delete from seller where member_id = 'hwanghwang'
 
 select count(seller_store_no) from seller where seller_assign = 1
 
@@ -316,22 +316,18 @@ CREATE TABLE orders (
 	foreign key(member_id) references member(member_id)
 );
 
-<<<<<<< HEAD
 insert into orders values ('a', '수취인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'isj4216@gmail.com');
 insert into orders values ('b', '수신인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'isj4216@gmail.com');
 insert into orders values ('c', '이성준', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'isj4216@gmail.com');
 insert into orders values ('d', '주변인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'isj4216@gmail.com');
 insert into orders values ('e', '너', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, sysdate, 'isj4216@gmail.com');
 insert into orders values ('f', '나', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, sysdate, 'isj4216@gmail.com');
-=======
 insert into orders values ('ggg', '수취인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, '19901126', 'hwang3');
 insert into orders values ('hhh', '수신인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, '19901126', 'hwang3');
 insert into orders values ('iii', '이성준', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, '19901126', 'hwang3');
 insert into orders values ('jjj', '주변인', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, '19901126', 'hwang3');
 insert into orders values ('kkk', '너', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 0, '19901126', 'hwang3');
 insert into orders values ('lll', '나', '010-9977-2905', '123-123', '주소', '세부주소', 5000, '카드', '없음', 1, '19901126', 'hwang3');
->>>>>>> branch 'master' of https://github.com/Geena0314/HwangDangFleamarket.git
-
 
 DROP TABLE product_option 
 	CASCADE CONSTRAINTS;
