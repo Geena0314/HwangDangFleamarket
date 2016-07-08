@@ -308,39 +308,44 @@ public class MemberController {
 		Member oldMember = (Member) session.getAttribute("login_info");
 		
 		  
-		if(memberName.isEmpty()){
+		if(memberName.isEmpty() && oldMember !=null){
 			memberName = oldMember.getMemberName();
 		}
-		if(!oldPassword.isEmpty() && !oldPassword.equals(oldMember.getMemberPassword())){
+		if(!oldPassword.isEmpty() && oldMember !=null && !oldPassword.equals(oldMember.getMemberPassword())){
 			model.addAttribute("passwordError1" , "기존 비밀번호가 틀렸습니다.");
 			url = "member/member_info_update.go";
 		}
-		if(!newPassword1.isEmpty() && !newPassword2.isEmpty() && !newPassword1.equals(newPassword2)){
+		if(oldMember !=null && !newPassword1.isEmpty() && !newPassword2.isEmpty() && !newPassword1.equals(newPassword2)){
 			model.addAttribute("passwordError2" , "비밀번호1과 비밀번호2과 같지않습니다.");
 			url = "member/member_info_update.go";
 		}
-		if(newPassword1.isEmpty()){
+		if(oldMember !=null && newPassword1.isEmpty()){
 			newPassword1 = oldMember.getMemberPassword();
 		}
-		if(hp1.isEmpty() ||  hp2.isEmpty()|| hp3.isEmpty()){
+		if(oldMember !=null && (hp1.isEmpty() ||  hp2.isEmpty()|| hp3.isEmpty())){
 			memberPhone = oldMember.getMemberPhone();
 		}
-		if(memberZipcode.isEmpty()){
+		if(oldMember !=null && memberZipcode.isEmpty()){
 			memberZipcode = oldMember.getMemberZipcode();
 		}
-		if(memberAddress.isEmpty() ){
+		if(oldMember !=null && memberAddress.isEmpty() ){
 			memberAddress = oldMember.getMemberAddress();
 		}
-		if( memberSubAddress.isEmpty()){
+		if(oldMember !=null && memberSubAddress.isEmpty()){
 			memberSubAddress =oldMember.getMemberSubAddress();
 		}
-		Member setMember = new Member(oldMember.getMemberId(), newPassword1, memberName, memberPhone, memberZipcode, memberAddress, memberSubAddress , oldMember.getMemberAssign(), oldMember.getMemberMileage());
-		  
-		//System.out.println(setMember);
-		int flag = service.setMemberInfoByMemberId(setMember);
-		if(flag == 1){ //회원정보 수정 
-			session.setAttribute("login_info", setMember);
-			url = "member/updateSuccess.tiles";
+		Member setMember = null;
+		if(oldMember !=null ){
+			setMember = new Member(oldMember.getMemberId(), newPassword1, memberName, memberPhone, memberZipcode, memberAddress, memberSubAddress , oldMember.getMemberAssign(), oldMember.getMemberMileage());
+		}
+		if(setMember != null){
+			int flag = service.setMemberInfoByMemberId(setMember);
+			if(flag == 1){ //회원정보 수정 
+				session.setAttribute("login_info", setMember);
+				url = "member/updateSuccess.tiles";
+			}
+		}else {
+			url = "/";
 		}  
 		
 		return url;
