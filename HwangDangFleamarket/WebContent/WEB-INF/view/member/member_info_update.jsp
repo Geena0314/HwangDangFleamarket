@@ -181,7 +181,7 @@
 				<span hidden="true" id="hiddenPasswordSpan">
 					현재비밀번호 : <input type="password" name="oldPassword" size="20" id="oldPassword"><font color="blue" id="currentPasswordMsg">현재 비밀번호를 입력해 주세요</font><br/>
 					새 비밀번호 : <input type="password" name="newPassword1" size="20" id="newPassword1"> 8~15자의 영문 대/소문자, 숫자 조합<br/>
-					새 비밀번호 확인 :<input type="password" name="newPassword2" size="20" id="newPassword2"><input type="button" id="updatePassword" value="비밀번호수정" /><br/>
+					새 비밀번호 확인 :<input type="password" name="newPassword2" size="20" id="newPassword2"><br/>
 				</span>
 			</td>
 		</tr>

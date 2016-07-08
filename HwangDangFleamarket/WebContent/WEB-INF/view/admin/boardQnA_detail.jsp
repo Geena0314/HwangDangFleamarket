@@ -111,22 +111,22 @@
 		
 		
 		// 댓글 등록 
-		$("#addReplyBtn").on("click",function(){
-			$("form").prop("action" , "/HwangDangFleamarket/admin/addBoardQnAReply.go");
-			$("form").submit();
+		$("#addReplyBtn").on("click",function(){  
+			$("#myform").prop("action" , "/HwangDangFleamarket/admin/addBoardQnAReply.go?contentNo=${param.no}&contentPage=${param.page}");
+			$("#myform").submit();
 		});
 		
 		//댓글 수정 
 		$("#setReplyBtn").on("click",function(){
-			$("form").prop("action" , "/HwangDangFleamarket/admin/setBoardQnAReply.go");
-			$("form").submit();
+			$("#myform").prop("action" , "/HwangDangFleamarket/admin/setBoardQnAReply.go?contentNo=${param.no}&contentPage=${param.page}");
+			$("#myform").submit();
 			
 		});
 		
 		//댓글삭제
 		$("#removeReplyBtn").on("click",function(){
-			$("form").prop("action" , "/HwangDangFleamarket/admin/removeBoardQnAReply.go");
-			$("form").submit();
+			$("#myform").prop("action" , "/HwangDangFleamarket/admin/removeBoardQnAReply.go?contentNo=${param.no}&contentPage=${param.page}");
+			$("#myform").submit();
 			
 		});
 		
@@ -158,23 +158,13 @@ padding: 10px;
 	padding: 10px;
 }
 </style>
-
 <h3>세부조회</h3>
-<!-- 	private int adminQnaNo;
-	private String adminQnaTitle;
-	private String adminQnaContent;
-	private String adminQnaWriter;
-	private Date adminQnaDate;
-	private int adminQnaHit;
-	private String adminQnaPublished; -->
-	
-	
-	세션아이디 : ${sessionScope.login_info.memberId }  <br/>
+
+	<%-- 세션아이디 : ${sessionScope.login_info.memberId }  <br/> --%>
 	<%-- 작성자 아이디 : ${requestScope.findQnA.adminQnaWriter  } --%>
-	<form method="POST" action="#">
-	<input type="hidden" id="contentPage" name="contentPage" value="${requestScope.page }" />
-	<input type="hidden" id= "contentNo" name ="contentNo" value="${param.no }" />
-	
+	<form method="POST" action="#" id="myform">
+		<%-- <input type="hidden" id="contentPage" name="contentPage" value="${requestScope.page }" />
+		<input type="hidden" id= "contentNo" name ="contentNo" value="${param.no }" /> --%>
 	<section>
 		<header>
 			<div id="title">${requestScope.findQnA.adminQnaTitle }</div>
@@ -207,7 +197,6 @@ padding: 10px;
 				</c:if>
 			</div>
 			  
-			  
 		<!-- 관리자일경우만 댓글달기 가능  -->
 		<c:if test="${sessionScope.login_info.memberId == 'admin@admin.com' }">
  				<textarea rows="15" cols="55" name="replyTa" id="replyTa">${requestScope.findQnA.reply.adminReplyContent }</textarea><br/>
@@ -221,7 +210,6 @@ padding: 10px;
 				</c:otherwise>
 			</c:choose>			
 		</c:if>  
-			
 			
 	</section>
 	</form>  

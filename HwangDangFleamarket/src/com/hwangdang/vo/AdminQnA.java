@@ -14,25 +14,12 @@ public class AdminQnA implements Serializable{
 	private Date adminQnaDate;  //작성일 
 	private int adminQnaHit;  //조회수 
 	private String adminQnaPublished;  // 공개여부 
-	//private ArrayList<AdminQnAReply> replyList;  //댓글객체 리스트  
 	private AdminQnAReply reply; 
 	private String adminQnaPassword;
 	private String adminQnaReplyExist;
 	
 public AdminQnA(){};
 
-/*public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQuaContent, String adminQnaWriter, Date adminQnaDate,
-		int adminQnaHit, String adminQnaPublished) {
-	super();
-	this.adminQnaNo = adminQnaNo;
-	this.adminQnaTitle = adminQnaTitle;
-	this.adminQnaContent = adminQuaContent;
-	this.adminQnaWriter = adminQnaWriter;
-	this.adminQnaDate = adminQnaDate;
-	this.adminQnaHit = adminQnaHit;
-	this.adminQnaPublished = adminQnaPublished;
-}
-*/
 public AdminQnA(int adminQnaNo, String adminQnaTitle, String adminQnaContent, String adminQnaWriter, Date adminQnaDate,
 		int adminQnaHit, String adminQnaPublished, String adminQnaPassword) {
 	super();

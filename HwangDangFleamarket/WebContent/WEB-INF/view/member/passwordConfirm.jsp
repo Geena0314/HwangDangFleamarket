@@ -4,7 +4,7 @@
 <script>
 	$(document).ready(function(){
 		$("#forgotPasswordBtn").on("click",function(){
-			alert("비밀번호 몰라~TEST");
+			
 		});
 		
 	});
@@ -19,7 +19,6 @@
 		<font color="red" size="3">${requestScope.errorMsg  }</font>
 	</c:if>
 	<br/><br/>
-	<p>비밀번호를 잊으셨다면? <input type="button" id="forgotPasswordBtn" value="CLICK" />
-	<br/>저희마켓은 회원님의 개인정보를 신중히 취급하며, 회원님의 동의 없이는 
+	<p>저희마켓은 회원님의 개인정보를 신중히 취급하며, 회원님의 동의 없이는 
 	기재하신 회원정보를 공개 및 변경하지 않습니다.</p>
 </form>

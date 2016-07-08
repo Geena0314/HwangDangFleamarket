@@ -108,16 +108,9 @@
 	<insert id="insert" parameterType="AdminQnA">
 		INSERT INTO  admin_qna  
 		VALUES(
-				#{adminQnaNo } ,   
-				#{adminQnaTitle }  , 
-				#{adminQnaContent }  , 
-				#{adminQnaWriter }  , 
-				#{adminQnaDate }  , 
-				#{adminQnaHit }  , 
-				#{adminQnaPublished }  , 
-				#{adminQnaPassword }  ,
-				null , 
-				'f' 
+				#{adminQnaNo } ,   #{adminQnaTitle }  , #{adminQnaContent }  , 
+			    #{adminQnaWriter }  , #{adminQnaDate }  , #{adminQnaHit }  , 
+				#{adminQnaPublished }  , #{adminQnaPassword }  , null , 'f' 
 		) 
 	</insert>
 	

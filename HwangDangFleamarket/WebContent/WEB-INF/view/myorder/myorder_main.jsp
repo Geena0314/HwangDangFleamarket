@@ -161,38 +161,8 @@ div .parent  {
 			console.log(this);
 			
 		}); 
-		
-/* 		//seller세부정보
-		$(".sellerDetail").on("click",function(){
-			var sellerName = $(this).text(); 
-			$.ajax({
-				"url" : "/HwangDangFleamarket/myorder/SellerDetail.go" ,
-				"type" : "POST"  ,
-				"data"  : "sellerName="+sellerName +"&loginId="+loginId ,
-				"datatype"  : "json"  ,
-				"success" : function(obj){
-					//console.log(obj);
-					alert(
-						"스토어명 :"+ obj.sellerStoreName  + 
-						"스토어주소 :" + obj.sellerAddress + obj.sellerSubAddress +
-						"주요상품 :"  + obj.sellerProduct1 + ", " + obj.sellerProduct2 +", " + obj.sellerProduct3 + 
-						"스토어소개 :" + obj.sellerIntroduction
-					)
-					//window.oepn()
-					return false;
-				} ,
-				"beforeSend" : function(){
-					
-				} , 
-				
-				"error" : function(xhr , status , httpErrorMsg){
-					alert("실패 :" + httpErrorMsg);
-				}
-			});
-			
-		}); */
-		
-		
+
+	
 		 //주문세부정보
 		$(".orderDetail").on("click",function(){
 			/* var orderNo = $(this).text(); 
@@ -233,7 +203,6 @@ div .parent  {
  -->
     
 <h2>나의주문 - 배송현황 </h2>
-세션: ${sessionScope.login_info.memberId }
 
 <div id="nav_layer">		
 	<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">배송 현황</a><br/><br/><br/><br/>
@@ -250,11 +219,10 @@ div .parent  {
 <input type="hidden" id="loginId" value="${sessionScope.login_info.memberId }" />
 
 <c:forEach items="${requestScope.orderList }"  var="order" > 
-	<div class="parent">
 	
-		<!-- 주문날짜 -->
-		<h3><a class="orderDetail"><fmt:formatDate value="${order.orders_date }" pattern="yyyy년 MM월 dd일" /></a> 주문번호: ${order.ordersNo } </h3><br/>
-		
+	<div class="parent">
+	<!-- 주문날짜 -->
+	<h3><a class="orderDetail"><fmt:formatDate value="${order.orders_date }" pattern="yyyy년 MM월 dd일" /></a> 주문번호: ${order.ordersNo } </h3><br/>
 	<c:forEach items="${order.orderProductList }" var="orderProduct">				
 		
 		<div class="child">
@@ -296,6 +264,8 @@ div .parent  {
 </c:forEach>
 </form>
 
+
+<!-- ***************페이징처리************************************** -->
 	<!-- 페이징 ◀버튼처리 -->  
 	<c:choose>
 		<c:when test="${requestScope.pagingBean.previousPageGroup }">
@@ -329,6 +299,8 @@ div .parent  {
 		</c:otherwise>
 	</c:choose>
 
+
+<!-- 버튼 -->
 <div id="btn_layter">
 	<input type="button" value="구매취소" id="btnRequestCancel"/>
 	<input type="button" value="환불신청" id="btnRequestRefund"/>
