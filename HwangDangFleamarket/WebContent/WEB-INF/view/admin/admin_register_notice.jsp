@@ -44,7 +44,7 @@ span{
 	width: 800px;
 }
 </style>
-<h2 class="page-header store_look_around">황당 플리마켓 소식통 등록</h2>
+<h2 class="page-header store_look_around">황당 플리마켓 소식통</h2>
 <form action="/HwangDangFleamarket/admin/adminRegisterNotice.go" method="post">
 	<input type="hidden" name='page' value="1">
 	<div class="table-responsive noticeRnE">
@@ -52,7 +52,7 @@ span{
 			<thead>
 				<tr>
 					<td>
-						<input id="title" type="text" name="noticeTitle" size="71" placeholder="제목을 입력하세요.">
+						<b><input id="title" type="text" name="noticeTitle" size="71" placeholder="제목을 입력하세요."></b>
 					</td>
 				</tr>
 				<c:if test="${not empty requestScope.errors}">

@@ -54,7 +54,7 @@ span{
 			<thead>
 				<tr>
 					<td>
-						<input id="title" type="text" name="sellerNoticeTitle" size="71" placeholder="제목을 입력하세요.">
+						<b><input id="title" type="text" name="sellerNoticeTitle" size="71" placeholder="제목을 입력하세요."></b>
 					</td>
 				</tr>
 					<c:if test="${not empty requestScope.errors}">

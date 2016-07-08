@@ -60,7 +60,9 @@ img{
 	border-radius: 30px;
 	overflow: hidden;
 } */
-
+.seller-list:hover{
+	border: 2px solid green; 
+}
 </style>
 <h2 class="page-header store_look_around">황당 플리마켓 Stores</h2>
 <!-- <div class="seller_listing"> -->

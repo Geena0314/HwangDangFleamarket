@@ -51,7 +51,7 @@ span{
 			<thead>
 				<tr>
 					<td>
-						<input id="title" type="text" name="sellerNoticeTitle" size="71" value="${requestScope.sellerNotice.sellerNoticeTitle}">
+						<b><input id="title" type="text" name="sellerNoticeTitle" size="71" value="${requestScope.sellerNotice.sellerNoticeTitle}"></b>
 					</td>
 				</tr>
 				<c:if test="${not empty requestScope.errors}">
@@ -70,7 +70,7 @@ span{
 				</tr>
 				<c:if test="${not empty requestScope.errors}">
 					<tr>
-						<td colspan="2" class="error">
+						<td class="error">
 							<form:errors path="sellerNotice.sellerNoticeContent"/>
 						</td>
 					</tr>
@@ -78,8 +78,9 @@ span{
 			</tbody>
 		</table>
 	</div>
-	<p align="right">
-	<input type="submit" value="수정">&nbsp;&nbsp;<input type="reset" value="다시작성">&nbsp;&nbsp;
+	<p align="left">
+	<input type="submit" value="수정">
+	<input type="reset" value="다시작성">
 	<input type="button" value="취소" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
 	</p>
 </form>

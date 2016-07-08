@@ -41,7 +41,7 @@ span{
 	width: 800px;
 }
 </style>
-<h2 class="page-header store_look_around">황당 플리마켓 소식통 수정</h2>
+<h2 class="page-header store_look_around">황당 플리마켓 소식통</h2>
 <form action="/HwangDangFleamarket/admin/adminEditNotice.go" method="post">
 	<input type="hidden" name="page" value="${param.page}">
 	<input type="hidden" name="noticeNo" value="${requestScope.notice.noticeNo}">
@@ -50,7 +50,7 @@ span{
 			<thead>
 				<tr>
 					<td>
-						<input id="title" type="text" name="noticeTitle" size="71" value="${requestScope.notice.noticeTitle}">
+						<b><input id="title" type="text" name="noticeTitle" size="71" value="${requestScope.notice.noticeTitle}"></b>
 					</td>
 				</tr>
 				<c:if test="${not empty requestScope.errors}">
