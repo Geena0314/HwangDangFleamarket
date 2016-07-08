@@ -46,9 +46,9 @@ td{
 	<table class="table" id="adminTable">
 		<thead>
 			<tr style="background-color: whitesmoke;">
-				<td width="450px"><b> ${requestScope.notice.noticeTitle}</b></td>
-				<td width="200px" style="font-size: 10pt;">등록일 │ <fmt:formatDate value="${requestScope.notice.noticeDate}" pattern="yyyy-MM-dd"/></td>
-				<td width="150px" style="font-size: 10pt;">조회수 │ ${requestScope.notice.noticeHit}</td>
+				<td width="550px"><b> ${requestScope.notice.noticeTitle}</b></td>
+				<td width="150px" style="font-size: 10pt; vertical-align: middle;">등록일 │ <fmt:formatDate value="${requestScope.notice.noticeDate}" pattern="yyyy-MM-dd"/></td>
+				<td width="100px" style="font-size: 10pt; vertical-align: middle;">조회수 │ ${requestScope.notice.noticeHit}</td>
 			</tr>
 		</thead>
 		<tbody>
