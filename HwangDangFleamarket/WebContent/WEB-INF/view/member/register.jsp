@@ -4,6 +4,10 @@
 <script type="text/javascript">
 	$(document).ready(function()
 	{
+		$("#memberZipcode").on("click", function()
+		{
+			window.open('/HwangDangFleamarket/member/findAddress.go', '주소검색', 'resizable=no scrollbars=yes width=700 height=500 left=500 top=200');
+		});
 		$("#selectEmail").on("change", function()
 		{
 			var index = this.selectedIndex;
@@ -188,7 +192,7 @@
 			<td class='tdName'>우편번호</td>
 			<td>
 				<input type="text" name="memberZipcode" size="30" readonly="readonly" id="memberZipcode">
-				<input type="button" value="주소검색" id="findAddress" onclick="window.open('/HwangDangFleamarket/member/findAddress.go', '주소검색', 'resizable=no scrollbars=yes width=700 height=500 left=500 top=200');">
+				<input class="btn btn-default" type="button" value="주소검색" id="findAddress" onclick="window.open('/HwangDangFleamarket/member/findAddress.go', '주소검색', 'resizable=no scrollbars=yes width=700 height=500 left=500 top=200');">
 			</td>
 		</tr>
 		<tr class="trInput">
