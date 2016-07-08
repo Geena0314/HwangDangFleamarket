@@ -59,8 +59,6 @@
 		display : none;
 	}
 </style> -->
-<script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <link rel="stylesheet" href="/HwangDangFleamarket/uiscripts/jquery-ui.min.css">
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
