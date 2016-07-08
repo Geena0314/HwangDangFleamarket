@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.SessionScope;
 
@@ -32,11 +33,14 @@ public class QnABoardController {
 	 * QnA게시판 글등록 
 	 */
 	@RequestMapping("/register.go")
-	public String registerQnAContent( String loginId , String title , String password , String published ,String content  ){
-		//System.out.println("로그인아이디 :" + loginId +"title : "+title+", published :" + published + "content: " + content);
+	public String registerQnAContent( String loginId , String title , 
+				@RequestParam(value="password",required=false) String password , 
+				String published ,String content  ){
+		
+		System.out.println("로그인아이디 :" + loginId +" ,제목 : "+title+", 작성자 :" + published + "글내용: " + content);
 		int seq = service.getQnABoardSeq();
-		//System.out.println(seq);
-		AdminQnA newQnA = new AdminQnA(seq , title, content, loginId.trim(), new Date(), 1, published, password);
+		
+		AdminQnA newQnA = new AdminQnA(seq , title, content, loginId , new Date(), 1, published, password);
 		service.registerNewQnA(newQnA);
 	return "/admin/boardQnADetail.go?page="+1 +"&no="+seq;
 	} 
@@ -85,17 +89,15 @@ public class QnABoardController {
 	 *  QnA게시판 NO번호로 세부조회  
 	 */
 	@RequestMapping("/boardQnADetail.go")
-	public String boardQnADetail(int page , int no , String password , Model model){
-		if(password == null){
-			System.out.println("비밀번호가 널");
-		}
+	public String boardQnADetail(int page , int no ,@RequestParam(value="password" , required=false) String password , Model model){
+	
 		//System.out.println("디테일메소드:" + "페이지 :"+page +",NO: " +no + "password :" + password); 
 		String url = "";
 		AdminQnA findQnA = service.getAdminQnAByNo(no);
 		//System.out.println("파람패스워드:"+password +"객체패스워드:" + findQnA.getAdminQnaPassword());
 		
 		if(findQnA.getAdminQnaPublished().equals("f")){
-			if(password.equals(findQnA.getAdminQnaPassword() )){
+			if(password != null && password.equals(findQnA.getAdminQnaPassword() )){
 				//비공개에 비밀번호가 일치하면 
 				model.addAttribute("findQnA",findQnA);
 				model.addAttribute("page",page);
@@ -146,12 +148,13 @@ public class QnABoardController {
 	 */			
 	@RequestMapping("/addBoardQnAReply.go")
 	public String addBoardQnAReply( int contentNo , int contentPage , String replyTa , Model model){
-		//System.out.println(contentNo + "," + replyTa);
+		
+		System.out.println(contentNo + ",ta: " + replyTa+","+contentPage);
 		String writeDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		AdminQnAReply reply = new AdminQnAReply(replyTa, writeDate, "관리자", contentNo);
 		service.addReply(reply);
 		model.addAttribute("reply", reply);
-	return "/admin/boardQnADetail.go?page="+contentPage +"&no="+contentNo;
+	return "/admin/boardQnADetail.go?no="+contentNo+"&page="+contentPage;   
 	}
 	  /**
 	   * QnA게시판 관리자 댓글삭제

@@ -1,124 +1,63 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<style type="text/css">
-div.seller_listing{
-	float: left;
-	border-top: 1px solid gray;
-	border-bottom: 1px solid gray;
-	margin: 20px 20px 20px 20px;
-	padding: 20px 20px 20px 20px;
-	max-width: 800px;
-}
-ul{
-	display: block;
-	list-style: none;
-}
-div.seller_listing li#list_block{
-	float: left;
-	overflow: hidden;
-	position: relative;
-	height: 150px;
-	min-width: 800px;
-	padding: 15px 15px 15px 15px;
-}
-li{
-	display: list-item;
-	margin: 0px;
-}
-
-div{
-	display: block;
-}
-.thmb{
-	float: left;
-	width: 150px;
-	height: 150px;
-}
-.store_info{
-	float: left;
-	width: 400px;
-	height: 150px;
-	border-right: 1px solid gray;
-}
-.store_products{
-	float: left;
-	width: 150px;
-	height: 150px;
-}
-p{
-	clear: both;
-}
-b{
-	font-size: 15pt;
-}
-img{
-	width: 150px;
-	height: 150px;
-}
-.store_img{
-	border-radius: 30px;
-	overflow: hidden;
-}
-</style>
-<h2>판매 현황.</h2>
+<link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/seller_sales_status.css">
+<h2 class="page-header store_look_around">판매 현황</h2>
 
 <div class="seller_listing">
-	<ul>
-		<c:forEach items="${requestScope.orderList}" var="list" varStatus="no">
-			<c:forEach items="${list.orderProductList}" var="productList" varStatus="nos">
-				<li id="list_block">
-					<div class="thmb">
-						<div class="store_img">
-							<c:choose>
-								<c:when test="${ productList.orderProductStatus == 5}">
-									<!-- 교환신청 Controller Url주소 입력. -->
-									<a href="#" onClick="window.open('/HwangDangFleamarket/admin/salesInfo.go?sellerStoreNo=${sessionScope.seller.sellerStoreNo}&page=${ requestScope.bean.page }', '판매자 등록 신청 내용', 'scrollbars=yes width=600 height=600 left=450 top=100');">
-										<img src="../image_storage/${productList.product.productMainImage}">
-									</a>
-								</c:when>
-								<c:when test="${ productList.orderProductStatus == 6}">
-									<a href="#" onClick="window.open('/HwangDangFleamarket/seller/sellerRefundCheck.go?sellerStoreNo=${sessionScope.seller.sellerStoreNo}&page=${ requestScope.bean.page }&ordersNo=${ productList.ordersNo }&orderSeqNo=${ productList.orderSeqNo }', '환불 현황', 'scrollbars=yes width=600 height=600 left=450 top=100');">
-										<img src="../image_storage/${productList.product.productMainImage}">
-									</a>
-								</c:when>
-								<c:otherwise>
+	<c:forEach items="${requestScope.orderList}" var="list" varStatus="no">
+		<c:forEach items="${list.orderProductList}" var="productList" varStatus="nos">
+			<li id="list_block">
+				<div class="thmb">
+					<div class="store_imgs">
+						<c:choose>
+							<c:when test="${ productList.orderProductStatus == 5}">
+								<!-- 교환신청 Controller Url주소 입력. -->
+								<a href="#" onClick="window.open('/HwangDangFleamarket/admin/salesInfo.go?sellerStoreNo=${sessionScope.seller.sellerStoreNo}&page=${ requestScope.bean.page }', '판매자 등록 신청 내용', 'scrollbars=yes width=600 height=600 left=450 top=100');">
 									<img src="../image_storage/${productList.product.productMainImage}">
-								</c:otherwise>
-							</c:choose>
-						</div>
+								</a>
+							</c:when>
+							<c:when test="${ productList.orderProductStatus == 6}">
+								<a href="#" onClick="window.open('/HwangDangFleamarket/seller/sellerRefundCheck.go?sellerStoreNo=${sessionScope.seller.sellerStoreNo}&page=${ requestScope.bean.page }&ordersNo=${ productList.ordersNo }&orderSeqNo=${ productList.orderSeqNo }', '환불 현황', 'scrollbars=yes width=600 height=600 left=450 top=100');">
+									<img src="../image_storage/${productList.product.productMainImage}">
+								</a>
+							</c:when>
+							<c:otherwise>
+								<img src="../image_storage/${productList.product.productMainImage}">
+							</c:otherwise>
+						</c:choose>
 					</div>
-					<ul class="store_info">
+				</div>
+				<ul class="store_info">
+					<li class="product-names">
+						${productList.product.productName}
+					</li>
+					<li class="introduction">
+						<br>주문 번호 : ${productList.ordersNo}<br>
+						주문 수량 : ${productList.orderAmount}<br>
+						총 주문 가격 : ${list.ordersTotalPrice}
+					</li>
+				</ul>
+				<div class="store_products">
+					<ul class="product_lists">
+						<li>구매자 : ${list.memberId}</li>
+						<c:forEach begin="0" end="10" step="1" varStatus="status">
+							<c:if test="${ productList.orderProductStatus ==  status.index}">
+								<li>주문 현황 : ${requestScope.status[status.index]}</li>
+							</c:if>
+						</c:forEach>
 						<li>
-							${productList.product.productName}
-						</li>
-						<li class="introduction">
-							주문 번호 : ${productList.ordersNo}<br>
-							주문 수량 : ${productList.orderAmount}<br>
-							총 주문 가격 : ${list.ordersTotalPrice}
+							<c:if test="${list.ordersRequest!=null}">
+								요청 사항 : ${list.ordersRequest}
+							</c:if>
 						</li>
 					</ul>
-					<div class="store_products">
-						<ul class="product_list">
-							<li>구매자 : ${list.memberId}</li>
-							<c:forEach begin="0" end="10" step="1" varStatus="status">
-								<c:if test="${ productList.orderProductStatus ==  status.index}">
-									<li>주문 현황 : ${requestScope.status[status.index]}</li>
-								</c:if>
-							</c:forEach>
-							<li>
-								<c:if test="${list.ordersRequest!=null}">
-									요청 사항 : ${list.ordersRequest}
-								</c:if>
-							</li>
-						</ul>
-					</div>
-				</li>
-			</c:forEach>
+				</div>
+			</li>
 		</c:forEach>
-	</ul>
+	</c:forEach>
 </div>
 
-<p align="center">
+<p align="center" class="pageGroup seller-register-page">
 	<!-- ◀이전 페이지 그룹 처리 -->
 <c:choose>
 	<c:when test="${requestScope.bean.previousPageGroup}">

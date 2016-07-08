@@ -1,64 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="lee" uri="http://java.sun.com/jsp/jstl/core"%>
-<!-- <style type="text/css">
-	#main
-	{
-		width:800px;
-		height:300px;
-		backfround-color: blue;
-		margin-left : 50px;
-		margin-top : 50px;
-	}
-	#mainImage
-	{
-		width : 300px;
-		height : 200px;
-		margin : 50px;
-		float : left;
-	}
-	#table
-	{
-		width : 300px;
-		height : 200px;
-		margin : 50px;
-		float : left;
-	}
-	#info
-	{
-		width:600px;
-		min-height:400px;
-		backfround-color: blue;
-		margin-left : 150px;
-	}
-	#like
-	{
-		height:50px;
-		width:800px;
-		text-align: left;
-		float: left;
-	}
-	#reviewTable
-	{
-		width : 582.73px;
-		min-height : 235.46px;
-	}
-	#qnaTable
-	{
-		width : 582.73px;
-		min-height : 235.46px;
-	}
-	#optionId
-	{
-		display: none;
-	#optionAddPriceTr
-	{
-		display : none;
-	}
-	#optionStockError
-	{
-		display : none;
-	}
-</style> -->
+<link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/product_detail.css">
 <link rel="stylesheet" href="/HwangDangFleamarket/uiscripts/jquery-ui.min.css">
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
@@ -956,7 +898,7 @@ function error(xhr, status, err)
 	<h2 class="page-header store_look_around" align="left">상품 상세 정보 보기</h2>
 	<div class="row placeholders product-row">
 		<div id="mainImage" align="center" class="col-sm-6 margins">
-			<img src="../image_storage/${ requestScope.product.productMainImage }"  style="width:300px;height:200px;">
+			<img class="main-image"src="../image_storage/${ requestScope.product.productMainImage }" >
 		</div>
 		<div id="table" align="center" class="col-sm-6 margins">
 			<form method="POST" action="#" class="form-product">
@@ -1028,11 +970,9 @@ function error(xhr, status, err)
 		<div class="detailInfo">
 			<h3 class="page-header2">상세 보기</h3>
 			<lee:forEach items="${ requestScope.detailimage }" var="image">
-				<img src="../image_storage/${ image }"  style="width:300px;height:200px;"><br>
+				<img class="detail-image" src="../image_storage/${ image }"><br>
 			</lee:forEach>
-			
-			<br><br><br><br>${ requestScope.product.productInfo }<br>
-			<br><br><br><br>
+			${ requestScope.product.productInfo }
 		</div>
 	<table id="reviewTable" class="table-striped reviewTable">
 		<tr>
@@ -1112,7 +1052,7 @@ function error(xhr, status, err)
 					</td>
 				</tr>
 			</table>
-			<hr width="670px"><hr width="670px">
+			<hr width="65%"><hr width="65%">
 	<table id="qnaTable" class="table-striped reviewTable">
 		<tr><td colspan="3" align="center">QnA</td></tr>
 		<tr>

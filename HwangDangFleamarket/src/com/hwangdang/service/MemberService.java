@@ -28,5 +28,8 @@ public interface MemberService {
 	Member selectById(String memberId);
 
 	int deleteMemberByMemberId(String memberId);
+	   
+	//회원정보수정 
+	public int setMemberInfoByMemberId(Member setMember);
 }
 

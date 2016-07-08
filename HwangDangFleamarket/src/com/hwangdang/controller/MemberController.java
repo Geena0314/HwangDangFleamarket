@@ -147,11 +147,52 @@ public class MemberController {
 		return "redirect:/main.go";
 	}
 	
-	@RequestMapping("/mypage")
-	public String mypage(String memberPassword, HttpSession session)
-	{
-		return "member/mypage.tiles";
+	//패스워드 확인 페이지로 이동 
+	@RequestMapping("/passwordConfirm")
+	public String passwordConfirm()
+	{	
+		return "member/passwordConfirm.tiles";
 	}
+	//3가지 옵션 선택페이지 이동 
+	@RequestMapping("/mypage")
+	public String mypage(String memberPassword, HttpSession session , Model model)
+	{	
+		String url = "";
+		//입력한 비밀번호와 로그인한 회원의 실제 비밀번호가맞는지 검증 로직  
+		Member member = (Member) session.getAttribute("login_info");
+		if(member != null && member.getMemberPassword().equals(memberPassword)){
+			//패스워드 일치 
+			url = "member/mypage.tiles";
+		}else{
+			//패스워드 불일치
+			model.addAttribute("errorMsg" , "패스워드가 일치 하지 않습니다. 다시확인해주세요!");
+			url = "/member/passwordConfirm.go";
+		}
+		return url;
+	}	
+	
+	//회원정보 수정 페이지로 이동 
+	@RequestMapping("/member_info_update.go")
+	public String memberInfoUpdatePageMove(String memberPassword, HttpSession session , Model model)
+	{	
+		model.addAttribute("emailList", service.selectEmailList());
+		return "member/member_info_update.tiles";
+	}
+	//비밀번호  수정 : 예전 비밀번호 검증
+	@RequestMapping("/oldPasswordChecked.go")
+	@ResponseBody
+	public boolean oldPasswordChecked(String oldPassword , HttpSession session){	
+		boolean flag = false;
+		//System.out.println(oldPassword);
+		Member member = (Member) session.getAttribute("login_info");
+		if(member!=null && member.getMemberPassword().equals(oldPassword)){
+			 flag = true;
+		}else{
+			flag = false;
+		}
+		return flag;
+	}
+	
 	
 	@RequestMapping("/sellerRegister")
 	public ModelAndView sellerRegister()
@@ -247,4 +288,71 @@ public class MemberController {
 		service.deleteMemberByMemberId(memberId);
 		return "redirect:/main.go";
 	}
+	
+	//회원정보수정
+	@RequestMapping("/setMember.go")
+	public String setMember(@RequestParam(value="memberName",required=false) String memberName ,
+			@RequestParam(value="oldPassword",required=false) String oldPassword,
+			@RequestParam(value="newPassword1",required=false) String newPassword1,
+			@RequestParam(value="newPassword2",required=false) String newPassword2 , 
+			@RequestParam(value="hp1",required=false) String hp1 ,
+			@RequestParam(value="hp2",required=false) String hp2 , 
+			@RequestParam(value="hp3",required=false) String hp3 , 
+			@RequestParam(value="memberZipcode",required=false) String memberZipcode ,
+			@RequestParam(value="memberAddress",required=false) String memberAddress ,  Model model ,
+			@RequestParam(value="memberSubAddress",required=false) String memberSubAddress ,HttpSession session ){
+		 
+		String url = "/";
+		String memberPhone = hp1+"-"+hp2+"-"+hp3;
+		//System.out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n",memberName ,oldPassword ,newPassword1 ,newPassword2, hp1,hp2,hp3,memberZipcode , memberAddress, memberSubAddress);
+		Member oldMember = (Member) session.getAttribute("login_info");
+		
+		  
+		if(memberName.isEmpty() && oldMember !=null){
+			memberName = oldMember.getMemberName();
+		}
+		if(!oldPassword.isEmpty() && oldMember !=null && !oldPassword.equals(oldMember.getMemberPassword())){
+			model.addAttribute("passwordError1" , "기존 비밀번호가 틀렸습니다.");
+			url = "member/member_info_update.go";
+		}
+		if(oldMember !=null && !newPassword1.isEmpty() && !newPassword2.isEmpty() && !newPassword1.equals(newPassword2)){
+			model.addAttribute("passwordError2" , "비밀번호1과 비밀번호2과 같지않습니다.");
+			url = "member/member_info_update.go";
+		}
+		if(oldMember !=null && newPassword1.isEmpty()){
+			newPassword1 = oldMember.getMemberPassword();
+		}
+		if(oldMember !=null && (hp1.isEmpty() ||  hp2.isEmpty()|| hp3.isEmpty())){
+			memberPhone = oldMember.getMemberPhone();
+		}
+		if(oldMember !=null && memberZipcode.isEmpty()){
+			memberZipcode = oldMember.getMemberZipcode();
+		}
+		if(oldMember !=null && memberAddress.isEmpty() ){
+			memberAddress = oldMember.getMemberAddress();
+		}
+		if(oldMember !=null && memberSubAddress.isEmpty()){
+			memberSubAddress =oldMember.getMemberSubAddress();
+		}
+		Member setMember = null;
+		if(oldMember !=null ){
+			setMember = new Member(oldMember.getMemberId(), newPassword1, memberName, memberPhone, memberZipcode, memberAddress, memberSubAddress , oldMember.getMemberAssign(), oldMember.getMemberMileage());
+		}
+		if(setMember != null){
+			int flag = service.setMemberInfoByMemberId(setMember);
+			if(flag == 1){ //회원정보 수정 
+				session.setAttribute("login_info", setMember);
+				url = "member/updateSuccess.tiles";
+			}
+		}else {
+			url = "/";
+		}  
+		
+		return url;
+	}
+	
+	
+	
+	
+	
 }
