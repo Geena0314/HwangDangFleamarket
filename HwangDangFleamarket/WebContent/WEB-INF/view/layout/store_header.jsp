@@ -58,7 +58,10 @@
 				</c:if>
 			</ul>
 		</div>
-			<div><a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}"><img style="width: 130px; height: 130px; position: relative; left: 280px; top: -139px; border-radius: 20px;" class="store-main-img" id="storeMainImage" src="../image_storage/${param.sellerStoreImage}"></a>
+			<div>
+				<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}">
+					<img style="width: 130px; height: 130px; position: relative; left: 280px; top: -139px; border-radius: 20px;" class="store-main-img" id="storeMainImage" src="../image_storage/${param.sellerStoreImage}">
+				</a>
 				
 				<div align="center" class="store-buttons col-sm-6">
 					<ul class="nav navbar-nav navbar-right links">

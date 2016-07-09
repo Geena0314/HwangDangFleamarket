@@ -9,4 +9,4 @@
 	    }
 	});
 </script>
-<h2 class="page-header">${ requestScope.result }</h2>
+<h1 align="center">${ requestScope.result }</h1>
