@@ -54,7 +54,7 @@ img {
 	교환/환불/취소 -   환불신청 승인  : 9
  -->
 
-<h2>나의주문 - 배송완료</h2>
+<h2 class="page-header store_look_around">나의주문 - 배송완료</h2>
 세션: ${sessionScope.login_info.memberId }
 
 <div id="nav_layer">		

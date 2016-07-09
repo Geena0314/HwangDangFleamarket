@@ -245,9 +245,9 @@
 		width: 
 	}
 </style>
+<h2 class="page-header store_look_around">황당 플리마켓 판매자 신청</h2>
 <div>
 	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/member/sellerRegisterRequest.go" class="form-seller" name="sellerForm">
-	<h2 class="page-header">판매자 등록 신청</h2>
 		<table id="table" width='600' class="table table-striped">
 			<tr class="trInput">
 				<th class='tdName'>아이디</th>
@@ -361,7 +361,7 @@
 			<tr>
 				<td colspan="3">
 					<input class="btn btn-lg btn-success btn-block"  type="submit" value="등록하기" id="submits">
-					<input class="btn btn-lg btn-primary btn-block"  type="reset" value="다시입력.">
+					<input class="btn btn-lg btn-primary btn-block"  type="reset" value="다시입력">
 				</td>
 			</tr>
 			<tr>

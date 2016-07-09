@@ -217,7 +217,7 @@ img {
  -->
     
 orderSeqNo
-<h2>나의주문 - 배송현황 </h2>
+<h2 class="page-header store_look_around">나의주문 - 배송현황</h2>
 세션: ${sessionScope.login_info.memberId }
 
 <div id="nav_layer">		

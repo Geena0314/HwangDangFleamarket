@@ -158,7 +158,7 @@ padding: 10px;
 	padding: 10px;
 }
 </style>
-<h3>세부조회</h3>
+<h2 class="page-header store_look_around">황당플리마켓 Q&A</h2>
 
 	<%-- 세션아이디 : ${sessionScope.login_info.memberId }  <br/> --%>
 	<%-- 작성자 아이디 : ${requestScope.findQnA.adminQnaWriter  } --%>

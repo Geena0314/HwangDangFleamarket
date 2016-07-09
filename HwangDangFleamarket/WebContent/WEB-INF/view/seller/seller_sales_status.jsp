@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/seller_sales_status.css">
-<h2 class="page-header store_look_around">판매 현황</h2>
+<h2 class="page-header store_look_around">내 스토어 판매 현황</h2>
 
 <div class="seller_listing">
 	<c:forEach items="${requestScope.orderList}" var="list" varStatus="no">

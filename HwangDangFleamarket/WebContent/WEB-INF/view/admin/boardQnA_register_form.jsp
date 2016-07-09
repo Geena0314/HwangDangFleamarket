@@ -34,7 +34,7 @@
 </script>
 
 세션아이디 : ${sessionScope.login_info.memberId }
-<h2>문의사항 등록</h2>
+<h2 class="page-header store_look_around">황당플리마켓 Q&A</h2>
 <form method="POST" action="" id="f1">
 	<input type="hidden"  name="loginId" value="${sessionScope.login_info.memberId }" />
 	<div id="title_layer">

@@ -42,7 +42,7 @@
 
 <input type="hidden" value="${requestScope.password}" id="originalPassword" />
 
-<h2>QnA게시판 비밀번호 입력</h2>
+<h2 class="page-header store_look_around">황당플리마켓 Q&A</h2>
 <form method="POST" action="">
 	게시판 비밀번호 입력(4자리)  : <input type="password" name="password" id="password" />
 	<c:if test="${requestScope.errorMsg != null }">

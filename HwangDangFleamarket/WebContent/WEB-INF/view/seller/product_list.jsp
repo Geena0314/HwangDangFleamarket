@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="lee"  uri="http://java.sun.com/jsp/jstl/core"%>
-<h2 class="page-header store_look_around">상품 리스트 보기</h2>
+<h2 class="page-header store_look_around">스토어 상품 목록</h2>
 	<div class="row placeholders product-content">
 		<lee:forEach items="${ requestScope.productList }" var="list" varStatus="no">
 			<div id="product${ no.count }" class="col-sm-4 products">
@@ -54,12 +54,12 @@
 					▶
 				</lee:otherwise>
 			</lee:choose>
-			<lee:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
-		</lee:if>
 	</div>
 	<div class="registerProductBtn">
-		<span class="registerProductBtn">
-			<input type="button" value="상품 등록" onclick="window.location='/HwangDangFleamarket/product/registerProductForm.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }'">&nbsp;&nbsp;
-		</span>
+		<lee:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
+			<span class="registerProductBtn">
+				<input type="button" value="상품 등록" onclick="window.location='/HwangDangFleamarket/product/registerProductForm.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }'">&nbsp;&nbsp;
+			</span>
+		</lee:if>
 	</div>
 </div>

@@ -120,7 +120,7 @@ $(document).ready(function(){
 });
 </script>
 <div>
-	<h2 align="center">상품 수정</h2>
+	<h2 class="page-header store_look_around">스토어 상품 등록</h2>
 	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/product/editProduct.go">
 		<input type="hidden" name="sellerStoreNo" value="${param.sellerStoreNo}">
 		<input type="hidden" name="page" value="${param.page}">
