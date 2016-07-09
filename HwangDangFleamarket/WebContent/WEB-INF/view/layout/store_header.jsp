@@ -1,4 +1,4 @@
-<%@page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
 	$(document).ready(function(){
@@ -58,14 +58,16 @@
 				</c:if>
 			</ul>
 		</div>
-		<div align="center" class="main-buttons col-sm-6">
-			<ul class="nav navbar-nav navbar-right links">
-				<!-- 삭제 예정 <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li> -->
-				<li><a href="#" class="navbar-collapse collapse navbars main-buttons">튜토리얼</a></li>
-		        <li><a href="/HwangDangFleamarket/seller/sellerList.go?page=1" class="navbar-collapse collapse navbars main-buttons">스토어 둘러보기</a></li>
-		        <li><a href="/HwangDangFleamarket/admin/adminNotice.go?page=1" class="navbar-collapse collapse navbars main-buttons">소식통</a></li>
-		        <li><a href="/HwangDangFleamarket/admin/boardQnAList.go?page=1" class="navbar-collapse collapse navbars main-buttons">QnA게시판</a></li>
-	        </ul>
-		</div>
+			<div><a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}"><img style="width: 130px; height: 130px; position: relative; left: 280px; top: -139px; border-radius: 20px;" class="store-main-img" id="storeMainImage" src="../image_storage/${param.sellerStoreImage}"></a>
+				
+				<div align="center" class="store-buttons col-sm-6">
+					<ul class="nav navbar-nav navbar-right links">
+						<!-- 삭제 예정 <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li> -->
+						<li><input class="navbar-collapse collapse navbars store-buttons" type="button" value="스토어 소개"></li>
+						<li><input class="navbar-collapse collapse navbars store-buttons" type="button" value="상품 목록" onclick="window.location='/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'"></li>
+		        		<li><input class="navbar-collapse collapse navbars store-buttons" type="button" value="스토어 소식" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=1&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'"></li>
+			        </ul>
+				</div>
+			</div>
 	</div>
 </nav>
