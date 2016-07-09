@@ -126,17 +126,14 @@
 	<update id="update-by-no" parameterType="hashmap">
 	    UPDATE admin_qna
 		SET  admin_qna_content = #{content}  ,
-			 admin_qna_date = #{setDate} 
+			 admin_qna_date = #{setDate}  ,
+			 admin_qna_title = #{title}  ,
+			 admin_qna_password = #{password}  ,
+			 admin_qna_published = #{publiced}
 		WHERE admin_qna_no = #{no}
 	</update>
 	  
-	<!--QnA게시판 관리자 댓글추가  
-	private int adminReplyNo;
-	private String adminReplyContent;
-	private Date adminReplyDate;
-	private String adminReplyWriter;
-	private int adminQnaNo;
-	 -->
+	<!--QnA게시판 관리자 댓글추가 -->
 	<insert id="insert-reply" parameterType="com.hwangdang.vo.AdminQnAReply">
 		INSERT INTO admin_QnA_reply
 		VALUES(

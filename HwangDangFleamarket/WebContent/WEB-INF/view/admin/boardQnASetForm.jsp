@@ -27,21 +27,53 @@ span{
 }
 </style>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		
+		
+		
+		
+		//비공개시 패스워드 객체생성 
+		$("#private").click(function(){
+			var pass = document.getElementById("password");
+			$(pass).show();
+			if(pass == null){
+				$("#privateLabel").append("   <input type='password' name='password' id='password' /> ");		
+			}
+		});
+		
+		$("#publiced").click(function(){
+			var pass = document.getElementById("password");
+			if(pass != null){
+				$(pass).hide();
+			}
+		});
+		
+		
+		$("#publiced").click(function(){
+			var pass = document.getElementById("password");
+			if(pass != null){
+				$(pass).hide();
+			}
+		});
+		
+		
+	});//ready
+</script>
 수정폼이동!
 no :${param.no}
 page :${param.page}
 
 
 <h2 class="page-header store_look_around">황당 플리마켓 QnA게시판</h2>
-<form action="/HwangDangFleamarket/admin/boardQnASet.go" method="post">
-	<input type="hidden" name="page" value="${param.page}">
-	<input type="hidden" name="noticeNo" value="${requestScope.notice.noticeNo}">
-	<div class="table-responsive noticeRnE ">
+<form action="/HwangDangFleamarket/admin/boardQnASet.go?no=${param.no}&page=${param.page}" method="POST" id="setForm">
+	<div class="table-responsive">
 		<table class="table" id="adminTable">
 			<thead>
 				<tr>
-					<td>
-						<b><input id="title" type="text" name="noticeTitle" size="71" value="${requestScope.adminQnA.adminQnaTitle}"></b>
+					<td> 
+						<b><input id="title" type="text" name="title" size="71" value="${requestScope.adminQnA.adminQnaTitle}"></b>
 					</td>
 				</tr>
 				<c:if test="${not empty requestScope.errors}">
@@ -51,11 +83,27 @@ page :${param.page}
 						</td>
 					</tr>
 				</c:if>
+				<tr>
+					<td>
+						<c:choose>
+							<c:when test="${requestScope.adminQnA.adminQnaPublished eq 't' }">
+								<label>공개 <input type="radio" name="privated" checked="checked"  id="publiced" value="publiced" ></label>
+						<label id="privateLabel">비공개 <input type="radio" name="privated"  id="private"  value="not" ></label>
+							</c:when>
+							<c:otherwise>
+								<label>공개 <input type="radio" name="privated"   id="publiced" value="publiced" ></label>
+								<label id="privateLabel">비공개 <input type="radio" name="privated" checked="checked" id="private"  value="not" ></label>
+								<input type='password' name='password' id='password' />
+							</c:otherwise>
+						</c:choose>
+						
+					</td>
+				</tr>
 			</thead>
 			<tbody>
 				<tr>
 					<td>
-						<textarea rows="30" cols="70" name="noticeContent">${requestScope.adminQnA.adminQnaContent}</textarea>
+						<textarea class="form-control"  rows="15"  name="content">${requestScope.adminQnA.adminQnaContent}</textarea>
 					</td>
 				</tr>
 				<c:if test="${not empty requestScope.errors}">
@@ -68,13 +116,11 @@ page :${param.page}
 			</tbody>
 		</table>
 	</div>
-	<p class="text-center">
+	
 	<input type="submit" value="수정" class="btn btn-default" role="button"  >
-	<input type="reset" value="다시작성" class="btn btn-default" role="button" >
-	<input type="button" value="취소"class="btn btn-default" role="button"
-	 onclick="window.location='/HwangDangFleamarket/admin/adminNotice.go?page=${param.page}'">
-	</p>
+	<input type="button" value="목록보기"class="btn btn-default" role="button" onclick="window.location='/HwangDangFleamarket/admin/boardQnAList.go?page=${param.page}'">
+
 </form>
 
-
+<p class="text-center"></p>
 

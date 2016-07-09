@@ -36,6 +36,7 @@ $(document).ready(function(){
 	});
 });
 </script>
+<h2 class="page-header store_look_around">황당 플리마켓 MyPage</h2>
 <div class="row placeholders"  id="all">
 	<lee:choose>
 		<lee:when test="${ sessionScope.login_info.memberId == 'kinghwang@gmail.com' }">

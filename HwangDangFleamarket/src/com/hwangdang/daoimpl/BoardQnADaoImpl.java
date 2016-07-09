@@ -57,10 +57,11 @@ public class BoardQnADaoImpl implements Dao {
 		return session.update("boardQnA.update-by-no", param);
 	}
 	//댓글등록 add
-	public void insertReploy(AdminQnAReply reply){
+	public int insertReploy(AdminQnAReply reply){
 		//System.out.println("글번호 : " + reply.getAdminQnaNo());
-		session.update("boardQnA.update-by-no-reply-exsit", reply.getAdminQnaNo());
-		session.insert("boardQnA.insert-reply", reply);
+		int cnt = session.update("boardQnA.update-by-no-reply-exsit", reply.getAdminQnaNo());
+		cnt =session.insert("boardQnA.insert-reply", reply);
+		return cnt;
 	}  
 	//댓글삭제 remove
 	public void deleteReployByNo(int replyNo , int contentNo){ 

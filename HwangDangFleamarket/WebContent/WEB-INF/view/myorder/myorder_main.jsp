@@ -202,7 +202,7 @@ div .parent  {
 	교환/환불/취소 -   환불신청 승인  : 9
  -->
     
-<h2>나의주문 - 배송현황 </h2>
+<h2 class="page-header store_look_around">나의주문 - 배송현황</h2>
 
 <div id="nav_layer">		
 	<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">배송 현황</a><br/><br/><br/><br/>

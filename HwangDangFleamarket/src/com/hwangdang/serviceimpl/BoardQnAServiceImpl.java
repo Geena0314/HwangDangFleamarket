@@ -63,8 +63,8 @@ public class BoardQnAServiceImpl implements Service {
 	
 	//댓글 입력 add
 	@Transactional(rollbackFor=Exception.class)
-	public void addReply(AdminQnAReply reply){
-		adminDao.insertReploy(reply);
+	public int addReply(AdminQnAReply reply){
+		return adminDao.insertReploy(reply);
 	}	
 	//댓글 삭제 remove
 	@Transactional(rollbackFor=Exception.class)

@@ -6,8 +6,17 @@
 		//비공개시 패스워드 객체생성 
 		$("#private").click(function(){
 			var pass = document.getElementById("password");
+			$(pass).show();
 			if(pass == null){
 				$("#title_layer").append("<input type='password' name='password' id='password' /> ");		
+			}
+		});
+		
+		
+		$("#public").click(function(){
+			var pass = document.getElementById("password");
+			if(pass != null){
+				$(pass).hide();
 			}
 		});
 		
@@ -34,12 +43,12 @@
 </script>
 
 세션아이디 : ${sessionScope.login_info.memberId }
-<h2>문의사항 등록</h2>
+<h2 class="page-header store_look_around">황당플리마켓 Q&A</h2>
 <form method="POST" action="" id="f1">
 	<input type="hidden"  name="loginId" value="${sessionScope.login_info.memberId }" />
 	<div id="title_layer">
 		제목 : <input type="text" name="title" id="title" size="60" /><br/><br/>
-		공개여부 : 공개<input type="radio"  checked="checked" name="published"  value="t" />
+		공개여부 : 공개<input type="radio"  checked="checked" name="published"  value="t" id="public"   />
 		               비공개<input type="radio"  name="published" value="f" id="private" />
 	</div>
 	  

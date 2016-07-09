@@ -3,8 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style type="text/css">
 table, td {
-	border-top: 3px solid gray;
-	border-bottom: 3px solid gray;
+	border-top: 2px solid lightgray;
+	border-bottom: 2px solid lightgray;
 	border-left: none;
 	border-right: none;
 	text-align: center;
@@ -14,10 +14,10 @@ table {
 }
 .thead{
 	width: 650px;
-	background-color: lightgray;
+	background-color: whitesmoke;
 }
 .tfoot{
-	background-color: lightgray;
+	background-color: whitesmoke;
 }
 td {
 	border: none;
@@ -43,7 +43,7 @@ ul li{
 }
 .estimatedPrice{
 	display: block;
-	border: 3px solid gray;
+	border: 2px solid lightgray;
 	text-align: right;
 }
 .bottomBtn{
@@ -132,9 +132,7 @@ function error(xhr, status, err)
 	alert(status+", "+xhr.readyState+" "+err);
 }
 </script>
-<p align="right">
-	<b>장바구니</b>
-</p>
+<h2 class="page-header store_look_around">황당 플리마켓 장바구니</h2>
 <div class="cartListSection">
 	<div class="cartTable">
 		<table>

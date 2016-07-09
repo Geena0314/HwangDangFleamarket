@@ -32,7 +32,8 @@
 	});
 	
 </script>
-
+패스워드 : ${requestScope.password}   파람 : ${param.password}
+<h2 class="page-header store_look_around">황당플리마켓 Q&A</h2>
 <div class="center-block">
 	<input type="hidden" value="${requestScope.password}" id="originalPassword" />
 	<h2 class="page-header store_look_around">QnA게시판 비밀번호 입력</h2>
@@ -45,5 +46,3 @@
 		<input type="button" value="go"  id="submintBtn" class="btn btn-default" />
 	</form>
 </div>
-	
-

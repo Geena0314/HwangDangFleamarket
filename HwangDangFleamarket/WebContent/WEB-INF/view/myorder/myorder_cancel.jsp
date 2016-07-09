@@ -37,10 +37,7 @@ img {
 		
 	});
 </script>
-
-
-<h2>나의주문 - 교환/환불/취소</h2>
-
+<h2 class="page-header store_look_around">나의주문 - 교환/환불/취소</h2>
 <div id="nav_layer">		
 	<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">배송 현황</a><br/><br/><br/><br/>
 	<a href="/HwangDangFleamarket/myorder/success.go?loginId=${sessionScope.login_info.memberId }">배송 완료</a><br/><br/><br/><br/>

@@ -63,9 +63,21 @@
 				<div align="center" class="store-buttons col-sm-6">
 					<ul class="nav navbar-nav navbar-right links">
 						<!-- 삭제 예정 <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li> -->
-						<li><input class="navbar-collapse collapse navbars store-buttons" type="button" value="스토어 소개"></li>
-						<li><input class="navbar-collapse collapse navbars store-buttons" type="button" value="상품 목록" onclick="window.location='/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'"></li>
-		        		<li><input class="navbar-collapse collapse navbars store-buttons" type="button" value="스토어 소식" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=1&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'"></li>
+						<li>
+							<button class="navbar-collapse collapse navbars store-buttons">
+								<img src="/HwangDangFleamarket/image_storage/intro.JPG">
+							</button>
+						</li>
+						<li>
+							<button class="navbar-collapse collapse navbars store-buttons" onclick="window.location='/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
+								<img src="/HwangDangFleamarket/image_storage/products.JPG">
+							</button>
+						</li>
+		        		<li>
+		        			<button class="navbar-collapse collapse navbars store-buttons" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=1&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
+		        				<img src="/HwangDangFleamarket/image_storage/notice.JPG">
+		        			</button>
+		        		</li>
 			        </ul>
 				</div>
 			</div>
