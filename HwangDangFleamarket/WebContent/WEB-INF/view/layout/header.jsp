@@ -40,8 +40,8 @@
 				<li>
 					<!-- 검색바 -->
 					<form action="/HwangDangFleamarket/buy/findProductByKeyword.go" method="POST" >
-						<input type="text"  size="30" name="keyword" placeholder="상품/판매자 검색" class="navbar-form navbar-right" >
-						<input class="btn btn-info" type="submit" value="검색"  id="searchBtn">
+						<input type="text"  size="25" name="keyword" placeholder="seach for product..." >
+						<input class="btn btn-default" type="submit" value="go"  id="searchBtn">
 					</form>   
 				</li>
 				<c:choose>
