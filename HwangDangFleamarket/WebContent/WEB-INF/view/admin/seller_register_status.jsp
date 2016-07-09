@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/seller_register_status.css">
-<h2 class="page-header store_look_around">황당 플리마켓 판매자 신청 현황.</h2>
+<h2 class="page-header store_look_around">황당 플리마켓 판매자 신청 현황</h2>
 <div class="seller_listing">
 	<c:forEach items="${requestScope.registerList}" var="list" varStatus="no">
 		<li id="list_block">

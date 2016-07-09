@@ -595,3 +595,17 @@ li {
 	width: 450px;
 	height: 200px;
 }
+.store-main-img{
+	display: none;
+	opacity: 0.5;
+}
+.store-main-img:hover{
+	opacity: 1;
+}
+/* 스토어 상품 등록 */
+#productRegister{
+	max-width: 700px;
+	margin-left: 150px;
+	margin-top: 50px;
+	
+}
