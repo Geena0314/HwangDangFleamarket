@@ -27,7 +27,8 @@ c. extends : 기존 definition 태그의 내용을 상속받아 사용할때 사
 	</definition>
 	
 	<definition name="seller/*/*.tiles"  extends="template">
-		<put-attribute name="nav"  value="/WEB-INF/view/layout/store_side_menu.jsp" />
+		<put-attribute name="header"  value="/WEB-INF/view/layout/store_header.jsp" />
+		<put-attribute name="nav"  value="/WEB-INF/view/layout/side_menu.jsp" />
 		<put-attribute name="body"  value="/WEB-INF/view/{1}/{2}.jsp" />
 	</definition>
 	
