@@ -69,7 +69,7 @@
 
 #registerForm {
 	max-width: 850px;
-	margin-left: 150px;
+	margin-left: 18%;
 	margin-top: 50px;
 }
 /***************** store_side_menu************/
@@ -527,7 +527,7 @@ li {
 	margin-top: 10px;
 	margin-left: auto;
 	margin-right: auto;
-	left: 10%
+	left: 26%
 }
 .navbar-collapse.collapse.navbars.main-buttons
 {
@@ -537,6 +537,7 @@ li {
 	max-height: 50px;
 	position: relative;
 	top: -100px;
+	margin-right: 50px;
 }
 .container.main-footer
 {
@@ -550,11 +551,12 @@ li {
 .nav.navbar-nav.navbar-right.links
 {
 	padding-top: 0px;
+	padding-right: 200px;
 }
 .nav.navbar-nav.navbar-right.links img
 {
-	width: 150px;
-	height: 50px;	
+	width: 100px;
+	height: 50px;
 }
 /*스토어 메인헤더*/
 .navbar-collapse.collapse.navbars.store-buttons
@@ -568,6 +570,11 @@ li {
 	position: relative;
 	top: -80px;
 	background-color: white;
+}
+.navbar-collapse.collapse.navbars.store-buttons img
+{
+	width: 150px;
+	height: 55px;
 }
 .store-buttons
 {
