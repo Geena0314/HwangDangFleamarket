@@ -26,8 +26,8 @@ public class BoardQnADaoImpl implements Dao {
 	}
 	
 	//게시글 insert 
-	public void insertQnABoard(AdminQnA newQnA){
-		session.insert("boardQnA.insert", newQnA);
+	public int insertQnABoard(AdminQnA newQnA){
+		return session.insert("boardQnA.insert", newQnA);
 	}
 		
 	//QnA게시판 전체 조회 -페이징

@@ -198,10 +198,12 @@ public boolean equals(Object obj) {
 
 @Override
 public String toString() {
-	return "AdminQnA [adminQnaNo=" + adminQnaNo + ", adminQnaTitle=" + adminQnaTitle + ", adminQuaContent="
+	return "AdminQnA [adminQnaNo=" + adminQnaNo + ", adminQnaTitle=" + adminQnaTitle + ", adminQnaContent="
 			+ adminQnaContent + ", adminQnaWriter=" + adminQnaWriter + ", adminQnaDate=" + adminQnaDate
-			+ ", adminQnaHit=" + adminQnaHit + ", adminQnaPublished=" + adminQnaPublished + "]";
+			+ ", adminQnaHit=" + adminQnaHit + ", adminQnaPublished=" + adminQnaPublished + ", reply=" + reply
+			+ ", adminQnaPassword=" + adminQnaPassword + ", adminQnaReplyExist=" + adminQnaReplyExist + "]";
 }
+
 
 
 }

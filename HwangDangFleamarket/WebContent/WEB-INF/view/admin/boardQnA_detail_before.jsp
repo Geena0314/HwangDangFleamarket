@@ -28,7 +28,7 @@
 				//비밀번호맞음 세부페이지로 이동 
 				$("form").prop("action" , 
 				"/HwangDangFleamarket/admin/boardQnADetail.go?no=${param.no}&page=${param.page}");
-				$("form").submit();
+				$("#form1").submit();
 			}
 			
 		});
@@ -37,13 +37,11 @@
 </script>
 
 
-패스워드 : ${requestScope.password}
 
 
 <input type="hidden" value="${requestScope.password}" id="originalPassword" />
-
 <h2>QnA게시판 비밀번호 입력</h2>
-<form method="POST" action="">
+<form method="POST" action="" id="form1">
 	게시판 비밀번호 입력(4자리)  : <input type="password" name="password" id="password" />
 	<c:if test="${requestScope.errorMsg != null }">
 		에러메시지 : ${requestScope.errorMsg }

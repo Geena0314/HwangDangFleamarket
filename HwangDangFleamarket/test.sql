@@ -873,3 +873,6 @@ SELECT  count(*)
 		) p , seller s
 		WHERE     p.seller_store_no = s.seller_store_no 
 		AND       product_name LIKE '%새우깡%'
+		
+		
+select * FROM ADMIN_QNA
