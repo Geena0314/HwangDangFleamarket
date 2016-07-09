@@ -62,7 +62,7 @@
 		
 		<div>
 			<footer class="blog-footer">
-		 		<div class="container">
+		 		<div class="container main-footer">
 					<tiles:insertAttribute name="footer"/>
 				</div>
 			</footer>
