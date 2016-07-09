@@ -57,8 +57,8 @@ public class BoardQnAServiceImpl implements Service {
 		}
 	//글번호로 글삭제
 	@Transactional(rollbackFor=Exception.class)
-	public void setAdminQnAByNo(HashMap param){
-		adminDao.updateByNo(param);
+	public int setAdminQnAByNo(HashMap param){
+		return adminDao.updateByNo(param);
 	}
 	
 	//댓글 입력 add

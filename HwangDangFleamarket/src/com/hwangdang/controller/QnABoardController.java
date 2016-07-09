@@ -41,8 +41,8 @@ public class QnABoardController {
 		String url = "/";
 		//System.out.println("로그인아이디 :" + loginId +" ,제목 : "+title+", 작성자 :" + published + "글내용: " + content);
 		int seq = service.getQnABoardSeq();
-		Member member = memberService.selectById(loginId);															//조회수 ,작성자 , 비밀번호 
-		AdminQnA newQnA = new AdminQnA(seq , title, content, member.getMemberName() , new Date(), 1, published, password);
+		//Member member = memberService.selectById(loginId);															//조회수 ,작성자 , 비밀번호 
+		AdminQnA newQnA = new AdminQnA(seq , title, content, loginId , new Date(), 1, published, password);
 		int flag = service.registerNewQnA(newQnA);
 		if(flag == 1){
 			//System.out.println("글등록 성공!!!");
@@ -102,8 +102,7 @@ public class QnABoardController {
 		//System.out.println("디테일메소드:" + "페이지 :"+page +",NO: " +no + "password :" + password); 
 		String url = "";
 		AdminQnA findQnA = service.getAdminQnAByNo(no);
-		//System.out.println(findQnA);	  
-		System.out.println("파람패스워드:"+password +" , 객체패스워드:" + findQnA.getAdminQnaPassword());
+		//System.out.println("파람패스워드:"+password +" , 객체패스워드:" + findQnA.getAdminQnaPassword());
 		
 		if(findQnA != null && findQnA.getAdminQnaPublished().equals("f")){
 			if(password != null && password.equals(findQnA.getAdminQnaPassword() )){
@@ -126,22 +125,35 @@ public class QnABoardController {
 		
 	return url;  
 	}
+	
 	/**
-	 *  QnA게시판 No번호로 글 수정 - 작성자만 가능  
+	 *  QnA게시판 수정페이지로 이동 
+	 */
+	@RequestMapping("/boardQnASetMove.go")
+	public String boardQnASetMove( int no , int page , Model model){
+		//System.out.println(no +", " + page);
+		AdminQnA adminQnA = service.getAdminQnAByNo(no);
+		model.addAttribute("adminQnA" ,adminQnA);
+		return "admin/boardQnASetForm.tiles";
+	}
+	
+	
+	/**
+	 *  QnA게시판 No번호로 글 수정 기능 - 작성자만 가능  
 	 */
 	@RequestMapping("/boardQnASet.go")
-	@ResponseBody
-	public AdminQnA boardQnASet( int no , int page , String content, Model model){
+	public String boardQnASet( int no , int page , String content, Model model){
+		String url ="/";
 		HashMap<String,Object> param = new HashMap<>();
 		param.put("no", no);
 		param.put("content", content);
 		param.put("setDate", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		//수정처리
-		service.setAdminQnAByNo(param);
-		//수정된 공지글 조회 
-		AdminQnA obj = service.getAdminQnAByNo(no);
-		//System.out.println(obj);
-	return obj;  
+		int flag = service.setAdminQnAByNo(param);
+		if(flag ==1){
+			url = "/admin/boardQnADetailBefore.go?no="+no+"&page="+page;
+		}
+		return url;  
 	}
 	/**
 	 *  QnA게시판 No번호로 질문글 삭제 - 작성자만 가능  
@@ -169,9 +181,21 @@ public class QnABoardController {
 	   * QnA게시판 관리자 댓글삭제
 	   */
 	@RequestMapping("/removeBoardQnAReply.go")
-	public String removeBoardQnAReply( int contentNo , int replyNo ,int contentPage ){
-		service.removeReplyByNo(replyNo , contentNo);  
-		return "/admin/boardQnADetail.go?page="+contentPage +"&no="+contentNo;
+	public String removeBoardQnAReply( @RequestParam(value="contentNo", defaultValue="0") int contentNo ,
+					@RequestParam(value="replyNo", defaultValue="0") int replyNo ,
+					@RequestParam(value="contentPage", defaultValue="0") int contentPage ){
+		
+		//System.out.println("cententNO : " + contentNo+" ,replyNo:" +replyNo) ;
+		String url ="/";
+		//댓글삭제
+		service.removeReplyByNo(replyNo , contentNo); 
+		
+		AdminQnA adminQnA = service.getAdminQnAByNo(contentNo);
+		//System.out.println("adminQnA 댓글삭제 : " + adminQnA);
+		if(adminQnA != null){
+			url = "/admin/boardQnADetail.go?page="+contentPage +"&no="+contentNo+"&password="+adminQnA.getAdminQnaPassword();
+		}     
+		return url;
 	}
 	 /**
 	   * QnA게시판 관리자 댓글수정
@@ -180,12 +204,17 @@ public class QnABoardController {
 	public String setBoardQnAReply( int contentNo , int replyNo ,int contentPage ,String replyTa ){
 		/*System.out.println("댓글수정 -  댓글번호:" + replyNo + " , 글번호 no :" +contentNo +"페이지번호:" + contentPage);
 		System.out.println("수정한 댓글내용" + replyTa);*/
+		
 		HashMap<String,Object> param = new HashMap<>();
 		param.put("replyNo", replyNo);
 		param.put("replyTa", replyTa);
 		param.put("setDate", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		//댓글수정
 		service.setReplyByNo(param);
-	return "/admin/boardQnADetail.go?page="+contentPage +"&no="+contentNo;
+		//글의 비밀번호 찾는 로직
+		AdminQnA adminQnA = service.getAdminQnAByNo(contentNo);
+		
+	return "/admin/boardQnADetail.go?page="+contentPage +"&no="+contentNo+"&password="+adminQnA.getAdminQnaPassword();
 	}
 	
 

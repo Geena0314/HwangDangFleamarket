@@ -49,11 +49,12 @@ public class BoardQnADaoImpl implements Dao {
 	}
 	//글번호로 게시글 삭제
 	public int deleteByNo(int no){
-		return session.delete("boardQnA.delete-by-no", no);
+		int cnt = session.delete("boardQnA.delete-by-no", no);
+		return cnt;
 	}
 	//글번호로 게시글 수정변경 
-	public void updateByNo(HashMap param){
-		session.update("boardQnA.update-by-no", param);
+	public int updateByNo(HashMap param){
+		return session.update("boardQnA.update-by-no", param);
 	}
 	//댓글등록 add
 	public void insertReploy(AdminQnAReply reply){

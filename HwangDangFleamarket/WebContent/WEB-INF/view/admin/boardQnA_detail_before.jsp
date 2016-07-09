@@ -32,16 +32,15 @@
 	});
 	
 </script>
-<br><br><br><br><br><br>
 
 <div class="center-block">
 	<input type="hidden" value="${requestScope.password}" id="originalPassword" />
-	<h2>QnA게시판 비밀번호 입력</h2>
-	<form method="POST" action="" id="form1">
-		게시판 비밀번호 입력(4자리)  : 
-		<input type="password" name="password" id="password"  placeholder="4자리숫자입력!" />
+	<h2 class="page-header store_look_around">QnA게시판 비밀번호 입력</h2>
+	<form method="POST" action="" id="form1" class="form-inline">
+		<label for="password"">게시판 비밀번호 입력(4자리)  : </label>
+		<input  class="form-control" type="password" name="password" id="password"  placeholder="4자리숫자입력!" />
 		<c:if test="${requestScope.errorMsg != null }">
-			message : ${requestScope.errorMsg }
+			<p class="text-center">message : ${requestScope.errorMsg }</p>
 		</c:if>
 		<input type="button" value="go"  id="submintBtn" class="btn btn-default" />
 	</form>
