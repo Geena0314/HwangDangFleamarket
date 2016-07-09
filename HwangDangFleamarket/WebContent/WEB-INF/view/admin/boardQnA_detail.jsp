@@ -158,10 +158,8 @@ padding: 10px;
 	padding: 10px;
 }
 </style>
+<div class="table-responsive adminNotice">
 <h3>세부조회</h3>
-
-	<%-- 세션아이디 : ${sessionScope.login_info.memberId }  <br/> --%>
-	<%-- 작성자 아이디 : ${requestScope.findQnA.adminQnaWriter  } --%>
 	<form method="POST" action="#" id="myform">
 		<%-- <input type="hidden" id="contentPage" name="contentPage" value="${requestScope.page }" />
 		<input type="hidden" id= "contentNo" name ="contentNo" value="${param.no }" /> --%>
@@ -202,17 +200,18 @@ padding: 10px;
  				<textarea rows="15" cols="55" name="replyTa" id="replyTa">${requestScope.findQnA.reply.adminReplyContent }</textarea><br/>
 			<c:choose>
 				<c:when test="${requestScope.findQnA.reply.adminReplyNo  !=  null}">
-				<input type="button" value="댓글수정" id="setReplyBtn"  />
-				<input type="button" value="댓글삭제" id="removeReplyBtn"  />
+				<input type="button" class="btn btn-default" value="댓글수정" id="setReplyBtn"  />
+				<input type="button" class="btn btn-default" value="댓글삭제" id="removeReplyBtn"  />
 				</c:when>
 				<c:otherwise>
-					<input type="button" value="댓글등록" id="addReplyBtn" />
+					<input type="button" class="btn btn-default" value="댓글등록" id="addReplyBtn" />
 				</c:otherwise>
 			</c:choose>			
 		</c:if>  
 			
 	</section>
 	</form>  
+</div>
 	<p>  
   
 

@@ -17,6 +17,7 @@ import org.springframework.web.context.request.SessionScope;
 
 import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.serviceimpl.BoardQnAServiceImpl;
+import com.hwangdang.serviceimpl.MemberServiceImpl;
 import com.hwangdang.vo.AdminQnA;
 import com.hwangdang.vo.AdminQnAReply;
 import com.hwangdang.vo.Member;
@@ -27,7 +28,8 @@ public class QnABoardController {
 
 	@Autowired
 	private BoardQnAServiceImpl service;
-	
+	@Autowired
+	private MemberServiceImpl memberService;
 	
 	/**
 	 * QnA게시판 글등록 
@@ -36,13 +38,18 @@ public class QnABoardController {
 	public String registerQnAContent( String loginId , String title , 
 				@RequestParam(value="password",required=false) String password , 
 				String published ,String content  ){
-		
-		System.out.println("로그인아이디 :" + loginId +" ,제목 : "+title+", 작성자 :" + published + "글내용: " + content);
+		String url = "/";
+		//System.out.println("로그인아이디 :" + loginId +" ,제목 : "+title+", 작성자 :" + published + "글내용: " + content);
 		int seq = service.getQnABoardSeq();
+		Member member = memberService.selectById(loginId);															//조회수 ,작성자 , 비밀번호 
+		AdminQnA newQnA = new AdminQnA(seq , title, content, member.getMemberName() , new Date(), 1, published, password);
+		int flag = service.registerNewQnA(newQnA);
+		if(flag == 1){
+			//System.out.println("글등록 성공!!!");
+			url = "/admin/boardQnADetail.go?page="+1 +"&no="+seq;
+		}
 		
-		AdminQnA newQnA = new AdminQnA(seq , title, content, loginId , new Date(), 1, published, password);
-		service.registerNewQnA(newQnA);
-	return "/admin/boardQnADetail.go?page="+1 +"&no="+seq;
+	return url;
 	} 
 	
 	/**
@@ -65,18 +72,18 @@ public class QnABoardController {
 	public String boardQnADetailBefore(int page , int no , Model model , HttpSession session){
 		String url = "";
 		AdminQnA findQnA = service.getAdminQnAByNo(no);
-		if(findQnA.getAdminQnaPublished().equals("t")){
+		if(findQnA!= null && findQnA.getAdminQnaPublished().equals("t")){
 			//문의글의 공개 
 			url ="/admin/boardQnADetail.go"; 
 		}else{
 			//문의글의 비공개
 			Member member = (Member) session.getAttribute("login_info");
-			//System.out.println(member.getMemberId());
 			if(member != null && member.getMemberId().equals("admin@admin.com")){
-				//스토어관리자이면 
+				//스토어관리자이면 :프리패쓰 
 				url ="/admin/boardQnADetail.go?password="+findQnA.getAdminQnaPassword();
 				model.addAttribute("password" , findQnA.getAdminQnaPassword());
 			}else{
+				//일반사용자이면 : 비밀번호 입력 폼으로 이동 
 				//System.out.println("비밀번호:" + findQnA.getAdminQnaPassword()); 
 				model.addAttribute("password" , findQnA.getAdminQnaPassword());
 				url="admin/boardQnA_detail_before.tiles";
@@ -89,14 +96,16 @@ public class QnABoardController {
 	 *  QnA게시판 NO번호로 세부조회  
 	 */
 	@RequestMapping("/boardQnADetail.go")
-	public String boardQnADetail(int page , int no ,@RequestParam(value="password" , required=false) String password , Model model){
+	public String boardQnADetail(int page , int no , Model model , HttpSession session ,
+					@RequestParam(value="password" , required=false) String password ){
 	
 		//System.out.println("디테일메소드:" + "페이지 :"+page +",NO: " +no + "password :" + password); 
 		String url = "";
 		AdminQnA findQnA = service.getAdminQnAByNo(no);
-		//System.out.println("파람패스워드:"+password +"객체패스워드:" + findQnA.getAdminQnaPassword());
+		//System.out.println(findQnA);	  
+		System.out.println("파람패스워드:"+password +" , 객체패스워드:" + findQnA.getAdminQnaPassword());
 		
-		if(findQnA.getAdminQnaPublished().equals("f")){
+		if(findQnA != null && findQnA.getAdminQnaPublished().equals("f")){
 			if(password != null && password.equals(findQnA.getAdminQnaPassword() )){
 				//비공개에 비밀번호가 일치하면 
 				model.addAttribute("findQnA",findQnA);
@@ -104,7 +113,7 @@ public class QnABoardController {
 				url = "admin/boardQnA_detail.tiles";
 			}else{
 				//비공개에 비밀번호가 불일치
-				System.out.println("비밀번호가 틀렸습니다.");
+				//System.out.println("비밀번호가 틀렸습니다.");
 				url="admin/boardQnA_detail_before.tiles";
 				model.addAttribute("errorMsg","비밀번호가 틀렸습니다.");
 			}
