@@ -61,10 +61,18 @@
 		<div align="center" class="main-buttons col-sm-6">
 			<ul class="nav navbar-nav navbar-right links">
 				<!-- 삭제 예정 <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li> -->
-				<li><a href="#" class="navbar-collapse collapse navbars main-buttons">튜토리얼</a></li>
-		        <li><a href="/HwangDangFleamarket/seller/sellerList.go?page=1" class="navbar-collapse collapse navbars main-buttons">스토어 둘러보기</a></li>
-		        <li><a href="/HwangDangFleamarket/admin/adminNotice.go?page=1" class="navbar-collapse collapse navbars main-buttons">소식통</a></li>
-		        <li><a href="/HwangDangFleamarket/admin/boardQnAList.go?page=1" class="navbar-collapse collapse navbars main-buttons">QnA게시판</a></li>
+				<li><a href="#" class="navbar-collapse collapse navbars main-buttons">
+					<img src="/HwangDangFleamarket/image_storage/tutorial.JPG">
+				</a></li>
+		        <li><a href="/HwangDangFleamarket/seller/sellerList.go?page=1" class="navbar-collapse collapse navbars main-buttons">
+		        	<img src="/HwangDangFleamarket/image_storage/stores.JPG">
+	        	</a></li>
+		        <li><a href="/HwangDangFleamarket/admin/adminNotice.go?page=1" class="navbar-collapse collapse navbars main-buttons">
+		    		<img src="/HwangDangFleamarket/image_storage/notice.JPG">
+	    		</a></li>
+		        <li><a href="/HwangDangFleamarket/admin/boardQnAList.go?page=1" class="navbar-collapse collapse navbars main-buttons">
+		        	<img src="/HwangDangFleamarket/image_storage/Q&A.JPG">
+	        	</a></li>
 	        </ul>
 		</div>
 	</div>

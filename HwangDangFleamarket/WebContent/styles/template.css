@@ -431,7 +431,7 @@ footer{
 
 .store_look_around {
 	padding-left: 50px;
-	padding-top: 150px;
+	padding-top: 30px;
 }
 /* 이미지 크기고정. */
 .sellerListImage {
@@ -551,6 +551,11 @@ li {
 {
 	padding-top: 0px;
 }
+.nav.navbar-nav.navbar-right.links img
+{
+	width: 150px;
+	height: 50px;	
+}
 /*스토어 메인헤더*/
 .navbar-collapse.collapse.navbars.store-buttons
 {
@@ -562,6 +567,7 @@ li {
 	margin-right: 20px;
 	position: relative;
 	top: -80px;
+	background-color: white;
 }
 .store-buttons
 {
