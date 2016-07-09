@@ -421,7 +421,12 @@ footer{
 }
 
 .list-margins {
-	padding-left: 30px;
+	padding: 30px;
+	width: 315px;
+}
+.list-margins:hover{
+	border: 2px solid purple;
+	border-radius: 20px;
 }
 
 .store_look_around {
@@ -441,7 +446,7 @@ footer{
 
 /*소개글 크기고정 및 글자숨김처리.*/
 div .introduction {
-	height: 300px;
+	height: 200px;
 	width: 250px;
 	/*글자수가 범위를 넘어가면 숨김.*/
 	overflow: hidden;
@@ -488,6 +493,10 @@ li {
 /*header*/
 
 /*body*/
+.body-block{
+	padding-left: 100px;
+	padding-right: 100px;
+}
 
 /*게시판*/
 .adminNoticePaging{
@@ -498,4 +507,29 @@ li {
 	margin-top: 50px;
 	margin-left: 150px;
 	width: 80%;
+}
+
+/*홈 헤더*/
+.home-header
+{
+	height: 250px;
+}
+.main-header
+{
+	height: 100%;
+}
+.main-buttons
+{
+	width: 100%;
+	height: 100px;
+	position: absolute;
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	left: 9%
+}
+.navbar-collapse.collapse.navbars.main-buttons
+{
+	width: 100px;
+	height: 50px;
 }

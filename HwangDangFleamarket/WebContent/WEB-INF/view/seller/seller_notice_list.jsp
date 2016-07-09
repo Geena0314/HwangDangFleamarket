@@ -73,7 +73,7 @@ b {
 		<%-- ◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.pagingBean.previousPageGroup}">
-			<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${requestScope.pagingBean.beginPage-1}">
+			<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${requestScope.pagingBean.beginPage-1}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }">
 				◀ 
 			</a>
 		</c:when>
@@ -88,7 +88,7 @@ b {
 	  				<b>${page}</b>
 	 			</c:when>
 			<c:otherwise>
-				<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${page}">
+				<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }">
 					${page} 
 				</a>
 			</c:otherwise>
@@ -98,7 +98,7 @@ b {
 		<%--다음 페이지 그룹 처리 ▶--%>
 		<c:choose>
 			<c:when test="${requestScope.pagingBean.nextPageGroup}">
-				<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${requestScope.pagingBean.endPage+1}">
+				<a href="/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${requestScope.pagingBean.endPage+1}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }">
 					▶
 				</a>
 			</c:when>

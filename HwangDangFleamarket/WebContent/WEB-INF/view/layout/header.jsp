@@ -21,9 +21,9 @@
 }
 </style>
 <nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container-fluid">
+	<div class="container-fluid main-header">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbars" aria-expanded="false" aria-controls="navbar">
 				<span class="sr-only">Toggle navigation</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
@@ -35,7 +35,7 @@
 		</div>
 		
 			
-		<div id="navbar" class="navbar-collapse collapse">
+		<div class="navbar-collapse collapse navbars">
 			<ul class="nav navbar-nav navbar-right links">
 				<li>
 					<!-- 검색바 -->
@@ -63,6 +63,15 @@
 					<li><a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${sessionScope.seller.sellerStoreNo}&sellerStoreImage=${sessionScope.seller.sellerStoreImage}">내 스토어</a></li>
 				</c:if>
 			</ul>
+		</div>
+		<div align="center" class="main-buttons col-sm-6">
+		<ul class="nav navbar-nav navbar-right links">
+			<!-- 삭제 예정 <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li> -->
+			<li><a href="#" class="navbar-collapse collapse navbars main-buttons">튜토리얼</a></li>
+	        <li><a href="/HwangDangFleamarket/seller/sellerList.go?page=1" class="navbar-collapse collapse navbars main-buttons">스토어 둘러보기</a></li>
+	        <li><a href="/HwangDangFleamarket/admin/adminNotice.go?page=1" class="navbar-collapse collapse navbars main-buttons">소식통</a></li>
+	        <li><a href="/HwangDangFleamarket/admin/boardQnAList.go?page=1" class="navbar-collapse collapse navbars main-buttons">QnA게시판</a></li>
+        </ul>
 		</div>
 	</div>
 </nav>
