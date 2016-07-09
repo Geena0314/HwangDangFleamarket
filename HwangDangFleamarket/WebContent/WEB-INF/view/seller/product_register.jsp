@@ -69,8 +69,8 @@ $(document).ready(function(){
 			alert("사진을 등록해주세요.");
 			return false;
 		}
-		$("#mainImg").after('<tr><th>상품 상세 사진</th><td colspan="2"><input type="file" name="images" class="imgFile">&nbsp;&nbsp;'
-							+'<input type="button" value="사진삭제" class="deleteImgBtn"></td></tr>');
+		$("#mainImg").after('<tr class="trInput"><th>상품 상세 사진</th><td><input style="margin: 0px; width: 185px;" type="file" name="images" class="imgFile"></td>'
+							+'<td><input style="position: relative; left: -150px; top: -3px;" type="button" value="사진삭제" class="deleteImgBtn"></td></tr>');
 	});
 	$("table").on("click",".deleteImgBtn",function(){
 		$(this).parent().parent().remove();
@@ -125,72 +125,76 @@ $(document).ready(function(){
 	});
 });
 </script>
-<div>
+<div style="min-height: 1150px; margin-bottom: 30px;">
 	<h2 class="page-header store_look_around">스토어 상품 등록</h2>
-	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/product/registerProduct.go">
+	<form id="productRegister" method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/product/registerProduct.go">
 		<input type="hidden" name="sellerStoreNo" value="${param.sellerStoreNo}">
 		<input type="hidden" name="page" value="${param.page}">
 		<input type="hidden" name="sellerStoreImage" value="${param.sellerStoreImage}">
-			<table id="table">
-				<tr>
-					<th>상품 ID</th>
+		<div class="table-responsive" >
+			<table id="table" class="table table-striped">
+				<tr class="trInput">
+					<th class='tdName'>상품 ID</th>
 					<td colspan="2"><input type="text" name="productId" id="productId" placeholder="ID는 영어+숫자 조합 "></td>
 				</tr>
-				<tr>
-					<th>상품명</th>
+				<tr class="trInput">
+					<th class='tdName'>상품명</th>
 					<td colspan="2"><input type="text" name="productName" id="productName"></td>
 				</tr>
-				<tr>
-					<th>상품 가격</th>
+				<tr class="trInput">
+					<th class='tdName'>상품 가격</th>
 					<td colspan="2"><input type="number" name="productPrice" id="productPrice"></td>
 				</tr>
-				<tr>
+				<tr class="trInput">
 					<th colspan="3"><hr></th>
 				</tr>
-				<tr>
-					<th>상품 옵션</th>
+				<tr class="trInput">
+					<th class='tdName'>상품 옵션</th>
 					<td colspan="2"><input type="text" name="optionList[0].optionName" class="optionName" placeholder="필수 입력 사항" id="optionName"></td>
 				</tr>
-				<tr>
-					<th>상품 세부 옵션</th>
+				<tr class="trInput">
+					<th class='tdName'>상품 세부 옵션</th>
 					<td colspan="2"><input type="text" name="optionList[0].optionSubName" class="optionSubName" placeholder="필수 입력 사항" id="optionSubName"></td>
 				</tr>
-				<tr>
-					<th>옵션별 재고</th>
+				<tr class="trInput">
+					<th class='tdName'>옵션별 재고</th>
 					<td colspan="2"><input type="number" name="optionList[0].optionStock" class="optionStock" placeholder="필수 입력 사항" id="optionStock"></td>
 				</tr>
-				<tr>
-					<th>옵션별 추가 가격</th>
+				<tr class="trInput">
+					<th class='tdName'>옵션별 추가 가격</th>
 					<td colspan="2">
 						<input type="number" name="optionList[0].optionAddPrice">&nbsp;
 						<input type="button" value="옵션추가" id="addOptionBtn">
 					</td>
 				</tr>
-				<tr id="endOption">
+				<tr id="endOption" class="trInput">
 					<th colspan="3"><hr></th>
 				</tr>
-				<tr>
-					<th>상품 대표 사진</th>
+				<tr class="trInput">
+					<th class='tdName'>상품 대표 사진</th>
 					<td colspan="2"><input type="file" name="images" id="productMainImage"></td>
 				</tr>
-		  		<tr id="mainImg">
-					<th>상품 상세 사진</th>
-					<td colspan="2">
-						<input type="file" name="images" class="imgFile" id="imgFile">&nbsp;
-						<input type="button" value="사진추가" id="addImageBtn">
+		  		<tr id="mainImg" class="trInput">
+					<th class='tdName'>상품 상세 사진</th>
+					<td>
+						<input style="margin: 0px; width: 185px;" type="file" name="images" class="imgFile" id="imgFile">
+					</td>
+					<td>
+						<input style="position: relative; left: -150px; top: -3px;" type="button" value="사진추가" id="addImageBtn">
 					</td>
 				</tr>
-				<tr>
-					<th>상품 소개</th>
+				<tr class="trInput">
+					<th class='tdName'>상품 소개</th>
 					<td colspan="2"><textarea id="productInfo" name="productInfo" cols="45" rows="10"></textarea></td>
 				</tr>
-				<tr>
+				<tr class="trInput">
 					<td colspan="3">
-						<input type="submit" value="등록하기" id="submit">&nbsp;&nbsp;
-						<input type="reset" value="다시입력">&nbsp;&nbsp;
-						<input type="button" value="등록취소" onclick="window.location='/HwangDangFleamarket/product/list.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
+						<input class="btn btn-lg btn-success btn-block" type="submit" value="등록하기" id="submit">
+						<input class="btn btn-lg btn-primary btn-block" type="reset" value="다시입력">
+						<%-- <input class="btn btn-lg btn-primary btn-block" type="button" value="등록취소" onclick="window.location='/HwangDangFleamarket/product/list.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'"> --%>
 					</td>
 				</tr>
 			</table>
+		</div>
 	</form>
 </div>
