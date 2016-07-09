@@ -118,7 +118,7 @@ public class BuyController {
 		//1.주문번호 생성
 		long randomNumber = (int) (Math.random() * 999999999) + 1;
 		String ordersNo = "" + randomNumber;
-		
+		System.out.println("장바구니 구매 : 주문번호:" + ordersNo);
 		
 		ArrayList<String> listParam = listSplit(cartNoList);
 		//ArrayList<Cart> cartList = new ArrayList<>();
@@ -218,19 +218,19 @@ public class BuyController {
 	 * 	상품구매 로직   N개 : 
 	 */
 	@RequestMapping("/buyProducts.go")
-	public String buyProducts(@RequestParam(value="ordersNo" ,required=false) String ordersNo ,    
-			String ordersReceiver , String ordersPhone, String ordersZipcode ,
+	public String buyProducts(String ordersNo , String ordersReceiver , String ordersPhone, String ordersZipcode ,
 			String ordersAddress , String ordersSubAddress , int ordersTotalPrice ,
 			String ordersPayment , @RequestParam(value="ordersRequest" ,required=false) String ordersRequest , int paymentStatus , String memberId ,
 			String amountList , String productIdList , String optionIdList , String sellerStoreNoList , int orderProductStatus ,
 			@RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage  ,  HttpSession session , 
 			HttpServletResponse response , HttpServletRequest request ,String cartNoList) throws Exception{ // 0 결재대기 , 1 결재완료  
 		
-		//1.주문번호 생성
-		if(ordersNo == null){
-			long randomNumber = (int) (Math.random() * 999999999) + 1;
-			ordersNo = "" + randomNumber;
-		}
+	
+		System.out.println("주문번호:" + ordersNo);
+		System.out.println("제품리스트: " + productIdList);
+		System.out.println("옵션리스트: "+ optionIdList);
+		System.out.println("셀러리스트 : " + sellerStoreNoList);
+		
 		
 		//System.out.println("사용한 마일리지 : int :" + usedMileage);
 		//2.마일리지 사용했다면 변경하는 로직 

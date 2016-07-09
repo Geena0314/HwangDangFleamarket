@@ -217,7 +217,6 @@
 					 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId+
 					 "&orderAmount=${param.amount }&productId=${param.productId  }&sellerStoreNo=${param.sellerStoreNo }&orderProductStatus="
 					 +orderProductStatus+"&optionId="+$("#optionId").val().trim() +"&usedMileage="+$("#useMileage").html();	
-					 alert(queryString);	
 					$("form").prop("action", "/HwangDangFleamarket/buy/buyProductOne.go"+queryString);
 		
 			 }else{
@@ -246,18 +245,17 @@
 				 	});
 				 	
 					//alert("optoinIdList:"+optionIdList+" , sellerStoreNoList :" + sellerStoreNoList +", productIdList: "+ productIdList + ",amountList "+amountList);
-				 	
-				 	  queryString = "?&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
+				 	 
+				 	  queryString = "?ordersNo=${requestScope.ordersNo}&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
 					 +ordersZipcode+"&ordersAddress="+ordersAddress+"&ordersSubAddress="+ordersSubAddress
 					 +"&ordersTotalPrice="+ordersTotalPrice+"&ordersPayment="+ordersPayment
 					 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId+
 					 "&amountList="+ amountList + "&productIdList=" +productIdList+ "&sellerStoreNoList="+sellerStoreNoList +"&orderProductStatus="+orderProductStatus+
 					 "&optionIdList="+optionIdList  +"&usedMileage="+$("#useMileage").html().trim()+"&cartNoList=${requestScope.cartNoList }";	
-					 alert(queryString);
-					// queryString ="#";
 					$("form").prop("action", "/HwangDangFleamarket/buy/buyProducts.go"+queryString);
 			 }
-		
+			
+			// alert(queryString);
 			$("form").submit(); 
 			//return false;
 			
@@ -361,7 +359,6 @@
 		//사용할 마일리지포인트 보이게하기!
 		$("#useMileageBtn").click(function(){
 			$("#spanMileage").show();
-			
 		});	
 		
 		
@@ -429,11 +426,12 @@ seller_store_no : ${param.sellerStoreNo  }
 옵션명 : ${param.option } 
 옵션ID: ${requestScope.productOption.optionId }
 총추가가격 : ${requestScope.productOption.optionAddPrice * param.amount  }
--------------------------------------------------------<br/>
- --%>
-주문번호: ${requestScope.ordersNo}
 orderProductList : ${requestScope.orderProductList }
 카트리스트 ArrayList객체 ${requestScope.cartList }
+
+-------------------------------------------------------<br/>
+ --%>
+
 
 <form action="" method="POST" name="buy_form" >
 
@@ -508,9 +506,8 @@ orderProductList : ${requestScope.orderProductList }
 		<h4>주문상품 정보</h4>
 		<c:forEach  items="${requestScope.orderProductList }" var="op">
 			<input type="hidden" id="optionId"  class="optionId" value="${op.productOption.optionId }"/>
-			<input type="hidden"  class="sellerStoreNo" value="${op.seller.sellerStoreNo }"/>
+			<input type="hidden"  class="sellerStoreNo" value="${op.sellerStoreNo }"/>
 			<input type="hidden"   class="productId" value="${op.product.productId }"/>
-			
 			스토어명 : <span id="sellerStoreName" >${op.seller.sellerStoreName }</span><br/>
 			제품명 : <span id="productName">${op.product.productName  }</span><br/>
 			옵션명 : <span id="option">${op.productOption.optionSubName }</span><br/>
