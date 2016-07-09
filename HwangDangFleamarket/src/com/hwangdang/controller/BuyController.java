@@ -114,11 +114,9 @@ public class BuyController {
 	@RequestMapping("/buyCarts.go")
 	public String buyCarts(String cartNoList , Model model , HttpSession session ){
 		//System.out.println("카트리스트:"+ cartNoList);
-		
 		//1.주문번호 생성
 		long randomNumber = (int) (Math.random() * 999999999) + 1;
 		String ordersNo = "" + randomNumber;
-		System.out.println("장바구니 구매 : 주문번호:" + ordersNo);
 		
 		ArrayList<String> listParam = listSplit(cartNoList);
 		//ArrayList<Cart> cartList = new ArrayList<>();
@@ -126,12 +124,17 @@ public class BuyController {
 		for(int i =0;  i < listParam.size();  i++){
 			Cart cart = service.getCartByCartNo(Integer.parseInt(listParam.get(i)) );
 			//Member member = memberService.findById(cart.getMemberId());
-			Product product = service.getProductInfo(cart.getProductId());
-			ProductOption productOption = service.getProductOptionInfoByoptionNo(cart.getOptionId());
-			Seller seller = service.getSellerByNo(product.getSellerStoreNo());
-			int orderSeqNo = service.getOrderProductSeq();
-			OrderProduct orderProduct = new OrderProduct(orderSeqNo ,cart.getCartProductAmount(), ordersNo, cart.getProductId(), cart.getOptionId(),product.getSellerStoreNo() , 0 , product, productOption, seller);
-			orderProductList.add(orderProduct);
+			if(cart != null){
+				Product product = service.getProductInfo(cart.getProductId());
+				ProductOption productOption = service.getProductOptionInfoByoptionNo(cart.getOptionId());
+				Seller seller = service.getSellerByNo(product.getSellerStoreNo());
+				int orderSeqNo = service.getOrderProductSeq();
+				OrderProduct orderProduct = new OrderProduct(orderSeqNo ,cart.getCartProductAmount(), ordersNo, cart.getProductId(), cart.getOptionId(),product.getSellerStoreNo() , 0 , product, productOption, seller);
+				orderProductList.add(orderProduct);
+			}else{
+				System.out.println("127라인 널! : cart 객체");
+			}
+			
 		}
 		model.addAttribute("ordersNo",ordersNo );
 		model.addAttribute("orderProductList",orderProductList);
@@ -146,12 +149,36 @@ public class BuyController {
 	 */
 	@RequestMapping("/buyProductOne.go")
 	public String buyProductOne(@RequestParam(value="ordersNo" ,required=false) String ordersNo ,    
-			String ordersReceiver , String ordersPhone, String ordersZipcode ,
+			String ordersReceiver , String ordersPhone, String ordersZipcode , Model model ,
 			String ordersAddress , String ordersSubAddress , int ordersTotalPrice ,
 			String ordersPayment , @RequestParam(value="ordersRequest" ,required=false) String ordersRequest , int paymentStatus , String memberId ,
 			int orderAmount , String productId , int optionId , int sellerStoreNo , int orderProductStatus ,
 			@RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage  ,  HttpSession session , 
-			HttpServletResponse response , HttpServletRequest request  ) throws Exception{ // 0 결재대기 , 1 결재완료  
+			HttpServletResponse response , HttpServletRequest request  , @RequestParam(value="bank" ,required=false) String bank ,
+			@RequestParam(value="card" ,required=false) String card ,
+			@RequestParam(value="quota" ,required=false) String quota) throws Exception{ // 0 결재대기 , 1 결재완료  
+		
+		String vitualBankNo ="";
+		//System.out.println("bank:" + bank);
+		//가상번호 생성 로직 
+		if(bank != null  && !bank.isEmpty()){
+			//System.out.println("계좌번호생성!");
+			long randomNumber1 = (int) (Math.random() * 998) + 1;
+			vitualBankNo  = "" + randomNumber1 + "-";
+			long randomNumber2 = (int) (Math.random() * 99998) + 1;
+			vitualBankNo  = vitualBankNo + "" + randomNumber2 + "-";
+			long randomNumber3 = (int) (Math.random() * 998) + 1;
+			vitualBankNo  = vitualBankNo + "" + randomNumber3 + "-";
+			long randomNumber4 = (int) (Math.random() * 98) + 1;
+			vitualBankNo  = vitualBankNo + "" + randomNumber4 ;
+			session.setAttribute("vitualBankNo" ,vitualBankNo);
+			session.setAttribute("bank",bank);
+		
+		}else if(card != null && quota != null){
+			session.setAttribute("card" ,card);
+			session.setAttribute("quota" ,quota);
+		}
+		
 		
 		if(ordersNo == null){
 			//1.주문번호 생성
@@ -203,10 +230,11 @@ public class BuyController {
 				param.put("productId",productId );
 				service.setOptionStockByOptionId(param);
 				service.setProductStockByProductId(param);
-			
-			session.setAttribute("orders", orders);
+				session.setAttribute("orders", orders);
 			url = "redirect:/buy/addProductSuccessPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&productId="+productId;
-			 
+			
+			
+			
 		}else{
 			url = "redirect:/error.tiles"; 
 		}
@@ -223,15 +251,30 @@ public class BuyController {
 			String ordersPayment , @RequestParam(value="ordersRequest" ,required=false) String ordersRequest , int paymentStatus , String memberId ,
 			String amountList , String productIdList , String optionIdList , String sellerStoreNoList , int orderProductStatus ,
 			@RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage  ,  HttpSession session , 
-			HttpServletResponse response , HttpServletRequest request ,String cartNoList) throws Exception{ // 0 결재대기 , 1 결재완료  
-		
-	
-		System.out.println("주문번호:" + ordersNo);
-		System.out.println("제품리스트: " + productIdList);
-		System.out.println("옵션리스트: "+ optionIdList);
-		System.out.println("셀러리스트 : " + sellerStoreNoList);
+			HttpServletResponse response , HttpServletRequest request ,String cartNoList, 
+			@RequestParam(value="bank" ,required=false) String bank , 
+			@RequestParam(value="card" ,required=false) String card , @RequestParam(value="quota" ,required=false) String quota) throws Exception{ // 0 결재대기 , 1 결재완료  
 		
 		
+		String vitualBankNo ="";
+		//System.out.println("bank:" + bank);
+		//가상번호 생성 로직 
+		if(bank != null  && !bank.isEmpty()){
+			//System.out.println("계좌번호생성!");
+			long randomNumber1 = (int) (Math.random() * 998) + 1;
+			vitualBankNo  = "" + randomNumber1 + "-";
+			long randomNumber2 = (int) (Math.random() * 99998) + 1;
+			vitualBankNo  = vitualBankNo + "" + randomNumber2 + "-";
+			long randomNumber3 = (int) (Math.random() * 998) + 1;
+			vitualBankNo  = vitualBankNo + "" + randomNumber3 + "-";
+			long randomNumber4 = (int) (Math.random() * 98) + 1;
+			vitualBankNo  = vitualBankNo + "" + randomNumber4 ;
+			session.setAttribute("vitualBankNo" ,vitualBankNo);
+			session.setAttribute("bank",bank);
+		}else if(card != null && quota != null){
+			session.setAttribute("card" ,card);
+			session.setAttribute("quota" ,quota);
+		}
 		//System.out.println("사용한 마일리지 : int :" + usedMileage);
 		//2.마일리지 사용했다면 변경하는 로직 
 		if(usedMileage != 0){
@@ -336,7 +379,7 @@ public class BuyController {
 		String url = "/";
 		//System.out.println(ordersNo +", "+ productId);
 		
-			url = "buyer/buy_product_one_success.tiles";
+			url = "buyer/buy_success.tiles";
 			Orders orders = service.getOrdersByOrdersNo(ordersNo);
 			model.addAttribute("orders" ,orders);
 			model.addAttribute("product",productId);
@@ -387,16 +430,16 @@ public class BuyController {
 	public String findProductByKeyword(Model model,
 					@RequestParam(value="keyword" ,required=false) String keyword , 
 					@RequestParam(value="page" , defaultValue="1") int page){
-		System.out.println("키워드:"+keyword);
+		//System.out.println("키워드:"+keyword);
 		if(!keyword.isEmpty()){
 			Map<String ,Object> param = new HashMap<String,Object>();
 			param.put("keyword", keyword);
 			param.put("itemPerPage", Constants.ITEMS_PER_PAGE);
 			param.put("page" , page);
 			List<Product> productList = service.getProductByLikeKeyword(param);
-			for(Product p : productList){
+			/*for(Product p : productList){
 				System.out.println(p);
-			}
+			}*/
 			int totalItems = service.getProductTotalByLikeKeyword(keyword);
 			PagingBean pagingBean = new PagingBean(totalItems, page);
 			
@@ -409,5 +452,12 @@ public class BuyController {
 	}
 	
 	
+	/**
+	결제버튼 클릭시 결제정보입력
+	 * */
+	@RequestMapping("/inputPayInfo.go")
+	public String findProductByKeyword(){
+		return "/WEB-INF/view/buyer/pay_info_form.jsp";
+	}
 	
 }
