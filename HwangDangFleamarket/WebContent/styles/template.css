@@ -243,18 +243,6 @@ input#sellerZipcode
 	margin-bottom: 30px;
 	padding: 10px;
 }
-
-.registerProductBtn {
-	float: right;
-	margin-right: 100px;
-	position: absolute;
-	bottom: 0px;
-	left: 80%;
-	padding: 0;
-	text-align: center;
-	height: 60px;
-	font-size: large;
-}
 /********* product_detail ********/
 .reviewPageGroup {
 	font-size: 15px;
@@ -432,7 +420,10 @@ footer{
 
 .store_look_around {
 	padding-left: 50px;
-	padding-top: 30px;
+	position: relative;
+	top: -50px;
+	width: 70%;
+	left: 13.5%;
 }
 /* 이미지 크기고정. */
 .sellerListImage {
@@ -501,8 +492,9 @@ li {
 
 /*게시판*/
 .adminNoticePaging{
-	margin-top: 500px;
-	left: 25%;
+	left: 15%;
+	bottom: 5px;
+	color: black;
 }
 .adminNotice{
 	margin-top: 50px;
@@ -517,7 +509,7 @@ li {
 }
 .main-header
 {
-	height: 70%;
+	height: 100%;
 	border-bottom: 2px solid #63439d;
 }
 .main-buttons
@@ -537,7 +529,7 @@ li {
 	min-height: 50px;
 	max-height: 50px;
 	position: relative;
-	top: -100px;
+	top: -120px;
 	margin-right: 50px;
 }
 .container.main-footer
@@ -557,7 +549,7 @@ li {
 }
 .nav.navbar-nav.navbar-right.links.fixed-menus
 {
-	padding-right: 20%;
+	padding-right: 21%;
 }
 .nav.navbar-nav.navbar-right.links a
 {
@@ -590,7 +582,8 @@ li {
 	border: 0;
 	margin-right: 20px;
 	position: relative;
-	top: -80px;
+	top: -135px;
+	left: 100%;
 	background-color: white;
 }
 .navbar-collapse.collapse.navbars.store-buttons img
@@ -618,11 +611,12 @@ li {
 }
 .homeMainImage{
 	padding-left: 200px;
-	padding-top: 50px;
+	padding-bottom: 60px;
 	position: relative;
-	top: -30px;
+	top: -10px;
 	width: 450px;
 	height: 200px;
+	left: 65%;
 }
 .store-main-img{
 	display: none;
@@ -635,12 +629,43 @@ li {
 #productRegister{
 	max-width: 700px;
 	margin-left: 150px;
-	margin-top: 50px;
-	
+	margin-top: -20px;
+	left: 13%;
+	position: relative;
 }
-
+.registerProductBtn {
+	float: right;
+	margin-right: 100px;
+	position: absolute;
+	bottom: 0px;
+	left: 80%;
+	padding: 0;
+	text-align: center;
+	height: 60px;
+	font-size: large;
+}
+.registerProductInput{
+	background-color: white;
+	border: 1px solid whitegray;
+	border-radius: 5px;
+	font-size: 11pt;
+}
+.registerProductInput:hover{
+	border: 1px solid gray;
+}
+.prodictRegister{
+	min-height: 1150px;
+	margin-bottom: 30px;
+}
 /*에러메세지 폰트처리*/
 .error-message
 {
 	color: #FF5A5A;
+}
+
+/*상품리스트조회 페이징*/
+.product-lists-page
+{
+	left: 47.5%;
+	bottom: -10px;
 }

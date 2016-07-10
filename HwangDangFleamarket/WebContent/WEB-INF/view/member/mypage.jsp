@@ -80,7 +80,6 @@ $(document).ready(function(){
 	<lee:choose>
 		<lee:when test="${ sessionScope.login_info.memberId == 'kinghwang@gmail.com' }">
 			<div class="col-md-6" id="memberEdit">
-				<img src="../image_storage/memberList.jpg"><!-- 회원 목록 조회(관리자). -->
 			</div>
 		</lee:when>
 		<lee:otherwise>

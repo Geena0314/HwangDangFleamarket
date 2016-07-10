@@ -1,12 +1,15 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/notice.css">
 <style type="text/css">
 a {
 	text-decoration: none;
+	color: black;
 }
 a:HOVER {
 	text-decoration: underline;
+	color: #8748E1;
 }
 b {
 	font-size: 15pt;
@@ -23,13 +26,13 @@ b {
 }
 </style>
 <h2 class="page-header store_look_around">황당 플리마켓 소식통</h2>
-<div class="table-responsive adminNotice">
+<div class="table-responsive notice">
 	<table class="table table-striped" id="adminTable">
 		<thead>
 			<tr>
 				<td colspan="4">
 					<c:if test="${sessionScope.login_info.memberId == 'kinghwang@gmail.com'}">
-						<input type="button" value="소식글등록" onclick="window.location='/HwangDangFleamarket/admin/adminRegisterForm.go'">
+						<input class="noticeBtns" type="button" value="소식글등록" onclick="window.location='/HwangDangFleamarket/admin/adminRegisterForm.go'">
 					</c:if>
 				</td>
 			</tr>

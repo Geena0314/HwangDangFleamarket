@@ -12,7 +12,7 @@
 				<div>${ list.productName }<br>${ list.productPrice }</div>
 			</div>
 		</lee:forEach>
-	<div id="page" class="pageGroup">
+	<div id="page" class="pageGroup product-lists-page">
 		<!-- 
 			이전 페이지 그룹 처리.
 			만약, 이전페이지 그룹이 있으면 링크처리하고 없으면 화살표만 나오도록 처리. 
@@ -58,7 +58,7 @@
 	<div class="registerProductBtn">
 		<lee:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
 			<span class="registerProductBtn">
-				<input type="button" value="상품 등록" onclick="window.location='/HwangDangFleamarket/product/registerProductForm.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }'">&nbsp;&nbsp;
+				<input class="registerProductInput" type="button" value="상품 등록" onclick="window.location='/HwangDangFleamarket/product/registerProductForm.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }'">&nbsp;&nbsp;
 			</span>
 		</lee:if>
 	</div>
