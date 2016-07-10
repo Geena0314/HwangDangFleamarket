@@ -16,4 +16,5 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover{
 	min-height: 500px;
 	left: 25%;
 	position: relative;
+	color: gray;
 }

@@ -18,6 +18,7 @@ td {
 } */
 a {
 	text-decoration: none;
+	color: gray;
 }
 a:HOVER {
 	text-decoration: underline;

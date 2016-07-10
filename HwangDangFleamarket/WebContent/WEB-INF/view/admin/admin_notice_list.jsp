@@ -5,7 +5,7 @@
 <style type="text/css">
 a {
 	text-decoration: none;
-	color: black;
+	color: gray;
 }
 a:HOVER {
 	text-decoration: underline;

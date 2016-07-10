@@ -62,3 +62,12 @@ input[type=button]:hover, input[type=submit]:hover
 {
 	border: 1px solid gray;
 }
+.productTB
+{
+	color: gray;
+}
+#main
+{
+	position: relative;
+	left: 5%;
+}

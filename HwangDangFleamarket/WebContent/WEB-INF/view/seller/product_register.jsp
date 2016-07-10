@@ -40,10 +40,10 @@ $(document).ready(function(){
 					$(".optionStock").attr("readonly", "readonly");
 				}
 			}
-			$("#endOption").after('<tr><th>상품 옵션</th><td colspan="2"><input type="text" name="optionList['+idx+'].optionName" readonly="readonly" value='+$(".optionName")[0].value+' placeholder="필수 입력 사항" class="optionName"></td></tr>'
-								 +'<tr><th>상품 세부 옵션</th><td colspan="2"><input type="text" name="optionList['+idx+'].optionSubName" placeholder="필수 입력 사항" class="optionSubName" id="optionSubName' + window.j + '"></td></tr>'
-								 +'<tr><th>옵션별 재고</th><td colspan="2"><input type="number" name="optionList['+idx+'].optionStock" placeholder="필수 입력 사항" class="optionStock" id="optionStock' + window.j + '"></td></tr>'
-								 +'<tr><th>옵션별 추가 가격</th><td colspan="2"><input type="number" name="optionList['+idx+'].optionAddPrice">&nbsp;'
+			$("#endOption").after('<tr class="trInput"><th class="tdName">상품 옵션</th><td colspan="2"><input type="text" name="optionList['+idx+'].optionName" readonly="readonly" value='+$(".optionName")[0].value+' placeholder="필수 입력 사항" class="optionName"></td></tr>'
+								 +'<tr class="trInput"><th class="tdName">상품 세부 옵션</th><td colspan="2"><input type="text" name="optionList['+idx+'].optionSubName" placeholder="필수 입력 사항" class="optionSubName" id="optionSubName' + window.j + '"></td></tr>'
+								 +'<tr class="trInput"><th class="tdName">옵션별 재고</th><td colspan="2"><input type="number" name="optionList['+idx+'].optionStock" placeholder="필수 입력 사항" class="optionStock" id="optionStock' + window.j + '"></td></tr>'
+								 +'<tr class="trInput"><th class="tdName">옵션별 추가 가격</th><td colspan="2"><input type="number" name="optionList['+idx+'].optionAddPrice">&nbsp;'
 								 +'<input type="button" value="옵션삭제" class="deleteOptionBtn"></td></tr>'
 								 +'<tr id="endOption"><th colspan="3"><hr></th></tr>');
 			idx++;
@@ -67,7 +67,7 @@ $(document).ready(function(){
 			alert("사진을 등록해주세요.");
 			return false;
 		}
-		$("#mainImg").after('<tr class="trInput"><th>상품 상세 사진</th><td><input style="margin: 0px; width: 185px;" type="file" name="images" class="imgFile"></td>'
+		$("#mainImg").after('<tr class="trInput"><th class="tdName">상품 상세 사진</th><td><input style="margin: 0px; width: 185px;" type="file" name="images" class="imgFile"></td>'
 							+'<td><input style="position: relative; left: -150px; top: -3px;" type="button" value="사진삭제" class="deleteImgBtn"></td></tr>');
 	});
 	$("table").on("click",".deleteImgBtn",function(){
@@ -133,13 +133,13 @@ function idCheck(obj)
     obj.value = obj.value.replace(/\s/gi, '');
 }
 </script>
-<div class="prodictRegister">
-	<h2 class="page-header store_look_around">스토어 상품 등록</h2>
+<h2 class="page-header store_look_around">스토어 상품 등록</h2>
+<div class="productRegister">
 	<form id="productRegister" method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/product/registerProduct.go">
 		<input type="hidden" name="sellerStoreNo" value="${param.sellerStoreNo}">
 		<input type="hidden" name="page" value="${param.page}">
 		<input type="hidden" name="sellerStoreImage" value="${param.sellerStoreImage}">
-		<div class="table-responsive" >
+		<div class="table-responsive">
 			<table id="table" class="table table-striped">
 				<tr class="trInput">
 					<th class='tdName'>상품 ID</th>
@@ -195,11 +195,11 @@ function idCheck(obj)
 					<th class='tdName'>상품 소개</th>
 					<td colspan="2"><textarea id="productInfo" name="productInfo" cols="45" rows="10"></textarea></td>
 				</tr>
-				<tr class="trInput">
+				<tr class="trInput basicBtn">
 					<td colspan="3">
 						<input class="btn btn-lg btn-success btn-block" type="submit" value="등록하기" id="submit">
 						<input class="btn btn-lg btn-primary btn-block" type="reset" value="다시입력">
-						<%-- <input class="btn btn-lg btn-primary btn-block" type="button" value="등록취소" onclick="window.location='/HwangDangFleamarket/product/list.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'"> --%>
+						<input class="btn btn-lg btn-danger btn-block" type="button" value="등록취소" onclick="window.location='/HwangDangFleamarket/product/list.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
 					</td>
 				</tr>
 			</table>
