@@ -2,32 +2,24 @@
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt"   uri="http://java.sun.com/jsp/jstl/fmt"  %> 
 <style>
-#nav_layer{
-	background-color: lightgray;
-	/* margin: 1 */
-	padding: 30px;
-} 
-table {
-	border: 3px solid gray;
-	padding: 30px;
-	magin: 30px;
-}
-tr  {
-	border: 1px solid black;
-}
-
-#nav_layer {
-  width: 150px;
-  min-height:  380px;
-  float: left;
-}
-
 img {
 	width : 100px;
 	height : 70px;
 }
 
+div .parent  {
+	/* border : 1px solid pink; */
+	/* float : left; */
+}
+div .child  {
+	/* border : 1px solid black; */
+	/* float : left; */
+}
 
+#orderSeqNo
+{
+	display: none;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
@@ -44,72 +36,90 @@ img {
 	교환/환불/취소 -   교환신청 승인 : 8 
 	교환/환불/취소 -   환불신청 승인  : 9   -->
 
-<h2 class="page-header store_look_around">나의주문 - 교환/환불/취소</h2>
-<div id="nav_layer">		
-	<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">배송 현황</a><br/><br/><br/><br/>
-	<a href="/HwangDangFleamarket/myorder/success.go?loginId=${sessionScope.login_info.memberId }">배송 완료</a><br/><br/><br/><br/>
-	<a href="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId }">교환/환불/취소</a>
-</div>
 
-<input type="hidden" id="loginId" value="${sessionScope.login_info.memberId }" />
-<table>
-	<thead>
-		<tr>
-			<td>체크박스</td> 
-			<td>주문날짜 </td>  <!-- 주문상세보기버튼  -->
-			<td>상품정보</td> <!-- 셀러 , 제품명 , 수량 , 주문번호  , 옵션보기버튼 ,메인옵션(추가가격) 제품가격   -->
-			<td>상태</td> <!-- 배송중,결제완료 등등   -->
-		<tr>
-	</thead>
-	<%--   ${requestScope.orderList }  --%>
-	<tbody> 
-			<c:forEach items="${requestScope.orderList }"  var="order" >
-			
-			<tr> 
 
-			  <!--  체크박스   --> 
-				<td>
-					주문번호 :${order.ordersNo }
-					<input type="checkbox" name="items" value="${order.ordersNo }"  />
-				</td>
-				
-				<!-- 주문날짜 -->
-				<td>
-					<fmt:formatDate value="${order.orders_date }" pattern="yyyy년 MM월 dd일" /> 
-					
-				</td>
-				
-				<!-- 주문정보 :  셀러 , 제품명 , 수량 , 주문번호  , 옵션보기버튼 ,메인옵션(추가가격) , 제품가격   -->
-				<c:forEach items="${order.orderProductList }" var="orderProduct">
-					<td id="order_info">
-						<img src="/HwangDangFleamarket/product_img/${orderProduct.product.productMainImage }" />
-						${orderProduct.seller.sellerStoreName }
-						${orderProduct.product.productName }
-						${orderProduct.orderAmount}
-						옵션 :${orderProduct.productOption.optionSubName }
-						수량 :${orderProduct.productOption.optionStock }개
-						<font color="lightgray">(${orderProduct.productOption.optionAddPrice})</font>
-						상품가격 :<fmt:formatNumber value="${orderProduct.product.productPrice }" type="currency" />
-					</td>
-				<td>
-					<c:choose>
-						<c:when test="${orderProduct.orderProductStatus  == 5 }">교환신청</c:when>
-						<c:when test="${orderProduct.orderProductStatus  == 6 }">환불신청  </c:when>
-						<c:when test="${orderProduct.orderProductStatus  == 7 }">구매취소 완료 </c:when>
-						<c:when test="${orderProduct.orderProductStatus  == 8 }">교환완료</c:when>
-						<c:when test="${orderProduct.orderProductStatus  == 6 }">환불완료</c:when>
-					</c:choose> 
-				</td>
-				
-			</c:forEach>
-				</tr>
-		</c:forEach> 
+<div class="container">
+	<h2 class="page-header store_look_around">나의주문 - 교환/환불/취소</h2>
+	<div class="row">
+	<!-- 네비게이션 바Area -->
+	 <ul class="nav nav-tabs">
+	 	 <li role="presentation" class="active"><a class="btn btn-default" role="button"  href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">배송 현황</a></li>
+	  	<li role="presentation"><a class="btn btn-default" role="button" href="/HwangDangFleamarket/myorder/success.go?loginId=${sessionScope.login_info.memberId }">배송 완료</a></li>
+	  	<li role="presentation">	<a class="btn btn-default" role="button" href="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId }">교환/환불/취소</a></li>
+	</ul>
+	
+	
+	 <!-- 본문 Area -->
+	<div class="col-md-12">
+	<form action=""  method="post"  id="f2">
+	<input type="hidden" id="loginId" value="${sessionScope.login_info.memberId }" />
 		
-	</tbody>
-</table>
+	
+	<c:forEach items="${requestScope.orderList }"  var="order" > 
+	<div class="parent">
+	
+	
+	<!-- 주문날짜 -->
+	<h4><fmt:formatDate value="${order.orders_date }" pattern="yyyy-MM-dd" /> / orderno:${order.ordersNo }</h4><br/>
+		
+		<c:forEach items="${order.orderProductList }" var="orderProduct">		
+		
+			<table class="table">
+				<tr>
+					<td>
+						<!--  체크박스   -->
+						<input type="checkbox" name="items" value="${orderProduct.orderSeqNo}" />
+						<img src="/HwangDangFleamarket/product_img/${orderProduct.product.productMainImage }" />
+					</td>
+						
+					<td>
+						${orderProduct.product.productName } /
+						${orderProduct.orderAmount} 개 /
+						(${orderProduct.productOption.optionSubName })
+						<font color="lightgray">추가가격(+${orderProduct.productOption.optionAddPrice})</font>
+						가격 :<fmt:formatNumber value="${(orderProduct.product.productPrice +orderProduct.productOption.optionAddPrice) * orderProduct.orderAmount  }" pattern="#,###원"/>
+					</td>
+					
+					<td>
+						<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${orderProduct.seller.sellerStoreNo }&sellerImage=${orderProduct.seller.sellerStoreImage }">
+							${orderProduct.seller.sellerStoreName }  
+						</a>	 
+					</td>
+					
+					<td>
+							<!-- 배송상태  -->
+			<strong>  
+				<c:choose>
+					<c:when test="${orderProduct.orderProductStatus  == 5 }">교환신청</c:when>
+					<c:when test="${orderProduct.orderProductStatus  == 6 }">환불신청  </c:when>
+					<c:when test="${orderProduct.orderProductStatus  == 7 }">구매취소 완료 </c:when>
+					<c:when test="${orderProduct.orderProductStatus  == 8 }">교환완료</c:when>
+					<c:when test="${orderProduct.orderProductStatus  == 6 }">환불완료</c:when>
+				</c:choose> 
 
-
+			</strong>  
+					</td>
+				
+				<td>
+				<!-- 구매확정 버튼 -->
+					<c:if test="${orderProduct.orderProductStatus  == 4 }">
+						<button class="btn btn-success">구매확정</button>
+					</c:if>
+				</td>
+				</tr>
+			</table>
+	</c:forEach> 
+	
+		<p class="text-center">
+			<mark> <fmt:formatNumber value="${order.ordersTotalPrice }" type="currency" /></mark>
+		</p>
+		<hr>
+</div>     
+</c:forEach>
+</form>
 <!-- ***************페이징처리************************************** -->
+	
+	<p class="text-center">
 	<!-- 페이징 ◀버튼처리 -->  
 	<c:choose>
 		<c:when test="${requestScope.pagingBean.previousPageGroup }">
@@ -128,7 +138,7 @@ img {
 					<font id="currentPage" size="6px">  ${page}  </font>
 				</c:when>
 				<c:otherwise>
-					<a href="/HwangDangFleamarket/myorder//cancel.go?loginId=${sessionScope.login_info.memberId }&page=${page }">${page}</a>
+					<a href="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId }&page=${page }">${page}</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
@@ -136,11 +146,14 @@ img {
 		<!-- 페이징 ▶버튼 처리  -->
 	<c:choose>
 		<c:when test="${requestScope.pagingBean.nextPageGroup}">
-				<a href="/HwangDangFleamarket/myorder//cancel.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.endPage +1 }">▶ </a>
+				<a href="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.endPage +1 }">▶ </a>
 		</c:when>
 		<c:otherwise>
 			▷	  
 		</c:otherwise>
 	</c:choose>
+	</p>
+  </div>
+</div>
 
-
+ </div> <!-- container -->
