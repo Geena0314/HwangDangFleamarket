@@ -947,16 +947,11 @@ function error(xhr, status, err)
 				<tr id="optionAddPriceTr">
 				</tr>
 				<tr>
-					<td><input type="submit" value="바로구매" id="buyBtn" ></td>
-					<td><input type="button" value="장바구니담기" id="cartBtn"></td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="button" value="리스트로 돌아가기" onclick="window.location='/HwangDangFleamarket/product/list.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }'"></td>
+					<td colspan="2"><input type="button" value="장바구니" id="cartBtn"><input type="submit" value="바로구매" id="buyBtn" ><input type="button" id="listBtn" value="목록으로" onclick="window.location='/HwangDangFleamarket/product/list.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }'"></td>
 				</tr>
 				<lee:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
 					<tr>
-						<td><input type="button" value="상품 수정" onclick="window.location='/HwangDangFleamarket/product/editProductForm.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }&productId=${ requestScope.product.productId }'"></td>
-						<td><input type="button" value="상품 삭제" id="deleteBtn"></td>
+						<td colspan="2"><input type="button"  id="editBtn" value="상품 수정" onclick="window.location='/HwangDangFleamarket/product/editProductForm.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${ param.sellerStoreImage }&productId=${ requestScope.product.productId }'"><input type="button" value="상품 삭제" id="deleteBtn"></td>
 					</tr>
 				</lee:if>
 				</table>
