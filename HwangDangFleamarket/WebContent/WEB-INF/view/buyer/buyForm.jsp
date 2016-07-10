@@ -69,7 +69,6 @@
 		});
 	}
 	
-	
 	$(document).ready(function(){
 		
 		//마일리지 ajax통신을 이용하여 조회
@@ -86,8 +85,6 @@
 		$("#productPrice").html(total);
 		$("#ordersTotalPrice").html(total);
 		 
-		
-		
 		// 주문자 정보를 임시로 저장할 변수들  
 		var temp_ordersReceiver =$("#memberName").html().trim();
 		var temp_ordersPhone =$("#memberPhone").html().trim();
@@ -248,8 +245,11 @@
 			}
 			//주문요청사항
 			var ordersRequest = $("#requestInfo").val().trim();
+			
 			//결제상태 결제완료 :1 /결제대기중 :0 .. 
 			var paymentStatus = 1;
+			
+			
 			/* var ordersDate = new Date().format("yyyy-MM-dd"); */
 			var memberId = $("#hiddenMemberId").val().trim();
 			
@@ -313,24 +313,16 @@
 			$("form").submit(); 
 		}); //결제버튼
 	
-		//무통장입금 요소 show()
+		//무통장입금 요소 show()  / 다른요소 hide()
 		$("#bank").on("click" ,function(){
+			$("#pay_cart").hide();
 			$("#pay_bank").show();
 		});
-		/* //무통장입금 요소 hide()
-		$("#bank").on("blur" ,function(){
-			$("#pay_bank").hide();
-		}); */
-		
-		//카드결제 선택시 요소 show()
+		//카드결제 선택시 요소 show() / 다른요소 hide()
 		$("#card").on("click" ,function(){
+			$("#pay_bank").hide();
 			$("#pay_cart").show();
 		});
-		/* //카드결제 선택시  hide()
-		$("#card").on("blur" ,function(){
-			$("#pay_cart").hide();
-			
-		}); */
 		
 		
 		//마일리지 모두 사용!
@@ -445,7 +437,6 @@ orderProductList : ${requestScope.orderProductList }
 
 
 <form action="" method="POST" name="buy_form" >
-	<input type="text" name="bank" />
 	<input type="hidden" value="${sessionScope.login_info.memberId }" id="hiddenMemberId"	/>
 	<div id="left_lalyer">
 		<div id="address_div">

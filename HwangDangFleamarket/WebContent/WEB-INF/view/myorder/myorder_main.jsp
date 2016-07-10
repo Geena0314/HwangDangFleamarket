@@ -38,23 +38,26 @@ div .parent  {
 <script>
 
 	$(document).ready(function(){
+		
 		var flag = false;
 		var orderCancelList = "";
 		var url = "";
 		var loginId = $("#loginId").val();
 		
-		//폼전송
+		
+		//폼전송 함수 
 		function sendForm(url){
+			
 			if(flag){ 
 				flag = false;
 				orderCancelList = orderCancelList.substring( 0 ,orderCancelList.length-1);
-				console.log("split실행후:" +orderCancelList);
+				//console.log("split실행후:" +orderCancelList);
 				//alert("split실행후:" +orderCancelList);
-				$("form").prop("action" , url);
-				$("form").submit();
+				$("#f2").prop("action" , url);
+				$("#f2").submit();
 			}
 		}  
-		//체크박스검증 및 orderList 검증  
+		//체크박스검증 및 orderList 검증  함수 
 		function checkboxValidation(num1 , num2 , num3 , msg ){
 			if( !$("input:checkbox").is(":checked") ){  //true,false
 				alert("체크박스를선택해주세요.");
@@ -62,7 +65,7 @@ div .parent  {
 				// 체크박스선택하였고 주문취소가 가능한 상태인지 검증 
 				orderCancelList = "";
 				$("input:checkbox:checked").each(function(){
-					console.log("현재주문번호: " + $(this).val());
+					//console.log("현재주문번호: " + $(this).val());
 					var orderNo = $(this).val()
 					//alert(orderNo);
 					
@@ -89,24 +92,26 @@ div .parent  {
 						orderCancelList = orderCancelList + orderNo +","
 						flag = true;
 						
+						
 					}else{
 						alert(msg);
+						flag = false;
+						
 					}
 				}); //orderList 누적 for문
 			} //else 
 				
 		}
+		
 		// 주문취소 
 		$("#btnRequestCancel").on("click",function(){
 			var yesNO = confirm("정말취소하시겠습니까?");
-			
 			if(yesNO){
 				var page =  $("#currentPage").text().trim();
 				checkboxValidation(0 , 1 , 2 ,  "상품 발송후에는 주문취소를 할수없습니다. " );
 				url	="/HwangDangFleamarket/myorder/orderCancelList.go?orderCancelList="+orderCancelList+"&loginId="+loginId+"&status="+7+"&page="+page;
 				sendForm(url);
 			}
-			
 		}); //btn 
 		
 		
@@ -133,33 +138,50 @@ div .parent  {
 		$("#btnRequestChange").on("click",function(){
 			var yesNO = confirm("정말 교환 신청을 하시겠습니까?");
 			if(yesNO){
+				//1.교환신청시 검증 수행 
 				checkboxValidation(4 , 4, -1  , "배송완료상품만 교환을 신청할수 있습니다.");
-				url	="/HwangDangFleamarket/myorder/orderStatusChange.go?orderList="+orderCancelList+"&loginId="+loginId+"&status="+5;
-				sendForm(url);
+				
+				//2. 검증통과 되었을 경우에만 폼오픈!
+				if(flag){
+					var option ='resizable=no scrollbars=yes width=513 height=660 left=500 top=200';
+					window.open("/HwangDangFleamarket/myorder/exchangeRequestFormMove.go?orderSeqNo="+$(":checkbox:checked").val(), "교환신청", option);
+				}
+				//3. 교환로직, 입력폼 입력 끝나면 이동
+				/* url	="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId}";
+				$("#f2").prop("action" , url);
+				$("#f2").submit(); */
 			}
 			
 		});
 		
 		//구매확정 
 		$("button").on("click",function(){
-			var childDiv = $(this).parent();
-			var ordersNo =  $(childDiv).children().eq(0).val().trim();
-			//alert(ordersNo);
-			var page =  $("#currentPage").text().trim();
-			//console.log(page);
-			//alert(page);
 			
-			url	="/HwangDangFleamarket/myorder/orderStatusChange.go?orderList="+ordersNo+"&loginId="+loginId+"&status="+10+"&page="+page;  
-			//alert(url);
-			$("form").prop("action" , url);
-			$("form").submit();
-		
+			var yes_no = confirm("정말 구매확정하시겠습니다. 구매확정하시면 되돌릴수 없습니다.");
+			if(yes_no){
+				var childDiv = $(this).parent();
+				var ordersNo =  $(childDiv).children().eq(0).val().trim();
+				//alert(ordersNo);
+				var page =  $("#currentPage").text().trim();
+				//console.log(page);
+				//alert(page);
+				
+				url	="/HwangDangFleamarket/myorder/orderStatusChange.go?orderList="+ordersNo+"&loginId="+loginId+"&status="+10+"&page="+page;  
+				//alert(url);
+				$("#f2").prop("action" , url);
+				$("#f2").submit();
+			}else{
+				alert("취소하셨습니다.");
+				return false;
+			}
+			
 			
 		}); 
+		
+		
 		$(".detail").on("click",function(){
 			alert("디테일버튼" + this);
 			console.log(this);
-			
 		}); 
 
 	
@@ -215,7 +237,7 @@ div .parent  {
 	<td>상태</td> 
 	<td>구매확정</td> 
 
-<form action=""  method="post">
+<form action=""  method="post"  id="f2">
 <input type="hidden" id="loginId" value="${sessionScope.login_info.memberId }" />
 
 <c:forEach items="${requestScope.orderList }"  var="order" > 

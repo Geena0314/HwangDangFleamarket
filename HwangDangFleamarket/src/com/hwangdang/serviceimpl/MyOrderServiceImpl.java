@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.hwangdang.daoimpl.MyOrderDaoImpl;
 import com.hwangdang.service.MyOrderService;
+import com.hwangdang.vo.ExchangeRequest;
 import com.hwangdang.vo.Orders;
+import com.hwangdang.vo.RefundRequest;
 import com.hwangdang.vo.Seller;
 
 @Service
@@ -55,6 +57,13 @@ public class MyOrderServiceImpl implements MyOrderService {
 	public int getOrdersTotalItems(){
 		return dao.selectOrdersTotalItems();
 	}
+	
+	//교환신청 요청사항 처리 : 글 + 내용  
+		public int addExchageRequest(ExchangeRequest exchage){
+			return dao.insertExchangeRequestByOrdersNo(exchage);
+		}
+		
+	
 	
 	
 }

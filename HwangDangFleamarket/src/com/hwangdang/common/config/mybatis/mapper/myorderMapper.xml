@@ -264,4 +264,13 @@
 	SELECT count(*) FROM order_product 
 	WHERE order_product_status IN (0,1,2,3,4)    
 </select>
+
+<!-- 교환신청 처리  -->
+<insert id="insert-requestExchange"  parameterType="exchangeRequest">
+	INSERT INTO  exchange_request
+	VALUES ( #{exchageTitle}, #{exchangeContent}, #{orderSeqNo} )
+</insert>
+	
+	
+
 </mapper>

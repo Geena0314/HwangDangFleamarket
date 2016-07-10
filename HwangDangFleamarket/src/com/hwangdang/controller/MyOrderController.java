@@ -2,6 +2,7 @@ package com.hwangdang.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Spliterator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.service.OrderService;
 import com.hwangdang.serviceimpl.MyOrderServiceImpl;
+import com.hwangdang.vo.ExchangeRequest;
 import com.hwangdang.vo.Orders;
 import com.hwangdang.vo.RefundRequest;
 import com.hwangdang.vo.Seller;
@@ -125,6 +127,26 @@ public class MyOrderController {
 		//System.out.println("sellerName:"+sellerName + "loginId:"+loginId);
 		return service.getSellerDetailBySellerName(sellerName);
 	}  
+	
+	//교환신청시 교환폼 띄우기 
+	@RequestMapping("/exchangeRequestFormMove.go") 
+	public String exchangeRequestFormMove(){
+		return "/WEB-INF/view/myorder/myorder_exchange_form.jsp";
+	}  
+	
+	//교환신청 내용 DB에 저장 
+	@RequestMapping("/exchangeRequest.go")
+	public String exchangeRequest(ExchangeRequest  exchange, HttpServletRequest request){
+		
+		//System.out.println(exchange);
+		int flag = service.addExchageRequest(exchange);
+		if(flag  == 1){
+			request.setAttribute("result", 1);
+			return "/WEB-INF/view/myorder/myorder_exchange_success.jsp";
+		}else{
+			return "/WEB-INF/view/myorder/myorder_exchange_success.jsp";
+		}
+	}
 	
 	@RequestMapping("/refundForm")
 	public String refundRegisterForm()

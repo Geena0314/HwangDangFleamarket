@@ -2,6 +2,7 @@ package com.hwangdang.daoimpl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hwangdang.common.util.Constants;
 import com.hwangdang.dao.MyOrderDao;
+import com.hwangdang.vo.ExchangeRequest;
 import com.hwangdang.vo.Orders;
 import com.hwangdang.vo.Seller;
 
@@ -61,5 +63,15 @@ public class MyOrderDaoImpl implements MyOrderDao {
 		return session.selectOne("myorder.select-orders-total-couont");
 	}
 	
+	@Transactional
+	public int insertExchangeRequestByOrdersNo(ExchangeRequest exchage){
+		
+		int cnt = session.insert("myorder.insert-requestExchange" , exchage);
+		Map<String,Object> param = new HashMap<>();
+		param.put("status", 5);
+		param.put("no",exchage.getOrderSeqNo());
+		cnt = session.update("myorder.update-by-orderNo",param );
+		return cnt;
+	}
 	
 }
