@@ -596,7 +596,7 @@ li {
 {
 	margin-left: auto;
 	margin-right: auto;
-	left: 14%;
+	left: 23%;
 }
 .store-buttons.col-sm-6 img
 {
@@ -631,4 +631,10 @@ li {
 	margin-left: 150px;
 	margin-top: 50px;
 	
+}
+
+/*에러메세지 폰트처리*/
+.error-message
+{
+	color: #FF5A5A;
 }
