@@ -56,7 +56,7 @@ public class BuyController {
 		param.put("productId", productId);
 		param.put("optionSubName", optionSubName);
 		int stock = service.getProductStockByProductId(param);
-		System.out.println("재고량 조회:" + stock);
+		//System.out.println("재고량 조회:" + stock);
 		String msg = "";
 		if(amount > stock){
 			//주문수량이 재고량보다 큼 

@@ -58,7 +58,7 @@ public class MyOrderController {
 		}
 		List<Orders> orderList =  service.getOrdersMain(loginId , page);
 		/*for(Orders temp : orderList){
-			System.out.println(temp);
+			System.out.println("temp:"+temp);     
 		}*/
 		
 		model.addAttribute("orderList" ,orderList); 
@@ -106,11 +106,11 @@ public class MyOrderController {
 	//체크박스 list  콤마 split 메소드 
 	public ArrayList<String> listSplit(String str){
 		String array[] = str.split(",");
-		ArrayList<String> param = new ArrayList<>();
+		ArrayList<String> list = new ArrayList<>();
 		for (int i = 0; i < array.length; i++) {
-			param.add(array[i]);
+			list.add(array[i]);
 		}
-		return param;
+		return list;
 	}
 	
 	//주문취소 로직수행
@@ -124,15 +124,16 @@ public class MyOrderController {
 		return "redirect:/myorder/main.go?loginId="+loginId+"&page="+page;
 	}
 	
-	//orders 의 상태변경 
+	//구매확정 
 	@RequestMapping("/orderStatusChange.go") 
-	public String orderStatusRefund(String orderList ,String loginId , int status){
-		//System.out.println("오더환불리스트 : "+ orderList);
-		//System.out.println("status: "+status);  
+	public String orderStatus10(String orderList ,String loginId , int status){
+		
+		/*System.out.println("구매확정 : "+ orderList);
+		System.out.println("status: "+status); */
 		String url = "";
 		ArrayList<String> param  = listSplit(orderList);   
-		service.setOrderStatus(param , status);  
-		if(status != 10){
+		int flag = service.setOrderStatus(param , status);  
+		if(status != 10 && flag == 1 ){
 			// 6:환불신청 status //5: 교환신청status
 			url = "redirect:/myorder/cancel.go?loginId="+loginId;
 		}else{

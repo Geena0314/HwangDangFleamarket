@@ -255,7 +255,7 @@
 			// if($("#oneOrN").html().trim() == '1'){
 				if($("#hiddenFlaN").val() != 'ok'){
 				
-				 	alert("한개구매");
+				 	//alert("한개구매");
 				 	//한개구매  
 				 	 queryString = "?ordersNo=${requestScope.ordersNo}&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
 					 +ordersZipcode+"&ordersAddress="+ordersAddress+"&ordersSubAddress="+ordersSubAddress
@@ -267,7 +267,7 @@
 					$("form").prop("action", "/HwangDangFleamarket/buy/buyProductOne.go"+queryString);
 		        
 			 }else{
-				 	alert("n개구매");
+				 	//alert("n개구매");
 				 	//N개구매
 				 	//optionId sellerStoreNo  productId amount
 				 	var optionIdList = "";
@@ -302,7 +302,7 @@
 					$("form").prop("action", "/HwangDangFleamarket/buy/buyProducts.go"+queryString);
 			 }
 			  
-			 alert(queryString);
+			// alert(queryString);
 			$("form").submit(); 
 		}); //결제버튼
 	
