@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/notice.css">
 <style type="text/css">
 /* table, td {
 	border: 1px solid gray;
@@ -36,13 +37,13 @@ b {
 }
 </style>
 <h2 class="page-header store_look_around">스토어 소식통</h2>
-<div class="table-responsive adminNotice">
+<div class="table-responsive notice">
 	<table class="table table-striped" id="adminTable">
 		<thead>
 			<tr>
 				<td>
 					<c:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
-						<input type="button" id="rgstBtn" value="소식글등록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRegisterNoticeForm.go?sellerStoreNo=${requestScope.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
+						<input class="noticeBtns" type="button" id="rgstBtn" value="소식글등록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRegisterNoticeForm.go?sellerStoreNo=${requestScope.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
 					</c:if>
 				</td>
 			</tr>

@@ -27,9 +27,6 @@ span{
 	border-bottom: 1px solid lightgray;
 	border-collapse: separate;
 }
-.noticeRnE{
-	width: 800px;
-}
 </style>
 <h2 class="page-header store_look_around">황당 플리마켓 소식통</h2>
 <div class="table-responsive notice">
@@ -53,7 +50,7 @@ span{
 				<tbody>
 					<tr>
 						<td>
-							<textarea rows="30" cols="70" name="noticeContent"></textarea>
+							<textarea rows="20" cols="70" name="noticeContent"></textarea>
 						</td>
 					</tr>
 					<c:if test="${not empty requestScope.errors}">

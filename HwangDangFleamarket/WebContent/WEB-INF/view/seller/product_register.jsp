@@ -133,7 +133,7 @@ function idCheck(obj)
     obj.value = obj.value.replace(/\s/gi, '');
 }
 </script>
-<div style="min-height: 1150px; margin-bottom: 30px;">
+<div class="prodictRegister">
 	<h2 class="page-header store_look_around">스토어 상품 등록</h2>
 	<form id="productRegister" method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/product/registerProduct.go">
 		<input type="hidden" name="sellerStoreNo" value="${param.sellerStoreNo}">

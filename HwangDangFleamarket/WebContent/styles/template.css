@@ -243,18 +243,6 @@ input#sellerZipcode
 	margin-bottom: 30px;
 	padding: 10px;
 }
-
-.registerProductBtn {
-	float: right;
-	margin-right: 100px;
-	position: absolute;
-	bottom: 0px;
-	left: 80%;
-	padding: 0;
-	text-align: center;
-	height: 60px;
-	font-size: large;
-}
 /********* product_detail ********/
 .reviewPageGroup {
 	font-size: 15px;
@@ -641,10 +629,34 @@ li {
 #productRegister{
 	max-width: 700px;
 	margin-left: 150px;
-	margin-top: 50px;
-	
+	margin-top: -20px;
+	left: 13%;
+	position: relative;
 }
-
+.registerProductBtn {
+	float: right;
+	margin-right: 100px;
+	position: absolute;
+	bottom: 0px;
+	left: 80%;
+	padding: 0;
+	text-align: center;
+	height: 60px;
+	font-size: large;
+}
+.registerProductInput{
+	background-color: white;
+	border: 1px solid whitegray;
+	border-radius: 5px;
+	font-size: 11pt;
+}
+.registerProductInput:hover{
+	border: 1px solid gray;
+}
+.prodictRegister{
+	min-height: 1150px;
+	margin-bottom: 30px;
+}
 /*에러메세지 폰트처리*/
 .error-message
 {

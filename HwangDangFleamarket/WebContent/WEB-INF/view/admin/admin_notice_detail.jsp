@@ -9,11 +9,15 @@
 	font-size: 13pt;
 	border-top: 1px solid lightgray;
 	border-collapse: separate;
+	position: relative;
 }
 td{
 	text-align: left;
 	border-left: none;
 	border-right: none;
+}
+.table-responsive.notice{
+	left: 20%;
 }
 </style>
 <h2 class="page-header store_look_around">황당 플리마켓 소식통</h2>
@@ -36,7 +40,7 @@ td{
 		<tfoot>
 			<tr>
 				<td colspan="3" style="border-top: none;">
-					<input class="noticeBtns" type="button" value="목록" onclick="window.location='/HwangDangFleamarket/admin/adminNotice.go?page=${page}'">
+					<input class="noticeBtns" type="button" value="목록으로" onclick="window.location='/HwangDangFleamarket/admin/adminNotice.go?page=${page}'">
 					<c:if test="${sessionScope.login_info.memberId == 'kinghwang@gmail.com'}">
 						<input class="noticeBtns" type="button" value="공지수정" onclick="window.location='/HwangDangFleamarket/admin/adminEditForm.go?page=${page}&noticeNo=${requestScope.notice.noticeNo}'">
 						<input class="noticeBtns" type="button" value="공지삭제" onclick="window.location='/HwangDangFleamarket/admin/adminRemoveNotice.go?page=${page}&noticeNo=${requestScope.notice.noticeNo}'">
