@@ -112,22 +112,32 @@
 		
 		// 댓글 등록 
 		$("#addReplyBtn").on("click",function(){  
+			
+			
+			//댓글등록 로직 
 			$("#myform").prop("action" , "/HwangDangFleamarket/admin/addBoardQnAReply.go?contentNo=${param.no}&contentPage=${param.page}");
 			$("#myform").submit();
 		});
 		
 		//댓글 수정 
 		$("#setReplyBtn").on("click",function(){
-			$("#myform").prop("action" , "/HwangDangFleamarket/admin/setBoardQnAReply.go?contentNo=${param.no}&contentPage=${param.page}");
-			$("#myform").submit();
+			
+			var ta = $("#replyTa").val().trim();
+			//답글을 작성했을경우에만 로직실행
+			if(ta.length == 0 || ta == "" || ta == null ) {
+				alert("수정할 글내용을 textbox에 입력하세요!");
+			}else{
+				$("#myform").prop("action" , "/HwangDangFleamarket/admin/setBoardQnAReply.go?contentNo=${param.no}&contentPage=${param.page}");
+				$("#myform").submit();
+			}
 			
 		});
 		
 		//댓글삭제
 		$("#removeReplyBtn").on("click",function(){
-			$("#myform").prop("action" , "/HwangDangFleamarket/admin/removeBoardQnAReply.go?contentNo=${param.no}&contentPage=${param.page}");
+			$("#myform").prop("action" , "/HwangDangFleamarket/admin/removeBoardQnAReply.go?contentNo=${param.no}&replyNo=${requestScope.findQnA.reply.adminReplyNo }&contentPage=${param.page}");
 			$("#myform").submit();
-			
+			          
 		});
 		
 		
@@ -138,6 +148,8 @@
 section{
 	width:700px;
 	border:1px solid gray;
+	min-height: 300px;
+	max-height: 500px;
 }
 #title{
 font-weight: bold;
@@ -153,7 +165,7 @@ padding: 10px;
 	text-align: right;
 }
 #content{
-	min-height:200px; /*최소 높이 300px*/
+	min-height:150px; /*최소 높이 300px*/
 	height:auto;/*자동으로 늘어나기*/
 	padding: 10px;
 }
@@ -179,46 +191,64 @@ padding: 10px;
 		
 		
 		<textarea id="insertContent" rows="30" cols="75" hidden="true" ></textarea>
-		<article id="content">${requestScope.findQnA.adminQuaContent }</article>
+		 	<article id="content">
+		 	 <p class="text-center">${requestScope.findQnA.adminQuaContent }</p>
+		 	 </article>
 		<br/>
 	
-		<!-- 작성자만 수정 삭제가능  -->
+		<!-- 작성자만 수정 삭제가능!  -->
 		<c:if test="${sessionScope.login_info.memberId == requestScope.findQnA.adminQnaWriter   }">
-			<a id="setContentBtn" href="#" hidden="true" class="btn btn-default"role="button">수정하기</a>
-			<a id="setFormMoveBtn" href="#" class="btn btn-default"role="button" >수정폼이동 </a>&nbsp;&nbsp;&nbsp;
-			<a id="removeBtn" href="/HwangDangFleamarket/admin/boardQnARemove.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}" class="btn btn-default"role="button">삭제하기 </a>
+			<p class="text-center">       
+				<a id="setFormMoveBtn" href="/HwangDangFleamarket/admin/boardQnASetMove.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}" class="btn btn-default" role="button" >수정하기</a>
+				<a id="removeBtn" href="/HwangDangFleamarket/admin/boardQnARemove.go?no=${requestScope.findQnA.adminQnaNo}&page=${param.page}" class="btn btn-default"role="button">삭제하기</a>
+				<a class="btn btn-default"role="button" href="/HwangDangFleamarket/admin/boardQnAList.go?page=${param.page }">목록</a>
+			</p>
 		</c:if>
 		<hr>
-		 <c:if test="${requestScope.findQnA.reply.adminQnaReplyExist }">
-		<p class="text-center">
-			<input type="hidden" name="replyNo" value="${requestScope.findQnA.reply.adminReplyNo }">
-			<fmt:formatDate value="${requestScope.findQnA.reply.adminReplyDate }" pattern="yyyy-MM-dd"/>
-			<mark>관리자</mark><br/>
-			<c:if test="${sessionScope.login_info.memberId != 'admin@admin.com'  }">
-				<p id="response" class="text-center">
-					<strong>${requestScope.findQnA.reply.adminReplyContent }</strong>
+	
+		<c:choose>
+			<c:when test="${requestScope.findQnA.adminQnaReplyExist == 't' }">
+					<p class="text-center">
+				 <input type="hidden" name="replyNo" value="${requestScope.findQnA.reply.adminReplyNo }">
+				<fmt:formatDate value="${requestScope.findQnA.reply.adminReplyDate }" pattern="yyyy-MM-dd"/>
+				<mark>관리자</mark><br/>
+					<p id="response" class="text-center">
+						<strong>${requestScope.findQnA.reply.adminReplyContent }</strong>
+					</p>
 				</p>
-			</c:if>
-				</p>
-		</c:if>   
+			</c:when>
+			<c:otherwise>
+				<p id="response" class="text-center">관리자가 답변전 입니다.</p>
+			</c:otherwise>
+		</c:choose>
+		
 		<br/><br/><br/><br/>
-				
-				
+				  
+				  
 		<p class="text-center">  
-		<!-- 관리자일경우만 댓글달기 가능  -->
+		<!-- 관리자일경우만 댓글달기 가능 버튼및 TA 보이기 -->
 		<c:if test="${sessionScope.login_info.memberId == 'admin@admin.com' }">
- 				<textarea class="form-control" rows="3" name="replyTa" id="replyTa">${requestScope.findQnA.reply.adminReplyContent }</textarea><br/>
-			<c:choose>
-				<c:when test="${requestScope.findQnA.reply.adminReplyNo  !=  null}">
-				<input type="button" class="btn btn-default" value="댓글수정" id="setReplyBtn"  />
-				<input type="button" class="btn btn-default" value="댓글삭제" id="removeReplyBtn"  />
+ 				<textarea class="form-control" rows="3" name="replyTa" id="replyTa"></textarea><br/>
+			
+				<!-- 댓글달려있는지 유무 -->
+			<c:choose>			
+				<c:when test="${requestScope.findQnA.adminQnaReplyExist  eq 't'}">
+					<input type="button" class="btn btn-default" value="답변수정" id="setReplyBtn"  />
+					<input type="button" class="btn btn-default" value="답변삭제" id="removeReplyBtn"  />
+					<a class="btn btn-default"role="button" href="/HwangDangFleamarket/admin/boardQnAList.go?page=${param.page }">목록</a>
 				</c:when>
 				<c:otherwise>
-					<input type="button" class="btn btn-default" value="댓글등록" id="addReplyBtn" />
+					<input type="button" class="btn btn-default" value="답변등록" id="addReplyBtn" />
+					<a class="btn btn-default"role="button" href="/HwangDangFleamarket/admin/boardQnAList.go?page=${param.page }">목록</a>
 				</c:otherwise>
 			</c:choose>			
 		</c:if>  
-		<a class="btn btn-default"role="button" href="/HwangDangFleamarket/admin/boardQnAList.go?page=${param.page }">목록</a>
+		
+		<!-- 비로그인상태에 글목록 버튼보이기 -->
+		<c:if test="${sessionScope.login_info == null }">
+			<a class="btn btn-default"role="button" href="/HwangDangFleamarket/admin/boardQnAList.go?page=${param.page }">목록</a>
+		</c:if>
+		
 	 </p>
 	</section>
 	</form>  

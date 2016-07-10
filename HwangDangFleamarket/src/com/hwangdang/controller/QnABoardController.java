@@ -37,12 +37,12 @@ public class QnABoardController {
 	@RequestMapping("/register.go")
 	public String registerQnAContent( String loginId , String title , 
 				@RequestParam(value="password",required=false) String password , 
-				String published ,String content  ){
+				@RequestParam(value="published",required=false) String published ,String content  ){
 		String url = "/";
 		//System.out.println("로그인아이디 :" + loginId +" ,제목 : "+title+", 작성자 :" + published + "글내용: " + content);
 		int seq = service.getQnABoardSeq();
-		Member member = memberService.selectById(loginId);															//조회수 ,작성자 , 비밀번호 
-		AdminQnA newQnA = new AdminQnA(seq , title, content, member.getMemberName() , new Date(), 1, published, password);
+		//Member member = memberService.selectById(loginId);															//조회수 ,작성자 , 비밀번호 
+		AdminQnA newQnA = new AdminQnA(seq , title, content, loginId , new Date(), 1, published, password);
 		int flag = service.registerNewQnA(newQnA);
 		if(flag == 1){
 			//System.out.println("글등록 성공!!!");
@@ -66,7 +66,7 @@ public class QnABoardController {
 	}
 	
 	/**
-	 *  QnA게시판 공개/비공개 여부확인 
+	 *  QnA게시판  비공개글에 비밀번호 불일치하면 이곳으로 이동
 	 */
 	@RequestMapping("/boardQnADetailBefore.go")
 	public String boardQnADetailBefore(int page , int no , Model model , HttpSession session){
@@ -99,14 +99,14 @@ public class QnABoardController {
 	public String boardQnADetail(int page , int no , Model model , HttpSession session ,
 					@RequestParam(value="password" , required=false) String password ){
 	
-		//System.out.println("디테일메소드:" + "페이지 :"+page +",NO: " +no + "password :" + password); 
+		System.out.println("디테일메소드:" + "페이지 :"+page +",NO: " +no + "password :" + password); 
 		String url = "";
 		AdminQnA findQnA = service.getAdminQnAByNo(no);
-		//System.out.println(findQnA);	  
-		System.out.println("파람패스워드:"+password +" , 객체패스워드:" + findQnA.getAdminQnaPassword());
+		//System.out.println("파람패스워드:"+password +" , 객체패스워드:" + findQnA.getAdminQnaPassword());
+		Member member =(Member) session.getAttribute("login_info");
 		
 		if(findQnA != null && findQnA.getAdminQnaPublished().equals("f")){
-			if(password != null && password.equals(findQnA.getAdminQnaPassword() )){
+			if( (password != null && password.equals(findQnA.getAdminQnaPassword())) ||  member.getMemberId().equals("admin@admin.com")   ){
 				//비공개에 비밀번호가 일치하면 
 				model.addAttribute("findQnA",findQnA);
 				model.addAttribute("page",page);
@@ -125,23 +125,52 @@ public class QnABoardController {
 		}
 		
 	return url;  
-	}
+	}   
+	
 	/**
-	 *  QnA게시판 No번호로 글 수정 - 작성자만 가능  
+	 *  QnA게시판 수정페이지로 이동 
+	 */
+	@RequestMapping("/boardQnASetMove.go")
+	public String boardQnASetMove( int no , int page , Model model){
+		//System.out.println(no +", " + page);
+		AdminQnA adminQnA = service.getAdminQnAByNo(no);
+		model.addAttribute("adminQnA" ,adminQnA);
+		return "admin/boardQnASetForm.tiles";
+	}
+	
+	/**
+	 *  QnA게시판 No번호로 글 수정 기능 - 작성자만 가능  
 	 */
 	@RequestMapping("/boardQnASet.go")
-	@ResponseBody
-	public AdminQnA boardQnASet( int no , int page , String content, Model model){
+	public String boardQnASet( int no , int page , String title , String content,
+			@RequestParam(value="password",required=false) String password ,
+			@RequestParam(value="privated",required=false) String privated ,Model model){
+		   
+		//System.out.println(no +", " + page +", " + title +" ," +content);
+		//System.out.println("privated : " + privated + ",pass: "+password);
+		String url ="/";
 		HashMap<String,Object> param = new HashMap<>();
 		param.put("no", no);
 		param.put("content", content);
+		param.put("title", title);
+		param.put("password", password);
 		param.put("setDate", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		if(privated != null && privated.equals("publiced")){
+			//공개글
+			//System.out.println("공개글");
+			param.put("publiced", "t");
+		}else{
+			//비공개글
+			//System.out.println("비공개");
+			param.put("publiced", "f");
+		}
 		//수정처리
-		service.setAdminQnAByNo(param);
-		//수정된 공지글 조회 
-		AdminQnA obj = service.getAdminQnAByNo(no);
-		//System.out.println(obj);
-	return obj;  
+		int flag = service.setAdminQnAByNo(param);
+		if(flag ==1){
+			//System.out.println("수정성공"); +"&password="+password
+			url = "/admin/boardQnADetail.go?no="+no+"&page="+page;
+		}
+		return url;  
 	}
 	/**
 	 *  QnA게시판 No번호로 질문글 삭제 - 작성자만 가능  
@@ -156,36 +185,62 @@ public class QnABoardController {
 	 *  QnA게시판 댓글달기 add - 관리자만가능  
 	 */			
 	@RequestMapping("/addBoardQnAReply.go")
-	public String addBoardQnAReply( int contentNo , int contentPage , String replyTa , Model model){
+	public String addBoardQnAReply( int contentNo , int contentPage ,
+			@RequestParam(value="replyTa" ,defaultValue=" ") String replyTa , Model model){
 		
-		System.out.println(contentNo + ",ta: " + replyTa+","+contentPage);
+		String url = "/";
+		System.out.println("글번호:"+ contentNo + ", 댓글내용: " + replyTa+",page : "+ contentPage);
 		String writeDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		AdminQnAReply reply = new AdminQnAReply(replyTa, writeDate, "관리자", contentNo);
-		service.addReply(reply);
-		model.addAttribute("reply", reply);
-	return "/admin/boardQnADetail.go?no="+contentNo+"&page="+contentPage;   
+		int flag = service.addReply(reply);
+		if(flag == 1){
+			//댓글달기 성공
+			model.addAttribute("reply", reply);
+			url = "/admin/boardQnADetail.go?no="+contentNo+"&page="+contentPage;
+		}else{
+			System.out.println("댓글달기 실패!");
+		}
+	return url;
 	}
 	  /**
 	   * QnA게시판 관리자 댓글삭제
 	   */
 	@RequestMapping("/removeBoardQnAReply.go")
-	public String removeBoardQnAReply( int contentNo , int replyNo ,int contentPage ){
-		service.removeReplyByNo(replyNo , contentNo);  
-		return "/admin/boardQnADetail.go?page="+contentPage +"&no="+contentNo;
+	public String removeBoardQnAReply( @RequestParam(value="contentNo", defaultValue="0") int contentNo ,
+					@RequestParam(value="replyNo", defaultValue="0") int replyNo ,
+					@RequestParam(value="contentPage", defaultValue="0") int contentPage ){
+		
+		//System.out.println("cententNO : " + contentNo+" ,replyNo:" +replyNo) ;
+		String url ="/";
+		//댓글삭제
+		service.removeReplyByNo(replyNo , contentNo); 
+		
+		AdminQnA adminQnA = service.getAdminQnAByNo(contentNo);
+		//System.out.println("adminQnA 댓글삭제 : " + adminQnA);
+		if(adminQnA != null){
+			url = "/admin/boardQnADetail.go?page="+contentPage +"&no="+contentNo+"&password="+adminQnA.getAdminQnaPassword();
+		}     
+		return url;
 	}
 	 /**
 	   * QnA게시판 관리자 댓글수정
 	   */
 	@RequestMapping("/setBoardQnAReply.go")
-	public String setBoardQnAReply( int contentNo , int replyNo ,int contentPage ,String replyTa ){
+	public String setBoardQnAReply( int contentNo , int replyNo ,int contentPage ,
+		@RequestParam(value="replyTa" ,defaultValue=" ") String replyTa ){
 		/*System.out.println("댓글수정 -  댓글번호:" + replyNo + " , 글번호 no :" +contentNo +"페이지번호:" + contentPage);
 		System.out.println("수정한 댓글내용" + replyTa);*/
+		
 		HashMap<String,Object> param = new HashMap<>();
 		param.put("replyNo", replyNo);
 		param.put("replyTa", replyTa);
 		param.put("setDate", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		//댓글수정
 		service.setReplyByNo(param);
-	return "/admin/boardQnADetail.go?page="+contentPage +"&no="+contentNo;
+		//글의 비밀번호 찾는 로직
+		AdminQnA adminQnA = service.getAdminQnAByNo(contentNo);
+		
+	return "/admin/boardQnADetail.go?page="+contentPage +"&no="+contentNo+"&password="+adminQnA.getAdminQnaPassword();
 	}
 	
 

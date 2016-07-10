@@ -48,13 +48,9 @@
 		
 	}  
 
-	/*
-	 멤버 마일리지 조회 
-	*/
+	/* 멤버 마일리지 조회 */
 	function getMemberMileage(){
-		
 		$.ajax({
-			  
 			"url" : "/HwangDangFleamarket/buy/getMemberMileageAjax.go" ,
 			"type" : "POST"  ,
 			"data" : "memberId="+$("#hiddenMemberId").val().trim() ,
@@ -66,7 +62,6 @@
 				//alert(returnMileage);
 				$("#memberMileage").html(returnMileage);
 			}, 
-			
 			"error"  : function(a ,status , httpErrorMsg){
 				alert("마일리지조회 ajax 예외: " + status +httpErrorMsg);
 			}
@@ -112,12 +107,59 @@
 			
 		});
 		
+		//ajax : 최근배송지 조회하기
+		$("#currentDeliveryAddress").on("click" ,function(){
+			//alert($("#hiddenMemberId").val());
+			$.ajax({
+				"url" : "/HwangDangFleamarket/buy/currentDeliveryAddress.go" ,
+				"type" : "POST"  ,
+				"data" : "memberId="+$("#hiddenMemberId").val().trim() ,
+				"dataType" : "json" ,
+				"beforeSend" : function(){
+					//alert("TEST ID: "+$("#hiddenMemberId").val().trim());
+				},
+				"success" : function(orders){
+					//alert(orders.ordersPhone);
+					$("#originalAddress").show();
+					$("#hiddenAddress").hide();
+					temp_ordersReceiver = $("#memberName").html().trim();
+					$("#memberName").html(orders.ordersReceiver);
+					
+					temp_currentAddress = $("#memberAddress").html().trim();
+					$("#memberAddress").html(orders.currentAddress);
+					
+					temp_ordersPhone = $("#memberPhone").html().trim();
+					$("#memberPhone").html(orders.ordersPhone);
+					
+					temp_ordersSubAddress = $("#memberSubAddress").html().trim();
+					$("#memberSubAddress").html(orders.ordersSubAddress);
+					
+					temp_ordersZipcode = $("#memberZipcode").html().trim();
+					$("#memberZipcode").html(orders.ordersZipcode);
+				} ,
+				"error" : function( a , status, HttpErrorMsg ){
+					alert("ajax:통신실패:" + status + HttpErrorMsg);
+					//console.log("ajax:통신실패:" + status + HttpErrorMsg);
+				}
+			});
+		});
+		
+		//배송지선택 -원상복귀 - memberTB의 주소정보로 변경 
+		$("#diliverAddress").on("click" ,function(){
+			$("#memberName").html(temp_ordersReceiver);
+			$("#memberAddress").html(temp_ordersAddress);
+			$("#memberPhone").html(temp_ordersPhone);
+			$("#memberSubAddress").html(temp_ordersSubAddress);
+			$("#memberZipcode").html(temp_ordersZipcode);
+		});
+		
 		//새로운배송지 입력태그들 show 
 		$("#newAddress").on("click" , function(){
 			$("#originalAddress").hide();
 			$("#hiddenAddress").show();
 			
 		});
+		
 		//새로운배송지 입력태그들 hide 
 		$("#diliverAddress").on("click" , function(){
 			$("#originalAddress").show();
@@ -132,6 +174,7 @@
 			window.open("/HwangDangFleamarket/popup.jsp","addressForm" ,specs);
 		});
 	
+		
 		//결제버튼 클릭
 		$("#submitBtn").on("click",function(){
 			
@@ -144,7 +187,6 @@
 
 			//1.새로운 배송지 선택시 검증 로직 
 			if( $("#newAddress").is(":checked") ){
-				
 				ordersReceiver = $("#name").val();
 				var phone1 = $("#phone1").val().trim();
 				var phone2 = $("input[name=phone2]").val().trim();
@@ -191,6 +233,19 @@
 			var ordersTotalPrice = $("#ordersTotalPrice").html().trim();
 			//결제방식 0:현금결제 ,1 카드결제등등 		
 			var ordersPayment = $(":radio[name=payment]:checked").val().trim();
+			
+			
+			var bank = "";
+			var card  = "";
+			var quota = "";
+			if(ordersPayment == 0){
+				//현금결제시 은행명 가져오기
+				bank = $("#bankSelect option:selected").text().trim(); 
+			}else if(ordersPayment == 1){
+				//카드 결제시  , 
+				card = $("#cardSelect option:selected").text().trim(); 
+				quota = $("#cardSelectOption option:selected").text().trim(); 
+			}
 			//주문요청사항
 			var ordersRequest = $("#requestInfo").val().trim();
 			//결제상태 결제완료 :1 /결제대기중 :0 .. 
@@ -200,15 +255,14 @@
 			
 			var ordersPayment = $(":radio[name=payment]:checked").val().trim();
 			var orderProductStatus = 0;
+			
+		
 			if(ordersPayment == 0){
 				orderProductStatus = 0; //미결재 
 			}else if (ordersPayment == 1 || ordersPayment == 2 || ordersPayment == 3 ) {
 				orderProductStatus =1;  //결제완료 
 			}
-			
-			
 			 var queryString = "";
-			   
 			 if($("#oneOrN").html().trim() =='1'){
 				 	//한개구매
 				 	 queryString = "?&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
@@ -216,13 +270,12 @@
 					 +"&ordersTotalPrice="+ordersTotalPrice+"&ordersPayment="+ordersPayment
 					 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId+
 					 "&orderAmount=${param.amount }&productId=${param.productId  }&sellerStoreNo=${param.sellerStoreNo }&orderProductStatus="
-					 +orderProductStatus+"&optionId="+$("#optionId").val().trim() +"&usedMileage="+$("#useMileage").html();	
-					 alert(queryString);	
+					 +orderProductStatus+"&optionId="+$("#optionId").val().trim() +"&usedMileage="+$("#useMileage").html()+"&bank="+bank
+					 +"&card="+card+"&quota="+quota;	
 					$("form").prop("action", "/HwangDangFleamarket/buy/buyProductOne.go"+queryString);
 		
 			 }else{
 				 	//N개구매
-				 	
 				 	//optionId sellerStoreNo  productId amount
 				 	var optionIdList = "";
 				 	var sellerStoreNoList ="";
@@ -246,75 +299,40 @@
 				 	});
 				 	
 					//alert("optoinIdList:"+optionIdList+" , sellerStoreNoList :" + sellerStoreNoList +", productIdList: "+ productIdList + ",amountList "+amountList);
-				 	
-				 	  queryString = "?&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
+				 	 
+				 	  queryString = "?ordersNo=${requestScope.ordersNo}&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
 					 +ordersZipcode+"&ordersAddress="+ordersAddress+"&ordersSubAddress="+ordersSubAddress
 					 +"&ordersTotalPrice="+ordersTotalPrice+"&ordersPayment="+ordersPayment
 					 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId+
 					 "&amountList="+ amountList + "&productIdList=" +productIdList+ "&sellerStoreNoList="+sellerStoreNoList +"&orderProductStatus="+orderProductStatus+
-					 "&optionIdList="+optionIdList  +"&usedMileage="+$("#useMileage").html().trim()+"&cartNoList=${requestScope.cartNoList }";	
-					 alert(queryString);
-					// queryString ="#";
+					 "&optionIdList="+optionIdList  +"&usedMileage="+$("#useMileage").html().trim()+"&cartNoList=${requestScope.cartNoList }&bank="+bank+"&card="+card+"&quota="+quota;	;	
 					$("form").prop("action", "/HwangDangFleamarket/buy/buyProducts.go"+queryString);
 			 }
-		
+			
+			// alert(queryString);
 			$("form").submit(); 
-			//return false;
-			
 		}); //결제버튼
-		
-		
-		//ajax : 최근배송지 조회하기
-		$("#currentDeliveryAddress").on("click" ,function(){
-			//alert($("#hiddenMemberId").val());
-			$.ajax({
-				"url" : "/HwangDangFleamarket/buy/currentDeliveryAddress.go" ,
-				"type" : "POST"  ,
-				"data" : "memberId="+$("#hiddenMemberId").val().trim() ,
-				"dataType" : "json" ,
-				"beforeSend" : function(){
-					//alert("TEST ID: "+$("#hiddenMemberId").val().trim());
-				},
-				"success" : function(orders){
-					
-					//alert(orders.ordersPhone);
-					
-					temp_ordersReceiver = $("#memberName").html().trim();
-					$("#memberName").html(orders.ordersReceiver);
-					
-					temp_currentAddress = $("#memberAddress").html().trim();
-					$("#memberAddress").html(orders.currentAddress);
-					
-					temp_ordersPhone = $("#memberPhone").html().trim();
-					$("#memberPhone").html(orders.ordersPhone);
-					
-					temp_ordersSubAddress = $("#memberSubAddress").html().trim();
-					$("#memberSubAddress").html(orders.ordersSubAddress);
-					
-					temp_ordersZipcode = $("#memberZipcode").html().trim();
-					$("#memberZipcode").html(orders.ordersZipcode);
-					
-				   	 
-				} ,
-				"error" : function( a , status, HttpErrorMsg ){
-					alert("ajax:통신실패:" + status + HttpErrorMsg);
-					//console.log("ajax:통신실패:" + status + HttpErrorMsg);
-				}
-				
-			});
-			
+	
+		//무통장입금 요소 show()
+		$("#bank").on("click" ,function(){
+			$("#pay_bank").show();
 		});
+		/* //무통장입금 요소 hide()
+		$("#bank").on("blur" ,function(){
+			$("#pay_bank").hide();
+		}); */
 		
-		//배송지선택 -원상복귀 - memberTB의 주소정보로 변경 
-		$("#diliverAddress").on("click" ,function(){
-			
-			$("#memberName").html(temp_ordersReceiver);
-			$("#memberAddress").html(temp_ordersAddress);
-			$("#memberPhone").html(temp_ordersPhone);
-			$("#memberSubAddress").html(temp_ordersSubAddress);
-			$("#memberZipcode").html(temp_ordersZipcode);
-			
+		//카드결제 선택시 요소 show()
+		$("#card").on("click" ,function(){
+			$("#pay_cart").show();
 		});
+		/* //카드결제 선택시  hide()
+		$("#card").on("blur" ,function(){
+			$("#pay_cart").hide();
+			
+		}); */
+		
+		
 		//마일리지 모두 사용!
 		$("#mileageCheckbox").on("click",function(){
 			if( $("#mileageCheckbox").is(":checked") ){
@@ -330,10 +348,7 @@
 				//화면 사용할 마일리지에 적용  
 				$("#useMileage").text(memberMileage);
 				
-			
 				//체크해제를 대비하여 temp변수들에 임시 저장 
-				
-				  
 				productPriceTemp =   productPrice;
 				memberMileageTemp  = memberMileage;
 				//ordersTotalPriceTemp  = ordersTotalPrice;
@@ -361,7 +376,6 @@
 		//사용할 마일리지포인트 보이게하기!
 		$("#useMileageBtn").click(function(){
 			$("#spanMileage").show();
-			
 		});	
 		
 		
@@ -408,13 +422,7 @@
 		$("#memberMileage").text(memberMileageTemp)
 	});
 		
-		
-		$("#testBtn").click(function(){
-			
-			
-		});		
-		
-		
+	
 	}); //ready
 	
 </script>
@@ -429,14 +437,15 @@ seller_store_no : ${param.sellerStoreNo  }
 옵션명 : ${param.option } 
 옵션ID: ${requestScope.productOption.optionId }
 총추가가격 : ${requestScope.productOption.optionAddPrice * param.amount  }
--------------------------------------------------------<br/>
- --%>
-주문번호: ${requestScope.ordersNo}
 orderProductList : ${requestScope.orderProductList }
 카트리스트 ArrayList객체 ${requestScope.cartList }
 
-<form action="" method="POST" name="buy_form" >
+-------------------------------------------------------<br/>
+ --%>
 
+
+<form action="" method="POST" name="buy_form" >
+	<input type="text" name="bank" />
 	<input type="hidden" value="${sessionScope.login_info.memberId }" id="hiddenMemberId"	/>
 	<div id="left_lalyer">
 		<div id="address_div">
@@ -465,8 +474,7 @@ orderProductList : ${requestScope.orderProductList }
 			</select>
 			-<input type="text" name="phone2" id="phone2" /> -
 			 <input type="text" name="phone3" id="phone3" /><br/>
-			
-			주소 
+				주소 
 				<input type="button" value="주소찾기"  id="findAddress" />
 				<input type="text" name="zipcode" id="zipcode" disabled="disabled" size="10" /><br/>
 				<input type="text" name="address1" id="address1" disabled="disabled"  size="45" /><br/>
@@ -490,16 +498,89 @@ orderProductList : ${requestScope.orderProductList }
 		  	<input type="number" name="choiceMileage" id="choiceMileage"   size="10" />
 		  		<input type="button" value="사용하기"  id="mileageUseBtn" /><input type="button" value="사용취소" id="mileageCancelBtn"/>
 		  	</span><br/>
-		  	 
 			<hr>
-			 
-			<hr>
+			
 			<h4>결제수단 선택</h4>
-			<input type="radio" name="payment" value="0">무통장입금
-			<input type="radio" name="payment" value="1" checked="checked">카드결제
+			<input type="radio" name="payment" value="0" id="bank">무통장입금
+			<input type="radio" name="payment" value="1" id="card">카드결제
 			<input type="radio" name="payment" value="2">자동이체
 			<input type="radio" name="payment" value="3">간편결제
-			<hr>
+				
+				 <!-- 현금결제 요소들 -->
+				<div align="center" hidden="true" id="pay_bank">
+				<h4 class="page-header" align="center">무통장 입금</h4>
+					<ul>
+						<li><p align="left"><strong>은행선택</strong>
+					<select id="bankSelect" name="bank" class="form-control">
+						<option>===은행선택===</option>
+						<option>국민은행</option>
+						<option>농협</option>
+						<option>신한은행</option>
+						<option>하나은행</option>
+						<option>외환은행</option>
+						<option>씨티은행</option>
+						<option>우체국</option>
+						<option>부산은행</option>
+						<option>대구은행</option>
+						<option>SC은행</option>
+					</select>
+					</p>
+					</li>
+					<li>
+						<p align="left"><strong>현금영수증발급 : </strong>
+						${sessionScope.login_info.memberName } 
+						( ${sessionScope.login_info.memberPhone }) - 개인소득공제 <input type="button" class="btn btn-default" value="수정"></p> 
+					</li>
+					</ul>
+			</div>	
+			<hr>  
+				 <!-- 카드결제 요소들 -->
+				<div align="center" hidden="true" id="pay_cart">
+				<h4 class="page-header" align="center">카드 결제</h4>
+					<ul>
+						<li><p align="left"><strong>카드 선택</strong>
+						<select id="cardSelect" name="card" class="form-control">
+							<option>===카드사===</option>
+							<option>현대카드</option>
+							<option>삼성카드</option>
+							<option>신한카드</option>
+							<option>롯데카드</option>
+							<option>비씨카드</option>
+							<option>하나카드</option>
+							<option>우리카드</option>
+						</select>
+						</p>
+					</li>
+						<li><p align="left"><strong>할부선택</strong>
+						<select id="cardSelectOption" name="cardOption" class="form-control">
+							<option>일시불</option>
+							<option>3</option>
+							<option>5</option>
+							<option>6</option>
+							<option>6</option>
+							<option>7</option>
+							<option>8</option>
+							<option>9</option>
+							<option>10</option>
+							<option>11</option>
+							<option>12</option>
+						</select>
+						</p>
+					</li>
+					
+					<li>
+						<p align="left"><strong>카드번호 입력 : </strong>
+						<input type="text" name="card1" class="" >-
+						<input type="text" name="card2" class="">-
+						<input type="text" name="card3" class="">-
+						<input type="text" name="card4" class="">
+						</p> 
+					</li>
+					</ul>
+			</div>	
+			<hr>  
+			
+			
 		</div>
 	
 	</div>
@@ -508,9 +589,8 @@ orderProductList : ${requestScope.orderProductList }
 		<h4>주문상품 정보</h4>
 		<c:forEach  items="${requestScope.orderProductList }" var="op">
 			<input type="hidden" id="optionId"  class="optionId" value="${op.productOption.optionId }"/>
-			<input type="hidden"  class="sellerStoreNo" value="${op.seller.sellerStoreNo }"/>
+			<input type="hidden"  class="sellerStoreNo" value="${op.sellerStoreNo }"/>
 			<input type="hidden"   class="productId" value="${op.product.productId }"/>
-			
 			스토어명 : <span id="sellerStoreName" >${op.seller.sellerStoreName }</span><br/>
 			제품명 : <span id="productName">${op.product.productName  }</span><br/>
 			옵션명 : <span id="option">${op.productOption.optionSubName }</span><br/>
@@ -543,12 +623,10 @@ orderProductList : ${requestScope.orderProductList }
 			
 		<hr>
 		<h4>최종결제 정보</h4>
-		
 			결제예정금액 : <span id="productPrice"></span>원<br/>
 			사용할 마일리지 :<span id="useMileage" ></span><br/>
 			<hr>
 			 실제결제금액:<font size="15" color="red" ><span id="ordersTotalPrice"></span></font>원<br/>
-			
 			<input type="button" value="결제하기" id="submitBtn" />
 			<input type="button" value="test" id="testBtn" />
 		<hr>

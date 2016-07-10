@@ -51,10 +51,10 @@ b {
 				<td class="tdName" width="50px">no</td>
 				<td class="tdName" width="80px">답변여부</td>
 				<td class="tdName"  width="150px">글제목</td>
-				<td class="tdName" width="50px">작성자</td>
-				<td class="tdName" width="80px">작성일</td>
-				<td class="tdName" width="50px">조회수</td>
-				<td class="tdName" width="70px">공개여부</td>
+				<td class="tdName" width="70px">작성자</td>
+				<td class="tdName" width="90px">작성일</td>
+				<td class="tdName" width="60px">조회수</td>
+				<td class="tdName" width="77px">공개여부</td>
 			</tr>
 		</thead>
 		<tbody>		

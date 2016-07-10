@@ -5,6 +5,17 @@ DELETE FROM PRODUCT_OPTION
 
 DROP TABLE product_option 
 	CASCADE CONSTRAINTS;
+	
+select * FROM product;	
+select * FROM product_option;	
+select * FROM seller;	
+select * FROM orders 
+
+SELECT *
+  FROM user_constraints
+ WHERE table_name = 'orders'
+
+	
 /* 상품옵션vvvvvvvv */
 drop table product_option
 CREATE TABLE product_option (
@@ -737,7 +748,7 @@ MODIFY option_sub_name
 SELECT * FROM member;
 SELECT * FROM product_option;
 
-SELECT * FROM  
+SELECT * FROM  seller
 
 UPDATE member 
 SET member_mileage =  15000

@@ -8,13 +8,9 @@
 	}
 	
 	#layer {
-		border: 2px solid gray;
 		min-height:  300px;
 		min-width: 300px;
 	}   
-	/* .imgDiv , .priceDiv , .priceNameDiv , .priceInfoDiv  , .SellerNameDiv {
-		 float: left;
-	} */
 	
 	.media{
 		margin:  40px;
@@ -27,19 +23,10 @@
 <script>
 	$(document).ready(function(){
 		
-		
-		
 	});
 </script>
-조회결과  <span class="glyphicon glyphicon-heart-empty" aria-hidden="true">:::</span>
-
 
 <div id="layer">
-
-
-
-	
-	
 	<c:choose>
 	<c:when test="${!empty requestScope.productList }">
 		<c:forEach items="${requestScope.productList }" var="p">
@@ -59,33 +46,11 @@
 					</c:if>
 				</div>
 			</div>                                            
-		 
-		<%-- 
-			<ul>
-				<li>
-					<span class="imgDiv">
-						<a href="/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage }">
-							<img src="/HwangDangFleamarket/image_storage/${p.productMainImage }"/>
-						</a>
-						</span>
-
-					<a href="/HwangDangFleamarket/product/detail.go?page=1&productId=${p.productId }&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage}">
-						TEST
-					</a>
-					<span class="infoDiv"><a href="/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage }">${p.productName }  ${p.productInfo }</a></span>
-					<span class="priceDiv">
-						<a href="/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage }"><fmt:formatNumber pattern="#,###원">${p.productPrice }</fmt:formatNumber> <font size="0.5em" color="lightgray">3만원이상 주문시 무료배송</font></a>
-					</span>
-					<span class="likeDiv"><a href="/HwangDangFleamarket/product/list.go?page=1&sellerStoreNo=${p.seller.sellerStoreNo }&sellerStoreImage=${p.seller.sellerStoreImage }">좋아요 : ${p.productLike }</a></span>
-				<span class="SellerNameDiv"><a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${p.seller.sellerStoreNo }&sellerImage=${p.seller.sellerStoreImage }">${p.seller.sellerStoreName }</a></span> 
-				</li>  
-			</ul>
-			--%>
 			<hr/>  
 		</c:forEach>
 	</c:when>
 	<c:otherwise>
-		"${requestScope.keyword }"에 대한 조회 상품이 없습니다.
+		<p class="text-center"><strong>"${requestScope.keyword }"에 대한 조회 상품이 없습니다.</strong></p>
 	</c:otherwise>
 </c:choose> 
 
