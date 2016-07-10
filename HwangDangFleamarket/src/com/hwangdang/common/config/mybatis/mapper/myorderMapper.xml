@@ -213,33 +213,156 @@
 		)  
 	)WHERE page = #{page}
 </select>
-<!-- AND  op.order_product_status IN (0,1,2,3,4)     -->
-
-<!-- 배송 완료 조회 -->		
-<select id="select-diliver-success" parameterType="string"  resultMap="orders-orderProduct-join" >
-	
-	SELECT  <include refid="join-column"/>
-	FROM   orders o ,  order_product op , product p  ,seller s  , product_option po
-	WHERE  o.member_id =  #{buyerId}
-	AND    o.orders_no =  op.orders_no
-	AND    op.product_id =  p.product_Id
-	AND    op.seller_store_no =  s.seller_store_no
-	AND    op.option_id  =  po.option_id
-	AND     op.order_product_status IN (10)
-	ORDER BY o.orders_date DESC
-</select>
 
 <!-- 주문취소/교환/환불 조회 -->		
-<select id="select-diliver-cancel" parameterType="string"  resultMap="orders-orderProduct-join" >
-	SELECT  <include refid="join-column"/>
-	FROM   orders o ,  order_product op , product p  ,seller s  , product_option po
-	WHERE  o.member_id =  #{buyerId}
-	AND    o.orders_no =  op.orders_no
-	AND    op.product_id =  p.product_Id
-	AND    op.seller_store_no =  s.seller_store_no
-	AND    op.option_id  =  po.option_id
-	AND     op.order_product_status IN ( 5,6,7 )
-	ORDER BY o.orders_date DESC
+<select id="select-diliver-cancel" parameterType="map"  resultMap="orders-orderProduct-join" >
+	SELECT 
+		orders_no_1 , orders_receiver , orders_phone ,    orders_zipcode ,
+		orders_address , orders_sub_address ,    orders_total_price ,
+		orders_payment , orders_request , payment_status , orders_date ,  buyer ,    
+		
+		order_seq_no , order_amount  , orders_no_2 ,  product_id_1  ,option_id_1 , 
+		seller_store_no_1 , order_product_status ,        
+		
+		product_Id_2 , product_name , product_price, product_stock,   
+		product_main_image, product_info, product_like, seller_store_no ,  
+		
+		seller_store_no_2 , seller_store_name, seller_tax_id, seller_industry,    
+		seller_sub_industry, seller_zipcode, seller_address, seller_sub_address,     
+		seller_store_image, seller_product1, seller_product2, seller_product3,    
+		seller_introduction, seller_assign, member_id  ,        
+				
+		option_id_2 , option_name , option_sub_name , option_stock , 
+		option_add_price ,  product_id 
+		
+	FROM ( SELECT   
+		orders_no_1 , orders_receiver , orders_phone ,    orders_zipcode ,
+		orders_address , orders_sub_address ,    orders_total_price ,
+		orders_payment , orders_request , payment_status , orders_date ,  buyer ,    
+		
+		order_seq_no , order_amount  , orders_no_2 ,  product_id_1  ,option_id_1 , 
+		seller_store_no_1 , order_product_status ,        
+		
+		product_Id_2 , product_name , product_price, product_stock,   
+		product_main_image, product_info, product_like, seller_store_no ,  
+		
+		
+		seller_store_no_2 , seller_store_name, seller_tax_id, seller_industry,    
+		seller_sub_industry, seller_zipcode, seller_address, seller_sub_address,     
+		seller_store_image, seller_product1, seller_product2, seller_product3,    
+		seller_introduction, seller_assign, member_id  ,        
+		
+		option_id_2 , option_name , option_sub_name , option_stock , 
+		option_add_price ,  product_id  ,  ceil( rownum / #{itemPerPage} ) page  
+	
+		FROM (  SELECT    
+			o.orders_no orders_no_1 , o.orders_receiver , o.orders_phone ,
+			o.orders_zipcode , o.orders_address , o.orders_sub_address ,   
+			o.orders_total_price , o.orders_payment , o.orders_request ,    
+			o.payment_status , o.orders_date ,    o.member_id buyer ,     
+			
+			op.order_seq_no , op.order_amount  , op.orders_no orders_no_2 ,  
+			op.product_id product_id_1  ,op.option_id option_id_1  ,    
+			op.seller_store_no seller_store_no_1 , op.order_product_status ,   
+			
+			p.product_Id product_id_2 , p.product_name, p.product_price, p.product_stock,   
+			p.product_main_image, p.product_info, p.product_like,   p.seller_store_no  ,       
+			
+			s.seller_store_no seller_store_no_2 , s.seller_store_name, s.seller_tax_id, s.seller_industry,    
+			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address,     
+			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3,     
+			s.seller_introduction, s.seller_assign, s.member_id  ,       
+			
+			po.option_id option_id_2,  po.option_name , po.option_sub_name ,
+			po.option_stock , po.option_add_price , po.product_id        
+		
+		FROM   orders o ,  order_product op , product p  ,seller s  , product_option po 
+		
+		WHERE  o.member_id =   #{buyer}  
+		AND    o.orders_no =  op.orders_no(+)   
+		AND    op.product_id =  p.product_Id  
+		AND    op.seller_store_no =  s.seller_store_no   
+		AND    op.option_id  =  po.option_id  
+		AND    op.order_product_status IN (5,6,7,8,9)  
+		ORDER BY o.orders_date DESC 
+		)  
+	)WHERE page = #{page}
+</select>
+
+<!-- 배송 완료 조회 -->		
+<select id="select-diliver-success" parameterType="map"  resultMap="orders-orderProduct-join" >
+	
+	SELECT 
+		orders_no_1 , orders_receiver , orders_phone ,    orders_zipcode ,
+		orders_address , orders_sub_address ,    orders_total_price ,
+		orders_payment , orders_request , payment_status , orders_date ,  buyer ,    
+		
+		order_seq_no , order_amount  , orders_no_2 ,  product_id_1  ,option_id_1 , 
+		seller_store_no_1 , order_product_status ,        
+		
+		product_Id_2 , product_name , product_price, product_stock,   
+		product_main_image, product_info, product_like, seller_store_no ,  
+		
+		seller_store_no_2 , seller_store_name, seller_tax_id, seller_industry,    
+		seller_sub_industry, seller_zipcode, seller_address, seller_sub_address,     
+		seller_store_image, seller_product1, seller_product2, seller_product3,    
+		seller_introduction, seller_assign, member_id  ,        
+				
+		option_id_2 , option_name , option_sub_name , option_stock , 
+		option_add_price ,  product_id 
+		
+	FROM ( SELECT   
+		orders_no_1 , orders_receiver , orders_phone ,    orders_zipcode ,
+		orders_address , orders_sub_address ,    orders_total_price ,
+		orders_payment , orders_request , payment_status , orders_date ,  buyer ,    
+		
+		order_seq_no , order_amount  , orders_no_2 ,  product_id_1  ,option_id_1 , 
+		seller_store_no_1 , order_product_status ,        
+		
+		product_Id_2 , product_name , product_price, product_stock,   
+		product_main_image, product_info, product_like, seller_store_no ,  
+		
+		
+		seller_store_no_2 , seller_store_name, seller_tax_id, seller_industry,    
+		seller_sub_industry, seller_zipcode, seller_address, seller_sub_address,     
+		seller_store_image, seller_product1, seller_product2, seller_product3,    
+		seller_introduction, seller_assign, member_id  ,        
+		
+		option_id_2 , option_name , option_sub_name , option_stock , 
+		option_add_price ,  product_id  ,  ceil( rownum / #{itemPerPage} ) page  
+	
+		FROM (  SELECT    
+			o.orders_no orders_no_1 , o.orders_receiver , o.orders_phone ,
+			o.orders_zipcode , o.orders_address , o.orders_sub_address ,   
+			o.orders_total_price , o.orders_payment , o.orders_request ,    
+			o.payment_status , o.orders_date ,    o.member_id buyer ,     
+			
+			op.order_seq_no , op.order_amount  , op.orders_no orders_no_2 ,  
+			op.product_id product_id_1  ,op.option_id option_id_1  ,    
+			op.seller_store_no seller_store_no_1 , op.order_product_status ,   
+			
+			p.product_Id product_id_2 , p.product_name, p.product_price, p.product_stock,   
+			p.product_main_image, p.product_info, p.product_like,   p.seller_store_no  ,       
+			
+			s.seller_store_no seller_store_no_2 , s.seller_store_name, s.seller_tax_id, s.seller_industry,    
+			s.seller_sub_industry, s.seller_zipcode, s.seller_address, s.seller_sub_address,     
+			s.seller_store_image, s.seller_product1, s.seller_product2, s.seller_product3,     
+			s.seller_introduction, s.seller_assign, s.member_id  ,       
+			
+			po.option_id option_id_2,  po.option_name , po.option_sub_name ,
+			po.option_stock , po.option_add_price , po.product_id        
+		
+		FROM   orders o ,  order_product op , product p  ,seller s  , product_option po 
+		
+		WHERE  o.member_id =   #{buyer}  
+		AND    o.orders_no =  op.orders_no(+)   
+		AND    op.product_id =  p.product_Id  
+		AND    op.seller_store_no =  s.seller_store_no   
+		AND    op.option_id  =  po.option_id  
+		AND    op.order_product_status IN (10)  
+		ORDER BY o.orders_date DESC 
+		)  
+	)WHERE page = #{page}
 </select>
 
 
@@ -260,8 +383,19 @@
 </select>
 
 <!-- order_product - 배송현황  전체튜플조회 -->
-<select id="select-orders-total-couont" resultType="_int" >
+<select id="select-orders-total-couont" resultType="_int" parameterType="map"  >
 	SELECT count(*) FROM order_product 
-	WHERE order_product_status IN (0,1,2,3,4)    
+	WHERE order_product_status IN (
+	#{value1} ,#{value2},#{value3},#{value4},#{value5}  )    
 </select>
+
+
+<!-- 교환신청 처리  -->
+<insert id="insert-requestExchange"  parameterType="exchangeRequest">
+	INSERT INTO  exchange_request
+	VALUES ( #{exchageTitle}, #{exchangeContent}, #{orderSeqNo} )
+</insert>
+	
+	
+
 </mapper>

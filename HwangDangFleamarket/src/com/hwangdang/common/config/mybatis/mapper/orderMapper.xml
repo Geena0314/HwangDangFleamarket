@@ -129,4 +129,6 @@
 		set			order_product_status = 6
 		where 	order_seq_no = #{orderSeqNo}
 	</update>
+	
+
 </mapper>

@@ -9,16 +9,6 @@
 	padding:20px;
 } 
 
-#nav_layer {
-  width: 120px;
-  min-height:  500px;
-  float: left;
-  
-} 
-button {
-	width : 70px;
-	height : 40px;  
-}
 
 img {
 	width : 100px;
@@ -26,9 +16,14 @@ img {
 }
 
 div .parent  {
-	border : 3px dotted pink;
-	float : left;
+	/* border : 1px solid pink; */
+	/* float : left; */
 }
+div .child  {
+	/* border : 1px solid black; */
+	/* float : left; */
+}
+
 #orderSeqNo
 {
 	display: none;
@@ -38,23 +33,25 @@ div .parent  {
 <script>
 
 	$(document).ready(function(){
+		
 		var flag = false;
 		var orderCancelList = "";
 		var url = "";
 		var loginId = $("#loginId").val();
 		
-		//폼전송
+		//폼전송 함수 
 		function sendForm(url){
+			
 			if(flag){ 
 				flag = false;
 				orderCancelList = orderCancelList.substring( 0 ,orderCancelList.length-1);
-				console.log("split실행후:" +orderCancelList);
+				//console.log("split실행후:" +orderCancelList);
 				//alert("split실행후:" +orderCancelList);
-				$("form").prop("action" , url);
-				$("form").submit();
+				$("#f2").prop("action" , url);
+				$("#f2").submit();
 			}
 		}  
-		//체크박스검증 및 orderList 검증  
+		//체크박스검증 및 orderList 검증  함수 
 		function checkboxValidation(num1 , num2 , num3 , msg ){
 			if( !$("input:checkbox").is(":checked") ){  //true,false
 				alert("체크박스를선택해주세요.");
@@ -62,7 +59,7 @@ div .parent  {
 				// 체크박스선택하였고 주문취소가 가능한 상태인지 검증 
 				orderCancelList = "";
 				$("input:checkbox:checked").each(function(){
-					console.log("현재주문번호: " + $(this).val());
+					//console.log("현재주문번호: " + $(this).val());
 					var orderNo = $(this).val()
 					//alert(orderNo);
 					
@@ -88,25 +85,25 @@ div .parent  {
 						//취소할 주문번호 배열에 누적 
 						orderCancelList = orderCancelList + orderNo +","
 						flag = true;
-						
 					}else{
 						alert(msg);
+						flag = false;
+						
 					}
 				}); //orderList 누적 for문
 			} //else 
 				
 		}
+		
 		// 주문취소 
 		$("#btnRequestCancel").on("click",function(){
 			var yesNO = confirm("정말취소하시겠습니까?");
-			
 			if(yesNO){
 				var page =  $("#currentPage").text().trim();
 				checkboxValidation(0 , 1 , 2 ,  "상품 발송후에는 주문취소를 할수없습니다. " );
 				url	="/HwangDangFleamarket/myorder/orderCancelList.go?orderCancelList="+orderCancelList+"&loginId="+loginId+"&status="+7+"&page="+page;
 				sendForm(url);
 			}
-			
 		}); //btn 
 		
 		
@@ -133,114 +130,111 @@ div .parent  {
 		$("#btnRequestChange").on("click",function(){
 			var yesNO = confirm("정말 교환 신청을 하시겠습니까?");
 			if(yesNO){
+				//1.교환신청시 검증 수행 
 				checkboxValidation(4 , 4, -1  , "배송완료상품만 교환을 신청할수 있습니다.");
-				url	="/HwangDangFleamarket/myorder/orderStatusChange.go?orderList="+orderCancelList+"&loginId="+loginId+"&status="+5;
-				sendForm(url);
+				
+				//2. 검증통과 되었을 경우에만 폼오픈!
+				if(flag){
+					var option ='resizable=no scrollbars=yes width=513 height=660 left=500 top=200';
+					window.open("/HwangDangFleamarket/myorder/exchangeRequestFormMove.go?orderSeqNo="+$(":checkbox:checked").val(), "교환신청", option);
+				}
+				//3. 교환로직, 입력폼 입력 끝나면 이동
+				/* url	="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId}";
+				$("#f2").prop("action" , url);
+				$("#f2").submit(); */
 			}
 			
-		});
+		});//교환신청
 		
 		//구매확정 
 		$("button").on("click",function(){
-			var childDiv = $(this).parent();
-			var ordersNo =  $(childDiv).children().eq(0).val().trim();
-			//alert(ordersNo);
-			var page =  $("#currentPage").text().trim();
-			//console.log(page);
-			//alert(page);
-			
-			url	="/HwangDangFleamarket/myorder/orderStatusChange.go?orderList="+ordersNo+"&loginId="+loginId+"&status="+10+"&page="+page;  
-			//alert(url);
-			$("form").prop("action" , url);
-			$("form").submit();
+			var yes_no = confirm("정말 구매확정하시겠습니다. 구매확정하시면 되돌릴수 없습니다.");
+			if(yes_no){
+				var childDiv = $(this).parent();
+				var ordersNo =  $(childDiv).children().eq(0).val().trim();
+				//alert(ordersNo);
+				var page =  $("#currentPage").text().trim();
+				//console.log(page);
+				//alert(page);
+				
+				url	="/HwangDangFleamarket/myorder/orderStatusChange.go?orderList="+ordersNo+"&loginId="+loginId+"&status="+10+"&page="+page;  
+				//alert(url);
+				$("#f2").prop("action" , url);
+				$("#f2").submit();
+			}else{
+				alert("취소하셨습니다.");
+				return false;
+			}
+		}); //구매확정
 		
-			
-		}); 
 		$(".detail").on("click",function(){
 			alert("디테일버튼" + this);
 			console.log(this);
-			
 		}); 
-
-	
-		 //주문세부정보
-		$(".orderDetail").on("click",function(){
-			/* var orderNo = $(this).text(); 
-			$.ajax({
-				"url" : "/HwangDangFleamarket/myorder/orderDetail.go" ,
-				"type" : "POST"  ,
-				"data"  : "orderNo="+orderNo +"&loginId="+loginId ,
-				"datatype"  : "json"  ,
-				"success" : function(obj){
-					console.log(obj);
-					//window.oepn()
-				} ,
-				
-				"error" : function(xhr , status , httpErrorMsg){
-					alert("실패 :" + httpErrorMsg);
-				}
-			}); */
-		});
 		
-	
-		
-	}); //docudent
+	}); //docudent  
 </script>
 
-
 <!-- 배송현황 조회
-배송완료 -  구매확정 : 10 
 	배송현황 - 입금대기중 : 0 
 	배송현황 - 결제완료 : 1
 	배송현황 - 배송준비중 : 2
 	배송현황 - 배송중 : 3
 	배송현황  - 배송완료 : 4
-	교환/환불/취소 -  교환신청 : 5
-	교환/환불/취소 -  환불신청 :  6 
-	교환/환불/취소 - 구매취소(배송전) :  7 
-	교환/환불/취소 -   교환신청 승인 : 8 
-	교환/환불/취소 -   환불신청 승인  : 9
  -->
-    
-<h2 class="page-header store_look_around">나의주문 - 배송현황</h2>
-
-<div id="nav_layer">		
-	<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">배송 현황</a><br/><br/><br/><br/>
-	<a href="/HwangDangFleamarket/myorder/success.go?loginId=${sessionScope.login_info.memberId }">배송 완료</a><br/><br/><br/><br/>
-	<a href="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId }">교환/환불/취소</a>
-</div>
-	<td>체크박스</td> 
-	<td>주문날짜 </td> 
-	<td>상품정보</td> 
-	<td>상태</td> 
-	<td>구매확정</td> 
-
-<form action=""  method="post">
-<input type="hidden" id="loginId" value="${sessionScope.login_info.memberId }" />
-
-<c:forEach items="${requestScope.orderList }"  var="order" > 
+ 
+<div class="container">
+	<h2 class="page-header store_look_around">나의주문 - 배송현황</h2>
 	
+	<div class="row">
+	<!-- 네비게이션 바Area -->
+	 <ul class="nav nav-tabs">
+	 	 <li role="presentation" class="active"><a class="btn btn-default" role="button"  href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">배송 현황</a></li>
+	  	<li role="presentation"><a class="btn btn-default" role="button" href="/HwangDangFleamarket/myorder/success.go?loginId=${sessionScope.login_info.memberId }">배송 완료</a></li>
+	  	<li role="presentation">	<a class="btn btn-default" role="button" href="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId }">교환/환불/취소</a></li>
+	</ul>
+	
+	
+	 <!-- 본문 Area -->
+	<div class="col-md-12">
+	<form action=""  method="post"  id="f2">
+	<input type="hidden" id="loginId" value="${sessionScope.login_info.memberId }" />
+		
+	
+	<c:forEach items="${requestScope.orderList }"  var="order" > 
 	<div class="parent">
+	
+	
 	<!-- 주문날짜 -->
-	<h3><a class="orderDetail"><fmt:formatDate value="${order.orders_date }" pattern="yyyy년 MM월 dd일" /></a> 주문번호: ${order.ordersNo } </h3><br/>
-	<c:forEach items="${order.orderProductList }" var="orderProduct">				
+	<h4><fmt:formatDate value="${order.orders_date }" pattern="yyyy-MM-dd" /> / orderno:${order.ordersNo }</h4><br/>
 		
-		<div class="child">
-		<!--  체크박스   -->
-		<input type="checkbox" name="items" value="${orderProduct.orderSeqNo}" />
+		<c:forEach items="${order.orderProductList }" var="orderProduct">		
 		
-		<!-- 주문정보  
-			<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${p.seller.sellerStoreNo }&sellerImage=${p.seller.sellerStoreImage }">${p.seller.sellerStoreName }</a>
-		-->
-			<img src="/HwangDangFleamarket/product_img/${orderProduct.product.productMainImage }" />
-			<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${orderProduct.seller.sellerStoreNo }&sellerImage=${orderProduct.seller.sellerStoreImage }">${orderProduct.seller.sellerStoreName }</a>
-			${orderProduct.product.productName } 주문수량 : ${orderProduct.orderAmount}개
-			옵션 :${orderProduct.productOption.optionSubName }
-			옵션수량 :${orderProduct.productOption.optionStock }개 <font color="lightgray">(+${orderProduct.productOption.optionAddPrice})</font>
-			상품가격 :<fmt:formatNumber value="${orderProduct.product.productPrice }" pattern="###,#원" />
-				   
-		<!-- 배송상태  -->
-		<font color="blue" size="9px">
+			<table class="table">
+				<tr>
+					<td>
+						<!--  체크박스   -->
+						<input type="checkbox" name="items" value="${orderProduct.orderSeqNo}" />
+						<img src="/HwangDangFleamarket/product_img/${orderProduct.product.productMainImage }" />
+					</td>
+						
+					<td>
+						${orderProduct.product.productName } /
+						${orderProduct.orderAmount} 개 /
+						(${orderProduct.productOption.optionSubName })
+						<font color="lightgray">추가가격(+${orderProduct.productOption.optionAddPrice})</font>
+						가격 :<fmt:formatNumber value="${(orderProduct.product.productPrice +orderProduct.productOption.optionAddPrice) * orderProduct.orderAmount  }" pattern="#,###원"/>
+					</td>
+					
+					<td>
+						<a href="/HwangDangFleamarket/seller/sellerStore.go?sellerStoreNo=${orderProduct.seller.sellerStoreNo }&sellerImage=${orderProduct.seller.sellerStoreImage }">
+							${orderProduct.seller.sellerStoreName }  
+						</a>	 
+					</td>
+					
+					<td>
+							<!-- 배송상태  -->
+			<strong>  
 			<c:choose>
 				<c:when test="${orderProduct.orderProductStatus  == 0 }">입금대기중</c:when>
 				<c:when test="${orderProduct.orderProductStatus  == 1 }">결제완료</c:when>
@@ -248,34 +242,34 @@ div .parent  {
 				<c:when test="${orderProduct.orderProductStatus  == 3 }">배송중</c:when>
 				<c:when test="${orderProduct.orderProductStatus ==  4 }">배송완료</c:when>
 			</c:choose> 
-		</font>	 
-		
-		<!-- 구매확정 버튼 -->
-			<c:if test="${orderProduct.orderProductStatus  == 4 }">
-				<button>구매확정</button>
-			</c:if>
-		</div>
-		
+			</strong>  
+					</td>
+				
+				<td>
+				<!-- 구매확정 버튼 -->
+					<c:if test="${orderProduct.orderProductStatus  == 4 }">
+						<button class="btn btn-success">구매확정</button>
+					</c:if>
+				</td>
+				</tr>
+			</table>
 	</c:forEach> 
-	<font size="14px" color="green" >총가격 :<fmt:formatNumber value="${order.ordersTotalPrice }" type="currency" /> </font>
+	
+		<p class="text-center">
+			<mark> <fmt:formatNumber value="${order.ordersTotalPrice }" type="currency" /></mark>
+		</p>
 		<hr>
-	</div>
-
+</div>     
 </c:forEach>
 </form>
-
 
 <!-- ***************페이징처리************************************** -->
 	<!-- 페이징 ◀버튼처리 -->  
 	<c:choose>
 		<c:when test="${requestScope.pagingBean.previousPageGroup }">
-			<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.beginPage-1}">
-			◀
-			</a>
+			<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.beginPage-1}">◀</a>
 		</c:when>
-		<c:otherwise>
-		 	◁	  
-		</c:otherwise>
+		<c:otherwise>◁</c:otherwise>
 	</c:choose>
 		<!-- 페이지 번호 처리 -->  
 		<c:forEach begin="${requestScope.pagingBean.beginPage }" end="${requestScope.pagingBean.endPage }" var="page">
@@ -289,20 +283,20 @@ div .parent  {
 			</c:choose>
 		</c:forEach>
 	
-		<!-- 페이징 ▶버튼 처리  -->
+	<!-- 페이징 ▶버튼 처리  -->
 	<c:choose>
 		<c:when test="${requestScope.pagingBean.nextPageGroup}">
-				<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.endPage +1 }">▶ </a>
+			<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.endPage +1 }">▶ </a>
 		</c:when>
-		<c:otherwise>
-			▷	  
-		</c:otherwise>
+		<c:otherwise>▷</c:otherwise>
 	</c:choose>
-
-
-<!-- 버튼 -->
-<div id="btn_layter">
-	<input type="button" value="구매취소" id="btnRequestCancel"/>
-	<input type="button" value="환불신청" id="btnRequestRefund"/>
-	<input type="button" value="교환신청" id="btnRequestChange"/>
+	<br/>  
+	<!-- 버튼 -->
+	<input type="button" value="구매취소" id="btnRequestCancel" class="btn btn-default"/>
+	<input type="button" value="환불신청" id="btnRequestRefund" class="btn btn-default"/>
+	<input type="button" value="교환신청" id="btnRequestChange" class="btn btn-default"/>
+	
+  </div>
 </div>
+
+ </div> <!-- container -->
