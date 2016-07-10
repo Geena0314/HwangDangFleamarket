@@ -31,7 +31,7 @@ span{
 }
 </style>
 <h2 class="page-header store_look_around">황당 플리마켓 소식통</h2>
-<form action="/HwangDangFleamarket/admin/adminRegisterNotice.go" method="post">
+<form action="/HwangDangFleamarket/admin/adminRegisterNotice.go" method="post" style="margin-bottom: 80px;">
 	<input type="hidden" name='page' value="1">
 	<div class="table-responsive noticeRnE">
 		<table class="table" id="adminTable">

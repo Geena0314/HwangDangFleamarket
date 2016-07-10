@@ -24,13 +24,15 @@ span{
 }
 .noticeRnE{
 	width: 800px;
+	min-height: 500px;
+	margin-bottom: 30px;
 }
 </style>
 <h2 class="page-header store_look_around">황당 플리마켓 소식통</h2>
-<form action="/HwangDangFleamarket/admin/adminEditNotice.go" method="post">
-	<input type="hidden" name="page" value="${param.page}">
-	<input type="hidden" name="noticeNo" value="${requestScope.notice.noticeNo}">
-	<div class="table-responsive noticeRnE">
+<div class="table-responsive noticeRnE">
+	<form action="/HwangDangFleamarket/admin/adminEditNotice.go" method="post">
+		<input type="hidden" name="page" value="${param.page}">
+		<input type="hidden" name="noticeNo" value="${requestScope.notice.noticeNo}">
 		<table class="table" id="adminTable">
 			<thead>
 				<tr>
@@ -61,10 +63,10 @@ span{
 				</c:if>
 			</tbody>
 		</table>
-	</div>
 	<p align="left">
 	<input type="submit" value="수정">
 	<input type="reset" value="다시작성">
 	<input type="button" value="취소" onclick="window.location='/HwangDangFleamarket/admin/adminNotice.go?page=${param.page}'">
 	</p>
-</form>
+	</form>
+</div>
