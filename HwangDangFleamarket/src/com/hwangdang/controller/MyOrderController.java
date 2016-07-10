@@ -1,8 +1,9 @@
 package com.hwangdang.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Spliterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,26 +32,35 @@ public class MyOrderController {
 	@Autowired
 	OrderService orderService;
 	
+	public Map<String ,Integer > getTotalItemsParam(int num1 ,int num2 , int num3 , 
+																	int num4 , int num5 ){
+		Map<String ,Integer> param = new HashMap<>();
+		param.put("value1", new Integer(num1));
+		param.put("value2", new Integer(num2));
+		param.put("value3", new Integer(num3));
+		param.put("value4", new Integer(num4));
+		param.put("value5", new Integer(num5));
+		return param;
+	}
+	
+	
+	
 	//나의주문 - 메인페이지 (배송현황 조회 ) 이동 
 	@RequestMapping("/main.go") 
-	public String goMainPage(String loginId , Model model , 
-			@RequestParam(value="page" ,defaultValue="1") int page ){
-		//System.out.println("메인페이지 , 구매자아이디 : " + loginId);
-		//System.out.println("페이지번호 : "+ page);
-		// 전체피이지수 ,  보고픈  page번호   : 디폴트 1  
-		PagingBean pagingBean = new PagingBean(service.getOrdersTotalItems(), page); 
-		//System.out.println("endPage번호: "+pagingBean.getEndPage());
+	public String goMainPage(String loginId , Model model , @RequestParam(value="page" ,defaultValue="1") int page ){
+		
+		Map<String ,Integer> param = getTotalItemsParam(0, 1, 2, 3, 4);
+		PagingBean pagingBean = new PagingBean(service.getOrdersTotalItems(param), page); 
 		
 		if(page > pagingBean.getEndPage()){
 			//System.out.println("페이지1로 돌아가야한다.");
 			page = 1;
 		}
-		
-		//System.out.println(service.getOrdersTotalItems());
 		List<Orders> orderList =  service.getOrdersMain(loginId , page);
 		/*for(Orders temp : orderList){
-			System.out.println(temp.toString());
+			System.out.println(temp);
 		}*/
+		
 		model.addAttribute("orderList" ,orderList); 
 		model.addAttribute("pagingBean" , pagingBean);
 		return "myorder/myorder_main.tiles";  
@@ -58,25 +68,38 @@ public class MyOrderController {
 	
 	//나의주문- 배송완료 페이지이동 
 	@RequestMapping("/success.go")
-	public String goDeriveryPage(String loginId , Model model ){
-		//System.out.println("derivery페이지 , 구매자아이디 : " + loginId);
-		List<Orders> orderList =  service.getOrdersSuccess(loginId);
+	public String goDeriveryPage(String loginId , Model model , @RequestParam(value="page" ,defaultValue="1") int page ){
+		
+		Map<String ,Integer> param = getTotalItemsParam(10,10,10,10,10);
+		PagingBean pagingBean = new PagingBean(service.getOrdersTotalItems(param), page); 
+		if(page > pagingBean.getEndPage()){
+			page = 1;
+		}
+		List<Orders> orderList =  service.getOrdersSuccess(loginId, page);
 		/*for(Orders temp : orderList){
 			System.out.println(temp.toString());
-		}*/
+		}*/ 
 		model.addAttribute("orderList" ,orderList); 
+		model.addAttribute("pagingBean" , pagingBean);
+		
 		return "myorder/myorder_success.tiles";  
 	}
+	
 	// 주문취소 ,환불 , 교환 페이지 이동 
 	@RequestMapping("/cancel.go")
-	public String goCancelPage(String loginId , Model model ){
-			
-		//System.out.println("cancel페이지 , 구매자아이디 : " + loginId);
-		List<Orders> orderList =  service.getOrdersCancel(loginId);
-		/*for(Orders temp : orderList){
-			System.out.println(temp.toString());
-		}  */
+	public String goCancelPage(String loginId , Model model , @RequestParam(value="page" ,defaultValue="1") int page ){
+		
+		// 전체피이지수 ,  보고픈  page번호   : 디폴트 1  
+		Map<String ,Integer> param = getTotalItemsParam(5, 6, 7, 8, 9);
+		PagingBean pagingBean = new PagingBean(service.getOrdersTotalItems(param), page); 
+		if(page > pagingBean.getEndPage()){
+			page = 1;
+		}
+		//리스트 조회 로직 
+		List<Orders> orderList =  service.getOrdersCancel(loginId , page);
 		model.addAttribute("orderList" ,orderList); 
+		model.addAttribute("pagingBean" , pagingBean);
+		
 		return "myorder/myorder_cancel.tiles";  
 	}
 	

@@ -41,7 +41,7 @@ img {
 
 
 <!-- 배송현황 조회
-	배송완료 -  구매확정 : -1 
+	배송완료 -  구매확정 : 10 
 	배송현황 - 입금대기중 : 0 
 	배송현황 - 결제완료 : 1
 	배송현황 - 배송준비중 : 2
@@ -116,4 +116,40 @@ img {
 		
 	</tbody>
 </table>
+
+
+<!-- ***************페이징처리************************************** -->
+	<!-- 페이징 ◀버튼처리 -->  
+	<c:choose>
+		<c:when test="${requestScope.pagingBean.previousPageGroup }">
+			<a href="/HwangDangFleamarket/myorder/success.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.beginPage-1}">
+			◀
+			</a>
+		</c:when>
+		<c:otherwise>
+		 	◁	  
+		</c:otherwise>
+	</c:choose>
+		<!-- 페이지 번호 처리 -->  
+		<c:forEach begin="${requestScope.pagingBean.beginPage }" end="${requestScope.pagingBean.endPage }" var="page">
+			<c:choose>
+				<c:when test="${requestScope.pagingBean.page == page }">
+					<font id="currentPage" size="6px">  ${page}  </font>
+				</c:when>
+				<c:otherwise>
+					<a href="/HwangDangFleamarket/myorder/success.go?loginId=${sessionScope.login_info.memberId }&page=${page }">${page}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+	
+		<!-- 페이징 ▶버튼 처리  -->
+	<c:choose>
+		<c:when test="${requestScope.pagingBean.nextPageGroup}">
+				<a href="/HwangDangFleamarket/myorder/success.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.endPage +1 }">▶ </a>
+		</c:when>
+		<c:otherwise>
+			▷	  
+		</c:otherwise>
+	</c:choose>
+
 

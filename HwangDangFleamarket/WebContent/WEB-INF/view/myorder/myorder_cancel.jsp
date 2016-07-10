@@ -101,3 +101,39 @@ img {
 	</tbody>
 </table>
 
+
+<!-- ***************페이징처리************************************** -->
+	<!-- 페이징 ◀버튼처리 -->  
+	<c:choose>
+		<c:when test="${requestScope.pagingBean.previousPageGroup }">
+			<a href="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.beginPage-1}">
+			◀
+			</a>
+		</c:when>
+		<c:otherwise>
+		 	◁	  
+		</c:otherwise>
+	</c:choose>
+		<!-- 페이지 번호 처리 -->  
+		<c:forEach begin="${requestScope.pagingBean.beginPage }" end="${requestScope.pagingBean.endPage }" var="page">
+			<c:choose>
+				<c:when test="${requestScope.pagingBean.page == page }">
+					<font id="currentPage" size="6px">  ${page}  </font>
+				</c:when>
+				<c:otherwise>
+					<a href="/HwangDangFleamarket/myorder//cancel.go?loginId=${sessionScope.login_info.memberId }&page=${page }">${page}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+	
+		<!-- 페이징 ▶버튼 처리  -->
+	<c:choose>
+		<c:when test="${requestScope.pagingBean.nextPageGroup}">
+				<a href="/HwangDangFleamarket/myorder//cancel.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.endPage +1 }">▶ </a>
+		</c:when>
+		<c:otherwise>
+			▷	  
+		</c:otherwise>
+	</c:choose>
+
+
