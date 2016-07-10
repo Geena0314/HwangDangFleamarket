@@ -588,7 +588,7 @@ li {
 }
 .nav.navbar-nav.navbar-right.links.fixed-menus
 {
-	padding-right: 21%;
+	padding-right: 25%;
 }
 .nav.navbar-nav.navbar-right.links a
 {
@@ -655,7 +655,7 @@ li {
 	top: -10px;
 	width: 450px;
 	height: 200px;
-	left: 65%;
+	left: 55%;
 }
 .store-main-img{
 	display: none;
