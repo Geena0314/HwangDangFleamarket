@@ -119,46 +119,47 @@ $(document).ready(function(){
 	});
 });
 </script>
-<div  style="margin-bottom: 30px;">
+<div class="productRegister">
 	<h2 class="page-header store_look_around">스토어 상품 등록</h2>
 	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/product/editProduct.go">
 		<input type="hidden" name="sellerStoreNo" value="${param.sellerStoreNo}">
 		<input type="hidden" name="page" value="${param.page}">
 		<input type="hidden" name="sellerStoreImage" value="${param.sellerStoreImage}">
-			<table id="table">
-				<tr>
-					<th>상품 ID</th>
-					<td colspan="2"><input type="text" name="productId" id="productId" value="${requestScope.product.productId}" readonly="readonly"></td>
-				</tr>
-				<tr>
-					<th>상품명</th>
-					<td colspan="2"><input type="text" name="productName" id="productName" value="${requestScope.product.productName}"></td>
-				</tr>
-				<tr>
-					<th>상품 가격</th>
-					<td colspan="2"><input type="number" name="productPrice" id="productPrice" value="${requestScope.product.productPrice}"></td>
-				</tr>
-				<tr>
-					<th colspan="3"><hr></th>
-				</tr>
-				<c:forEach items="${requestScope.optionList}" var="optionList" varStatus="no">
+			<div class="table-responsive">
+				<table id="table" class="table table-striped">
+					<tr class="trInput">
+						<th class='tdName'>상품 ID</th>
+						<td colspan="2"><input type="text" name="productId" id="productId" value="${requestScope.product.productId}" readonly="readonly"></td>
+					</tr>
+					<tr class="trInput">
+						<th class='tdName'>상품명</th>
+						<td colspan="2"><input type="text" name="productName" id="productName" value="${requestScope.product.productName}"></td>
+					</tr>
+					<tr class="trInput">
+						<th class='tdName'>상품 가격</th>
+						<td colspan="2"><input type="number" name="productPrice" id="productPrice" value="${requestScope.product.productPrice}"></td>
+					</tr>
+					<tr class="trInput">
+						<th colspan="3"><hr></th>
+					</tr>
+					<c:forEach items="${requestScope.optionList}" var="optionList" varStatus="no">
 					<tr id="optionId" style="display: none;">
 						<td colspan="3"><input type="text" name="optionList[${no.index}].optionId" value="${optionList.optionId}" readonly="readonly"></td>
 					</tr>
-					<tr>
-						<th>상품 옵션</th>
+					<tr class="trInput">
+						<th class='tdName'>상품 옵션</th>
 						<td colspan="2"><input type="text" value="${optionList.optionName}" name="optionList[${no.index}].optionName" class="optionName" placeholder="필수 입력 사항" id="optionName" readonly="readonly"></td>
 					</tr>
-					<tr>
-						<th>상품 세부 옵션</th>
+					<tr class="trInput">
+						<th class='tdName'>상품 세부 옵션</th>
 						<td colspan="2"><input type="text" value="${optionList.optionSubName}" name="optionList[${no.index}].optionSubName" class="optionSubName" placeholder="필수 입력 사항" id="optionSubName" readonly="readonly"></td>
 					</tr>
-					<tr>
-						<th>옵션별 재고</th>
+					<tr class="trInput">
+						<th class='tdName'>옵션별 재고</th>
 						<td colspan="2"><input type="number" value="${optionList.optionStock}" name="optionList[${no.index}].optionStock" class="optionStock" placeholder="필수 입력 사항" id="optionStock"></td>
 					</tr>
-					<tr>
-						<th>옵션별 추가 가격</th>
+					<tr class="trInput">
+						<th class='tdName'>옵션별 추가 가격</th>
 						<td colspan="2">
 							<input type="number" value="${optionList.optionAddPrice}" name="optionList[${no.index}].optionAddPrice">&nbsp;
 							<c:if test="${no.index == 0}">
@@ -170,28 +171,29 @@ $(document).ready(function(){
 						<th colspan="3"><hr></th>
 					</tr>
 				</c:forEach>
-				<tr>
-					<th>상품 대표 사진</th>
+				<tr class="trInput">
+					<th class='tdName'>상품 대표 사진</th>
 					<td colspan="2"><input type="file" name="images" id="productMainImage"></td>
 				</tr>
-		  		<tr id="mainImg">
-					<th>상품 상세 사진</th>
+		  		<tr id="mainImg" class="trInput">
+					<th class='tdName'>상품 상세 사진</th>
 					<td colspan="2">
-						<input type="file" name="images" class="imgFile" id="imgFile">&nbsp;
-						<input type="button" value="사진추가" id="addImageBtn">
+						<input style="margin: 0px; width: 185px;" type="file" type="file" name="images" class="imgFile" id="imgFile">&nbsp;
+						<input style="position: relative; left: -150px; top: -3px;" type="button" value="사진추가" id="addImageBtn">
 					</td>
 				</tr>
-				<tr>
-					<th>상품 소개</th>
+				<tr class="trInput">
+					<th class='tdName'>상품 소개</th>
 					<td colspan="2"><textarea id="productInfo" name="productInfo" cols="45" rows="10">${requestScope.product.productInfo}</textarea></td>
 				</tr>
-				<tr>
+				<tr class="trInput">
 					<td colspan="3">
-						<input type="submit" value="수정완료" id="submit">&nbsp;&nbsp;
-						<input type="reset" value="다시입력">&nbsp;&nbsp;
-						<input type="button" value="수정취소" onclick="window.location='/HwangDangFleamarket/product/detail.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&productId=${param.productId}'">
+						<input class="btn btn-lg btn-success btn-block" type="submit" value="수정완료" id="submit">
+						<input class="btn btn-lg btn-primary btn-block" type="reset" value="다시입력">
+						<%-- <input class="btn btn-lg btn-primary btn-block" type="button" value="수정취소" onclick="window.location='/HwangDangFleamarket/product/detail.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&productId=${param.productId}'"> --%>
 					</td>
 				</tr>
 			</table>
+		</div>
 	</form>
 </div>

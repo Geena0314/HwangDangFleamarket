@@ -424,6 +424,7 @@ footer{
 	top: -50px;
 	width: 70%;
 	left: 13.5%;
+	color: gray;
 }
 /* 이미지 크기고정. */
 .sellerListImage {
@@ -653,7 +654,7 @@ li {
 .registerProductInput:hover{
 	border: 1px solid gray;
 }
-.prodictRegister{
+.productRegister{
 	min-height: 1150px;
 	margin-bottom: 30px;
 }
