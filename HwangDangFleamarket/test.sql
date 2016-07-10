@@ -15,7 +15,12 @@ SELECT *
   FROM user_constraints
  WHERE table_name = 'orders'
 
-	
+SELECT count(*) FROM order_product 
+WHERE order_product_status IN (1,2,3,4)
+SELECT count(*) FROM order_product 
+WHERE order_product_status IN ('1','2','3','4')
+  
+ 
 /* 상품옵션vvvvvvvv */
 drop table product_option
 CREATE TABLE product_option (

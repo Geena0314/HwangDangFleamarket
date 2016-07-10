@@ -37,6 +37,13 @@ img {
 		
 	});
 </script>
+
+<!-- 교환/환불/취소 -  교환신청 : 5
+	교환/환불/취소 -  환불신청 :  6 
+	교환/환불/취소 - 구매취소(배송전) :  7 
+	교환/환불/취소 -   교환신청 승인 : 8 
+	교환/환불/취소 -   환불신청 승인  : 9   -->
+
 <h2 class="page-header store_look_around">나의주문 - 교환/환불/취소</h2>
 <div id="nav_layer">		
 	<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">배송 현황</a><br/><br/><br/><br/>
@@ -100,4 +107,40 @@ img {
 		
 	</tbody>
 </table>
+
+
+<!-- ***************페이징처리************************************** -->
+	<!-- 페이징 ◀버튼처리 -->  
+	<c:choose>
+		<c:when test="${requestScope.pagingBean.previousPageGroup }">
+			<a href="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.beginPage-1}">
+			◀
+			</a>
+		</c:when>
+		<c:otherwise>
+		 	◁	  
+		</c:otherwise>
+	</c:choose>
+		<!-- 페이지 번호 처리 -->  
+		<c:forEach begin="${requestScope.pagingBean.beginPage }" end="${requestScope.pagingBean.endPage }" var="page">
+			<c:choose>
+				<c:when test="${requestScope.pagingBean.page == page }">
+					<font id="currentPage" size="6px">  ${page}  </font>
+				</c:when>
+				<c:otherwise>
+					<a href="/HwangDangFleamarket/myorder//cancel.go?loginId=${sessionScope.login_info.memberId }&page=${page }">${page}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+	
+		<!-- 페이징 ▶버튼 처리  -->
+	<c:choose>
+		<c:when test="${requestScope.pagingBean.nextPageGroup}">
+				<a href="/HwangDangFleamarket/myorder//cancel.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.endPage +1 }">▶ </a>
+		</c:when>
+		<c:otherwise>
+			▷	  
+		</c:otherwise>
+	</c:choose>
+
 

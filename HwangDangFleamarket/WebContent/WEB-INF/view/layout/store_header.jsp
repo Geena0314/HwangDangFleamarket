@@ -30,7 +30,7 @@
 		
 			
 		<div class="navbar-collapse collapse navbars">
-			<ul class="nav navbar-nav navbar-right links">
+			<ul class="nav navbar-nav navbar-right links fixed-menus">
 				<li>
 					<!-- 검색바 -->
 					<form action="/HwangDangFleamarket/buy/findProductByKeyword.go" method="POST" id="searchForm" >
