@@ -501,8 +501,9 @@ li {
 
 /*게시판*/
 .adminNoticePaging{
-	margin-top: 500px;
-	left: 25%;
+	left: 15%;
+	bottom: 5px;
+	color: black;
 }
 .adminNotice{
 	margin-top: 50px;

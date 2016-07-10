@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/notice.css">
 <style type="text/css">
 #adminTable{
 	width: 800px;
@@ -16,7 +17,7 @@ td{
 }
 </style>
 <h2 class="page-header store_look_around">황당 플리마켓 소식통</h2>
-<div class="table-responsive adminNotice" style="margin-bottom: 30px;">
+<div class="table-responsive notice">
 	<table class="table" id="adminTable">
 		<thead>
 			<tr style="background-color: whitesmoke;">
@@ -35,10 +36,10 @@ td{
 		<tfoot>
 			<tr>
 				<td colspan="3" style="border-top: none;">
-					<input type="button" value="목록" onclick="window.location='/HwangDangFleamarket/admin/adminNotice.go?page=${page}'">
+					<input class="noticeBtns" type="button" value="목록" onclick="window.location='/HwangDangFleamarket/admin/adminNotice.go?page=${page}'">
 					<c:if test="${sessionScope.login_info.memberId == 'kinghwang@gmail.com'}">
-						<input type="button" value="공지수정" onclick="window.location='/HwangDangFleamarket/admin/adminEditForm.go?page=${page}&noticeNo=${requestScope.notice.noticeNo}'">
-						<input type="button" value="공지삭제" onclick="window.location='/HwangDangFleamarket/admin/adminRemoveNotice.go?page=${page}&noticeNo=${requestScope.notice.noticeNo}'">
+						<input class="noticeBtns" type="button" value="공지수정" onclick="window.location='/HwangDangFleamarket/admin/adminEditForm.go?page=${page}&noticeNo=${requestScope.notice.noticeNo}'">
+						<input class="noticeBtns" type="button" value="공지삭제" onclick="window.location='/HwangDangFleamarket/admin/adminRemoveNotice.go?page=${page}&noticeNo=${requestScope.notice.noticeNo}'">
 					</c:if>
 				</td>
 			</tr>
