@@ -1,18 +1,18 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
-			
-			   $("#searchBtn").on("click" , function(){
-				   alert("test@@@@@@@@"); 
-		  			/* alert($("input[name='keyword']").val());
-		  			var keyword = $("input[name='keyword']").val();
-		  			if(keyword.length == 0){
-		  				alert("검색어를 입력하세요.");
-		  			} */
-		  		});
+		$("#searchBtn").on("click" , function(){
+			 alert("test@@@@@@@@"); 
+			 /* alert($("input[name='keyword']").val());
+	  			var keyword = $("input[name='keyword']").val();
+	  			if(keyword.length == 0){
+	  				alert("검색어를 입력하세요.");
+	  			} */
+	  	});
 		
-	});
+	}); //ready
 </script>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid main-header">
@@ -33,8 +33,8 @@
 			<ul class="nav navbar-nav navbar-right links">
 				<li>
 					<!-- 검색바 -->
-					<form action="/HwangDangFleamarket/buy/findProductByKeyword.go" method="POST" >
-						<input type="text"  size="25" name="keyword" placeholder="search for product..." >
+					<form action="/HwangDangFleamarket/buy/findProductByKeyword.go" method="POST" id="searchForm" >
+						<input type="text"  size="25" name="keyword" placeholder="seach for product..." >
 						<input class="btn btn-default" type="submit" value="go"  id="searchBtn">
 					</form>   
 				</li>
@@ -64,10 +64,10 @@
 				<li><a href="#" class="navbar-collapse collapse navbars main-buttons">
 					<img src="/HwangDangFleamarket/image_storage/tutorial.JPG">
 				</a></li>
-		        <li><a href="/HwangDangFleamarket/seller/sellerList.go?page=1" class="navbar-collapse collapse navbars main-buttons">
+		        <li><a href="/HwangDangFleamarket/seller/sellerList.go?page=1" class="navbar-collapse collapse navbars main-buttons" style="margin-right: 30px;">
 		        	<img src="/HwangDangFleamarket/image_storage/stores.JPG">
 	        	</a></li>
-		        <li><a href="/HwangDangFleamarket/admin/adminNotice.go?page=1" class="navbar-collapse collapse navbars main-buttons">
+		        <li><a href="/HwangDangFleamarket/admin/adminNotice.go?page=1" class="navbar-collapse collapse navbars main-buttons" style="margin-right: 0px;">
 		    		<img src="/HwangDangFleamarket/image_storage/notice.JPG">
 	    		</a></li>
 		        <li><a href="/HwangDangFleamarket/admin/boardQnAList.go?page=1" class="navbar-collapse collapse navbars main-buttons">

@@ -30,10 +30,6 @@ span{
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
-		
-		
-		
-		
 		//비공개시 패스워드 객체생성 
 		$("#private").click(function(){
 			var pass = document.getElementById("password");
@@ -58,13 +54,9 @@ span{
 			}
 		});
 		
-		
 	});//ready
 </script>
-수정폼이동!
-no :${param.no}
-page :${param.page}
-
+<%-- 수정폼이동! no :${param.no}page :${param.page}--%>
 
 <h2 class="page-header store_look_around">황당 플리마켓 QnA게시판</h2>
 <form action="/HwangDangFleamarket/admin/boardQnASet.go?no=${param.no}&page=${param.page}" method="POST" id="setForm">

@@ -148,6 +148,8 @@
 section{
 	width:700px;
 	border:1px solid gray;
+	min-height: 300px;
+	max-height: 500px;
 }
 #title{
 font-weight: bold;
@@ -163,7 +165,7 @@ padding: 10px;
 	text-align: right;
 }
 #content{
-	min-height:200px; /*최소 높이 300px*/
+	min-height:150px; /*최소 높이 300px*/
 	height:auto;/*자동으로 늘어나기*/
 	padding: 10px;
 }

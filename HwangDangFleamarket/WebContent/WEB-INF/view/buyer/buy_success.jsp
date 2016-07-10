@@ -21,7 +21,6 @@
 <%-- 세션멤버 : ${sessionScope.login_info.memberId }
 세션orders: ${sessionScope.orders} --%>
 
-
 <div id="layer">
 		<h3>주문정보</h3>
 	<hr/>
@@ -62,6 +61,33 @@
 		<fmt:formatNumber type="currency"> 
 			 ${sessionScope.orders.ordersTotalPrice }
 		 </fmt:formatNumber> 원</font><br/>
+		
+		<c:choose>
+			<c:when test="${sessionScope.bank != null }">
+				 은행명 : ${sessionScope.bank }
+				 계좌번호 : ${sessionScope.vitualBankNo }
+		
+			</c:when>
+			<c:when test="${sessionScope.card != null }">
+				 카드회사 : ${sessionScope.card }
+				 할부 : ${sessionScope.quota }
+			</c:when>
+		</c:choose>
+		
+		
+		
+		<%
+			// 세션정보 삭제!
+			if(session.getAttribute("bank") != null){
+				session.removeAttribute("bank");
+				session.removeAttribute("vitualBankNo");
+			}else if(session.getAttribute("card") != null){
+				session.removeAttribute("card");
+				session.removeAttribute("quota");
+			}
+			
+		%>
+		 
 	             <!--     카드사 + 카드번호  *** 
 		         계좌이체한 은행명  + 계좌번호     ***
 	                 무통장입금 : 입금할 은행명 및 계좌번호  -->
