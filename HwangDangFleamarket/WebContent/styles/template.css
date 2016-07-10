@@ -236,11 +236,12 @@ input#sellerZipcode
 .product-content {
 	position: relative;
 	margin-bottom: 60px;
-	min-height: 570px;
+	min-height: 600px;
+	left: 7%;
 }
 
 .products {
-	margin-bottom: 30px;
+	margin-bottom: 15px;
 	padding: 10px;
 }
 
@@ -254,6 +255,31 @@ input#sellerZipcode
 	text-align: center;
 	height: 60px;
 	font-size: large;
+}
+
+.product-lists-img:hover
+{
+	border: 2px solid purple;
+	border-radius: 20px;
+}
+
+.product-lists-img
+{
+	width: 250px; 
+	height: 250px;
+	padding: 10px;
+}
+
+/*상품리스트조회 페이징*/
+.pageGroup.product-lists-page
+{
+	font-size: large;
+	bottom: 20px;
+	padding: 0;
+	text-align: center;
+	height: 60px;
+	position: absolute;
+	left: 47%;
 }
 /********* product_detail ********/
 .reviewPageGroup {
@@ -423,6 +449,7 @@ footer{
 
 .list-margins {
 	padding: 30px;
+	padding-left: 50px;
 	width: 315px;
 }
 .list-margins:hover{
@@ -450,7 +477,7 @@ footer{
 
 /*소개글 크기고정 및 글자숨김처리.*/
 div .introduction {
-	height: 200px;
+	height: 150px;
 	width: 250px;
 	/*글자수가 범위를 넘어가면 숨김.*/
 	overflow: hidden;
@@ -474,7 +501,7 @@ li {
 
 .store_info {
 	width: 80%;
-	height: 200px;
+	height: 170px;
 }
 
 .product_list {
@@ -648,11 +675,4 @@ li {
 .error-message
 {
 	color: #FF5A5A;
-}
-
-/*상품리스트조회 페이징*/
-.product-lists-page
-{
-	left: 47.5%;
-	bottom: -10px;
 }
