@@ -661,3 +661,4 @@ INSERT INTO  product_detail_image
 values (  '1467159669150apple.jpg' , '상품id7');
 
 
+select * from all_constraints where table_name='PRODUCT_OPTION';
