@@ -122,18 +122,28 @@ $(document).ready(function(){
 		}
 	});
 });
+function idCheck(obj)
+{
+	 //좌우 방향키, 백스페이스, 딜리트, 탭키에 대한 예외
+    if(event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 || event.keyCode == 39
+    || event.keyCode == 46 ) return;
+    //obj.value = obj.value.replace(/[\a-zㄱ-ㅎㅏ-ㅣ가-힣]/g, '');
+    obj.value = obj.value.replace(/[\ㄱ-ㅎㅏ-ㅣ가-힣]/g, '');
+    obj.value = obj.value.replace(/[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(]/gi, '');
+    obj.value = obj.value.replace(/\s/gi, '');
+}
 </script>
-<div style="min-height: 1150px; margin-bottom: 30px;">
+<div class="productRegister">
 	<h2 class="page-header store_look_around">스토어 상품 등록</h2>
 	<form id="productRegister" method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/product/registerProduct.go">
 		<input type="hidden" name="sellerStoreNo" value="${param.sellerStoreNo}">
 		<input type="hidden" name="page" value="${param.page}">
 		<input type="hidden" name="sellerStoreImage" value="${param.sellerStoreImage}">
-		<div class="table-responsive" >
+		<div class="table-responsive">
 			<table id="table" class="table table-striped">
 				<tr class="trInput">
 					<th class='tdName'>상품 ID</th>
-					<td colspan="2"><input type="text" name="productId" id="productId" placeholder="ID는 영어+숫자 조합 "></td>
+					<td colspan="2"><input type="text" name="productId" id="productId" placeholder="ID는 영어+숫자 조합 " onkeydown="idCheck(this)"></td>
 				</tr>
 				<tr class="trInput">
 					<th class='tdName'>상품명</th>

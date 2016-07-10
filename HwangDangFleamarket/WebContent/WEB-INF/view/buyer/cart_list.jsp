@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/notice.css">
 <style type="text/css">
 table, td {
 	border-top: 2px solid lightgray;
@@ -23,6 +24,7 @@ td {
 }
 a {
 	text-decoration: none;
+	color: gray;
 }
 
 a:HOVER {
@@ -51,6 +53,9 @@ ul li{
 .cartListSection{
 	width: 70%;
 	margin-bottom: 70px;
+	position: relative;
+	left: 14%;
+	color: gray;
 }
 </style>
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
@@ -229,8 +234,8 @@ function error(xhr, status, err)
 		</div>
 		<br>
 		<span class="bottomBtn"> 
-			<input type="button" value="선택상품삭제" id="removeBtn">&nbsp;&nbsp; 
-			<input type="button" value="구매하기" id="buyBtn">
+			<input class="noticeBtns" type="button" value="선택상품삭제" id="removeBtn">&nbsp;&nbsp; 
+			<input class="noticeBtns" type="button" value="구매하기" id="buyBtn">
 		</span>
 		</div>
 </div>

@@ -894,8 +894,8 @@ function error(xhr, status, err)
 }
 </script>
 
+<h2 class="page-header store_look_around" align="left">상품 상세 정보 보기</h2>
 <div id="main" align="center">
-	<h2 class="page-header store_look_around" align="left">상품 상세 정보 보기</h2>
 	<div class="row placeholders product-row">
 		<div id="mainImage" align="center" class="col-sm-6 margins">
 			<img class="main-image"src="../image_storage/${ requestScope.product.productMainImage }" >

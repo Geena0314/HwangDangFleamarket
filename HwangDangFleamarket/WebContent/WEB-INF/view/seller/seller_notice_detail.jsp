@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/notice.css">
 <style type="text/css">
 /* table, td {
 	border: 1px solid gray;
@@ -34,7 +35,7 @@ td{
 }
 </style>
 <h2 class="page-header store_look_around">스토어 소식통</h2>
-<div class="table-responsive adminNotice" style="margin-bottom: 30px;">
+<div class="table-responsive notice">
 	<table class="table" id="adminTable">
 		<thead>
 			<tr style="background-color: whitesmoke;">
@@ -53,10 +54,10 @@ td{
 		<tfoot>
 			<tr>
 				<td colspan="3" style="border-top: none;">
-					<input type="button" value="목록" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${page}&sellerStoreNo=${requestScope.sellerNotice.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">&nbsp;&nbsp;
+					<input class="noticeBtns" type="button" value="목록으로" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerNotice.go?page=${page}&sellerStoreNo=${requestScope.sellerNotice.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
 					<c:if test="${sessionScope.seller.sellerStoreNo == param.sellerStoreNo}">
-						<input type="button" value="공지수정" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerEditNoticeForm.go?page=${page}&sellerNoticeNo=${requestScope.sellerNotice.sellerNoticeNo}&sellerStoreNo=${requestScope.sellerNotice.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">&nbsp;&nbsp;
-						<input type="button" value="공지삭제" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRemoveNotice.go?page=${page}&sellerNoticeNo=${requestScope.sellerNotice.sellerNoticeNo}&sellerStoreNo=${requestScope.sellerNotice.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
+						<input class="noticeBtns" type="button" value="공지수정" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerEditNoticeForm.go?page=${page}&sellerNoticeNo=${requestScope.sellerNotice.sellerNoticeNo}&sellerStoreNo=${requestScope.sellerNotice.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
+						<input class="noticeBtns" type="button" value="공지삭제" onclick="window.location='/HwangDangFleamarket/sellerNotice/sellerRemoveNotice.go?page=${page}&sellerNoticeNo=${requestScope.sellerNotice.sellerNoticeNo}&sellerStoreNo=${requestScope.sellerNotice.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}'">
 					</c:if>
 				</td>
 			</tr>

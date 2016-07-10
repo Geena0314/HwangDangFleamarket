@@ -3,25 +3,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <style>
-	div {
-	 margin : 20px;
-	 padding : 20px;
-	}
-	#left_lalyer{
-		border :3px solid blue;
-		float : left;
-		min-width: 400px;
-	}
 	
-	#right_layer{
-		border :3px solid blue;
-		float : left; 
-		min-width: 180px;   
-	}
 </style>
-
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
 
@@ -229,7 +212,7 @@
 			
 			var ordersTotalPrice = $("#ordersTotalPrice").html().trim();
 			//결제방식 0:현금결제 ,1 카드결제등등 		
-			var ordersPayment = $(":radio[name=payment]:checked").val().trim();
+			var ordersPayment = $(":radio[name=payment]:checked").val();
 			
 			
 			var bank = "";
@@ -244,16 +227,16 @@
 				quota = $("#cardSelectOption option:selected").text().trim(); 
 			}
 			//주문요청사항
-			var ordersRequest = $("#requestInfo").val().trim();
+			var ordersRequest = $("#requestInfo").val();
 			
 			//결제상태 결제완료 :1 /결제대기중 :0 .. 
 			var paymentStatus = 1;
 			
 			
 			/* var ordersDate = new Date().format("yyyy-MM-dd"); */
-			var memberId = $("#hiddenMemberId").val().trim();
+			var memberId = $("#hiddenMemberId").val();
 			
-			var ordersPayment = $(":radio[name=payment]:checked").val().trim();
+			var ordersPayment = $(":radio[name=payment]:checked").val();
 			var orderProductStatus = 0;
 			
 		
@@ -299,7 +282,7 @@
 				 	});
 				 	
 					//alert("optoinIdList:"+optionIdList+" , sellerStoreNoList :" + sellerStoreNoList +", productIdList: "+ productIdList + ",amountList "+amountList);
-				 	 
+				 	        
 				 	  queryString = "?ordersNo=${requestScope.ordersNo}&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
 					 +ordersZipcode+"&ordersAddress="+ordersAddress+"&ordersSubAddress="+ordersSubAddress
 					 +"&ordersTotalPrice="+ordersTotalPrice+"&ordersPayment="+ordersPayment
@@ -309,7 +292,7 @@
 					$("form").prop("action", "/HwangDangFleamarket/buy/buyProducts.go"+queryString);
 			 }
 			
-			// alert(queryString);
+			 //alert(queryString);
 			$("form").submit(); 
 		}); //결제버튼
 	
@@ -419,84 +402,79 @@
 	
 </script>
 
-<h2>구매페이지</h2>
-<%-- 세션스코프 멤버정보 : ${sessionScope.login_info.memberAddress }
-page : ${param.page  }
-구매자아이디 : ${param.memberId } 
-product_id : ${param.productId  }
-seller_store_no : ${param.sellerStoreNo  }
-구매수량 : ${param.amount }
-옵션명 : ${param.option } 
-옵션ID: ${requestScope.productOption.optionId }
-총추가가격 : ${requestScope.productOption.optionAddPrice * param.amount  }
-orderProductList : ${requestScope.orderProductList }
-카트리스트 ArrayList객체 ${requestScope.cartList }
+<!-- <h2 class="page-header store_look_around">구매페이지</h2> -->
 
--------------------------------------------------------<br/>
- --%>
-
-
-<form action="" method="POST" name="buy_form" >
-	<input type="hidden" value="${sessionScope.login_info.memberId }" id="hiddenMemberId"	/>
-	<div id="left_lalyer">
-		<div id="address_div">
-			<h4>배송지 선택</h4>
-			<hr>
-			<input type="radio" name="diliverAddress" id="diliverAddress"  checked="checked">${sessionScope.login_info.memberName}   
-			<input type="radio" name="diliverAddress" id="currentDeliveryAddress">최근배송지
-			 <input type="radio" name="diliverAddress" id="newAddress">새로운배송지
-			-----------------------------<br/><br/>
-			<span id="originalAddress">
+<div class="container">
+<form action="" method="POST" name="buy_form" class="form-inline"  >
+<input type="hidden" value="${sessionScope.login_info.memberId }" id="hiddenMemberId"	/>
+<table class="table">
+	<tr>
+		<td>  
+			<h2>배송지 선택</h2>
+			<div style="border: 3px solid lightgray; padding: 15px; margin: 10px;">
+			<label><input type="radio" name="diliverAddress" id="diliverAddress"  checked="checked"> ${sessionScope.login_info.memberName}</label>   
+			<label><input type="radio" name="diliverAddress" id="currentDeliveryAddress"> 최근배송지</label>
+			<label><input type="radio" name="diliverAddress" id="newAddress"> 새로운배송지</label><br/>
+			<hr/>
+			<p class="text-left">
+			<span id="originalAddress" >
 				<span id="memberName">${sessionScope.login_info.memberName}</span> <span id="memberPhone">${sessionScope.login_info.memberPhone}</span> <br/>
 				<span id="memberAddress">${sessionScope.login_info.memberAddress}</span> <span id="memberSubAddress">${sessionScope.login_info.memberSubAddress}</span><br/>
 				<font size="1.5em">우편번호 : [<span id="memberZipcode">${sessionScope.login_info.memberZipcode}</span>]</font><br/>
-		  		<input type="button" id="setBtn" value="수정" /><br/>
+		  		<input type="button" id="setBtn" value="수정" class="btn btn-default" /><br/>
 		  	</span>
 		  	
 		  	<span id="hiddenAddress" hidden="true">
-			받는분 <input type="text" name="name" id="name"/><br/>
+			받는분 <input type="text" name="name" id="name" class="form-control"/><br/>
 			휴대전화 
-			<select name="phone1" id="phone1">
+			<select name="phone1" id="phone1" class="form-control">
 				<option>010</option>
 				<option>011</option>
 				<option>017</option>
 				<option>018</option>
 				<option>019</option>
 			</select>
-			-<input type="text" name="phone2" id="phone2" /> -
-			 <input type="text" name="phone3" id="phone3" /><br/>
+			-<input type="text" name="phone2" id="phone2" class="form-control"/> -
+			 <input type="text" name="phone3" id="phone3" class="form-control"/><br/>
 				주소 
 				<input type="button" value="주소찾기"  id="findAddress" />
-				<input type="text" name="zipcode" id="zipcode" disabled="disabled" size="10" /><br/>
-				<input type="text" name="address1" id="address1" disabled="disabled"  size="45" /><br/>
-				<input type="text" name="address2"  size="45" />
+				<input type="text" name="zipcode" id="zipcode" disabled="disabled" size="10" class="form-control"/><br/>
+				<input type="text" name="address1" id="address1" disabled="disabled"  size="45" class="form-control"/><br/>
+				<input type="text" name="address2"  size="45" class="form-control"/>
 			 </span><br/>
 		  	
-		  	<select name="requestOption" id="requestOption">
+		  	<select name="requestOption" id="requestOption" class="form-control">
 				<option>배송시 요청사항을 선택해주세요.</option>
 				<option>배송전, 연락바랍니다.</option>
 				<option>부재시, 경비실에 맡겨주세요.</option>
 				<option>부재시, 전화또는 문자 연락주세요.</option>
 			</select><br/>
-		  	배송요청정보 : <input type="text" name="requestInfo" id="requestInfo" size="40" >
-		  	<hr>
+		  	배송요청정보 : <input type="text" name="requestInfo" id="requestInfo"class="form-control" size="40" >
+		  	</p>
+		  	</div>	
 		  	
-		  	<hr>
-		  	<h4>할인 및 포인트 선택</h4>
-		  	사용가능 포인트 :<span id="memberMileage"></span>점<br/>
-		  	모두사용하기 <input type="checkbox" id="mileageCheckbox" /><input type="button" value="마일리지 금액 선택" id="useMileageBtn" /><br/>
-		  	<span hidden="true" id="spanMileage">사용할 마일리지 입력 : 
-		  	<input type="number" name="choiceMileage" id="choiceMileage"   size="10" />
-		  		<input type="button" value="사용하기"  id="mileageUseBtn" /><input type="button" value="사용취소" id="mileageCancelBtn"/>
+		  	
+		  	<h2>할인 및 포인트 선택</h2>
+		  	<div style="border: 3px solid lightgray; padding: 15px; margin: 10px;">
+		  	사용가능 포인트 :<span id="memberMileage"></span>점<br/><hr/>
+		  	모두사용하기&nbsp;&nbsp;
+		  	<input type="checkbox" id="mileageCheckbox" />&nbsp;&nbsp;
+		  	<input type="button" value="마일리지 금액 선택" id="useMileageBtn" class="btn btn-default" />
+		  	<br/>
+		  	<span hidden="true" id="spanMileage">사용할 마일리지 입력 :
+		  	<input type="number" name="choiceMileage" id="choiceMileage"  class="form-control" size="10" />
+		  		<input type="button" value="사용하기"  id="mileageUseBtn" class="btn btn-default"/>
+		  		<input type="button" value="사용취소" id="mileageCancelBtn"class="btn btn-default" />
 		  	</span><br/>
-			<hr>
+			</div>
 			
-			<h4>결제수단 선택</h4>
+			<h2>결제수단 선택</h2>
+			<div style="border: 3px solid lightgray; padding: 15px; margin: 10px;">
 			<input type="radio" name="payment" value="0" id="bank">무통장입금
 			<input type="radio" name="payment" value="1" id="card">카드결제
 			<input type="radio" name="payment" value="2">자동이체
 			<input type="radio" name="payment" value="3">간편결제
-				
+			<hr>
 				 <!-- 현금결제 요소들 -->
 				<div align="center" hidden="true" id="pay_bank">
 				<h4 class="page-header" align="center">무통장 입금</h4>
@@ -520,11 +498,12 @@ orderProductList : ${requestScope.orderProductList }
 					<li>
 						<p align="left"><strong>현금영수증발급 : </strong>
 						${sessionScope.login_info.memberName } 
-						( ${sessionScope.login_info.memberPhone }) - 개인소득공제 <input type="button" class="btn btn-default" value="수정"></p> 
+						( ${sessionScope.login_info.memberPhone }) - 개인소득공제 
+						<input type="button" class="btn btn-default" value="수정" class="btn btn-default">
+						</p> 
 					</li>
 					</ul>
 			</div>	
-			<hr>  
 				 <!-- 카드결제 요소들 -->
 				<div align="center" hidden="true" id="pay_cart">
 				<h4 class="page-header" align="center">카드 결제</h4>
@@ -561,37 +540,34 @@ orderProductList : ${requestScope.orderProductList }
 					
 					<li>
 						<p align="left"><strong>카드번호 입력 : </strong>
-						<input type="text" name="card1" class="" >-
-						<input type="text" name="card2" class="">-
-						<input type="text" name="card3" class="">-
-						<input type="text" name="card4" class="">
+						<input type="text" name="card1" class="form-control" size="7" >-
+						<input type="text" name="card2" class="form-control" size="7">-
+						<input type="text" name="card3" class="form-control" size="7">-
+						<input type="text" name="card4" class="form-control" size="7">
 						</p> 
 					</li>
 					</ul>
+				</div>
 			</div>	
-			<hr>  
+		</td>
 			
-			
-		</div>
-	
-	</div>
-	<div id="right_layer">
-		<hr>
-		<h4>주문상품 정보</h4>
+		
+		<td>
+		<h2>주문상품 정보</h2>
+		<div style="border: 3px solid lightgray; padding: 15px; margin: 10px;">
 		<c:forEach  items="${requestScope.orderProductList }" var="op">
 			<input type="hidden" id="optionId"  class="optionId" value="${op.productOption.optionId }"/>
 			<input type="hidden"  class="sellerStoreNo" value="${op.sellerStoreNo }"/>
-			<input type="hidden"   class="productId" value="${op.product.productId }"/>
-			스토어명 : <span id="sellerStoreName" >${op.seller.sellerStoreName }</span><br/>
-			제품명 : <span id="productName">${op.product.productName  }</span><br/>
-			옵션명 : <span id="option">${op.productOption.optionSubName }</span><br/>
-			가격/구매수랑 : 
-			<span id="productPricePer"><fmt:formatNumber type="currency">${op.product.productPrice }</fmt:formatNumber></span>원 
-			/<span id="amount" class="amount">${op.orderAmount  }</span>개<br/>
-			상품당 추가가격 : 
+			<input type="hidden"  class="productId" value="${op.product.productId }"/>
+			
+			<span id="sellerStoreName" >${op.seller.sellerStoreName }</span> - <span id="productName">${op.product.productName  } </span><br/>
+			<span id="productPricePer"><fmt:formatNumber type="currency">${op.product.productPrice } </fmt:formatNumber></span>
 			<span>
-				<fmt:formatNumber type="currency">${op.productOption.optionAddPrice } </fmt:formatNumber>
-			</span>원<br/>
+				<font color="lightgray">+<fmt:formatNumber type="currency">${op.productOption.optionAddPrice } </fmt:formatNumber></font>
+			</span>
+			<span id="amount" class="amount"> ${op.orderAmount }</span>개
+			<span id="option"> ${op.productOption.optionSubName } </span><br/>
+			
 			배송비 : 
 			<span id="deriveryCharge">
 			<c:choose>
@@ -599,31 +575,30 @@ orderProductList : ${requestScope.orderProductList }
 				<c:otherwise>2500</c:otherwise>
 			</c:choose>
 			</span>원<br/>   
-			
-			상품가격 : <font color="blue" class="partProductPrice" > 
+			<font color="gray" class="partProductPrice" size="5px" > 
 			<c:choose>
 				<c:when test="${ (op.product.productPrice  + op.productOption.optionAddPrice )  * op.orderAmount  >= 50000 }">${(op.product.productPrice+op.productOption.optionAddPrice)*op.orderAmount }</c:when>
-				<c:otherwise>${(op.product.productPrice+op.productOption.optionAddPrice)*op.orderAmount + 2500 }  </c:otherwise>
+				<c:otherwise>${(op.product.productPrice+op.productOption.optionAddPrice)*op.orderAmount + 2500 } </c:otherwise>
 			</c:choose>
 			</font>
-			<hr>
-		</c:forEach>		
-			총상품갯수 : <span id="oneOrN">${fn:length(requestScope.orderProductList) } </span>개<br/>
-		
+			<br/><hr/>	
+		</c:forEach>
+		<br/>
+			<p class="text-center">총 <font color="blue"><span id="oneOrN">${fn:length(requestScope.orderProductList) }</font> 건
+			</span></p><br/>
+		</div>
+		<br/>
+		<h2>최종결제 정보</h2>
+			<div style="border: 3px solid black; padding: 15px; margin: 10px;">
+			 결제예정금액 : <strong><span id="productPrice"></span>원</strong><br/>
+			사용할 마일리지 :<strong><span id="useMileage" ></span></strong><br/>
+			 실제결제금액:<font size="9" color="red" ><span id="ordersTotalPrice"></span></font>원<br/>
 			
-			
-		<hr>
-		<h4>최종결제 정보</h4>
-			결제예정금액 : <span id="productPrice"></span>원<br/>
-			사용할 마일리지 :<span id="useMileage" ></span><br/>
-			<hr>
-			 실제결제금액:<font size="15" color="red" ><span id="ordersTotalPrice"></span></font>원<br/>
-			<input type="button" value="결제하기" id="submitBtn" />
-			<input type="button" value="test" id="testBtn" />
-		<hr>
-		
-	</div>
-	
-	
+			<input type="button" value="결제하기" id="submitBtn" class="btn btn-default" />
+			</div>
+		</td>
+	</tr>
+</table>		
 </form>
+</div>
 
