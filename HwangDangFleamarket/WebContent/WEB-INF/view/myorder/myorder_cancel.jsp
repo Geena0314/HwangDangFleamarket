@@ -37,6 +37,13 @@ img {
 		
 	});
 </script>
+
+<!-- 교환/환불/취소 -  교환신청 : 5
+	교환/환불/취소 -  환불신청 :  6 
+	교환/환불/취소 - 구매취소(배송전) :  7 
+	교환/환불/취소 -   교환신청 승인 : 8 
+	교환/환불/취소 -   환불신청 승인  : 9   -->
+
 <h2 class="page-header store_look_around">나의주문 - 교환/환불/취소</h2>
 <div id="nav_layer">		
 	<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">배송 현황</a><br/><br/><br/><br/>
