@@ -158,6 +158,12 @@
 		//결제버튼 클릭
 		$("#submitBtn").on("click",function(){
 			
+			//결제버튼 반드시 체크확인 
+			if($('input:radio[name=payment]').is(':checked') == false){
+				alert("결제방법을 확인하세요.");
+				return false;
+			}
+			
 			//0. 파라미터 
 			var ordersReceiver = "";
 			var ordersZipcode = "";
@@ -246,9 +252,12 @@
 				orderProductStatus =1;  //결제완료 
 			}
 			 var queryString = "";
-			 if($("#oneOrN").html().trim() =='1'){
-				 	//한개구매
-				 	 queryString = "?&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
+			// if($("#oneOrN").html().trim() == '1'){
+				if($("#hiddenFlaN").val() != 'ok'){
+				
+				 	alert("한개구매");
+				 	//한개구매  
+				 	 queryString = "?ordersNo=${requestScope.ordersNo}&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
 					 +ordersZipcode+"&ordersAddress="+ordersAddress+"&ordersSubAddress="+ordersSubAddress
 					 +"&ordersTotalPrice="+ordersTotalPrice+"&ordersPayment="+ordersPayment
 					 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId+
@@ -256,8 +265,9 @@
 					 +orderProductStatus+"&optionId="+$("#optionId").val().trim() +"&usedMileage="+$("#useMileage").html()+"&bank="+bank
 					 +"&card="+card+"&quota="+quota;	
 					$("form").prop("action", "/HwangDangFleamarket/buy/buyProductOne.go"+queryString);
-		
+		        
 			 }else{
+				 	alert("n개구매");
 				 	//N개구매
 				 	//optionId sellerStoreNo  productId amount
 				 	var optionIdList = "";
@@ -291,8 +301,8 @@
 					 "&optionIdList="+optionIdList  +"&usedMileage="+$("#useMileage").html().trim()+"&cartNoList=${requestScope.cartNoList }&bank="+bank+"&card="+card+"&quota="+quota;	;	
 					$("form").prop("action", "/HwangDangFleamarket/buy/buyProducts.go"+queryString);
 			 }
-			
-			 //alert(queryString);
+			  
+			 alert(queryString);
 			$("form").submit(); 
 		}); //결제버튼
 	
@@ -398,6 +408,9 @@
 	});
 		
 	
+	//결제라디오 버튼 검증 : 반드시 선택되도록 검증!
+	
+			
 	}); //ready
 	
 </script>
@@ -407,6 +420,9 @@
 <div class="container">
 <form action="" method="POST" name="buy_form" class="form-inline"  >
 <input type="hidden" value="${sessionScope.login_info.memberId }" id="hiddenMemberId"	/>
+<input type="hidden" value="${requestScope.flaN }" id="hiddenFlaN"	/>
+ 
+flaN : ${requestScope.flaN }
 <table class="table">
 	<tr>
 		<td>  
