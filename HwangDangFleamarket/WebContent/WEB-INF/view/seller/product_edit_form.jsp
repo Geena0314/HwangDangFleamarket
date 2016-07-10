@@ -119,7 +119,7 @@ $(document).ready(function(){
 	});
 });
 </script>
-<div>
+<div  style="margin-bottom: 30px;">
 	<h2 class="page-header store_look_around">스토어 상품 등록</h2>
 	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/product/editProduct.go">
 		<input type="hidden" name="sellerStoreNo" value="${param.sellerStoreNo}">

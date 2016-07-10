@@ -10,10 +10,9 @@ table, td {
 	text-align: center;
 }
 table {
-	width: 650px;
+	width: 100%;
 }
 .thead{
-	width: 650px;
 	background-color: whitesmoke;
 }
 .tfoot{
@@ -48,6 +47,10 @@ ul li{
 }
 .bottomBtn{
 	float: right;
+}
+.cartListSection{
+	width: 70%;
+	margin-bottom: 70px;
 }
 </style>
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
@@ -218,17 +221,17 @@ function error(xhr, status, err)
 				</tbody>
 			</form>
 		</table>
-	</div>
-	<p>
-	<div class="estimatedPrice">
-		결제 예상 금액 - 배송비&nbsp;&nbsp;
-		<hr>
-		<span id="checkedEstimatedPrice">${requestScope.sum}원&nbsp;&nbsp;</span> 
-	</div>
-	<br>
-	<span class="bottomBtn"> 
-		<input type="button" value="선택상품삭제" id="removeBtn">&nbsp;&nbsp; 
-		<input type="button" value="구매하기" id="buyBtn">
-	</span>
+			<p>
+		<div class="estimatedPrice" style="border: 2px solid lightgray;">
+			결제 예상 금액 - 배송비&nbsp;&nbsp;
+			<hr style="border: 1px solid lightgray;">
+			<span id="checkedEstimatedPrice">${requestScope.sum}원&nbsp;&nbsp;</span> 
+		</div>
+		<br>
+		<span class="bottomBtn"> 
+			<input type="button" value="선택상품삭제" id="removeBtn">&nbsp;&nbsp; 
+			<input type="button" value="구매하기" id="buyBtn">
+		</span>
+		</div>
 </div>
 

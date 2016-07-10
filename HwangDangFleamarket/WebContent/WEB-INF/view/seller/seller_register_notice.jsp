@@ -45,7 +45,7 @@ span{
 }
 </style>
 <h2 class="page-header store_look_around">스토어 소식통</h2>
-<form action="/HwangDangFleamarket/sellerNotice/sellerRegisterNotice.go" method="post">
+<form action="/HwangDangFleamarket/sellerNotice/sellerRegisterNotice.go" method="post" style="margin-bottom: 60px;">
 	<input type="hidden" name="page" value="1">
 	<input type="hidden" name="sellerStoreNo" value="${param.sellerStoreNo}">
 	<input type="hidden" name="sellerStoreImage" value="${param.sellerStoreImage}">
@@ -68,7 +68,7 @@ span{
 			<tbody>
 				<tr>
 					<td >
-						<textarea rows="30" cols="70" name="sellerNoticeContent"></textarea>
+						<textarea rows="20" cols="70" name="sellerNoticeContent"></textarea>
 					</td>
 				</tr>
 				<c:if test="${not empty requestScope.errors}">

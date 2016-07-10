@@ -41,7 +41,7 @@ span{
 }
 </style>
 <h2 class="page-header store_look_around">스토어 소식통</h2>
-<form action="/HwangDangFleamarket/sellerNotice/sellerEditNotice.go" method="post">
+<form action="/HwangDangFleamarket/sellerNotice/sellerEditNotice.go" method="post" style="margin-bottom: 60px;">
 	<input type="hidden" name="page" value="${param.page}">
 	<input type="hidden" name="sellerNoticeNo" value="${requestScope.sellerNotice.sellerNoticeNo}">
 	<input type="hidden" name="sellerStoreNo" value="${requestScope.sellerNotice.sellerStoreNo}">
