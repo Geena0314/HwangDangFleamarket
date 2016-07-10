@@ -34,7 +34,7 @@ td{
 }
 </style>
 <h2 class="page-header store_look_around">스토어 소식통</h2>
-<div class="table-responsive adminNotice">
+<div class="table-responsive adminNotice" style="margin-bottom: 30px;">
 	<table class="table" id="adminTable">
 		<thead>
 			<tr style="background-color: whitesmoke;">

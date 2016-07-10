@@ -34,7 +34,7 @@
 				<li>
 					<!-- 검색바 -->
 					<form action="/HwangDangFleamarket/buy/findProductByKeyword.go" method="POST" >
-						<input type="text"  size="25" name="keyword" placeholder="seach for product..." >
+						<input type="text"  size="25" name="keyword" placeholder="search for product..." >
 						<input class="btn btn-default" type="submit" value="go"  id="searchBtn">
 					</form>   
 				</li>
