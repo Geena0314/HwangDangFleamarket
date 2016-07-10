@@ -3,12 +3,6 @@
 <%@taglib prefix="fmt"   uri="http://java.sun.com/jsp/jstl/fmt"  %> 
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"  %>
 <style>
-#nav_layer{
-	background-color: lightgray;
-	/* margin: 1 */
-	padding:20px;
-} 
-
 
 img {
 	width : 100px;
@@ -28,6 +22,7 @@ div .child  {
 {
 	display: none;
 }
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
@@ -79,7 +74,7 @@ div .child  {
 					}if(orderStatus == "배송완료" ){
 						orderStatus = 4;
 					}
-					//alert("orderStatus 숫자:"+orderStatus);  //orderStatus 숫자로변경 
+					alert("orderStatus 숫자:"+orderStatus);  //orderStatus 숫자로변경 
 					
 					if(orderStatus == num1 || orderStatus ==num2 || orderStatus ==num3 ){
 						//취소할 주문번호 배열에 누적 
@@ -131,7 +126,7 @@ div .child  {
 			var yesNO = confirm("정말 교환 신청을 하시겠습니까?");
 			if(yesNO){
 				//1.교환신청시 검증 수행 
-				checkboxValidation(4 , 4, -1  , "배송완료상품만 교환을 신청할수 있습니다.");
+				checkboxValidation(4,4, 4, "배송완료상품만 교환을 신청할수 있습니다.");
 				
 				//2. 검증통과 되었을 경우에만 폼오픈!
 				if(flag){
@@ -265,6 +260,7 @@ div .child  {
 
 <!-- ***************페이징처리************************************** -->
 	<!-- 페이징 ◀버튼처리 -->  
+	<p class="text-center">
 	<c:choose>
 		<c:when test="${requestScope.pagingBean.previousPageGroup }">
 			<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.beginPage-1}">◀</a>
@@ -275,7 +271,7 @@ div .child  {
 		<c:forEach begin="${requestScope.pagingBean.beginPage }" end="${requestScope.pagingBean.endPage }" var="page">
 			<c:choose>
 				<c:when test="${requestScope.pagingBean.page == page }">
-					<font id="currentPage" size="6px">  ${page}  </font>
+					${page}
 				</c:when>
 				<c:otherwise>
 					<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }&page=${page }">${page}</a>
@@ -295,7 +291,7 @@ div .child  {
 	<input type="button" value="구매취소" id="btnRequestCancel" class="btn btn-default"/>
 	<input type="button" value="환불신청" id="btnRequestRefund" class="btn btn-default"/>
 	<input type="button" value="교환신청" id="btnRequestChange" class="btn btn-default"/>
-	
+	</p>
   </div>
 </div>
 

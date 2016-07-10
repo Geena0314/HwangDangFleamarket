@@ -271,6 +271,8 @@ public class BuyController {
 			vitualBankNo  = vitualBankNo + "" + randomNumber4 ;
 			session.setAttribute("vitualBankNo" ,vitualBankNo);
 			session.setAttribute("bank",bank);
+			//System.out.println(vitualBankNo);
+			
 		}else if(card != null && quota != null){
 			session.setAttribute("card" ,card);
 			session.setAttribute("quota" ,quota);
@@ -349,7 +351,7 @@ public class BuyController {
 		
 		String url = "";
 		if(cnt == 1){
-			System.out.println("성공"); //   "*/*.tiles"
+			//System.out.println("성공"); //   "*/*.tiles"
 			/*//뒤로가기이슈 해결 
 			//response.setHeader("Cache-Control", "no-store");
 			response.setHeader("Cache-Control","no-store");   
