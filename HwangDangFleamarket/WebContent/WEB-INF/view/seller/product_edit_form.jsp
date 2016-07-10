@@ -43,10 +43,10 @@ $(document).ready(function(){
 					$(".optionStock").attr("readonly", "readonly");
 				}
 			}
-			$("#endOption").after('<tr><th>상품 옵션</th><td colspan="2"><input type="text" name="optionList['+j+'].optionName" readonly="readonly" value='+$(".optionName")[0].value+' placeholder="필수 입력 사항" class="optionName"></td></tr>'
-								 +'<tr><th>상품 세부 옵션</th><td colspan="2"><input type="text" name="optionList['+j+'].optionSubName" placeholder="필수 입력 사항" class="optionSubName" id="optionSubName' + window.j + '"></td></tr>'
-								 +'<tr><th>옵션별 재고</th><td colspan="2"><input type="number" name="optionList['+j+'].optionStock" placeholder="필수 입력 사항" class="optionStock" id="optionStock' + window.j + '"></td></tr>'
-								 +'<tr><th>옵션별 추가 가격</th><td colspan="2"><input type="number" name="optionList['+j+'].optionAddPrice">&nbsp;'
+			$("#endOption").after('<tr class="trInput"><th class="tdName">상품 옵션</th><td colspan="2"><input type="text" name="optionList['+j+'].optionName" readonly="readonly" value='+$(".optionName")[0].value+' placeholder="필수 입력 사항" class="optionName"></td></tr>'
+								 +'<tr class="trInput"><th class="tdName">상품 세부 옵션</th><td colspan="2"><input type="text" name="optionList['+j+'].optionSubName" placeholder="필수 입력 사항" class="optionSubName" id="optionSubName' + window.j + '"></td></tr>'
+								 +'<tr class="trInput"><th class="tdName">옵션별 재고</th><td colspan="2"><input type="number" name="optionList['+j+'].optionStock" placeholder="필수 입력 사항" class="optionStock" id="optionStock' + window.j + '"></td></tr>'
+								 +'<tr class="trInput"><th class="tdName">옵션별 추가 가격</th><td colspan="2"><input type="number" name="optionList['+j+'].optionAddPrice">&nbsp;'
 								 +'<input type="button" value="옵션삭제" class="deleteOptionBtn"></td></tr>'
 								 +'<tr id="endOption"><th colspan="3"><hr></th></tr>');
 			window.j++;
@@ -69,8 +69,8 @@ $(document).ready(function(){
 			alert("상품 상세 사진을 등록해주세요.");
 			return false;
 		}
-		$("#mainImg").after('<tr><th>상품 상세 사진</th><td colspan="2"><input type="file" name="images" class="imgFile">&nbsp;&nbsp;'
-							+'<input type="button" value="사진삭제" class="deleteImgBtn"></td></tr>');
+		$("#mainImg").after('<tr class="trInput"><th class="tdName">상품 상세 사진</th><td colspan="2"><input style="margin: 0px; width: 185px;" type="file" name="images" class="imgFile">&nbsp;&nbsp;'
+							+'<input style="position: relative; left: 180px; top: -35px;" type="button" value="사진삭제" class="deleteImgBtn"></td></tr>');
 	});
 	$("table").on("click",".deleteImgBtn",function(){
 		$(this).parent().parent().remove();
@@ -119,8 +119,8 @@ $(document).ready(function(){
 	});
 });
 </script>
-<div class="productRegister">
-	<h2 class="page-header store_look_around">스토어 상품 등록</h2>
+<h2 class="page-header store_look_around">스토어 상품 수정</h2>
+<div class="productRegister" style="width: 50%; position: relative; left: 26%">
 	<form method="POST" enctype="multipart/form-data" action="/HwangDangFleamarket/product/editProduct.go">
 		<input type="hidden" name="sellerStoreNo" value="${param.sellerStoreNo}">
 		<input type="hidden" name="page" value="${param.page}">
@@ -179,7 +179,7 @@ $(document).ready(function(){
 					<th class='tdName'>상품 상세 사진</th>
 					<td colspan="2">
 						<input style="margin: 0px; width: 185px;" type="file" type="file" name="images" class="imgFile" id="imgFile">&nbsp;
-						<input style="position: relative; left: -150px; top: -3px;" type="button" value="사진추가" id="addImageBtn">
+						<input style="position: relative; left: 180px; top: -35px;" type="button" value="사진추가" id="addImageBtn">
 					</td>
 				</tr>
 				<tr class="trInput">
@@ -190,7 +190,7 @@ $(document).ready(function(){
 					<td colspan="3">
 						<input class="btn btn-lg btn-success btn-block" type="submit" value="수정완료" id="submit">
 						<input class="btn btn-lg btn-primary btn-block" type="reset" value="다시입력">
-						<%-- <input class="btn btn-lg btn-primary btn-block" type="button" value="수정취소" onclick="window.location='/HwangDangFleamarket/product/detail.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&productId=${param.productId}'"> --%>
+						<input class="btn btn-lg btn-danger btn-block" type="button" value="수정취소" onclick="window.location='/HwangDangFleamarket/product/detail.go?page=${param.page}&sellerStoreNo=${param.sellerStoreNo}&sellerStoreImage=${param.sellerStoreImage}&productId=${param.productId}'">
 					</td>
 				</tr>
 			</table>

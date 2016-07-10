@@ -59,7 +59,7 @@
 }
 
 .trInput input[type=submit].btn-block, .trInput input[type=reset].btn-block
-	{
+{
 	display: inline;
 	width: 25%;
 	padding: 5px;
@@ -657,6 +657,20 @@ li {
 .productRegister{
 	min-height: 1150px;
 	margin-bottom: 30px;
+}
+.btn.btn-lg.btn-danger.btn-block{
+	width: 25%;
+	font-family: 'NanumGothic_Bold';
+	position: relative;
+	left: 66%;
+	top: -39px;
+}
+.deleteOptionBtn,.deleteImgBtn{
+	border: 2px solid red;
+}
+.deleteOptionBtn:hover, .deleteImgBtn:hover{
+	background-color: red;
+	color: white;
 }
 /*에러메세지 폰트처리*/
 .error-message
