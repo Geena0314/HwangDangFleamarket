@@ -12,7 +12,7 @@
 				<div>${ list.productName }<br>${ list.productPrice }</div>
 			</div>
 		</lee:forEach>
-	<div id="page" class="pageGroup">
+	<div id="page" class="pageGroup product-lists-page">
 		<!-- 
 			이전 페이지 그룹 처리.
 			만약, 이전페이지 그룹이 있으면 링크처리하고 없으면 화살표만 나오도록 처리. 
