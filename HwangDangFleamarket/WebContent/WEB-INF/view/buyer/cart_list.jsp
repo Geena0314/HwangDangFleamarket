@@ -53,6 +53,9 @@ ul li{
 .cartListSection{
 	width: 70%;
 	margin-bottom: 70px;
+	position: relative;
+	left: 14%;
+	color: gray;
 }
 </style>
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
