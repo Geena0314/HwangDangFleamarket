@@ -218,7 +218,7 @@ public class MemberController {
 		//임시 저장소에 저장된 업로드 된 파일을 최종 저장소로 이동.
 		//최종 저장소 디렉토리 조회.
 		//new File(디렉토리, 파일)
-		String path = "C:\\Users\\kosta\\gits\\HwangDangFleamarket\\HwangDangFleamarket\\WebContent\\image_storage";
+		String path = "C:\\Users\\kosta\\git\\HwangDangFleamarket\\HwangDangFleamarket\\WebContent\\image_storage";
 		File image = new File(path, originalFileName);
 		
 	    //file중복체크

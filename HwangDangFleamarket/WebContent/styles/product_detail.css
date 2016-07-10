@@ -11,7 +11,6 @@
 	min-width: 300px;
 	min-height: 200px;
 	margin-bottom: 50px;
-	max-height: 800px;
 	max-width: 900px;
 }
 
@@ -34,4 +33,32 @@
 input[type=button]:hover, input[type=submit]:hover
 {
 	background-color: #EAEAEA;
+}
+
+.table-striped productTB input[type=button]
+{
+	border: 1px solid #604495;
+}
+
+#buyBtn, #editBtn
+{
+	background-color: #604495;
+	color: white;
+}
+
+#cartBtn, #listBtn, #deleteBtn
+{
+	background-color: white;
+	color: #604495;
+}
+
+#qnaRegister, #reviewRegister, #reviewDelete
+{
+	background-color: white;
+	border: 1px solid whitegray;
+}
+
+#qnaRegister:hover, #reviewRegister:hover, #reviewDelete:hover
+{
+	border: 1px solid gray;
 }

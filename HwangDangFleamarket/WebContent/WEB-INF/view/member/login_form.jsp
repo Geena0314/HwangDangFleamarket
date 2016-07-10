@@ -150,7 +150,7 @@
 							</td>
 						</tr>
 						<tr class="trInput">
-							<td colspan="2" id="idError">
+							<td colspan="2" id="idError" class="error-message">
 								<lee:if test="${not empty requestScope.idError }">
 									${ requestScope.idError }
 								</lee:if>
@@ -163,7 +163,7 @@
 							</td>
 						</tr>
 						<tr class="trInput">
-							<td colspan="2" id="passwordError">
+							<td colspan="2" id="passwordError" class="error-message">
 								<lee:if test="${not empty requestScope.passwordError }">
 									${ requestScope.passwordError }
 								</lee:if>
