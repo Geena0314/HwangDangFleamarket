@@ -553,6 +553,22 @@ li {
 	padding-top: 0px;
 	padding-right: 200px;
 }
+.nav.navbar-nav.navbar-right.links a
+{
+	color: #63439d;
+}
+.nav.navbar-nav.navbar-right.links a:HOVER
+{
+	color: #ccc;
+}
+.nav.navbar-nav.navbar-right.links input
+{
+	border: 1px solid #63439d;
+}
+.nav.navbar-nav.navbar-right.links input:HOVER
+{
+	color: #ccc;
+}
 .nav.navbar-nav.navbar-right.links img
 {
 	width: 100px;
