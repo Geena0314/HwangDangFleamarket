@@ -54,9 +54,11 @@ img {
 					//console.log("ordersSeqNo: " + $(this).val());
 					var orderNo = $(this).val()
 					//alert("ordersSeqNo: " +orderNo);
-					  
-					var orderStatusText = $("#ordersStatus").html().trim();
-					//alert("스태투스:" +orderStatusText);
+					var tr = $(this).parent().parent();
+					//console.log($(tr).children().eq(3).text());
+					var orderStatusText =$(tr).children().eq(3).text().trim();
+					//console.log(orderStatusText);
+					//alert("상태:" +orderStatusText);
 					var orderStatus =  0;
 					
 					if(orderStatusText == "입금대기중" ){
@@ -91,7 +93,7 @@ img {
 			var yesNO = confirm("정말취소하시겠습니까?");
 			if(yesNO){
 				var page =  $("#currentPage").text().trim();
-				checkboxValidation(0 , 1 , 2 ,  "상품 발송후에는 주문취소를 할수없습니다. " );
+				checkboxValidation(0 , 1 , 2 ,  "상품 발송후에는 주문취소를 할수없습니다.");
 				url	="/HwangDangFleamarket/myorder/orderCancelList.go?orderCancelList="+orderCancelList+"&loginId="+loginId+"&status="+7+"&page="+page;
 				sendForm(url);
 			}
@@ -225,7 +227,7 @@ img {
 					
 					<td>
 							<!-- 배송상태  -->
-			<strong id="ordersStatus">  
+			<strong class="ordersStatus">  
 			<c:choose>
 				<c:when test="${orderProduct.orderProductStatus  == 0 }">입금대기중</c:when>
 				<c:when test="${orderProduct.orderProductStatus  == 1 }">결제완료</c:when>
