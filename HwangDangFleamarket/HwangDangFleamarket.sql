@@ -34,6 +34,8 @@ DROP TABLE orders
 DROP TABLE product_option 
 	CASCADE CONSTRAINTS;
 
+delete from seller_NOTICE
+
 /* 소식통(관리자) */
 DROP TABLE notice 
 	CASCADE CONSTRAINTS;
@@ -294,7 +296,7 @@ CREATE TABLE cart (
 	foreign key(product_id) references product(product_id),
 	foreign key(member_id) references member(member_id)
 );
-
+drop sequence cart_no_seq;
 create sequence cart_no_seq nocache;
 
 /* 주문vvvvvvvvvvvvvv */
@@ -491,7 +493,7 @@ CREATE TABLE order_product  (
 	foreign key(option_id) references product_option(option_id) on delete set null ,
 	foreign key(seller_store_no) references seller(seller_store_no) on delete set null
 );
-create sequence order_seq_no_seq 
+create sequence order_product_seq 
 drop sequence order_seq_no_seq
 
 SELECT * FROM product_option;
