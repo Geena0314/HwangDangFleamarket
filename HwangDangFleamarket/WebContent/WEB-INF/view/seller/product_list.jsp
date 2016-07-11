@@ -10,7 +10,7 @@
 						<img class="mainImage" src="../image_storage/${ list.productMainImage }"  style="width:200px;height:170px;">
 					</a>
 				</div>
-				<div><br>${ list.productName }<br>${ list.productPrice }</div>
+				<div><br>${ list.productName }<br>&#8361;${ list.productPrice }</div>
 			</div>
 		</div>
 	</lee:forEach>
