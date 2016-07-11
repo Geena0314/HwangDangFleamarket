@@ -16,7 +16,7 @@ insert into member values ('seller1@gmail.com', '12341234', '김판매자', '010
 insert into member values ('seller2@gmail.com', '12341234', '이셀러', '010-9417-2525', '112-112',
    										   '서울시 강남구 역삼동', '안드로아파트 101동 8층', 1,2000); 
 insert into member values ('seller3@gmail.com', '12341234' , '홍판매원', '010-9911-2405', '111-476',
-   										   '경기도 수원시 팔달구', '유스페이스 B동 7층', 1, 5000);ADMIN_QNA
+   										   '경기도 수원시 팔달구', '유스페이스 B동 7층', 1, 5000);
    			
  --셀러정보  INSERT :seller TB   극동 6 / 꿈꾸는 8 , 마켓어스 9
 insert into seller 
@@ -35,19 +35,19 @@ values(seller_store_no_seq.nextval, '마켓어스', '12345-66789', '공산품', 
 							'40년 장인이 만든장난감 털가방 수제인형 팝니다.',1 , 'seller3@gmail.com'); 
 							
  
---  판매할 상품 INSERT    ,  FK  극동 6 / 꿈꾸는 8 , 마켓어스 9	-> 극동 1/ 꿈꾸는2/ 마켓3				
-insert into product values ('productno100', '싱싱한딸기잼', 5000, 10, '딸기쨈대표사진.jpg', '맛조은딸기쨈', 90, 6);
-insert into product values ('productno200', '핸드메이드방향제', 25000, 20, '방향제대표사진.jpg', '냄새엔 천연방향제', 310, 6);
-insert into product values ('productno300', '천연비누', 1500, 20, '비누대표사진.jpg', '천연재료로만든 비누', 222, 6);
+--  판매할 상품 INSERT    ,  FK  극동 20 / 꿈꾸는 21 , 마켓어스 22					
+insert into product values ('productno100', '싱싱한딸기잼', 5000, 10, '딸기쨈대표사진.jpg', '맛조은딸기쨈', 90, 20);
+insert into product values ('productno200', '핸드메이드방향제', 25000, 20, '방향제대표사진.jpg', '냄새엔 천연방향제', 310, 20);
+insert into product values ('productno300', '천연비누', 1500, 20, '비누대표사진.jpg', '천연재료로만든 비누', 222, 20);
 
 
-insert into product values ('productno400', '편안한귀걸이', 5000, 30, '귀걸이메인사진.jpg', '이쁘고 편안합니다.', 16, 8);
-insert into product values ('productno500', '정확한시계', 30000, 40, '시계메인사진.jpg', '최고로 정확합니다.', 347, 8);
-insert into product values ('productno600', '아름다운주머니', 15000, 20, '주머니대표img.jpg', '디자인이 아름답습니다.', 142, 8);
+insert into product values ('productno400', '편안한귀걸이', 5000, 30, '귀걸이메인사진.jpg', '이쁘고 편안합니다.', 16, 21);
+insert into product values ('productno500', '정확한시계', 30000, 40, '시계메인사진.jpg', '최고로 정확합니다.', 347, 21);
+insert into product values ('productno600', '아름다운주머니', 15000, 20, '주머니대표img.jpg', '디자인이 아름답습니다.', 142, 21);
 
-insert into product values ('productno700', '재미난 인형', 5000, 60, '털가방메인사진.jpg', '귀여운 인형', 111, 9);
-insert into product values ('productno800', '즐거운 장난감', 10000, 20, '장난감대표사진.jpg', '조이조이 장남감', 913, 9);
-insert into product values ('productno900', '복실복실 털가방', 20000, 20, '인형대표사진.jpg', '겨울용 털가방', 441, 9);
+insert into product values ('productno700', '재미난 인형', 5000, 60, '털가방메인사진.jpg', '귀여운 인형', 111, 22);
+insert into product values ('productno800', '즐거운 장난감', 10000, 20, '장난감대표사진.jpg', '조이조이 장남감', 913, 22);
+insert into product values ('productno900', '복실복실 털가방', 20000, 20, '인형대표사진.jpg', '겨울용 털가방', 441, 22);
 												
 
 

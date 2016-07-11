@@ -27,8 +27,13 @@
 </script>   
 <div class="container">
 	<div class="center-block">
+	<div style="border: 6px solid lightgray; padding: 25px; margin: 20px; width: 500px; float: left">
 	<mark>저희 마켓을 이용해주셔서 감사합니다.</mark>
 	<input type="button" class="btn btn-default" value="확인" id="gotoMainBtn"/>
+	</div>
+	
+	
+	<div style="border: 6px solid lightgray; padding: 25px; margin: 20px; width: 500px; float: left">
 	<h2>배송정보</h2>
 	<hr>
 	받는사람 : ${sessionScope.orders.ordersReceiver } <br/>
@@ -39,9 +44,9 @@
 	 ${sessionScope.orders.ordersRequest }  
 	  <!-- 결제방식 0 무통장입금 : , 1카드결제 , 2자동이체 , 3.간편결제       -->
 	  <!--  결제여부 0 : 미결제  , 1. 결제완료  -->
+	</div>
 	
-	
-	
+	<div style="border: 6px solid lightgray; padding: 25px; margin: 20px; width: 500px; float: left">
 	<h2>결제정보</h2>
 	<hr>
 		결제방식 :
@@ -71,7 +76,7 @@
 		<br/>
 		<font size="8px" color="blue"><fmt:formatNumber type="currency"> ${sessionScope.orders.ordersTotalPrice }
 		 </fmt:formatNumber> 원</font><br/>
-		
+		</div>
 		
 		<%
 			// 세션정보 삭제!
@@ -84,18 +89,17 @@
 			}
 		%>
 	<hr/>	         
-
-
-	<h2>주문정보</h2>
-	<hr>
-	주문번호 : ${sessionScope.orders.ordersNo } <br/> 
-	<c:forEach  var="op" items="${sessionScope.orders.orderProductList }">
-		상품명/가격  :  ${op.product.productName } / ${op.product.productPrice } <br/>
-		수량/옵션정보 :  ${op.orderAmount}개    / ${op.productOption.optionSubName } 
-	</c:forEach> 
 	
-</div> 
+		<div style="border: 6px solid lightgray; padding: 25px; margin: 20px; width: 500px; float: left">
+		<h2>주문정보</h2>
+		<hr>  
+		주문번호 : ${sessionScope.orders.ordersNo } <br/> 
+		<c:forEach  var="op" items="${sessionScope.orders.orderProductList }">
+			상품명/가격  :  ${op.product.productName } / ${op.product.productPrice } <br/>
+			수량/옵션정보 :  ${op.orderAmount}개    / ${op.productOption.optionSubName } <br/>
+		</c:forEach> 
+		</div>
+	</div> 
 </div>     
-  
 
 

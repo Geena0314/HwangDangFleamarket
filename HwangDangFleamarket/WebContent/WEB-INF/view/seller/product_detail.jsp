@@ -60,7 +60,10 @@ $(document).ready(function()
 				$("#optionStockError").empty();
 				$("#optionId").empty();
 				if(index == 0)
+				{
 					$("#optionNameError").append("선택할 수 없는 옵션입니다.");
+					return false;
+				}
 			},
 			"success" : function(json)
 			{
@@ -619,7 +622,7 @@ $(document).ready(function()
 	//문의 클릭했을 경우.
 	$("#qnaTable").on("click", "tr.qnaTrs", function()
 	{
-		$("#qnaError").empty();r
+		$("#qnaError").empty();
 		$("#qnaTable tr").css("background-color", "white");
 		$(this).css("background-color", "#FFFED7");
 		var no = $(this).children().first().text();
@@ -711,6 +714,7 @@ $(document).ready(function()
 								"error" : function()
 								{
 									$("#qnaReply").val("해당상품 판매자만 입력 가능합니다.").blur();
+									$("#qnaReply").attr("readonly", "readonly");
 								}
 							});
 						});
