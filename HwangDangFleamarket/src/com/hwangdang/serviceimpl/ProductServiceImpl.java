@@ -142,7 +142,9 @@ public class ProductServiceImpl implements ProductService
 			map.put("ordersNo", list.get(i));
 			map.put("productId", productId);
 			if(dao.selectOrderProduct(map) > 0)
+			{
 				return true;
+			}
 		}
 		return false;
 	}
@@ -158,7 +160,7 @@ public class ProductServiceImpl implements ProductService
 		if(dao.reviewRegisterCheck(map) == 0)
 		{
 			dao.updateProductLikes(map);
-			dao.insertReview(new Review(0, reviewContent, new Date(), "isj4216", productId));
+			dao.insertReview(new Review(0, reviewContent, new Date(), memberId, productId));
 			return dao.selectProductLike(productId);
 		}
 		else 

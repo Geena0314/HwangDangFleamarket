@@ -17,8 +17,8 @@
 								</a>
 							</c:when>
 							<c:when test="${ productList.orderProductStatus == 6}">
-								<a href="#" onClick="window.open('/HwangDangFleamarket/seller/sellerRefundCheck.go?sellerStoreNo=${sessionScope.seller.sellerStoreNo}&page=${ requestScope.bean.page }&ordersNo=${ productList.ordersNo }&orderSeqNo=${ productList.orderSeqNo }', '환불 현황', 'scrollbars=yes width=600 height=600 left=450 top=100');">
-									<img src="../image_storage/${productList.product.productMainImage}">
+								<a href="#" onClick="window.open('/HwangDangFleamarket/seller/sellerRefundCheck.go?sellerStoreNo=${sessionScope.seller.sellerStoreNo}&page=${ requestScope.bean.page }&ordersNo=${ productList.ordersNo }&orderSeqNo=${ productList.orderSeqNo }', '환불 현황', 'scrollbars=yes width=600 height=645 left=450 top=100');">
+									<img src="../image_storage/${productList.product.productMainImage}" style="border: 2px solid red; float: left; height: 147px;">
 								</a>
 							</c:when>
 							<c:otherwise>

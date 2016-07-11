@@ -258,14 +258,14 @@
 				<td colspan="2"><input type="password" id="password1" name="memberPassword1"></td>
 			</tr>
 			<tr>
-				<td colspan="2" id="passwordError1" class="registerError"></td>
+				<td colspan="2" id="passwordError1" class="registerError, error-message"></td>
 			</tr>
 			<tr class="trInput">
 				<th rowspan="2" class='tdName'>패스워드 확인</th>
 				<td colspan="2"><input type="password" id="password2" name="memberPassword2"></td>
 			</tr>
 			<tr>
-				<td colspan="2" id="passwordError2" class="registerError"></td>
+				<td colspan="2" id="passwordError2" class="registerError error-message"></td>
 			</tr>
 			<tr class="trInput">
 				<th class='tdName'>이름</th>
@@ -288,14 +288,14 @@
 				<td colspan="2"><input type="text" name="sellerStoreName" id="sellerStoreName" size="20" placeholder="3글자 이상 20자 이하"></td>
 			</tr>
 			<tr>
-				<td colspan="2" id="sellerStoreNameError" class="registerError"></td>
+				<td colspan="2" id="sellerStoreNameError" class="registerError error-message"></td>
 			</tr>
 			<tr class="trInput">
 				<th rowspan="2" class='tdName'>사업자 번호</th>
 				<td colspan="2"><input type="number" name="sellerTaxId" id="sellerTaxId" size="20"></td>
 			</tr>
 			<tr>
-				<td colspan="2" id="sellerTaxIdError" class="registerError"></td>
+				<td colspan="2" id="sellerTaxIdError" class="registerError error-message"></td>
 			</tr>
 			<tr class="trInput">
 				<th rowspan="2" class='tdName'>업종</th>
@@ -314,7 +314,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" id="sellerIndustryError" class="registerError"></td>
+				<td colspan="2" id="sellerIndustryError" class="registerError error-message"></td>
 			</tr>
 			<tr class="trInput">
 				<th rowspan="4" class='tdName'>매장 주소</th>
@@ -333,14 +333,14 @@
 				<td colspan="2"><input type="text" name="sellerSubAddress" id="sellerSubAddress" size="43"></td>
 			</tr>
 			<tr>
-				<td colspan="2" id="addressError"></td>
+				<td colspan="2" id="addressError error-message"></td>
 			</tr>
 			<tr class="trInput">
 				<th rowspan="2" class='tdName'>사진 등록</th>
 				<td colspan="2"><input type="file" name="sellerMainImage" id="sellerMainImage"></td>
 			</tr>
 			<tr>
-				<td colspan="2" id="sellerMainImageError" class="registerError"></td>
+				<td colspan="2" id="sellerMainImageError" class="registerError error-message"></td>
 			</tr>
 			<tr class="trInput">
 				<th class='tdName'>판매 물품 1</th>
@@ -365,7 +365,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" id="sellerIntroductionError"></td>
+				<td colspan="2" id="sellerIntroductionError error-message"></td>
 			</tr>
 		</table>
 	</form>
