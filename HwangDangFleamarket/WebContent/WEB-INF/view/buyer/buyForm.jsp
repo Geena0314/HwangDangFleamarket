@@ -436,7 +436,6 @@
 <input type="hidden" value="${sessionScope.login_info.memberId }" id="hiddenMemberId"	/>
 <input type="hidden" value="${requestScope.flaN }" id="hiddenFlaN"	/>
  
-flaN : ${requestScope.flaN }
 <table class="table">
 	<tr>
 		<td>  
@@ -571,9 +570,9 @@ flaN : ${requestScope.flaN }
 					<li>
 						<p align="left"><strong>카드번호 입력 : </strong>
 						<input type="text" name="card1" class="form-control" size="7" >-
-						<input type="text" name="card2" class="form-control" size="7">-
+						<input type="password" name="card2" class="form-control" size="7">-
 						<input type="text" name="card3" class="form-control" size="7">-
-						<input type="text" name="card4" class="form-control" size="7">
+						<input type="password" name="card4" class="form-control" size="7">
 						</p> 
 					</li>
 					</ul>
