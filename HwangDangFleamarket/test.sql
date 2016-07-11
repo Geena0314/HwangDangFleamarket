@@ -3,6 +3,9 @@ ORDER BY admin_qna_no DESC;
 select * FROM PRODUCT_OPTION
 DELETE FROM PRODUCT_OPTION
 
+
+
+
 DROP TABLE product_option 
 	CASCADE CONSTRAINTS;
 	
