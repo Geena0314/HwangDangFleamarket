@@ -54,7 +54,7 @@
 	<body>
 		<form method="POST" action="/HwangDangFleamarket/myorder/refundSuccess.go?orderSeqNo=${ param.orderSeqNo }">
 			<div align="center" class="refund-div">
-				<h2 class="page-header">환 불 신 청</h2>
+				<h2 class="page-header store_look_around" style="position: relative; left: -20px;">환 불 신 청</h2>
 				<table class="table table-striped refundTB">
 					<tr class="trInput">
 						<th class='tdName' >신청 제목</th>

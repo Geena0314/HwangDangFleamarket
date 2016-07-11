@@ -55,28 +55,30 @@
 	</head>
 	<body>
 		<form method="POST" action="/HwangDangFleamarket/storeQnA/storeQnARegister.go?productId=${param.productId}">
-			<h2>상품 문의 하기</h2>
-			<table>
-				<tr>
-					<td>제목</td><td><input type="text" name="storeQnATitle" id="storeQnATitle" size="43" placeholder="3글자 이상, 10글자 이하로 간단하게 적어주세요."></td>
-				</tr>
-				<tr><td id="titleError" colspan="2" align="center"></td></tr>
-				<tr>
-					<td>내용</td><td><textarea rows="20" cols="45" id="storeQnAContent" name="storeQnAContent" placeholder="10글자 이상 입력해 주세요."></textarea>
-				</tr>
-				<tr><td id="contentError" align="center" colspan="2"></td></tr>
-				<tr>
-					<td>작성자</td><td><input type="text" size="15" name="storeQnAWriter" id="storeQnAWriter" value="${param.memberId}" readonly></td>
-				</tr>
-				<tr>
-					<td>공개여부</td>
-					<td align="right">
-						공개<input type="radio" name="storeQnAPublished" value="1" checked="checked">
-						비공개<input type="radio" name="storeQnAPublished" value="0">
-					</td>
-				</tr>
-				<tr><td colspan='2' align="right"><input type="submit" value="문의하기" id="submit"></td></tr>
-			</table>
+			<h2 align="center">상품 문의 하기</h2>
+			<div align="center" style="border: 3px solid lightgray; width: 500px; left: 40px; position: relative;">
+				<table>
+					<tr>
+						<td>제목</td><td><input type="text" name="storeQnATitle" id="storeQnATitle" size="43" placeholder="3글자 이상, 10글자 이하로 간단하게 적어주세요."></td>
+					</tr>
+					<tr><td id="titleError" colspan="2" align="center"></td></tr>
+					<tr>
+						<td>내용</td><td><textarea rows="20" cols="45" id="storeQnAContent" name="storeQnAContent" placeholder="10글자 이상 입력해 주세요."></textarea>
+					</tr>
+					<tr><td id="contentError" align="center" colspan="2"></td></tr>
+					<tr>
+						<td>작성자</td><td><input type="text" size="15" name="storeQnAWriter" id="storeQnAWriter" value="${param.memberId}" readonly></td>
+					</tr>
+					<tr>
+						<td>공개여부</td>
+						<td align="right">
+							공개<input type="radio" name="storeQnAPublished" value="1" checked="checked">
+							비공개<input type="radio" name="storeQnAPublished" value="0">
+						</td>
+					</tr>
+					<tr><td colspan='2' align="right"><input type="submit" value="문의하기" id="submit"></td></tr>
+				</table>
+			</div>
 		</form>
 	</body>
 </html>

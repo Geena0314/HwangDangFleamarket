@@ -113,7 +113,7 @@ img {
 			}
 			else
 			{
-				window.open('/HwangDangFleamarket/myorder/refundForm.go?orderSeqNo='+$(":checkbox:checked").val(), '환불신청', 'resizable=no scrollbars=yes width=513 height=660 left=500 top=200')
+				window.open('/HwangDangFleamarket/myorder/refundForm.go?orderSeqNo='+$(":checkbox:checked").val(), '환불신청', 'resizable=no scrollbars=yes width=463 height=648 left=500 top=200')
 			}	
 		});
 		

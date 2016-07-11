@@ -232,6 +232,17 @@ input#sellerZipcode
 #memberWithdrawal {
 	margin-top: 25px;
 }
+
+.mypage-images
+{
+	margin: 15px;
+}
+
+.mypage-images:hover
+{
+	border: 2px solid purple;
+	border-radius: 20px;
+}
 /********* product_list ********/
 .product-content {
 	position: relative;
@@ -380,10 +391,6 @@ input#sellerZipcode
 	margin-left: 5%;
 }
 
-#mainImage {
-	margin-top: 80px;
-}
-
 #qnaRegisterTD {
 	text-align: right;
 }
@@ -448,7 +455,6 @@ footer{
 
 .list-margins {
 	padding: 30px;
-	padding-left: 50px;
 	width: 315px;
 }
 .list-margins:hover{
@@ -477,7 +483,7 @@ footer{
 
 /*소개글 크기고정 및 글자숨김처리.*/
 div .introduction {
-	height: 150px;
+	height: 155px;
 	width: 250px;
 	/*글자수가 범위를 넘어가면 숨김.*/
 	overflow: hidden;

@@ -273,7 +273,7 @@ $(document).ready(function()
 		{
 			"url" : "/HwangDangFleamarket/product/reviewWriteCheck.go",
 			"type" : "POST",
-			"data" : "memberId=" + "xx",
+			"data" : "memberId=" + "xx&productId=" + $("#productId").text(),
 			"success" : function(text)
 			{
 				if(!text)
@@ -454,6 +454,7 @@ $(document).ready(function()
 			"dataType" : "JSON",
 			"success" : function(json)
 			{
+				$("#qnaError").empty();
 				$("#qnaContent").remove();
 				$(".qnaTrs").remove();
 				$("#qnaPaging").empty();
@@ -511,6 +512,7 @@ $(document).ready(function()
 			"dataType" : "JSON",
 			"success" : function(json)
 			{
+				$("#qnaError").empty();
 				$("#qnaContent").remove();
 				$(".qnaTrs").remove();
 				$("#qnaPaging").empty();
@@ -568,6 +570,7 @@ $(document).ready(function()
 			"dataType" : "JSON",
 			"success" : function(json)
 			{
+				$("#qnaError").empty();
 				$("#qnaContent").remove();
 				$(".qnaTrs").remove();
 				$("#qnaPaging").empty();
@@ -616,6 +619,7 @@ $(document).ready(function()
 	//문의 클릭했을 경우.
 	$("#qnaTable").on("click", "tr.qnaTrs", function()
 	{
+		$("#qnaError").empty();r
 		$("#qnaTable tr").css("background-color", "white");
 		$(this).css("background-color", "#FFFED7");
 		var no = $(this).children().first().text();
@@ -1106,7 +1110,7 @@ function error(xhr, status, err)
 		</tr>
 		<tr><td colspan="2" id="qnaError"></td></tr>
 		<tr>
-			<td colspan = "3" align="right" id="qnaRegisterTD"><input type="button" id="qnaRegister" value="문의 하기" onClick="if(${empty sessionScope.login_info.memberId }){if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=700 height=450 left=500 top=200');}}else{window.open('/HwangDangFleamarket/storeQnA/storeQnARegisterForm.go?productId=${param.productId}&memberId=${ sessionScope.login_info.memberId }','문의하기','resizable=no width=600 height=600');};"></td>
+			<td colspan = "3" align="right" id="qnaRegisterTD"><input type="button" id="qnaRegister" value="문의 하기" onClick="if(${empty sessionScope.login_info.memberId }){if(confirm('로그인이 필요한 서비스입니다. \n로그인 하시겠습니까?')){window.open('/HwangDangFleamarket/member/login.go', '로그인창', 'resizable=no scrollbars=yes width=700 height=450 left=500 top=200');}}else{window.open('/HwangDangFleamarket/storeQnA/storeQnARegisterForm.go?productId=${param.productId}&memberId=${ sessionScope.login_info.memberId }','문의하기','resizable=no width=600 height=600 left=500 top=200');};"></td>
 		</tr>
 	</table>
 	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
