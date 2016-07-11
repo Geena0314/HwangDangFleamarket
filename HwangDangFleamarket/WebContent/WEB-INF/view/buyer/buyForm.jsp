@@ -76,9 +76,9 @@
 		var temp_ordersSubAddress = $("#memberSubAddress").html().trim();
 		var temp_currentAddress = "";
 		
-		var ordersTotalPriceTemp  = 0;
-		var memberMileageTemp  = 0;
-		var productPriceTemp =0;
+		var ordersTotalPriceTemp  = $("#ordersTotalPrice").html().trim();
+		var memberMileageTemp  =  getMemberMileage();
+		var productPriceTemp = $("#productPrice").html().trim();
 		
 		//배송옵션 선택시 자동입력
 		$("#requestOption").on("change", function(){
@@ -376,10 +376,13 @@
 			//검증
 			var cutline = $("#memberMileage").text().trim();
 			cutline = parseInt(cutline);
-			
+			         
 			if(cutline <  choiceMileage){
 				alert("현재보유마일리지는 "+cutline +"점 입니다. 보유마일리지만큼 사용가능합니다.");
-				return false;
+				$("#choiceMileage").val("");
+				$("#choiceMileage").focus();
+				return false;     
+				                 
 			}else if(choiceMileage <= 0) {
 				alert("사용할마일리지는 1이상되어야 합니다.");
 			}else {
@@ -387,6 +390,13 @@
 				
 				//1. 마일리지 폼에 적용 
 				$("#useMileage").html(choiceMileage);
+				//1-2. 실제결제금액에 적용  
+				var ordersTotalPrice = $("#ordersTotalPrice").html().trim();
+				ordersTotalPrice = parseInt(ordersTotalPrice);
+				var ordersTotalPriceTemp  = ordersTotalPrice;
+				ordersTotalPrice = ordersTotalPrice -choiceMileage;
+				$("#ordersTotalPrice").html(ordersTotalPrice);
+				
 				
 				//2. temp 에 보관
 				memberMileageTemp = cutline;
@@ -404,7 +414,11 @@
 		
 		//마일리지 적용취소 
 	$("#mileageCancelBtn").click(function(){
-		$("#memberMileage").text(memberMileageTemp)
+		//멤버마일리지 취소 
+		$("#memberMileage").text(memberMileageTemp); 
+		 $("#ordersTotalPrice").html(ordersTotalPriceTemp);
+		$("#useMileage").text(0);
+		
 	});
 		
 	
