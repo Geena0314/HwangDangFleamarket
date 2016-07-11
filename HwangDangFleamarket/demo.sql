@@ -35,7 +35,7 @@ values(seller_store_no_seq.nextval, '마켓어스', '12345-66789', '공산품', 
 							'40년 장인이 만든장난감 털가방 수제인형 팝니다.',1 , 'seller3@gmail.com'); 
 							
  
---  판매할 상품 INSERT    ,  FK  극동 6 / 꿈꾸는 8 , 마켓어스 9					
+--  판매할 상품 INSERT    ,  FK  극동 6 / 꿈꾸는 8 , 마켓어스 9	-> 극동 1/ 꿈꾸는2/ 마켓3				
 insert into product values ('productno100', '싱싱한딸기잼', 5000, 10, '딸기쨈대표사진.jpg', '맛조은딸기쨈', 90, 6);
 insert into product values ('productno200', '핸드메이드방향제', 25000, 20, '방향제대표사진.jpg', '냄새엔 천연방향제', 310, 6);
 insert into product values ('productno300', '천연비누', 1500, 20, '비누대표사진.jpg', '천연재료로만든 비누', 222, 6);
