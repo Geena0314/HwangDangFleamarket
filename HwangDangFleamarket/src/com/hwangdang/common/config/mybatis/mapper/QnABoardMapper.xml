@@ -106,13 +106,13 @@
 		FROM dual
 	</select>
 		
-	<!-- QnA게시판 글등록 -->
+	<!-- QnA게시판 글등록   f : 글작성시 답변은 무조건 없으므로 !-->
 	<insert id="insert" parameterType="AdminQnA">
 		INSERT INTO  admin_qna  
 		VALUES(
 				#{adminQnaNo } ,   #{adminQnaTitle }  , #{adminQnaContent }  , 
 			    #{adminQnaWriter }  , #{adminQnaDate }  , #{adminQnaHit }  , 
-				#{adminQnaPublished }  , #{adminQnaPassword }  , null , 'f' 
+				#{adminQnaPublished }  , #{adminQnaPassword }  , 'f' 
 		) 
 	</insert>
 	
