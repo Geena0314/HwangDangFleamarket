@@ -78,7 +78,7 @@ public class QnABoardController {
 		}else{
 			//문의글의 비공개
 			Member member = (Member) session.getAttribute("login_info");
-			if(member != null && member.getMemberId().equals("admin@admin.com")){
+			if(member != null && member.getMemberId().equals("kinghwang@gmail.com")){
 				//스토어관리자이면 :프리패쓰 
 				url ="/admin/boardQnADetail.go?password="+findQnA.getAdminQnaPassword();
 				model.addAttribute("password" , findQnA.getAdminQnaPassword());
@@ -106,7 +106,7 @@ public class QnABoardController {
 		Member member =(Member) session.getAttribute("login_info");
 		
 		if(findQnA != null && findQnA.getAdminQnaPublished().equals("f")){
-			if( (password != null && password.equals(findQnA.getAdminQnaPassword())) ||  member.getMemberId().equals("admin@admin.com")   ){
+			if( (password != null && password.equals(findQnA.getAdminQnaPassword())) ||  member.getMemberId().equals("kinghwang@gmail.com")   ){
 				//비공개에 비밀번호가 일치하면 
 				model.addAttribute("findQnA",findQnA);
 				model.addAttribute("page",page);

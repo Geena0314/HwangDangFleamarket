@@ -227,7 +227,8 @@ padding: 10px;
 				  
 		<p class="text-center">  
 		<!-- 관리자일경우만 댓글달기 가능 버튼및 TA 보이기 -->
-		<c:if test="${sessionScope.login_info.memberId == 'admin@admin.com' }">
+		<%--<c:if test="${sessionScope.login_info.memberId == 'admin@admin.com' }"> 	 --%>
+ 		 <c:if test="${sessionScope.login_info.memberId == 'kinghwang@gmail.com' }">	
  				<textarea class="form-control" rows="3" name="replyTa" id="replyTa"></textarea><br/>
 			
 				<!-- 댓글달려있는지 유무 -->
