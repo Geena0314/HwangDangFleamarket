@@ -31,6 +31,7 @@ $(document).ready(function(){
 								window.j--;
 								$("#optionSubName"+window.j).removeProp("readonly");
 								$("#optionStock"+window.j).removeProp("readonly");
+								$("#optionSubName"+window.j).val("").focus();
 								window.j++;
 								return false;
 							}

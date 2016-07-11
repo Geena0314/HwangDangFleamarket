@@ -28,13 +28,12 @@ $(document).ready(function(){
 						}
 						else{
 							if(optionSubName[i].value == optionSubName[j].value){
-								alert(window.j + "처음")
 								alert("세부 옵션명이 중복됩니다.");
 								window.j--;
 								$("#optionSubName"+window.j).removeProp("readonly");
 								$("#optionStock"+window.j).removeProp("readonly");
+								$("#optionSubName"+window.j).val("").focus();
 								window.j++;
-								alert(window.j);
 								return false;
 							}
 						}
