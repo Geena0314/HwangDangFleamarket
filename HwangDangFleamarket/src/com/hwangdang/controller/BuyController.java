@@ -56,7 +56,7 @@ public class BuyController {
 		param.put("productId", productId);
 		param.put("optionSubName", optionSubName);
 		int stock = service.getProductStockByProductId(param);
-		System.out.println("재고량 조회:" + stock);
+		//System.out.println("재고량 조회:" + stock);
 		String msg = "";
 		if(amount > stock){
 			//주문수량이 재고량보다 큼 
@@ -101,6 +101,8 @@ public class BuyController {
 				OrderProduct orderProduct = new OrderProduct(orderSeqNo ,amount, ordersNo, productId, productOption.getOptionId()  ,product.getSellerStoreNo() , 0 , product, productOption, seller);
 				orderProductList.add(orderProduct);
 				model.addAttribute("orderProductList",orderProductList);
+				model.addAttribute("ordersNo",ordersNo);
+				
 				url ="buyer/buyForm.tiles";	
 			} 
 		
@@ -113,6 +115,8 @@ public class BuyController {
 	 */
 	@RequestMapping("/buyCarts.go")
 	public String buyCarts(String cartNoList , Model model , HttpSession session ){
+		
+		
 		//System.out.println("카트리스트:"+ cartNoList);
 		//1.주문번호 생성
 		long randomNumber = (int) (Math.random() * 999999999) + 1;
@@ -136,6 +140,7 @@ public class BuyController {
 			}
 			
 		}
+		model.addAttribute("flaN" , "ok");
 		model.addAttribute("ordersNo",ordersNo );
 		model.addAttribute("orderProductList",orderProductList);
 		model.addAttribute("cartNoList",cartNoList);
@@ -179,12 +184,12 @@ public class BuyController {
 			session.setAttribute("quota" ,quota);
 		}
 		
-		
+		/*
 		if(ordersNo == null){
 			//1.주문번호 생성
 			long randomNumber = (int) (Math.random() * 999999999) + 1;
 			ordersNo = "" + randomNumber;
-		}
+		}*/
 		
 		//System.out.println("사용한 마일리지 : int :" + usedMileage);
 		//2.마일리지 사용했다면 변경하는 로직 

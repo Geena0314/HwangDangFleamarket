@@ -9,14 +9,10 @@ img {
 	height : 70px;
 }
 
-div .parent  {
-	/* border : 1px solid pink; */
-	/* float : left; */
-}
-div .child  {
-	/* border : 1px solid black; */
-	/* float : left; */
-}
+.container{
+	min-height:  300px;
+	min-width:  500px;
+}   
 
 #orderSeqNo
 {
@@ -54,27 +50,27 @@ div .child  {
 				// 체크박스선택하였고 주문취소가 가능한 상태인지 검증 
 				orderCancelList = "";
 				$("input:checkbox:checked").each(function(){
-					//console.log("현재주문번호: " + $(this).val());
+					//console.log(this);
+					//console.log("ordersSeqNo: " + $(this).val());
 					var orderNo = $(this).val()
-					//alert(orderNo);
-					
-					var childDiv = $(this).parent();
-					console.log(childDiv);
-					var orderStatus = childDiv.children().eq(4).text().trim();
+					//alert("ordersSeqNo: " +orderNo);
+					  
+					var orderStatusText = $("#ordersStatus").html().trim();
 					//alert("스태투스:" +orderStatusText);
+					var orderStatus =  0;
 					
-					if(orderStatus == "입금대기중" ){
+					if(orderStatusText == "입금대기중" ){
 						orderStatus = 0;
-					}if(orderStatus == "결제완료" ){
+					}if(orderStatusText == "결제완료" ){
 						orderStatus = 1;
-					}if(orderStatus == "배송준비중" ){
+					}if(orderStatusText == "배송준비중" ){
 						orderStatus = 2;
-					}if(orderStatus == "배송중" ){
+					}if(orderStatusText == "배송중" ){
 						orderStatus = 3;
-					}if(orderStatus == "배송완료" ){
+					}if(orderStatusText == "배송완료" ){
 						orderStatus = 4;
 					}
-					alert("orderStatus 숫자:"+orderStatus);  //orderStatus 숫자로변경 
+					//alert("orderStatus 숫자:"+orderStatus);  //orderStatus 숫자로변경 
 					
 					if(orderStatus == num1 || orderStatus ==num2 || orderStatus ==num3 ){
 						//취소할 주문번호 배열에 누적 
@@ -90,7 +86,7 @@ div .child  {
 				
 		}
 		
-		// 주문취소 
+		// 주문취소
 		$("#btnRequestCancel").on("click",function(){
 			var yesNO = confirm("정말취소하시겠습니까?");
 			if(yesNO){
@@ -145,11 +141,10 @@ div .child  {
 		$("button").on("click",function(){
 			var yes_no = confirm("정말 구매확정하시겠습니다. 구매확정하시면 되돌릴수 없습니다.");
 			if(yes_no){
-				var childDiv = $(this).parent();
-				var ordersNo =  $(childDiv).children().eq(0).val().trim();
+				//alert(this.value);
+				var ordersNo = this.value;
 				//alert(ordersNo);
 				var page =  $("#currentPage").text().trim();
-				//console.log(page);
 				//alert(page);
 				
 				url	="/HwangDangFleamarket/myorder/orderStatusChange.go?orderList="+ordersNo+"&loginId="+loginId+"&status="+10+"&page="+page;  
@@ -183,9 +178,9 @@ div .child  {
 	
 	<div class="row">
 	<!-- 네비게이션 바Area -->
-	 <ul class="nav nav-tabs">
+	 <ul class="nav nav-tabs">       
 	 	 <li role="presentation" class="active"><a class="btn btn-default" role="button"  href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">배송 현황</a></li>
-	  	<li role="presentation"><a class="btn btn-default" role="button" href="/HwangDangFleamarket/myorder/success.go?loginId=${sessionScope.login_info.memberId }">배송 완료</a></li>
+	  	<li role="presentation"><a class="btn btn-default" role="button" href="/HwangDangFleamarket/myorder/success.go?loginId=${sessionScope.login_info.memberId }">구매 확정</a></li>
 	  	<li role="presentation">	<a class="btn btn-default" role="button" href="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId }">교환/환불/취소</a></li>
 	</ul>
 	
@@ -201,7 +196,7 @@ div .child  {
 	
 	
 	<!-- 주문날짜 -->
-	<h4><fmt:formatDate value="${order.orders_date }" pattern="yyyy-MM-dd" /> / orderno:${order.ordersNo }</h4><br/>
+	<h4><fmt:formatDate value="${order.orders_date }" pattern="yyyy-MM-dd" /> / orderno : ${order.ordersNo }</h4><br/>
 		
 		<c:forEach items="${order.orderProductList }" var="orderProduct">		
 		
@@ -229,7 +224,7 @@ div .child  {
 					
 					<td>
 							<!-- 배송상태  -->
-			<strong>  
+			<strong id="ordersStatus">  
 			<c:choose>
 				<c:when test="${orderProduct.orderProductStatus  == 0 }">입금대기중</c:when>
 				<c:when test="${orderProduct.orderProductStatus  == 1 }">결제완료</c:when>
@@ -239,11 +234,11 @@ div .child  {
 			</c:choose> 
 			</strong>  
 					</td>
-				
-				<td>
-				<!-- 구매확정 버튼 -->
+				  
+				<td>      
+				<!-- 구매확정 버튼 -->       
 					<c:if test="${orderProduct.orderProductStatus  == 4 }">
-						<button class="btn btn-success">구매확정</button>
+						<button class="btn btn-success"  value="${orderProduct.orderSeqNo}"  >구매확정</button>
 					</c:if>
 				</td>
 				</tr>
@@ -271,7 +266,7 @@ div .child  {
 		<c:forEach begin="${requestScope.pagingBean.beginPage }" end="${requestScope.pagingBean.endPage }" var="page">
 			<c:choose>
 				<c:when test="${requestScope.pagingBean.page == page }">
-					${page}
+					<span id="currentPage">${page}</span>
 				</c:when>
 				<c:otherwise>
 					<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }&page=${page }">${page}</a>
@@ -288,7 +283,7 @@ div .child  {
 	</c:choose>
 	<br/>  
 	<!-- 버튼 -->
-	<input type="button" value="구매취소" id="btnRequestCancel" class="btn btn-default"/>
+	<input type="button" value="주문취소" id="btnRequestCancel" class="btn btn-default"/>
 	<input type="button" value="환불신청" id="btnRequestRefund" class="btn btn-default"/>
 	<input type="button" value="교환신청" id="btnRequestChange" class="btn btn-default"/>
 	</p>

@@ -44,7 +44,7 @@ div .child  {
 	<!-- 네비게이션 바Area -->
 	 <ul class="nav nav-tabs">
 	 	 <li role="presentation" class="active"><a class="btn btn-default" role="button"  href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }">배송 현황</a></li>
-	  	<li role="presentation"><a class="btn btn-default" role="button" href="/HwangDangFleamarket/myorder/success.go?loginId=${sessionScope.login_info.memberId }">배송 완료</a></li>
+	  	<li role="presentation"><a class="btn btn-default" role="button" href="/HwangDangFleamarket/myorder/success.go?loginId=${sessionScope.login_info.memberId }">구매 확정</a></li>
 	  	<li role="presentation">	<a class="btn btn-default" role="button" href="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId }">교환/환불/취소</a></li>
 	</ul>
 	

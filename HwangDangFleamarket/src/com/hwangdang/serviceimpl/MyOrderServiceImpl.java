@@ -38,7 +38,7 @@ public class MyOrderServiceImpl implements MyOrderService {
 	
 	
 	//0:입금대기중 ,1:결제완료 , 2:배송준비중 삭제  == 주문취소 실행 
-	public void setOrderStatus(ArrayList<String> param, int status){
+	public int setOrderStatus(ArrayList<String> param, int status){
 		int flag = 0;
 		HashMap<String,Object> map = new HashMap<>();
 		for(int i=0;  i< param.size();  i++){
@@ -50,6 +50,7 @@ public class MyOrderServiceImpl implements MyOrderService {
 				break;  
 			}
 		}
+		return flag;
 	} // 메소드
 	
 	//셀러 정보 조회 1명 
