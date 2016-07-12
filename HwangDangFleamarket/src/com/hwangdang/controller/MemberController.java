@@ -126,7 +126,8 @@ public class MemberController {
 				//아이디와 패스워드가 일치 : 로그인상태 
 				session.setAttribute("login_info", member);
 				//바로구매 상품 조회  컨트롤러 메소드에게 요청 
-				url = "/buy/moveBuyPage.go?sellerStoreNo="+sellerStoreNo +"&sellerStoreImage="+sellerStoreImage +"&amount="+amount+"&memberId="+memberId;
+				//url = "/buy/moveBuyPage.go?sellerStoreNo="+sellerStoreNo +"&sellerStoreImage="+sellerStoreImage +"&amount="+amount+"&memberId="+memberId;
+				url = "/buy/moveBuyPage.go";
 			}else{
 				url ="member/login_form.tiles";
 				model.addAttribute("idError" ,"패스워드가 틀렸습니다!");

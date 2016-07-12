@@ -1,3 +1,6 @@
+<%@page import="com.hwangdang.serviceimpl.MemberServiceImpl"%>
+<%@page import="com.hwangdang.service.MemberService"%>
+<%@page import="com.hwangdang.vo.Member"%>
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"  %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"  %>
@@ -25,6 +28,7 @@
 	});  
 
 </script>   
+    
 <div class="container">
 	<div class="center-block">
 	<div style="border: 6px solid lightgray; padding: 25px; margin: 20px; width: 500px; float: left">
@@ -74,11 +78,23 @@
 			</c:when>
 		</c:choose>
 		<br/>
+		<%--  <!-- 사용한 마일리지가 있다면 사용한 마일리지금액 및 남은 금액 화면에 출력-->--%>
+		사용한 마일리지 금액 :
+		<c:choose>
+			<c:when test="${sessionScope.usedMileage > 0  }">
+				 ${sessionScope.usedMileage } 점
+			</c:when>
+			<c:otherwise>
+				0점
+			</c:otherwise>
+		</c:choose>
+		<br/>
 		<font size="8px" color="blue"><fmt:formatNumber type="currency"> ${sessionScope.orders.ordersTotalPrice }
 		 </fmt:formatNumber> 원</font><br/>
+		
 		</div>
 		
-		<%
+		<%  
 			// 세션정보 삭제!
 			if(session.getAttribute("bank") != null){
 				session.removeAttribute("bank");
@@ -86,6 +102,8 @@
 			}else if(session.getAttribute("card") != null){
 				session.removeAttribute("card");
 				session.removeAttribute("quota");
+			}else if(session.getAttribute("usedMileage") != null){
+				session.removeAttribute("usedMileage");
 			}
 		%>
 	<hr/>	         

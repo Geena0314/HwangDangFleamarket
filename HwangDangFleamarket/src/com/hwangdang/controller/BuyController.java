@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.buf.UEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -154,7 +155,7 @@ public class BuyController {
 	}  
 	
 	/**
-	 * 	상품구매 로직  1개 : 
+	 * 	상품구매 로직  1개 : 실제구매로직
 	 */
 	@RequestMapping("/buyProductOne.go")
 	public String buyProductOne(@RequestParam(value="ordersNo" ,required=false) String ordersNo ,    
@@ -166,6 +167,13 @@ public class BuyController {
 			HttpServletResponse response , HttpServletRequest request  , @RequestParam(value="bank" ,required=false) String bank ,
 			@RequestParam(value="card" ,required=false) String card ,
 			@RequestParam(value="quota" ,required=false) String quota) throws Exception{ // 0 결재대기 , 1 결재완료  
+		
+		String url = "";
+		//검증 결제예정금액이 마이너스인경우  : 즉 사용한마일리지 > 결제예정금액 인경우!
+		if(ordersTotalPrice < 0) {
+			request.setAttribute("errorMsg", "마일리지 사용금액이 실제 결제금액을 초과합니다. 마일리지 사용값을 확인해주세요");
+			return "error.tiles";
+		}
 		
 		String vitualBankNo ="";
 		//System.out.println("bank:" + bank);
@@ -197,12 +205,19 @@ public class BuyController {
 		
 		//System.out.println("사용한 마일리지 : int :" + usedMileage);
 		//2.마일리지 사용했다면 변경하는 로직 
-		if(usedMileage != 0){
-			Map<String,Object> param = new HashMap<>();
-			param.put("memberId", memberId);
-			param.put("mileage", usedMileage);
-			service.setMemberMileage(param);
-		}
+				if(usedMileage != 0){
+					Map<String,Object> param = new HashMap<>();
+					param.put("memberId", memberId);
+					param.put("mileage", usedMileage);
+					service.setMemberMileage(param);
+					
+					//마일리지사용 했을경우 세션의 login_info 정보 수정 
+					Member newMember = memberService.selectById(memberId);
+					session.setAttribute("login_info", newMember);
+					              
+					// 사용한 마일리지가 있다면 결제성공 페이지에 정보 출력
+					session.setAttribute("usedMileage", usedMileage);
+				}
 		
 		Orders orders = new Orders(ordersNo, ordersReceiver, ordersPhone, ordersZipcode, ordersAddress, ordersSubAddress, ordersTotalPrice, ordersPayment, ordersRequest, paymentStatus, new Date(), memberId);
 		OrderProduct op = new OrderProduct(orderAmount, ordersNo, productId, optionId, sellerStoreNo, orderProductStatus );
@@ -229,7 +244,7 @@ public class BuyController {
 		//****************************************
 		//orders TB , orders product TB INSERT 
 		int cnt = service.addProductOne(orders ,op);
-		String url = "";
+		
 		if(cnt == 1){
 			//System.out.println("성공"); 
 			//1.개별optionStock Minus
@@ -240,9 +255,12 @@ public class BuyController {
 				service.setOptionStockByOptionId(param);
 				service.setProductStockByProductId(param);
 				session.setAttribute("orders", orders);
+				
+				//마일리지사용 , 결제페이지 에서 회원정보 수정시 세션의 login_info 정보 수정 
+				Member newMember = memberService.selectById(memberId);
+				session.setAttribute("login_info", newMember);
+				
 			url = "redirect:/buy/addProductSuccessPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&productId="+productId;
-			
-			
 			
 		}else{
 			url = "redirect:/error.tiles"; 
@@ -264,6 +282,12 @@ public class BuyController {
 			@RequestParam(value="bank" ,required=false) String bank , 
 			@RequestParam(value="card" ,required=false) String card , @RequestParam(value="quota" ,required=false) String quota) throws Exception{ // 0 결재대기 , 1 결재완료  
 		
+		String url = "";
+		//검증 결제예정금액이 마이너스인경우  : 즉 사용한마일리지 > 결제예정금액 인경우!
+		if(ordersTotalPrice < 0) {
+			request.setAttribute("errorMsg", "마일리지 사용금액이 실제 결제금액을 초과합니다. 마일리지 사용값을 확인해주세요");
+			return "error.tiles";
+		}
 		
 		String vitualBankNo ="";
 		//System.out.println("bank:" + bank);
@@ -286,14 +310,24 @@ public class BuyController {
 			session.setAttribute("card" ,card);
 			session.setAttribute("quota" ,quota);
 		}
-		//System.out.println("사용한 마일리지 : int :" + usedMileage);
 		//2.마일리지 사용했다면 변경하는 로직 
 		if(usedMileage != 0){
 			Map<String,Object> param = new HashMap<>();
 			param.put("memberId", memberId);
 			param.put("mileage", usedMileage);
 			service.setMemberMileage(param);
+			
+			//마일리지사용 했을경우 세션의 login_info 정보 수정 
+			Member newMember = memberService.selectById(memberId);
+			session.setAttribute("login_info", newMember);
+			              
+			// 사용한 마일리지가 있다면 결제성공 페이지에 정보 출력
+			session.setAttribute("usedMileage", usedMileage);
 		}
+		
+		//마일리지는 사용않했지만 주소만 변경했다면!! session의 login_info 수정
+		//결제페이지에서 회원정보 수정 구현X
+		
 		  
 		//3. 매개변수 split
 		ArrayList<String> amountSplitList =  listSplit(amountList);
@@ -331,7 +365,6 @@ public class BuyController {
 			if(cnt == 0){
 				throw new Exception("addProductN(OrderProduct) 메소드에서 예외발생");
 			}
-			
 		}
 		
 		//6-1. DB에 INSERT  : 결재완료라면 Cart에서 삭제
@@ -358,7 +391,9 @@ public class BuyController {
 			}
 		}
 		
-		String url = "";
+		
+		
+		
 		if(cnt == 1){
 			//System.out.println("성공"); //   "*/*.tiles"
 			/*//뒤로가기이슈 해결 
@@ -371,6 +406,7 @@ public class BuyController {
 			}*/
 			
 			session.setAttribute("orders", orders);
+			
 			url = "redirect:/buy/addProductSuccessPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&orderProductList="+orderProductList;
 			
 		}else{
