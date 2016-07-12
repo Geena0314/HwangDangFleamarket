@@ -75,16 +75,17 @@ public class BuyController {
 	 * 바로구매 :1개  상품결제 페이지 이동 
 	 *   (비로그인상태이면 로그인페이지로 거쳐서 로그인후 구매페이지로 이동  )
 	 */
-	@RequestMapping("/moveBuyPage.go")
-	public String moveBuyPage(@RequestParam(value="page" ,defaultValue="1") int page  ,
-			@RequestParam(value="productId" ,required=false) String productId   , int sellerStoreNo , String sellerStoreImage , int amount ,
-			@RequestParam(value="memberId" ,required=false) String memberId , String option , Model model){
-		
+	@RequestMapping("/moveBuyPage.go") 
+	public String moveBuyPage(@RequestParam(value="page" ,defaultValue="1") int page  , 
+			@RequestParam(value="productId" ,required=false) String productId   ,
+			@RequestParam(value="sellerStoreNo" , required=false) int sellerStoreNo , String sellerStoreImage , 
+			int amount , @RequestParam(value="memberId" ,required=false) String memberId , String option , Model model){
 		String url = "";
 		if(memberId == null || memberId.isEmpty()){ 
 			//로그인이 안된상태 로그인페이지로 이동 !! 
 			url ="member/login_form.tiles";
 			model.addAttribute("errorMsg", "로그인이 필요한서비스입니다. 로그인해주세요");
+			model.addAttribute("flag" ,"true");
 			//이메일 셀렉트 박스를 위한 zipcode tB 조회 
 			List<Code> emailList = memberService.selectEmailList();
 			model.addAttribute("emailList", emailList);

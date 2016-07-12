@@ -117,16 +117,16 @@ public class MemberController {
 	public String loginAfterProductDetailPage(String memberId ,String domain, String memberPassword, HttpSession session , @RequestParam(value="page" ,defaultValue="1") int page  ,
 		 String productId , String sellerStoreNo   , String sellerStoreImage , String amount , String option , Model model){
 		memberId = memberId +"@" + domain;
-		System.out.println(memberId +" , " + memberPassword);
-		//System.out.println("page :" +page +", productId:"+productId + ",sellerStoreNo:" +sellerStoreNo  +",sellerSotreImage:"+sellerStoreImage+", amount:"+amount + ",option" +option);
+		//System.out.println(productId + ","  + sellerStoreNo + ", " + amount + ", " + option);
+		
 		Member member = service.findById(memberId);
-		String url ="";    
+		String url ="";   
 		if(member!=null){
-			//아이디가 존재함.
 			if(memberPassword.equals(member.getMemberPassword())){ 
-				//아이디와 패스워드가 맞는 경우
+				//아이디와 패스워드가 일치 : 로그인상태 
 				session.setAttribute("login_info", member);
-				url = "buyer/buyForm.tiles";
+				//바로구매 상품 조회  컨트롤러 메소드에게 요청 
+				url = "/buy/moveBuyPage.go?sellerStoreNo="+sellerStoreNo +"&sellerStoreImage="+sellerStoreImage +"&amount="+amount+"&memberId="+memberId;
 			}else{
 				url ="member/login_form.tiles";
 				model.addAttribute("idError" ,"패스워드가 틀렸습니다!");
