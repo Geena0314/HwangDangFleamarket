@@ -895,3 +895,5 @@ SELECT  count(*)
 		
 		
 select * FROM ADMIN_QNA
+select * FROM code
+

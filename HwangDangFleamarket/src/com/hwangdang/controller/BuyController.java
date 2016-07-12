@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.style.DefaultValueStyler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +23,7 @@ import com.hwangdang.service.CartService;
 import com.hwangdang.service.MemberService;
 import com.hwangdang.serviceimpl.BuyServiceImpl;
 import com.hwangdang.vo.Cart;
+import com.hwangdang.vo.Code;
 import com.hwangdang.vo.Member;
 import com.hwangdang.vo.OrderProduct;
 import com.hwangdang.vo.Orders;
@@ -78,16 +78,19 @@ public class BuyController {
 	@RequestMapping("/moveBuyPage.go")
 	public String moveBuyPage(@RequestParam(value="page" ,defaultValue="1") int page  ,
 			@RequestParam(value="productId" ,required=false) String productId   , int sellerStoreNo , String sellerStoreImage , int amount ,
-			@RequestParam(value="memberId" ,required=false) String memberId , String option , Model model /*, HttpSession session*/){
+			@RequestParam(value="memberId" ,required=false) String memberId , String option , Model model){
 		
 		String url = "";
-		if(memberId.isEmpty()){ 
+		if(memberId == null || memberId.isEmpty()){ 
 			//로그인이 안된상태 로그인페이지로 이동 !! 
 			url ="member/login_form.tiles";
 			model.addAttribute("errorMsg", "로그인이 필요한서비스입니다. 로그인해주세요");
-			model.addAttribute("queryString" ,"page="+page+"&productId="+productId);
+			//이메일 셀렉트 박스를 위한 zipcode tB 조회 
+			List<Code> emailList = memberService.selectEmailList();
+			model.addAttribute("emailList", emailList);
+			
 		}else{ 
-			// *********로그인상태! - 바로구매페이지로 이동 ***************
+			// ********* 로그인상태! - 바로구매페이지로 이동 ***************
 			if(productId != null){
 				ArrayList<OrderProduct> orderProductList = new ArrayList<>();
 				//System.out.println(sellerStoreNo);

@@ -205,10 +205,9 @@ img {
 			<table class="table">
 				<tr>
 					<td>
-						<!--  체크박스   <img class="main-image"src="../image_storage/${ requestScope.product.productMainImage }" > -->
+						<!--  체크박스   -->
 						<input type="checkbox" name="items" value="${orderProduct.orderSeqNo}" />
 						<img class="main-image" src="/HwangDangFleamarket/image_storage/${orderProduct.product.productMainImage }" />
-						 
 					</td>
 						
 					<td>
