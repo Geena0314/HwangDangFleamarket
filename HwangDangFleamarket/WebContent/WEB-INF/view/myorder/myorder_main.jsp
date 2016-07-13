@@ -4,6 +4,10 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"  %>
 <style>
 
+td {
+	align :center;
+}
+
 img {
 	width : 100px;
 	height : 70px;
@@ -22,79 +26,94 @@ img {
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
+	
+var flag = false;
+var orderCancelList = "";
+var url = "";
+var loginId = $("#loginId").val();
 
-	$(document).ready(function(){
-		
-		var flag = false;
-		var orderCancelList = "";
-		var url = "";
-		var loginId = $("#loginId").val();
-		
-		//폼전송 함수 
-		function sendForm(url){
-			
-			if(flag){ 
-				flag = false;
-				orderCancelList = orderCancelList.substring( 0 ,orderCancelList.length-1);
-				//console.log("split실행후:" +orderCancelList);
-				//alert("split실행후:" +orderCancelList);
-				$("#f2").prop("action" , url);
-				$("#f2").submit();
-			}
-		}  
-		//체크박스검증 및 orderList 검증  함수 
-		function checkboxValidation(num1 , num2 , num3 , msg ){
-			if( !$("input:checkbox").is(":checked") ){  //true,false
-				alert("체크박스를선택해주세요.");
-			}else{
-				// 체크박스선택하였고 주문취소가 가능한 상태인지 검증 
-				orderCancelList = "";
-				$("input:checkbox:checked").each(function(){
-					//console.log(this);
-					//console.log("ordersSeqNo: " + $(this).val());
-					var orderNo = $(this).val()
-					//alert("ordersSeqNo: " +orderNo);
-					var tr = $(this).parent().parent();
-					//console.log($(tr).children().eq(3).text());
-					var orderStatusText =$(tr).children().eq(3).text().trim();
-					//console.log(orderStatusText);
-					//alert("상태:" +orderStatusText);
-					var orderStatus =  0;
-					
-					if(orderStatusText == "입금대기중" ){
-						orderStatus = 0;
-					}if(orderStatusText == "결제완료" ){
-						orderStatus = 1;
-					}if(orderStatusText == "배송준비중" ){
-						orderStatus = 2;
-					}if(orderStatusText == "배송중" ){
-						orderStatus = 3;
-					}if(orderStatusText == "배송완료" ){
-						orderStatus = 4;
-					}
-					//alert("orderStatus 숫자:"+orderStatus);  //orderStatus 숫자로변경 
-					
-					if(orderStatus == num1 || orderStatus ==num2 || orderStatus ==num3 ){
-						//취소할 주문번호 배열에 누적 
-						orderCancelList = orderCancelList + orderNo +","
-						flag = true;
-					}else{
-						alert(msg);
-						flag = false;
-						
-					}
-				}); //orderList 누적 for문
-			} //else 
+//폼전송 함수 
+function sendForm(url){
+	if(flag){ 
+		flag = false;
+		orderCancelList = orderCancelList.substring( 0 ,orderCancelList.length-1);
+		//console.log("split실행후:" +orderCancelList);
+		//alert("split실행후:" +orderCancelList);
+		$("#f2").prop("action" , url);
+		$("#f2").submit();
+	}
+}  
+//체크박스검증 및 orderList 검증  함수 
+function checkboxValidation(num1 , num2 , num3 , msg ){
+	if( !$("input:checkbox").is(":checked") ){  //true,false
+		alert("체크박스를선택해주세요.");
+	}else{
+		// 체크박스선택하였고 주문취소가 가능한 상태인지 검증 
+		orderCancelList = "";
+		$("input:checkbox:checked").each(function(){
+			//console.log(this);
+			var orderNo = $(this).val()
+			//alert("ordersSeqNo: " +orderNo);
+			if(orderNo != 'on'){
+				var tr = $(this).parent().parent();
+				//console.log($(tr).children().eq(3).text());
+				var orderStatusText =$(tr).children().eq(3).text().trim();
+				//alert("상태:" +orderStatusText);
+				var orderStatus =  0;
 				
-		}
+				if(orderStatusText == "입금대기중" ){
+					orderStatus = 0;
+				}if(orderStatusText == "결제완료" ){
+					orderStatus = 1;
+				}if(orderStatusText == "배송준비중" ){
+					orderStatus = 2;
+				}if(orderStatusText == "배송중" ){
+					orderStatus = 3;
+				}if(orderStatusText == "배송완료" ){
+					orderStatus = 4;
+				}
+				//alert("orderStatus 숫자:"+orderStatus);  //orderStatus 숫자로변경 
+				
+				if(orderStatus == num1 || orderStatus ==num2 || orderStatus ==num3 ){
+					//취소할 주문번호 배열에 누적 
+					orderCancelList = orderCancelList + orderNo +","
+					flag = true;
+				}else{
+					alert(msg);
+					flag = false;
+				}
+			}
+			
 		
+		}); //orderList 누적 for문
+	} //else 
+		
+}
+		//제목의 체크박스 선택하면 현재주문 모두 체크하기
+		function allCheck(evt){
+			
+			var targetNameProp = $(evt).prop("name");
+			var flag = $("."+targetNameProp).prop("checked");
+			//alert("상태:" + flag);
+			 if(flag){
+				//true 즉 체크되어있으면 다른것들도 체크시킴!
+				 $("."+targetNameProp).prop("checked" ,"checked");	
+			 }else{
+				 $("."+targetNameProp).prop("checked" , false);	
+			} 
+			
+		}
+
+	
+	$(document).ready(function(){
 		// 주문취소
 		$("#btnRequestCancel").on("click",function(){
 			var yesNO = confirm("정말취소하시겠습니까?");
 			if(yesNO){
 				var page =  $("#currentPage").text().trim();
 				checkboxValidation(0 , 1 , 2 ,  "상품 발송후에는 주문취소를 할수없습니다.");
-				url	="/HwangDangFleamarket/myorder/orderCancelList.go?orderCancelList="+orderCancelList+"&loginId="+loginId+"&status="+7+"&page="+page;
+				//alert(orderCancelList);
+				url	="/HwangDangFleamarket/myorder/orderCancelList.go?orderCancelList="+orderCancelList+"&loginId=${sessionScope.login_info.memberId }&status="+7+"&page="+page;
 				sendForm(url);
 			}
 		}); //btn 
@@ -163,7 +182,6 @@ img {
 			alert("디테일버튼" + this);
 			console.log(this);
 		}); 
-		
 	}); //docudent  
 </script>
 
@@ -189,32 +207,22 @@ img {
 	<form action=""  method="post"  id="f2">
 	<input type="hidden" id="loginId" value="${sessionScope.login_info.memberId }" />
 	<br/>
-	<table class="table">
-		
-	</table>
+	
+	<% int cnt = 0; %>
 	<c:forEach items="${requestScope.orderList }"  var="order" > 
 	<div class="parent">
-	   
-	<!-- 주문날짜 -->
-	<h4><fmt:formatDate value="${order.orders_date }" pattern="yyyy-MM-dd" /> / orderno : ${order.ordersNo }</h4>
-		
+	  
+	<!-- 주문날짜 -->              
+	<h4>&nbsp;<input type="checkbox" name='items<%=cnt%>' class='items<%=cnt %>' onclick="allCheck(this);" /> 
+	<fmt:formatDate value="${order.orders_date }" pattern="yyyy-MM-dd" /> / orderno : ${order.ordersNo }</h4>
 		<c:forEach items="${order.orderProductList }" var="orderProduct">		
-		
+		     
 			<table class="table">
-				<thead>
-			<tr>
-				<th>선택</th>
-				<th>상품/가격</th>
-				<th>스토어명</th>
-				<th>배송상태</th>
-				<th>구매확정</th>
-			</tr>
-		</thead>
 			<tbody>
 				<tr>
 					<td>
 						<!--  체크박스   -->
-						<input type="checkbox" name="items" value="${orderProduct.orderSeqNo}" />
+						<input type="checkbox" name="items<%=cnt %>"  class="items<%=cnt %>"    value="${orderProduct.orderSeqNo}" />
 						<img class="main-image" src="/HwangDangFleamarket/image_storage/${orderProduct.product.productMainImage }" />
 					</td>
 						
@@ -233,31 +241,36 @@ img {
 					</td>
 					
 					<td>
-							<!-- 배송상태  -->
-			<strong class="ordersStatus">  
-			<c:choose>
-				<c:when test="${orderProduct.orderProductStatus  == 0 }">입금대기중</c:when>
-				<c:when test="${orderProduct.orderProductStatus  == 1 }">결제완료</c:when>
-				<c:when test="${orderProduct.orderProductStatus  == 2 }">배송준비중</c:when>
-				<c:when test="${orderProduct.orderProductStatus  == 3 }">배송중</c:when>
-				<c:when test="${orderProduct.orderProductStatus ==  4 }">배송완료</c:when>
-			</c:choose> 
-			</strong>  
+						<!-- 배송상태  -->
+						<strong class="ordersStatus">  
+						<c:choose>
+							<c:when test="${orderProduct.orderProductStatus  == 0 }">입금대기중</c:when>
+							<c:when test="${orderProduct.orderProductStatus  == 1 }">결제완료</c:when>
+							<c:when test="${orderProduct.orderProductStatus  == 2 }">배송준비중</c:when>
+							<c:when test="${orderProduct.orderProductStatus  == 3 }">배송중</c:when>
+							<c:when test="${orderProduct.orderProductStatus ==  4 }">배송완료</c:when>
+						</c:choose> 
+						</strong>  
 					</td>
 				  
-				<td>      
-				<!-- 구매확정 버튼 -->       
-					<c:if test="${orderProduct.orderProductStatus  == 4 }">
-						<button class="btn btn-success"  value="${orderProduct.orderSeqNo}"  >구매확정</button>
-					</c:if>
-				</td>
-				</tr>
+					<td>      
+					<!-- 구매확정 버튼 --> 
+						<c:choose>
+							<c:when test="${orderProduct.orderProductStatus  == 4 }">
+								<button class="btn btn-success"  value="${orderProduct.orderSeqNo}"  >구매확정</button>
+							</c:when>
+							<c:otherwise>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
+							</c:otherwise>
+						</c:choose>     
+					</td>
+				</tr>  
 				</tbody>
 			</table>
 	</c:forEach> 
-	
+		<% cnt++; %>
 		<p class="text-center">
-			<mark> <fmt:formatNumber value="${order.ordersTotalPrice }" type="currency" /></mark>
+			<strong><mark><fmt:formatNumber value="${order.ordersTotalPrice }" type="currency" /></mark></strong><br/>  
 		</p>
 		<!-- <hr> -->
 </div>     

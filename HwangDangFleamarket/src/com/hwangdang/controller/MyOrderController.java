@@ -87,7 +87,7 @@ public class MyOrderController {
 	
 	// 주문취소 ,환불 , 교환 페이지 이동 
 	@RequestMapping("/cancel.go")
-	public String goCancelPage(String loginId , Model model , @RequestParam(value="page" ,defaultValue="1") int page ){
+	public String goCancelPage(String loginId , @RequestParam(value="page" ,defaultValue="1") int page ,Model model ){
 		
 		// 전체피이지수 ,  보고픈  page번호   : 디폴트 1  
 		Map<String ,Integer> param = getTotalItemsParam(5, 6, 7, 8, 9);
@@ -121,9 +121,9 @@ public class MyOrderController {
 		//System.out.println(orderCancelList);
 		ArrayList<String> param  = listSplit(orderCancelList);
 		service.setOrderStatus(param,status);
-		return "redirect:/myorder/main.go?loginId="+loginId+"&page="+page;
-	}
-	
+		return "redirect:/myorder/cancel.go?loginId="+loginId+"&page="+page;
+	} 
+	  
 	//구매확정 
 	@RequestMapping("/orderStatusChange.go") 
 	public String orderStatus10(String orderList ,String loginId , int status){

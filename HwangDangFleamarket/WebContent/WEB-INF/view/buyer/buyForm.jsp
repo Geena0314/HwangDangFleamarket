@@ -4,52 +4,52 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
-	$(document).ready(function(){
-		function addMileage(mileage){
-			
-			var originalMileage = $("#memberMileage").text().trim();
-			var sum = 0;
-			console.log(mileage);
-			var value = $(mileage).html();
-			parseInt(value);
-			
-			 var beforeTotal = $("#ordersTotalPrice").html().trim();
-			parseInt(beforeTotal);
-			totalTemp =  beforeTotal;
-			
-			sum =  beforeTotal - value;
-			$("#ordersTotalPrice").html(sum); 
-			$("#mileageCheckbox").prop("disabled" ,"disabled");
-			
-			originalMileage = originalMileage -value;
-			$("#memberMileage").text(originalMileage);
-			
-		}  
 
-		/* 멤버 마일리지 조회 */
-		function getMemberMileage(){
-			
-			$.ajax({
-				"url" : "/HwangDangFleamarket/buy/getMemberMileageAjax.go" ,
-				"type" : "POST"  ,
-				"data" : "memberId="+$("#hiddenMemberId").val().trim() ,
-				"dataType" : "text" ,
-				"beforeSend" : function(){
-						if($("#hiddenMemberId").val() == null){
-							alert("로그인이 필요한 서비스 입니다.");
-							return false;
-						}
-				},
-				"success" : function(returnMileage){
-					$("#memberMileage").html(returnMileage);
-				}, 
-				"error"  : function(a ,status , httpErrorMsg){
-					alert("마일리지조회 ajax 예외: " + status +httpErrorMsg);
+
+function addMileage(mileage){
+	var originalMileage = $("#memberMileage").text().trim();
+	var sum = 0;
+	console.log(mileage);
+	var value = $(mileage).html();
+	parseInt(value);
+	
+	 var beforeTotal = $("#ordersTotalPrice").html().trim();
+	parseInt(beforeTotal);
+	totalTemp =  beforeTotal;
+	
+	sum =  beforeTotal - value;
+	$("#ordersTotalPrice").html(sum); 
+	$("#mileageCheckbox").prop("disabled" ,"disabled");
+	
+	originalMileage = originalMileage -value;
+	$("#memberMileage").text(originalMileage);
+	
+} //func 
+
+/* 멤버 마일리지 조회 */
+function getMemberMileage(){
+	
+	$.ajax({
+		"url" : "/HwangDangFleamarket/buy/getMemberMileageAjax.go" ,
+		"type" : "POST"  ,
+		"data" : "memberId="+$("#hiddenMemberId").val().trim() ,
+		"dataType" : "text" ,
+		"beforeSend" : function(){
+				if($("#hiddenMemberId").val() == null){
+					alert("로그인이 필요한 서비스 입니다.");
+					return false;
 				}
-			});
+		},
+		"success" : function(returnMileage){
+			$("#memberMileage").html(returnMileage);
+		}, 
+		"error"  : function(a ,status , httpErrorMsg){
+			alert("마일리지조회 ajax 예외: " + status +httpErrorMsg);
 		}
-		
-		
+	});
+}//func 
+
+	$(document).ready(function(){
 		//마일리지 ajax통신을 이용하여 조회
 		getMemberMileage();
 		   
