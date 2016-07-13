@@ -176,8 +176,7 @@ img {
  -->
  
 <div class="container">
-	<h2 class="page-header store_look_around">나의주문 - 배송현황</h2>
-	
+	<!-- <h2 class="page-header store_look_around">나의주문 - 배송현황</h2> -->
 	<div class="row">
 	<!-- 네비게이션 바Area -->
 	 <ul class="nav nav-tabs">       
@@ -186,23 +185,32 @@ img {
 	  	<li role="presentation">	<a class="btn btn-default" role="button" href="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId }">교환/환불/취소</a></li>
 	</ul>
 	
-	
-	 <!-- 본문 Area -->
 	<div class="col-md-12">
 	<form action=""  method="post"  id="f2">
 	<input type="hidden" id="loginId" value="${sessionScope.login_info.memberId }" />
+	<br/>
+	<table class="table">
 		
-	
+	</table>
 	<c:forEach items="${requestScope.orderList }"  var="order" > 
 	<div class="parent">
-	
-	
+	   
 	<!-- 주문날짜 -->
-	<h4><fmt:formatDate value="${order.orders_date }" pattern="yyyy-MM-dd" /> / orderno : ${order.ordersNo }</h4><br/>
+	<h4><fmt:formatDate value="${order.orders_date }" pattern="yyyy-MM-dd" /> / orderno : ${order.ordersNo }</h4>
 		
 		<c:forEach items="${order.orderProductList }" var="orderProduct">		
 		
 			<table class="table">
+				<thead>
+			<tr>
+				<th>선택</th>
+				<th>상품/가격</th>
+				<th>스토어명</th>
+				<th>배송상태</th>
+				<th>구매확정</th>
+			</tr>
+		</thead>
+			<tbody>
 				<tr>
 					<td>
 						<!--  체크박스   -->
@@ -215,7 +223,7 @@ img {
 						${orderProduct.orderAmount} 개 /
 						(${orderProduct.productOption.optionSubName })
 						<font color="lightgray">추가가격(+${orderProduct.productOption.optionAddPrice})</font>
-						가격 :<fmt:formatNumber value="${(orderProduct.product.productPrice +orderProduct.productOption.optionAddPrice) * orderProduct.orderAmount  }" pattern="#,###원"/>
+						<fmt:formatNumber value="${(orderProduct.product.productPrice +orderProduct.productOption.optionAddPrice) * orderProduct.orderAmount  }" pattern="#,###원"/>
 					</td>
 					
 					<td>
@@ -244,13 +252,14 @@ img {
 					</c:if>
 				</td>
 				</tr>
+				</tbody>
 			</table>
 	</c:forEach> 
 	
 		<p class="text-center">
 			<mark> <fmt:formatNumber value="${order.ordersTotalPrice }" type="currency" /></mark>
 		</p>
-		<hr>
+		<!-- <hr> -->
 </div>     
 </c:forEach>
 </form>
