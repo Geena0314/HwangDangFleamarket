@@ -1,11 +1,4 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-에러페이지 입니다.
-</body>
-</html>
+
+	<p class="text-center">비정상으로 실행되었습니다. 관리자에게 문의해주세요!</p>
+	<font size="3" color="red">${requestScope.errorMsg }</font>

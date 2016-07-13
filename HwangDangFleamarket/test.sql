@@ -895,3 +895,11 @@ SELECT  count(*)
 		
 		
 select * FROM ADMIN_QNA
+select * FROM code
+
+	SELECT  	option_id , option_name , option_sub_name ,
+				product_id , option_stock , option_add_price
+				
+	FROM 		product_option
+	WHERE 		option_sub_name = '250g/딸기'
+

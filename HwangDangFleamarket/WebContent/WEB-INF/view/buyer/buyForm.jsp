@@ -158,11 +158,19 @@
 		//결제버튼 클릭
 		$("#submitBtn").on("click",function(){
 			
-			//결제버튼 반드시 체크확인 
+			//검증1. 결제수단 반드시 체크확인 !
 			if($('input:radio[name=payment]').is(':checked') == false){
 				alert("결제방법을 확인하세요.");
 				return false;
 			}
+			
+			//검증2. 사용한 마일리지 > 실제결제금액 큰경우 확인 
+			//즉 실제결제금액이 마이너스 인경우 !!! 
+			if($('#ordersTotalPrice').html().trim() < 0 ){
+				alert("마일리지 사용금액이 실제 결제금액을 초과합니다. 마일리지 사용값을 확인해주세요");
+				return false;
+			}
+			
 			
 			//0. 파라미터 
 			var ordersReceiver = "";

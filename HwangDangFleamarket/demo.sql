@@ -135,7 +135,7 @@ insert into PRODUCT_DETAIL_IMAGE values ('인형2세부사진.jpg', 'productno90
   
 
 
-
+--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 --**********************************************************************
 -- 장난감 상품 추가                                                                                                                                                            극동storeNO 등록바람
 insert into product values ('productno911', '어니언 장난감', 5000, 30, '어니언메인사진.jpg', '어니언케릭터입니다.', 50, 1);
