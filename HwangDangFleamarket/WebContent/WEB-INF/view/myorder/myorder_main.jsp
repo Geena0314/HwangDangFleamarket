@@ -211,7 +211,7 @@ function checkboxValidation(num1 , num2 , num3 , msg ){
 	<% int cnt = 0; %>
 	<c:forEach items="${requestScope.orderList }"  var="order" > 
 	<div class="parent">
-	  
+	
 	<!-- 주문날짜 -->              
 	<h4>&nbsp;<input type="checkbox" name='items<%=cnt%>' class='items<%=cnt %>' onclick="allCheck(this);" /> 
 	<fmt:formatDate value="${order.orders_date }" pattern="yyyy-MM-dd" /> / orderno : ${order.ordersNo }</h4>
@@ -226,12 +226,12 @@ function checkboxValidation(num1 , num2 , num3 , msg ){
 						<img class="main-image" src="/HwangDangFleamarket/image_storage/${orderProduct.product.productMainImage }" />
 					</td>
 						
-					<td>
-						${orderProduct.product.productName } /
-						${orderProduct.orderAmount} 개 /
-						(${orderProduct.productOption.optionSubName })
-						<font color="lightgray">추가가격(+${orderProduct.productOption.optionAddPrice})</font>
-						<fmt:formatNumber value="${(orderProduct.product.productPrice +orderProduct.productOption.optionAddPrice) * orderProduct.orderAmount  }" pattern="#,###원"/>
+					<td>  
+						상품명(옵션)/수량 : ${orderProduct.product.productName}(${orderProduct.productOption.optionSubName})/
+						${orderProduct.orderAmount}개 <br/>
+						결제예정금액/배송비 : <fmt:formatNumber value="${(orderProduct.product.productPrice +orderProduct.productOption.optionAddPrice) * orderProduct.orderAmount  }" pattern="#,###원"/> /
+						<fmt:formatNumber pattern="#,###">${orderProduct.fare}</fmt:formatNumber>원
+						
 					</td>
 					
 					<td>
@@ -270,7 +270,11 @@ function checkboxValidation(num1 , num2 , num3 , msg ){
 	</c:forEach> 
 		<% cnt++; %>
 		<p class="text-center">
-			<strong><mark><fmt:formatNumber value="${order.ordersTotalPrice }" type="currency" /></mark></strong><br/>  
+			
+			<strong><mark>
+				사용한 마일리지 : ${order.usedMileage }<br/>  
+				결제금액 : <fmt:formatNumber value="${order.ordersTotalPrice }" pattern="#,###" />
+			</mark></strong><br/>  
 		</p>
 		<!-- <hr> -->
 </div>     

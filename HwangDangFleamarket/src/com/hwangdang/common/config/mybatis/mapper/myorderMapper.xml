@@ -5,8 +5,8 @@
 	orders_no , orders_receiver , orders_phone ,
 	orders_zipcode , orders_address , orders_sub_address ,
 	orders_total_price , orders_payment , orders_request ,
-	orders_payment_status , orders_status ,
-	member_id , seller_id , product_id
+	orders_payment_status , orders_status , orders_date , 
+	usedMileage , member_id , seller_id , product_id
 </sql>
 
 <sql id="join-column" >
@@ -51,6 +51,7 @@
 	<result column="orders_request" property="ordersRequest" />
 	<result column="orders_payment_status" property="paymentStatus" />
 	<result column="orders_date" property="orders_date" /> 
+	<result column="usedMileage" property="usedMileage" /> 
 	<result column="buyer" property="memberId" />
 </resultMap>
 
@@ -63,6 +64,7 @@
 		<result column="option_id_1" property="optionId"/>
 		<result column="seller_store_no_1" property="sellerStoreNo"/>
 		<result column="order_product_status" property="orderProductStatus"/>
+		<result column="fare" property="fare"/>
 	</resultMap>
 
 	<!-- seller 리절트맵  -->
@@ -144,10 +146,10 @@
 	SELECT 
 		orders_no_1 , orders_receiver , orders_phone ,    orders_zipcode ,
 		orders_address , orders_sub_address ,    orders_total_price ,
-		orders_payment , orders_request , payment_status , orders_date ,  buyer ,    
+		orders_payment , orders_request , payment_status , orders_date ,  buyer ,  usedMileage,   
 		
 		order_seq_no , order_amount  , orders_no_2 ,  product_id_1  ,option_id_1 , 
-		seller_store_no_1 , order_product_status ,        
+		seller_store_no_1 , order_product_status , fare ,        
 		
 		product_Id_2 , product_name , product_price, product_stock,   
 		product_main_image, product_info, product_like, seller_store_no ,  
@@ -163,10 +165,10 @@
 	FROM ( SELECT   
 		orders_no_1 , orders_receiver , orders_phone ,    orders_zipcode ,
 		orders_address , orders_sub_address ,    orders_total_price ,
-		orders_payment , orders_request , payment_status , orders_date ,  buyer ,    
+		orders_payment , orders_request , payment_status , orders_date ,  buyer , usedMileage ,
 		
 		order_seq_no , order_amount  , orders_no_2 ,  product_id_1  ,option_id_1 , 
-		seller_store_no_1 , order_product_status ,        
+		seller_store_no_1 , order_product_status , fare ,       
 		
 		product_Id_2 , product_name , product_price, product_stock,   
 		product_main_image, product_info, product_like, seller_store_no ,  
@@ -184,11 +186,11 @@
 			o.orders_no orders_no_1 , o.orders_receiver , o.orders_phone ,
 			o.orders_zipcode , o.orders_address , o.orders_sub_address ,   
 			o.orders_total_price , o.orders_payment , o.orders_request ,    
-			o.payment_status , o.orders_date ,    o.member_id buyer ,     
+			o.payment_status , o.orders_date ,   o.member_id buyer ,  o.usedMileage  ,
 			
 			op.order_seq_no , op.order_amount  , op.orders_no orders_no_2 ,  
 			op.product_id product_id_1  ,op.option_id option_id_1  ,    
-			op.seller_store_no seller_store_no_1 , op.order_product_status ,   
+			op.seller_store_no seller_store_no_1 , op.order_product_status , op.fare ,
 			
 			p.product_Id product_id_2 , p.product_name, p.product_price, p.product_stock,   
 			p.product_main_image, p.product_info, p.product_like,   p.seller_store_no  ,       

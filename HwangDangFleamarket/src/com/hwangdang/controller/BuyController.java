@@ -47,7 +47,7 @@ public class BuyController {
 	private CartService cartService;
 	
 	/**
-	 * 바로구매 :1개  상품결제 페이지 이동 
+	 * 바로구매  상품결제 페이지 이동 (1개구매)
 	 *   (비로그인상태이면 로그인페이지로 거쳐서 로그인후 구매페이지로 이동  )
 	 */
 	@RequestMapping("/moveBuyPage.go") 
@@ -90,7 +90,7 @@ public class BuyController {
 	}  
 	
 	/**
-	 * 장바구니 구매  N개 : 상품결제 페이지로 이동 
+	 * 장바구니 구매 상품결제 페이지로 이동( N개구매) 
 	 */
 	@RequestMapping("/buyCarts.go")
 	public String buyCarts(String cartNoList , Model model , HttpSession session ){
@@ -139,8 +139,8 @@ public class BuyController {
 			int orderAmount , String productId , int optionId , int sellerStoreNo , int orderProductStatus ,
 			@RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage  ,  HttpSession session , 
 			HttpServletResponse response , HttpServletRequest request  , @RequestParam(value="bank" ,required=false) String bank ,
-			@RequestParam(value="card" ,required=false) String card ,
-			@RequestParam(value="quota" ,required=false) String quota) throws Exception{ // 0 결재대기 , 1 결재완료  
+			@RequestParam(value="card" ,required=false) String card , @RequestParam(value="quota" ,required=false) String quota ,
+			@RequestParam(value="fare" ,defaultValue="0") int fare ) throws Exception{ // 0 결재대기 , 1 결재완료  
 		
 		String url = "";
 		//검증 결제예정금액이 마이너스인경우  : 즉 사용한마일리지 > 결제예정금액 인경우!
@@ -150,7 +150,6 @@ public class BuyController {
 		}
 		
 		String vitualBankNo ="";
-		//System.out.println("bank:" + bank);
 		//가상번호 생성 로직 
 		if(bank != null  && !bank.isEmpty()){
 			//System.out.println("계좌번호생성!");
@@ -170,14 +169,6 @@ public class BuyController {
 			session.setAttribute("quota" ,quota);
 		}
 		
-		/*
-		if(ordersNo == null){
-			//1.주문번호 생성
-			long randomNumber = (int) (Math.random() * 999999999) + 1;
-			ordersNo = "" + randomNumber;
-		}*/
-		
-		//System.out.println("사용한 마일리지 : int :" + usedMileage);
 		//2.마일리지 사용했다면 변경하는 로직 
 				if(usedMileage != 0){
 					Map<String,Object> param = new HashMap<>();
@@ -188,13 +179,10 @@ public class BuyController {
 					//마일리지사용 했을경우 세션의 login_info 정보 수정 
 					Member newMember = memberService.selectById(memberId);
 					session.setAttribute("login_info", newMember);
-					              
-					// 사용한 마일리지가 있다면 결제성공 페이지에 정보 출력
-					session.setAttribute("usedMileage", usedMileage);
 				}
-		
-		Orders orders = new Orders(ordersNo, ordersReceiver, ordersPhone, ordersZipcode, ordersAddress, ordersSubAddress, ordersTotalPrice, ordersPayment, ordersRequest, paymentStatus, new Date(), memberId);
-		OrderProduct op = new OrderProduct(orderAmount, ordersNo, productId, optionId, sellerStoreNo, orderProductStatus );
+		  
+		Orders orders = new Orders(ordersNo, ordersReceiver, ordersPhone, ordersZipcode, ordersAddress, ordersSubAddress, ordersTotalPrice, ordersPayment, ordersRequest, paymentStatus, new Date(), memberId  ,usedMileage);
+		OrderProduct op = new OrderProduct(orderAmount, ordersNo, productId, optionId, sellerStoreNo, orderProductStatus , fare);
 		Product product = service.getProductInfo(productId);
 		Seller seller = service.getSellerByNo(sellerStoreNo);
 		ProductOption po = service.getProductOptionInfoByoptionNo(optionId);
@@ -251,10 +239,10 @@ public class BuyController {
 			String ordersAddress , String ordersSubAddress , int ordersTotalPrice ,
 			String ordersPayment , @RequestParam(value="ordersRequest" ,required=false) String ordersRequest , int paymentStatus , String memberId ,
 			String amountList , String productIdList , String optionIdList , String sellerStoreNoList , int orderProductStatus ,
-			@RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage  ,  HttpSession session , 
+			@RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage  ,   @RequestParam(value="fareList" ,required=false) String fareList , HttpSession session , 
 			HttpServletResponse response , HttpServletRequest request ,String cartNoList, 
-			@RequestParam(value="bank" ,required=false) String bank , 
-			@RequestParam(value="card" ,required=false) String card , @RequestParam(value="quota" ,required=false) String quota) throws Exception{ // 0 결재대기 , 1 결재완료  
+			@RequestParam(value="bank" ,required=false) String bank , @RequestParam(value="card" ,required=false) String card , 
+			@RequestParam(value="quota" ,required=false) String quota) throws Exception{ // 0 결재대기 , 1 결재완료  
 		
 		String url = "";
 		//검증 결제예정금액이 마이너스인경우  : 즉 사용한마일리지 > 결제예정금액 인경우!
@@ -294,9 +282,7 @@ public class BuyController {
 			//마일리지사용 했을경우 세션의 login_info 정보 수정 
 			Member newMember = memberService.selectById(memberId);
 			session.setAttribute("login_info", newMember);
-			              
-			// 사용한 마일리지가 있다면 결제성공 페이지에 정보 출력
-			session.setAttribute("usedMileage", usedMileage);
+			
 		}
 		
 		//마일리지는 사용않했지만 주소만 변경했다면!! session의 login_info 수정
@@ -308,10 +294,12 @@ public class BuyController {
 		ArrayList<String> productIdSplitList =  listSplit(productIdList);
 		ArrayList<String> optoinIdSplitList =  listSplit(optionIdList);
 		ArrayList<String> sellerStoreNoSplitList =  listSplit(sellerStoreNoList);
+		ArrayList<String> fareListSplitList =  listSplit(fareList);
+		
 		
 		// 4. 객체생성
 		ArrayList<OrderProduct> orderProductList = new ArrayList<>();
-		Orders orders = new Orders(ordersNo, ordersReceiver, ordersPhone, ordersZipcode, ordersAddress, ordersSubAddress, ordersTotalPrice, ordersPayment, ordersRequest, paymentStatus, new Date(), memberId);
+		Orders orders = new Orders(ordersNo, ordersReceiver, ordersPhone, ordersZipcode, ordersAddress, ordersSubAddress, ordersTotalPrice, ordersPayment, ordersRequest, paymentStatus, new Date(), memberId , usedMileage);
 		
 		
 		for(int i=0; i < amountSplitList.size(); i++){
@@ -319,38 +307,36 @@ public class BuyController {
 			Product product = service.getProductInfo(productIdSplitList.get(i));
 			Seller seller = service.getSellerByNo(Integer.parseInt(sellerStoreNoSplitList.get(i)));
 			ProductOption productOption = service.getProductOptionInfoByoptionNo(Integer.parseInt(optoinIdSplitList.get(i)));
-			
 			OrderProduct op = new OrderProduct(Integer.parseInt(amountSplitList.get(i)), 
 					ordersNo, productIdSplitList.get(i) , Integer.parseInt(optoinIdSplitList.get(i)), Integer.parseInt(sellerStoreNoSplitList.get(i)), orderProductStatus ,product ,productOption , seller );
-			
-			//List에 add()
-			orderProductList.add(op);
+			op.setFare(Integer.parseInt(fareListSplitList.get(i)));
+			orderProductList.add(op); //List에 add()
 		}
 		orders.setOrderProductList(orderProductList);
 		
-		
 		//****************************************
-		 // 5.orders TB , orders product TB INSERT 
+		// 5.orders TB , orders product TB INSERT 
 		int cnt = service.addProductN(orders);
-		
 		for(OrderProduct op : orderProductList ){
 			//DB에 INSERT
 			cnt = service.addProductN(op);
 			if(cnt == 0){
-				throw new Exception("addProductN(OrderProduct) 메소드에서 예외발생");
+				//구매실패시 에러페이지로 이동!
+				session.setAttribute("errorMsg","구매가 실패하였습니다. 관리자에게문의해주세요!");
+				return "redirect:/error.tiles"; 
 			}
 		}
 		
 		//6-1. DB에 INSERT  : 결재완료라면 Cart에서 삭제
 		if(cnt == 1){
-				ArrayList<String> cartList = null;
-				cartList = listSplit(cartNoList);
-				for(String temp : cartList){
-					int cartNo = Integer.parseInt(temp);
-					cartService.removeCart(cartNo);
-				}
-		} //if
-	
+			ArrayList<String> cartList = null;
+			cartList = listSplit(cartNoList);
+			for(String temp : cartList){
+				int cartNo = Integer.parseInt(temp);
+				cartService.removeCart(cartNo);
+			}
+		}
+		
 		// 6-2결재완료라면  구매한 상품 수량 마이너스 
 		if(cnt == 1){
 			//1.개별optionStock Minus
@@ -366,7 +352,6 @@ public class BuyController {
 		}
 		
 		if(cnt == 1){
-			
 			//System.out.println("성공"); //   "*/*.tiles"
 			/*//뒤로가기이슈 해결 
 			//response.setHeader("Cache-Control", "no-store");
@@ -376,14 +361,10 @@ public class BuyController {
 			if (request.getProtocol().equals("HTTP/1.1")) {
 			        response.setHeader("Cache-Control", "no-cache"); 
 			}*/
-			
 			session.setAttribute("orders", orders);
-			
 			url = "redirect:/buy/addProductSuccessPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&orderProductList="+orderProductList;
-			
-		}else{
-			url = "redirect:/error.tiles"; 
 		}
+		
 	return url; 
 	}  
 	

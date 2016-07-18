@@ -10,8 +10,9 @@ public class OrderProduct implements Serializable
 	private String productId; //상품ID
 	private int optionId;  // 상품옵션 ID
 	private int sellerStoreNo;   // 셀러 스토어NO
-	private int orderProductStatus;  //상품에대한 상태  -1~9
-	  
+	private int orderProductStatus;  //상품에대한 상태  0~10
+	private int fare;  //배송비 
+	
 	private Product product;
 	private ProductOption productOption;
 	  
@@ -23,7 +24,7 @@ public class OrderProduct implements Serializable
 	}
 
 	public OrderProduct(int orderAmount, String ordersNo, String productId, int optionId,
-			int sellerStoreNo, int orderProductStatus)
+			int sellerStoreNo, int orderProductStatus , int fare)
 	{
 		//주문상품 정보만
 		super();
@@ -33,12 +34,11 @@ public class OrderProduct implements Serializable
 		this.optionId = optionId;
 		this.sellerStoreNo = sellerStoreNo;
 		this.orderProductStatus = orderProductStatus;
+		this.fare= fare;
 	}
 
-	
-	
 	public OrderProduct(int orderSeqNo, int orderAmount, String ordersNo, String productId, int optionId,
-			int sellerStoreNo, int orderProductStatus)
+			int sellerStoreNo, int orderProductStatus )
 	{
 		//주문상품 정보만
 		super();
@@ -100,8 +100,14 @@ public class OrderProduct implements Serializable
 	}
 
 	
-	
-	
+	public int getFare() {
+		return fare;
+	}
+
+	public void setFare(int fare) {
+		this.fare = fare;
+	}
+
 	public int getOrderSeqNo()
 	{
 		return orderSeqNo;

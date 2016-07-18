@@ -110,7 +110,7 @@ select c.cart_no, c.cart_product_amount, c.cart_product_option, c.product_id, c.
 ----------
 --Member TB  마일리지 컬럼 추가
  ALTER TABLE member ADD  member_mileage number
-
+ 
  drop table product_option cascade constraints
 CREATE TABLE product_option (
 	option_id NUMBER primary key, /* 상품옵션ID */
@@ -124,3 +124,11 @@ CREATE TABLE product_option (
 
 -- 상품 상세이미지 경로 크기 최대치로 늘려줌
 ALTER TABLE PRODUCT_DETAIL_IMAGE modify image_path varchar2(4000);
+
+
+-- orders TB  결제시 사용한 마일리지 컬럼 추가
+ALTER TABLE orders ADD  usedMileage number
+-- order_product 개별주문상품에 대한 배송료 컬럼 추가 
+ALTER TABLE ORDER_PRODUCT ADD  fare number
+select * FROM ORDER_PRODUCT
+select * FROM ORDERS

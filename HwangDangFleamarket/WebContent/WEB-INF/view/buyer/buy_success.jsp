@@ -45,7 +45,7 @@
 	${sessionScope.orders.ordersAddress } 
 	${sessionScope.orders.ordersSubAddress } 
 	 / ${sessionScope.orders.ordersPhone }<br/>
-	 ${sessionScope.orders.ordersRequest }  
+	요청사항 :  ${sessionScope.orders.ordersRequest }  
 	  <!-- 결제방식 0 무통장입금 : , 1카드결제 , 2자동이체 , 3.간편결제       -->
 	  <!--  결제여부 0 : 미결제  , 1. 결제완료  -->
 	</div>
@@ -81,16 +81,16 @@
 		<%--  <!-- 사용한 마일리지가 있다면 사용한 마일리지금액 및 남은 금액 화면에 출력-->--%>
 		사용한 마일리지 금액 :
 		<c:choose>
-			<c:when test="${sessionScope.usedMileage > 0  }">
-				 ${sessionScope.usedMileage } 점
+			<c:when test="${sessionScope.orders.usedMileage > 0  }">
+				 ${sessionScope.orders.usedMileage  } 점
 			</c:when>
 			<c:otherwise>
-				0점
+				0점 
 			</c:otherwise>
 		</c:choose>
 		<br/>
-		<font size="8px" color="blue"><fmt:formatNumber type="currency"> ${sessionScope.orders.ordersTotalPrice }
-		 </fmt:formatNumber> 원</font><br/>
+		<font size="8px" color="blue"><fmt:formatNumber pattern="#,###">${sessionScope.orders.ordersTotalPrice}
+		 </fmt:formatNumber>원</font><br/>
 		
 		</div>
 		
@@ -107,14 +107,15 @@
 			}
 		%>
 	<hr/>	         
-	
 		<div style="border: 6px solid lightgray; padding: 25px; margin: 20px; width: 500px; float: left">
 		<h2>주문정보</h2>
 		<hr>  
 		주문번호 : ${sessionScope.orders.ordersNo } <br/> 
 		<c:forEach  var="op" items="${sessionScope.orders.orderProductList }">
-			상품명/가격  :  ${op.product.productName } / ${op.product.productPrice } <br/>
-			수량/옵션정보 :  ${op.orderAmount}개    / ${op.productOption.optionSubName } <br/>
+			상품명(옵션사항) :  ${op.product.productName }(${op.productOption.optionSubName })<br/>
+			상품가격/수량/배송비  : <fmt:formatNumber pattern="#,###">${op.product.productPrice + op.productOption.optionAddPrice}</fmt:formatNumber>
+			 / ${op.orderAmount}개 / 
+			 <fmt:formatNumber pattern="#,###">${op.fare}</fmt:formatNumber>원 <br/>  <br/>
 		</c:forEach> 
 		</div>
 	</div> 

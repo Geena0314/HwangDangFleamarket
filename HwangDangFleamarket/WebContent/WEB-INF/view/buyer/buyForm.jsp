@@ -153,7 +153,6 @@ function getMemberMileage(){
 		
 		//결제버튼 클릭
 		$("#submitBtn").on("click",function(){
-			
 			//검증1. 결제수단 반드시 체크확인 !
 			if($('input:radio[name=payment]').is(':checked') == false){
 				alert("결제방법을 확인하세요.");
@@ -215,7 +214,6 @@ function getMemberMileage(){
 				 ordersZipcode = $("#memberZipcode").html().trim();
 				 ordersAddress = $("#memberAddress").html().trim();
 				 ordersSubAddress = $("#memberSubAddress").html().trim();
-				 
 			}
 			
 			
@@ -265,7 +263,7 @@ function getMemberMileage(){
 					 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId+
 					 "&orderAmount=${param.amount }&productId=${param.productId  }&sellerStoreNo=${param.sellerStoreNo }&orderProductStatus="
 					 +orderProductStatus+"&optionId="+$("#optionId").val().trim() +"&usedMileage="+$("#useMileage").html()+"&bank="+bank
-					 +"&card="+card+"&quota="+quota;	
+					 +"&card="+card+"&quota="+quota+"&fare="+$(".deriveryCharge").html().trim();	
 					$("form").prop("action", "/HwangDangFleamarket/buy/buyProductOne.go"+queryString);
 		        
 			 }else{
@@ -276,22 +274,24 @@ function getMemberMileage(){
 				 	var sellerStoreNoList ="";
 				 	var productIdList = "";
 				 	var amountList = "";
+				 	var fareList = "";
 				 	
 				 	$(".optionId").each( function(index){
 				 		optionIdList = optionIdList + this.value + ",";
 				 	});
-				 	
 				 	$(".sellerStoreNo").each( function(index){
 				 		sellerStoreNoList = sellerStoreNoList + this.value + ",";
 				 	});
-				 	
 					$(".productId").each( function(index){
 						productIdList = productIdList + this.value + ",";
 				 	});
-					
 					$(".amount").each( function(index){
 						amountList = amountList + $(this).html().trim() + ",";
 				 	});
+					$(".deriveryCharge").each( function(index){
+						fareList = fareList + $(this).html().trim() + ",";
+				 	});
+					
 				 	
 					//alert("optoinIdList:"+optionIdList+" , sellerStoreNoList :" + sellerStoreNoList +", productIdList: "+ productIdList + ",amountList "+amountList);
 				 	        
@@ -300,7 +300,7 @@ function getMemberMileage(){
 					 +"&ordersTotalPrice="+ordersTotalPrice+"&ordersPayment="+ordersPayment
 					 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId+
 					 "&amountList="+ amountList + "&productIdList=" +productIdList+ "&sellerStoreNoList="+sellerStoreNoList +"&orderProductStatus="+orderProductStatus+
-					 "&optionIdList="+optionIdList  +"&usedMileage="+$("#useMileage").html().trim()+"&cartNoList=${requestScope.cartNoList }&bank="+bank+"&card="+card+"&quota="+quota;	;	
+					 "&optionIdList="+optionIdList+"&fareList=" + fareList +"&usedMileage="+$("#useMileage").html().trim()+"&cartNoList=${requestScope.cartNoList }&bank="+bank+"&card="+card+"&quota="+quota;	
 					$("form").prop("action", "/HwangDangFleamarket/buy/buyProducts.go"+queryString);
 			 }
 			// alert(queryString);
@@ -389,7 +389,6 @@ function getMemberMileage(){
 				alert("사용할마일리지는 1이상되어야 합니다.");
 			}else {
 				//마일리지 적용 로직 
-				
 				//1. 마일리지 폼에 적용 
 				$("#useMileage").html(choiceMileage);
 				//1-2. 실제결제금액에 적용  
@@ -600,15 +599,15 @@ function getMemberMileage(){
 			<span id="option"> ${op.productOption.optionSubName } </span><br/>
 			
 			배송비 : 
-			<span id="deriveryCharge">
+			<span class="deriveryCharge">
 			<c:choose>
-				<c:when test="${ (op.product.productPrice  + op.productOption.optionAddPrice  )  * op.orderAmount  >= 50000 }">0</c:when>
+				<c:when test="${ (op.product.productPrice  + op.productOption.optionAddPrice  )  * op.orderAmount  >= 30000 }">0</c:when>
 				<c:otherwise>2500</c:otherwise>
 			</c:choose>
 			</span>원<br/>   
 			<font color="gray" class="partProductPrice" size="5px" > 
 			<c:choose>
-				<c:when test="${ (op.product.productPrice  + op.productOption.optionAddPrice )  * op.orderAmount  >= 50000 }">${(op.product.productPrice+op.productOption.optionAddPrice)*op.orderAmount }</c:when>
+				<c:when test="${ (op.product.productPrice  + op.productOption.optionAddPrice )  * op.orderAmount  >= 30000 }">${(op.product.productPrice+op.productOption.optionAddPrice)*op.orderAmount }</c:when>
 				<c:otherwise>${(op.product.productPrice+op.productOption.optionAddPrice)*op.orderAmount + 2500 } </c:otherwise>
 			</c:choose>
 			</font>

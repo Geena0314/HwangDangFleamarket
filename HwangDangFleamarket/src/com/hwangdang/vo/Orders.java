@@ -27,7 +27,7 @@ public class Orders implements Serializable
 
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
 			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
-			String ordersRequest, int paymentStatus, Date orders_date, String memberId) {
+			String ordersRequest, int paymentStatus, Date orders_date, String memberId ,int usedMileage) {
 		super();
 		this.ordersNo = ordersNo;
 		this.ordersReceiver = ordersReceiver;
@@ -41,6 +41,7 @@ public class Orders implements Serializable
 		this.paymentStatus = paymentStatus;
 		this.orders_date = orders_date;
 		this.memberId = memberId;
+		this.usedMileage = usedMileage;
 	}
 
 
@@ -64,6 +65,14 @@ public class Orders implements Serializable
 		this.orders_date = orders_date;
 		this.memberId = memberId;
 		this.orderProductList = orderProductList;
+	}
+
+	public int getUsedMileage() {
+		return usedMileage;
+	}
+
+	public void setUsedMileage(int usedMileage) {
+		this.usedMileage = usedMileage;
 	}
 
 	public String getOrdersNo()

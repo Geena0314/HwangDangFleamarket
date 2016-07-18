@@ -1,7 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="buy">
 
-     
 <sql id="product-column">
 	product_id , product_name ,product_price ,product_stock ,
 	product_main_image  , product_info , product_like , seller_store_no
@@ -17,7 +16,8 @@
 
 	<sql id="orders-column">
 		orders_no, orders_receiver, orders_phone, orders_zipcode, orders_address, orders_sub_address,
-		orders_total_price, orders_payment,orders_request, payment_status, member_id ,orders_date
+		orders_total_price, orders_payment,orders_request, payment_status,
+		 member_id ,orders_date , usedMileage
 	</sql>
 
 <resultMap type="product" id="basic-productmap">
@@ -35,7 +35,6 @@
 <resultMap type="Product" id="product-seller-join"  extends="basic-productmap">
 	<association property="seller" javaType="seller" resultMap="seller-basic-resultmap" />
 </resultMap> 
-	
 <resultMap type="ProductOption" id="basic-productOption-resultmap">
 	<id column="option_id" property="optionId" />
 	<result column="option_name" property="optionName"/>
@@ -62,6 +61,7 @@
 		<result column="payment_status" property="paymentStatus"/>
 		<result column="member_id" property="memberId"/>
 		<result column="orders_date"  property="orders_date"/>
+		<result column="usedMileage"  property="usedMileage"/>
 	</resultMap>
 
 
@@ -100,8 +100,8 @@
 	VALUES ( 
 	 #{ordersNo },#{ordersReceiver },#{ordersPhone },#{ordersZipcode },
 	 #{ordersAddress },#{ordersSubAddress },#{ordersTotalPrice },#{ordersPayment },
-	 #{ordersRequest },#{paymentStatus },#{orders_date },#{memberId }
-	)
+	 #{ordersRequest },#{paymentStatus },#{orders_date },#{memberId } ,#{usedMileage }
+	)  
 </insert>
 
 <!-- order_product TB INSERT   -->
@@ -113,7 +113,7 @@
 	INSERT INTO order_product
 	VALUES ( 
 	 #{orderSeqNo },#{orderAmount }, #{ordersNo }, #{productId },
-	 #{optionId }, #{sellerStoreNo },#{orderProductStatus }
+	 #{optionId }, #{sellerStoreNo },#{orderProductStatus } ,#{fare }
 	 
 	)
 </insert>
