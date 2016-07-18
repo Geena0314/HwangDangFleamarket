@@ -46,32 +46,6 @@ public class BuyController {
 	@Autowired
 	private CartService cartService;
 	
-	
-	//구매전 재고수량 확인 로직 - ajax 
-	@ResponseBody
-	@RequestMapping("/checkStock.go")
-	public String checkStock( String productId , int amount , String optionSubName){
-		
-		//재고확인로직
-		Map<String , Object> param = new HashMap<>();
-		param.put("productId", productId);
-		param.put("optionSubName", optionSubName);
-		int stock = service.getProductStockByProductId(param);
-		//System.out.println("재고량 조회:" + stock);
-		String msg = "";
-		if(amount > stock){
-			//주문수량이 재고량보다 큼 
-			//System.out.println("주문수량이 재고량보다 큼 : 주문실패 ");
-			 msg = "재고수량부족";
-			
-		}else if(amount <= stock){
-			//주문수량이 재고량보다 작거나 같을때 : 주문가능 
-			//System.out.println("주문가능상태 : 재고량가능!");
-			msg="재고수량가능";
-		}
-		return msg;
-	}  
-	
 	/**
 	 * 바로구매 :1개  상품결제 페이지 이동 
 	 *   (비로그인상태이면 로그인페이지로 거쳐서 로그인후 구매페이지로 이동  )
@@ -391,10 +365,8 @@ public class BuyController {
 			}
 		}
 		
-		
-		
-		
 		if(cnt == 1){
+			
 			//System.out.println("성공"); //   "*/*.tiles"
 			/*//뒤로가기이슈 해결 
 			//response.setHeader("Cache-Control", "no-store");
@@ -416,25 +388,17 @@ public class BuyController {
 	}  
 	
 	
-	
 	/**
 	 * 	구매성공 : 결제성공 페이지 이동 
 	 */
 	@RequestMapping("/addProductSuccessPage.go")
 	public String addProductPage(String ordersNo ,@RequestParam(value="productId" ,required=false ) String productId 
-			,@RequestParam(value="orderProductList" ,required=false ) List orderProductList ,Model model ){
-		String url = "/";
-		//System.out.println(ordersNo +", "+ productId);
-		
-			url = "buyer/buy_success.tiles";
+					,@RequestParam(value="orderProductList" ,required=false ) List orderProductList ,Model model ){
 			Orders orders = service.getOrdersByOrdersNo(ordersNo);
 			model.addAttribute("orders" ,orders);
 			model.addAttribute("product",productId);
 			model.addAttribute("orderProductList",orderProductList);
-			/*url = "error.tiles"; 
-			model.addAttribute("errorMsg","결제가실패하였습니다. 관리자에게 문의하세요.");*/
-		
-		return url;
+		return "buyer/buy_success.tiles";
 	}
 	/**
 	 * 	최근배송지 조회   - 
@@ -442,9 +406,7 @@ public class BuyController {
 	@RequestMapping("/currentDeliveryAddress.go")
 	@ResponseBody
 	public Orders currentDeliveryAddress(String memberId){
-		//System.out.println("아이디:"+memberId);
 		Orders orders = service.getcurrentDeliveryAddress(memberId);
-		//System.out.println(orders);
 		return orders;  //세부주소가진 orders 객체 리턴 
 	}
 	
@@ -494,17 +456,8 @@ public class BuyController {
 			model.addAttribute("productList", productList);
 			model.addAttribute("keyword" ,keyword);
 		}		
-		
 		return "buyer/product_list.tiles";
 	}
 	
 	
-	/**
-	결제버튼 클릭시 결제정보입력
-	 * */
-	@RequestMapping("/inputPayInfo.go")
-	public String findProductByKeyword(){
-		return "/WEB-INF/view/buyer/pay_info_form.jsp";
-	}
-	
-}
+} //class

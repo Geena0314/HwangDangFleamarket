@@ -255,9 +255,8 @@ function getMemberMileage(){
 				orderProductStatus =1;  //결제완료 
 			}
 			 var queryString = "";
-			// if($("#oneOrN").html().trim() == '1'){
-				if($("#hiddenFlaN").val() != 'ok'){
 				
+			 if($("#hiddenFlagN").val() != 'ok'){
 				 	//alert("한개구매");
 				 	//한개구매  
 				 	 queryString = "?ordersNo=${requestScope.ordersNo}&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
@@ -304,11 +303,11 @@ function getMemberMileage(){
 					 "&optionIdList="+optionIdList  +"&usedMileage="+$("#useMileage").html().trim()+"&cartNoList=${requestScope.cartNoList }&bank="+bank+"&card="+card+"&quota="+quota;	;	
 					$("form").prop("action", "/HwangDangFleamarket/buy/buyProducts.go"+queryString);
 			 }
-			  
 			// alert(queryString);
 			$("form").submit(); 
 		}); //결제버튼
 	
+		
 		//무통장입금 요소 show()  / 다른요소 hide()
 		$("#bank").on("click" ,function(){
 			$("#pay_cart").hide();
@@ -437,7 +436,7 @@ function getMemberMileage(){
 <div class="container">
 <form action="" method="POST" name="buy_form" class="form-inline"  >
 <input type="hidden" value="${sessionScope.login_info.memberId }" id="hiddenMemberId"	/>
-<input type="hidden" value="${requestScope.flaN }" id="hiddenFlaN"	/>
+<input type="hidden" value="${requestScope.flaN }" id="hiddenFlagN"	/>
  
 <table class="table">
 	<tr>

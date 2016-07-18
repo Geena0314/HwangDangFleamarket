@@ -18,16 +18,13 @@ public class Orders implements Serializable
 	private int paymentStatus;    // 결재여부 
 	private Date orders_date;   //주문날짜 
 	private String memberId;  //구매자 ID
+	private int usedMileage;
+	
 	
 	private List<OrderProduct> orderProductList;  // 주문한 제품에대한 세부정보  , 주문수량 , 상품ID
 	
-	public Orders()
-	{
-		// TODO Auto-generated constructor stub
-	}
+	public Orders(){ }
 
-	
-	
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
 			String ordersAddress, String ordersSubAddress, int ordersTotalPrice, String ordersPayment,
 			String ordersRequest, int paymentStatus, Date orders_date, String memberId) {
@@ -45,9 +42,6 @@ public class Orders implements Serializable
 		this.orders_date = orders_date;
 		this.memberId = memberId;
 	}
-
-
-
 
 
 	public Orders(String ordersNo, String ordersReceiver, String ordersPhone, String ordersZipcode,
