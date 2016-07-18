@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-<%@ taglib prefix="lee" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="lee" uri="http://java.sun.com/jsp/jstl/core"%> 
 <link type="text/css" rel="stylesheet" href="/HwangDangFleamarket/styles/product_detail.css">
 <link rel="stylesheet" href="/HwangDangFleamarket/uiscripts/jquery-ui.min.css">
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>

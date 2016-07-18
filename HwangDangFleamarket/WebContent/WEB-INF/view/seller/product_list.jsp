@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-<%@ taglib prefix="lee"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="lee"  uri="http://java.sun.com/jsp/jstl/core"%> 
 <h2 class="page-header store_look_around">스토어 상품 목록</h2>
 <div class="row placeholders product-content">
 	<lee:forEach items="${ requestScope.productList }" var="list" varStatus="no">

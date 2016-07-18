@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix='lee' uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
-<script type="text/javascript">
+<script type="text/javascript"> 
 	$(document).ready(function()
 	{
 		$("#memberZipcode").on("click", function()

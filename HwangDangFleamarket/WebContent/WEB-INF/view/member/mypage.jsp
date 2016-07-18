@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="lee" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
-<script type="text/javascript">
+<script type="text/javascript"> 
 $(document).ready(function(){
 	$('#withdtawalBtn').on("click", function(){
 		if(confirm("정말 탈퇴하실건가요ㅠㅠ?")){

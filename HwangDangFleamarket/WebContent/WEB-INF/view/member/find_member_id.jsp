@@ -1,6 +1,6 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
-
+ 
 		<!-- id -->
 		<table width='600' class="table table-striped">
 		<tr class="trInput">

@@ -3,7 +3,7 @@
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		
+		 
 		var passwordFlag = false;
 		var nameFlag = false;
 		var phoneFlag = false;
