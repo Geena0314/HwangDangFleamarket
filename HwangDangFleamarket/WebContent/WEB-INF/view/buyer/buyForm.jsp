@@ -2,9 +2,17 @@
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<<style>
+	img {
+		width : 70px;
+		height: 70px;
+	}
+</style>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
-
 
 function addMileage(mileage){
 	var originalMileage = $("#memberMileage").text().trim();
@@ -48,6 +56,51 @@ function getMemberMileage(){
 		}
 	});
 }//func 
+
+//Daum address API
+ function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = ''; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    fullAddr = data.roadAddress;
+
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    fullAddr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+                if(data.userSelectedType === 'R'){
+                    //법정동명이 있을 경우 추가한다.
+                    if(data.bname !== ''){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if(data.buildingName !== ''){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('sample6_address').value = fullAddr;
+
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById('sample6_address2').focus();
+            }
+        }).open();
+    }
+
+
 
 	$(document).ready(function(){
 		//마일리지 ajax통신을 이용하여 조회
@@ -143,14 +196,6 @@ function getMemberMileage(){
 			
 		});
 		
-		//주소지입력 버튼 클릭 
-		$("#findAddress").on("click",function(){
-			var specs = "left=100,top=100,width=600,height=500";
-			  specs += ",toolbar=no,menubar=no,status=no,scrollbars=no,resizable=no";
-			window.open("/HwangDangFleamarket/popup.jsp","addressForm" ,specs);
-		});
-	
-		
 		//결제버튼 클릭
 		$("#submitBtn").on("click",function(){
 			//검증1. 결제수단 반드시 체크확인 !
@@ -179,11 +224,10 @@ function getMemberMileage(){
 				var phone1 = $("#phone1").val().trim();
 				var phone2 = $("input[name=phone2]").val().trim();
 				var phone3 = $("#phone3").val().trim();
-				
-				 ordersZipcode = $("#zipcode").val().trim();
-				 ordersAddress = $("#address1").val().trim();
-				 ordersSubAddress = $("input[name=address2]").val().trim();
-				//alert(name+phone1+phone2+phone3+zipcode+address1+address2);
+				    
+				 ordersZipcode = $("#sample6_postcode").val().trim();
+				 ordersAddress = $("#sample6_address").val().trim();
+				 ordersSubAddress = $("#sample6_address2").val().trim();
 				
 				if(ordersReceiver.length == 0){
 					alert("받는분을 입력해주세요.");
@@ -430,6 +474,7 @@ function getMemberMileage(){
 	
 </script>
 
+
 <!-- <h2 class="page-header store_look_around">구매페이지</h2> -->
 
 <div class="container">
@@ -467,10 +512,15 @@ function getMemberMileage(){
 			-<input type="text" name="phone2" id="phone2" class="form-control"/> -
 			 <input type="text" name="phone3" id="phone3" class="form-control"/><br/>
 				주소 
-				<input type="button" value="주소찾기"  id="findAddress" />
+				<input type="text"  name="zipcode" id="sample6_postcode" placeholder="우편번호" class="form-control" size="10">
+				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="btn btn-default"><br> 
+				<input type="text" name="address1"  id="sample6_address" placeholder="주소" class="form-control" size="65"><br/>
+				<input type="text" name="address2" id="sample6_address2" placeholder="상세주소" class="form-control"size="65" >
+							
+				<!-- <input type="button" value="주소찾기"  id="findAddress" />
 				<input type="text" name="zipcode" id="zipcode" disabled="disabled" size="10" class="form-control"/><br/>
 				<input type="text" name="address1" id="address1" disabled="disabled"  size="45" class="form-control"/><br/>
-				<input type="text" name="address2"  size="45" class="form-control"/>
+				<input type="text" name="address2"  size="45" class="form-control"/> -->
 			 </span><br/>
 		  	
 		  	<select name="requestOption" id="requestOption" class="form-control">
@@ -589,7 +639,7 @@ function getMemberMileage(){
 			<input type="hidden" id="optionId"  class="optionId" value="${op.productOption.optionId }"/>
 			<input type="hidden"  class="sellerStoreNo" value="${op.sellerStoreNo }"/>
 			<input type="hidden"  class="productId" value="${op.product.productId }"/>
-			
+			<img alt="상품메인이미지" src="../image_storage/${op.product.productMainImage }">
 			<span id="sellerStoreName" >${op.seller.sellerStoreName }</span> - <span id="productName">${op.product.productName  } </span><br/>
 			<span id="productPricePer"><fmt:formatNumber type="currency">${op.product.productPrice } </fmt:formatNumber></span>
 			<span>

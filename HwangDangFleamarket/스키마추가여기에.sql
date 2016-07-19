@@ -130,5 +130,4 @@ ALTER TABLE PRODUCT_DETAIL_IMAGE modify image_path varchar2(4000);
 ALTER TABLE orders ADD  usedMileage number
 -- order_product 개별주문상품에 대한 배송료 컬럼 추가 
 ALTER TABLE ORDER_PRODUCT ADD  fare number
-select * FROM ORDER_PRODUCT
-select * FROM ORDERS
+
