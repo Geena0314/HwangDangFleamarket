@@ -8,6 +8,12 @@
 	#layer{
 		width : 1000px;
 	}
+	
+img {
+	width : 70px;
+	height: 70px;
+}  
+	  
 .center-block {
   display: block;
   margin-left: auto;
@@ -112,6 +118,7 @@
 		<hr>  
 		주문번호 : ${sessionScope.orders.ordersNo } <br/> 
 		<c:forEach  var="op" items="${sessionScope.orders.orderProductList }">
+			<img alt="상품메인사진" src="../image_storage/${op.product.productMainImage }"><br/>  
 			상품명(옵션사항) :  ${op.product.productName }(${op.productOption.optionSubName })<br/>
 			상품가격/수량/배송비  : <fmt:formatNumber pattern="#,###">${op.product.productPrice + op.productOption.optionAddPrice}</fmt:formatNumber>
 			 / ${op.orderAmount}개 / 

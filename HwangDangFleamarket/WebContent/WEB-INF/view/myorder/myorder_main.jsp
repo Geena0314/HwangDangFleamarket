@@ -211,12 +211,11 @@ function checkboxValidation(num1 , num2 , num3 , msg ){
 	<% int cnt = 0; %>
 	<c:forEach items="${requestScope.orderList }"  var="order" > 
 	<div class="parent">
-	
+	${order. }
 	<!-- 주문날짜 -->              
 	<h4>&nbsp;<input type="checkbox" name='items<%=cnt%>' class='items<%=cnt %>' onclick="allCheck(this);" /> 
 	<fmt:formatDate value="${order.orders_date }" pattern="yyyy-MM-dd" /> / orderno : ${order.ordersNo }</h4>
 		<c:forEach items="${order.orderProductList }" var="orderProduct">		
-		     
 			<table class="table">
 			<tbody>
 				<tr>

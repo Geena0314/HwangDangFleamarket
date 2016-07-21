@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<<style>
+<style>
 	img {
 		width : 70px;
 		height: 70px;
@@ -101,7 +101,6 @@ function getMemberMileage(){
     }
 
 
-
 	$(document).ready(function(){
 		//마일리지 ajax통신을 이용하여 조회
 		getMemberMileage();
@@ -148,14 +147,15 @@ function getMemberMileage(){
 					//alert("TEST ID: "+$("#hiddenMemberId").val().trim());
 				},
 				"success" : function(orders){
-					//alert(orders.ordersPhone);
+					//console.log(orders);
+					//alert(orders.ordersAddress);  
 					$("#originalAddress").show();
 					$("#hiddenAddress").hide();
 					temp_ordersReceiver = $("#memberName").html().trim();
 					$("#memberName").html(orders.ordersReceiver);
 					
 					temp_currentAddress = $("#memberAddress").html().trim();
-					$("#memberAddress").html(orders.currentAddress);
+					$("#memberAddress").html(orders.ordersAddress);
 					
 					temp_ordersPhone = $("#memberPhone").html().trim();
 					$("#memberPhone").html(orders.ordersPhone);

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -174,9 +175,14 @@ public class MemberController {
 	
 	//회원정보 수정 페이지로 이동 
 	@RequestMapping("/member_info_update.go")
-	public String memberInfoUpdatePageMove(String memberPassword, HttpSession session , Model model)
-	{	
+	public String memberInfoUpdatePageMove(String memberId , Model model){	
 		model.addAttribute("emailList", service.selectEmailList());
+		//셀러회원이면 셀러정보 조회 
+		Member member = service.findById(memberId);
+		if(member != null && member.getMemberAssign() == 1 ){
+			Seller seller = service.selectSellerById(memberId);
+			model.addAttribute("seller" ,seller);
+		}
 		return "member/member_info_update.tiles";
 	}
 	//비밀번호  수정 : 예전 비밀번호 검증
@@ -301,8 +307,54 @@ public class MemberController {
 			@RequestParam(value="hp3",required=false) String hp3 , 
 			@RequestParam(value="memberZipcode",required=false) String memberZipcode ,
 			@RequestParam(value="memberAddress",required=false) String memberAddress ,  Model model ,
-			@RequestParam(value="memberSubAddress",required=false) String memberSubAddress ,HttpSession session ){
-		 
+			@RequestParam(value="memberSubAddress",required=false) String memberSubAddress ,HttpSession session ,
+			@RequestParam(value="sellerSubIndustry",required=false) String sellerSubIndustry ,
+			@RequestParam(value="sellerProduct1",required=false) String sellerProduct1 ,
+			@RequestParam(value="sellerProduct2",required=false) String sellerProduct2 ,
+			@RequestParam(value="sellerProduct3",required=false) String sellerProduct3 ,
+			@RequestParam(value="sellerIntroduction",required=false) String sellerIntroduction ,
+			@RequestParam(value="sellerZipcode",required=false) String sellerZipcode ,
+			@RequestParam(value="sellerAddress",required=false) String sellerAddress ,
+			@RequestParam(value="sellerSubAddress",required=false) String sellerSubAddress ,
+			@RequestParam(value="sellerTaxId",required=false) String sellerTaxId ,
+			@RequestParam(value="sellerStoreName",required=false) String sellerStoreName , 
+			@RequestParam(value="sellerMainImage",required=false) MultipartFile sellerMainImage , HttpServletRequest request ,
+			String memberId ,@RequestParam(value="sellerIndustry",required=false) String sellerIndustry ){
+		//셀러 등록 신청.
+				//대표이미지 저장처리.(sellerMainImage -> setSellerStoreImage)이름만 저장.
+			    String originalFileName = sellerMainImage.getOriginalFilename();//업로드 된 파일명.
+				
+				//임시 저장소에 저장된 업로드 된 파일을 최종 저장소로 이동.
+				//최종 저장소 디렉토리 조회.
+				//new File(디렉토리, 파일)
+				String path = "C:\\Users\\kosta\\git\\HwangDangFleamarket\\HwangDangFleamarket\\WebContent\\image_storage";
+				File image = new File(path, originalFileName);
+				
+			    //file중복체크
+			    if (image.exists())
+			    {
+					originalFileName = System.currentTimeMillis() + originalFileName;
+					image = new File(path, originalFileName);
+			    }
+			    // /는 application의 루트경로 => 파일경로로 알려준다.
+			    try
+				{
+			    	//톰캣 경로의 image_storage로 파일복사.
+			    	String imageStorage = request.getServletContext().getRealPath("/image_storage");
+			    	FileCopyUtils.copy(sellerMainImage.getInputStream(), new FileOutputStream(imageStorage+"/"+originalFileName));
+			    	
+			    	//gits경로로 이미지 이동.
+		 			sellerMainImage.transferTo(image);
+				} catch (IllegalStateException | IOException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    
+			    
+			    seller.setSellerStoreImage(originalFileName);
+			    int result = sellerService.setSeller(seller);
+		
 		String url = "/";
 		String memberPhone = hp1+"-"+hp2+"-"+hp3;
 		//System.out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n",memberName ,oldPassword ,newPassword1 ,newPassword2, hp1,hp2,hp3,memberZipcode , memberAddress, memberSubAddress);

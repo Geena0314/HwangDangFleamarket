@@ -50,6 +50,10 @@ public class SellerSerivceImpl implements SellerService{
 		// TODO Auto-generated method stub
 		return dao.insertSeller(seller);
 	}
+	
+	public int setSeller(Seller seller){
+		return dao.updateSeller(seller);
+	}
 
 	@Override
 	public HashMap<String, Object> selectOrderState(int page, int sellerStoreNo)

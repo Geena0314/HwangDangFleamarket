@@ -7,15 +7,6 @@ img {
 	height : 70px;
 }
 
-div .parent  {
-	/* border : 1px solid pink; */
-	/* float : left; */
-}
-div .child  {
-	/* border : 1px solid black; */
-	/* float : left; */
-}
-
 #orderSeqNo
 {
 	display: none;
@@ -36,10 +27,8 @@ div .child  {
 	교환/환불/취소 -   교환신청 승인 : 8 
 	교환/환불/취소 -   환불신청 승인  : 9   -->
 
-
-
 <div class="container">
-	<h2 class="page-header store_look_around">나의주문 - 배송완료</h2>
+	<!-- <h2 class="page-header store_look_around">나의주문 - 배송완료</h2> -->
 	<div class="row">
 	<!-- 네비게이션 바Area -->
 	 <ul class="nav nav-tabs">

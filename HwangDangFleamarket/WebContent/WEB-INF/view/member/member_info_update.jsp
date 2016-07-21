@@ -1,7 +1,62 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+	img {
+		width:70px; 
+		hiehgt: 70px;
+	}
+</style>
+
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+
+
+
 <script type="text/javascript">
+
+//다음주소 API
+function sample6_execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var fullAddr = ''; // 최종 주소 변수
+            var extraAddr = ''; // 조합형 주소 변수
+
+            // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                fullAddr = data.roadAddress;
+
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                fullAddr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+            if(data.userSelectedType === 'R'){
+                //법정동명이 있을 경우 추가한다.
+                if(data.bname !== ''){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있을 경우 추가한다.
+                if(data.buildingName !== ''){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('sample6_postcode').value = data.zonecode; //5자리 새우편번호 사용
+            document.getElementById('sample6_address').value = fullAddr;
+
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById('sample6_address2').focus();
+        }
+    }).open();
+}
+
 	$(document).ready(function(){
 		 
 		var passwordFlag = false;
@@ -80,8 +135,6 @@
 						return false;
 					}
 					
-					
-					
 					if(nameFlag && $("#memberName").val().trim().length < 2 || $("#memberName").val().trim().length > 6)
 					{
 						alert("이름은 2자이상 6자 이하로 입력해 주세요.");
@@ -159,18 +212,49 @@
 		 addressFlag = true;
 	});
 		
-
-	}); //ready
+	  
+	
+	
+	 //판매자 정보수정버튼 클릭 리스트들 
+	$("#sellerStoreNameUpdateBtn").on("click",function(){
+		$("#hiddenSellerStoreName").show();
+	});
+	 
+	$("#sellerTaxIdUpdateBtn").on("click",function(){
+		$("#hiddenSellerTaxId").show();
+	});
+	 
+	   
+	$("#sellerSubIndustryUpdateBtn").on("click",function(){
+		$("#hiddenSellerSubIndustry").show();
+	});
+	
+	 
+	$("#sellerAddressUpdateBtn").on("click",function(){
+		$("#hiddenSellerAddress").show();
+	});
+	
+}); //ready
+	
+	//hidden된 스팬을 보여주는 함수 정의
+	function  showSpan(spanName){
+		var span = document.getElementById(spanName);
+		//console.log(span);
+		span.style.display = 'block'; 		
+	}
+	
+	
 </script>
 <h2 class="page-header store_look_around">황당 플리마켓 회원정보 수정</h2>
-<form method="post" action="/HwangDangFleamarket/member/setMember.go" name="register" id="registerForm">
+<form method="post" enctype="multipart/form-data" action="/HwangDangFleamarket/member/setMember.go" name="register" id="registerForm">
 <div class="table-responsive" >
 	<table width='600' class="table table-striped">
 		<tr class="trInput">
 		
 			<td width='150' class='tdName'>I&nbsp&nbsp&nbsp&nbsp&nbspD</td>
 			<td>
-				 ${sessionScope.login_info.memberId } 
+				 ${sessionScope.login_info.memberId }
+				  <input type="hidden" name="memberId" value="${sessionScope.login_info.memberId }" />
 			</td>
 		</tr>
 		<tr class="trInput">
@@ -227,7 +311,107 @@
 			</span>
 			</td>
 		</tr>   
-		
+		    
+		<!-- 판매자일경우 판매자 정보 변경 양식  -->
+		<c:if test="${sessionScope.login_info.memberAssign == 1 }">
+			<tr class="trInput">  
+					<td class='tdName'>상호 명</td>
+					<td>${requestScope.seller.sellerStoreName } <input type="button" value="수정" id="sellerStoreNameUpdateBtn"/><br/>
+					<span id="hiddenSellerStoreName" hidden="hidden">	
+						<input type="text" name="sellerStoreName" />
+					</span>
+					</td>
+			</tr>
+						
+			<tr class="trInput">
+				<td class='tdName'>사업자 번호</td>
+				<td>${requestScope.seller.sellerTaxId }<input type="button" value="수정" id="sellerTaxIdUpdateBtn"/><br/>
+					<span id="hiddenSellerTaxId" hidden="true">  
+						<input type="text" name="sellerTaxId">
+					</span>
+					
+				</td>
+			</tr>
+				
+			<tr class="trInput">
+				<td class='tdName'>업종대분류</td>
+				<td>${requestScope.seller.sellerIndustry }<input type="button" value="수정" onclick="showSpan('hiddenSellerIndustry')" /><br/>
+					<span hidden="true" id="hiddenSellerIndustry">
+						<input type="text" name="sellerIndustry">
+					</span>
+				</td>
+			</tr>	
+						
+			<tr class="trInput">
+				<td class='tdName'>업종소분류</td>
+				<td>${requestScope.seller.sellerSubIndustry }<input type="button" value="수정" id="sellerSubIndustryUpdateBtn"/><br/>
+					<span hidden="true" id="hiddenSellerSubIndustry">
+						<input type="text" name="sellerSubIndustry">
+					</span>
+				</td>
+			</tr>
+
+			<tr class="trInput">
+				<td class='tdName'> 매장 주소 </td>
+				<td>[${requestScope.seller.sellerZipcode}]${requestScope.seller.sellerAddress}${requestScope.seller.sellerSubAddress}
+				<input type="button" value="수정" id="sellerAddressUpdateBtn"/><br/>
+					<span hidden="true" id="hiddenSellerAddress">
+						<input type="text" id="sample6_postcode" placeholder="우편번호"  name="sellerZipcode" size="30">
+						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+						<input type="text" id="sample6_address" placeholder="주소" name="sellerAddress" size="60">
+						<input type="text" id="sample6_address2" placeholder="상세주소" name="sellerSubAddress" size="60">
+					</span>
+				</td>
+			</tr>  
+			
+			<tr class="trInput">
+				<td class='tdName'>스토어사진</td>
+				<td><img src="../image_storage/${requestScope.seller.sellerStoreImage }" />
+					<input type="file" alt="이미지등록" value="이미지등록"  name="sellerStoreImage" />
+				</td>
+			</tr>
+			
+			<tr class="trInput">
+				<td class='tdName'>판매 물품1</td>
+				<td>${requestScope.seller.sellerProduct1 }
+				<input type="button" value="수정"  onclick="showSpan('hiddenSellerProduct1')" /><br/>
+					<span hidden="true" id="hiddenSellerProduct1">
+						<input type="text" name="sellerProduct1">
+					</span>
+				</td>
+			</tr>
+			
+			<tr class="trInput">
+				<td class='tdName'>판매 물품2</td>
+				<td>${requestScope.seller.sellerProduct2 } 
+					<input type="button" value="수정" onclick="showSpan('hiddensellerProduct2')"/><br/>
+					<span hidden="true" id="hiddensellerProduct2">
+						<input type="text" name="sellerProduct2" />
+					</span>
+				</td>
+			</tr>
+			  
+			<tr class="trInput">
+				<td class='tdName'>판매 물품3</td>
+				<td>${requestScope.seller.sellerProduct3 }
+					<input type="button" value="수정" onclick="showSpan('hiddenSellerProduct3')" /><br/>
+					<span hidden="true" id="hiddenSellerProduct3">
+						<input type="text" name="sellerProduct3"/>
+					</span>
+				</td>
+			</tr>
+			
+			<tr class="trInput">
+				<td class='tdName'>스토어소개글</td>
+				<td>${requestScope.seller.sellerIntroduction }
+					<input type="button" value="수정"  onclick="showSpan('hiddenSellerIntroduction')" /><br/>
+					<span hidden="true" id="hiddenSellerIntroduction">
+					  	<textarea name="sellerIntroduction"></textarea>
+					</span>
+				</td>
+			</tr>
+			</div>
+		</c:if>		
 		<tr class="trInput">
 			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>

@@ -58,6 +58,8 @@
 				</c:if>
 			</ul>
 		</div>
+		
+		
 		<div align="center" class="main-buttons col-sm-6">
 			<ul class="nav navbar-nav navbar-right links">
 				<!-- 삭제 예정 <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li> -->

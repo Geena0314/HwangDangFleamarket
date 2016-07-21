@@ -46,6 +46,10 @@ public class SellerDaoImpl implements SellerDao{
 		return session.insert("sellerMapper.insertSeller", seller);
 	}
 
+	public int updateSeller(Seller seller){
+		return session.update("sellerMapper.updateSeller", seller);
+	}
+	
 	@Override
 	public List<Seller> selectSellerRegister(HashMap<String, Object> map)
 	{

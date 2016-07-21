@@ -44,4 +44,6 @@ public interface SellerDao {
 	
 	//주문번호로 주문정보조회.
 	Orders selectOrderInfo(String ordersNo);
+	
+	public int updateSeller(Seller seller);
 }

@@ -37,9 +37,8 @@ div .child  {
 	교환/환불/취소 -   환불신청 승인  : 9   -->
 
 
-
 <div class="container">
-	<h2 class="page-header store_look_around">나의주문 - 교환/환불/취소</h2>
+	<!-- <h2 class="page-header store_look_around">나의주문 - 교환/환불/취소</h2> -->
 	<div class="row">
 	<!-- 네비게이션 바Area -->
 	 <ul class="nav nav-tabs">

@@ -63,7 +63,9 @@ $(document).ready(function(){
 		<lee:otherwise>
 		<!-- 회원,판매자 정보 수정. -->
 			<div class="col-sm-4" id="memberEdit">
-				<a href="/HwangDangFleamarket/member/member_info_update.go"><img class="mypage-images" src="../image_storage/memberEdit.jpg"></a>  
+				<a href="/HwangDangFleamarket/member/member_info_update.go?memberId=${sessionScope.login_info.memberId }">
+					<img class="mypage-images" src="../image_storage/memberEdit.jpg">
+				</a>  
 			</div>
 		</lee:otherwise>
 	</lee:choose>
