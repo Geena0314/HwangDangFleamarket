@@ -13,10 +13,13 @@
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  
+  
   <servlet-mapping>
     <servlet-name>springDispatcherServlet</servlet-name>
     <url-pattern>*.go</url-pattern>
   </servlet-mapping>
+  
   <filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -25,8 +28,10 @@
       <param-value>UTF-8</param-value>
     </init-param>
   </filter>
+  
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>
     <url-pattern>*.go</url-pattern>
   </filter-mapping>
+  
 </web-app>

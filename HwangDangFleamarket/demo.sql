@@ -134,31 +134,35 @@ insert into PRODUCT_DETAIL_IMAGE values ('장난감세부사진.jpg', 'productno
 insert into PRODUCT_DETAIL_IMAGE values ('인형2세부사진.jpg', 'productno900');
   
 
-
+select * FROM PRODUCT
 --XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 --**********************************************************************
--- 장난감 상품 추가                                                                                                                                                            극동storeNO 등록바람
-insert into product values ('productno911', '어니언 장난감', 5000, 30, '어니언메인사진.jpg', '어니언케릭터입니다.', 50, 1);
+-- 장난감 상품 추가                                                                                               극동storeNO 등록바람
+insert into product values ('productno701', '어니언 장난감', 5000, 30, '어니언메인사진.jpg', '어니언케릭터입니다.', 50, 6);
+
 insert into product_option 
-values (option_id_seq.nextval, '넓이/높이', '10cm/5cm', 20,  2500, 'productno911');
+values (option_id_seq.nextval, '출시년도', '2012', 20,  2500, 'productno701');
+
 insert into product_option
-values (option_id_seq.nextval,  '넓이/높이', '20cm/15cm', 10, 6000, 'productno911');
+values (option_id_seq.nextval, '출시년도', '2013', 5, 3500, 'productno701');
+
 insert into product_option 
-values (option_id_seq.nextval,  '넓이/높이', '30cm/25cm', 10, 9000, 'productno911');
-insert into PRODUCT_DETAIL_IMAGE values ('어니언 세부사진.jpg', 'productno911');
+values (option_id_seq.nextval,  '출시년도', '2015', 5, 4500, 'productno701');
+
+insert into PRODUCT_DETAIL_IMAGE values ('어니언 세부사진.jpg', 'productno701');
 
 
 --꿈꾸는 스토어 등록 
-insert into product values ('productno912', '동물장난감', 10000, 0, '동물장난감메인.jpg', '조이조이 장남감', 901, 2);
+insert into product values ('productno702', '동물장난감', 10000, 0, '동물장난감메인.jpg', '조이조이 장남감', 901, 8);
 insert into product_option 
-values (option_id_seq.nextval, '넓이/높이', '10cm/5cm', 0,  1500, 'productno912');
+values (option_id_seq.nextval, '가로/세로/높이', '10cm/6cm/7cm', 0,  1500, 'productno702');
 insert into product_option
-values (option_id_seq.nextval,  '넓이/높이', '20cm/15cm', 0, 3000, 'productno912');
+values (option_id_seq.nextval,  '넓이/높이', '20cm/15cm/10cm', 0, 3000, 'productno702');
 insert into product_option 
-values (option_id_seq.nextval,  '넓이/높이', '30cm/25cm', 0, 5000, 'productno912');
+values (option_id_seq.nextval,  '넓이/높이', '30cm/25cm/15cm', 0, 5000, 'productno702');
 
 
-insert into PRODUCT_DETAIL_IMAGE values ('동물장난감세부사진.jpg', 'productno912');
+insert into PRODUCT_DETAIL_IMAGE values ('동물장난감세부사진.jpg', 'productno702');
   
 
 

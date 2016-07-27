@@ -1,3 +1,6 @@
+ select * from all_objects where object_name like 'SYS_C007123';
+
+
 select * FROM admin_QnA 
 ORDER BY admin_qna_no DESC;
 select * FROM PRODUCT_OPTION

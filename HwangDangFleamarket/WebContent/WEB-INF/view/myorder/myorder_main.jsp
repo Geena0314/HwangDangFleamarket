@@ -1,7 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt"   uri="http://java.sun.com/jsp/jstl/fmt"  %> 
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"  %>
+<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt"   uri="http://java.sun.com/jsp/jstl/fmt"%> 
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <style> 
 
 td {
@@ -211,7 +211,7 @@ function checkboxValidation(num1 , num2 , num3 , msg ){
 	<% int cnt = 0; %>
 	<c:forEach items="${requestScope.orderList }"  var="order" > 
 	<div class="parent">
-	${order. }
+	
 	<!-- 주문날짜 -->              
 	<h4>&nbsp;<input type="checkbox" name='items<%=cnt%>' class='items<%=cnt %>' onclick="allCheck(this);" /> 
 	<fmt:formatDate value="${order.orders_date }" pattern="yyyy-MM-dd" /> / orderno : ${order.ordersNo }</h4>

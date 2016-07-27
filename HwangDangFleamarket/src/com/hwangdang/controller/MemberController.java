@@ -298,7 +298,7 @@ public class MemberController {
 	
 	//회원정보수정
 	@RequestMapping("/setMember.go")
-	public String setMember(@RequestParam(value="memberName",required=false) String memberName ,
+	public String setMember(String memberId ,@RequestParam(value="memberName",required=false) String memberName ,
 			@RequestParam(value="oldPassword",required=false) String oldPassword,
 			@RequestParam(value="newPassword1",required=false) String newPassword1,
 			@RequestParam(value="newPassword2",required=false) String newPassword2 , 
@@ -307,7 +307,8 @@ public class MemberController {
 			@RequestParam(value="hp3",required=false) String hp3 , 
 			@RequestParam(value="memberZipcode",required=false) String memberZipcode ,
 			@RequestParam(value="memberAddress",required=false) String memberAddress ,  Model model ,
-			@RequestParam(value="memberSubAddress",required=false) String memberSubAddress ,HttpSession session ,
+			@RequestParam(value="memberSubAddress",required=false) String memberSubAddress ,
+			HttpSession session , HttpServletRequest request ,
 			@RequestParam(value="sellerSubIndustry",required=false) String sellerSubIndustry ,
 			@RequestParam(value="sellerProduct1",required=false) String sellerProduct1 ,
 			@RequestParam(value="sellerProduct2",required=false) String sellerProduct2 ,
@@ -318,44 +319,12 @@ public class MemberController {
 			@RequestParam(value="sellerSubAddress",required=false) String sellerSubAddress ,
 			@RequestParam(value="sellerTaxId",required=false) String sellerTaxId ,
 			@RequestParam(value="sellerStoreName",required=false) String sellerStoreName , 
-			@RequestParam(value="sellerMainImage",required=false) MultipartFile sellerMainImage , HttpServletRequest request ,
-			String memberId ,@RequestParam(value="sellerIndustry",required=false) String sellerIndustry ){
-		//셀러 등록 신청.
-				//대표이미지 저장처리.(sellerMainImage -> setSellerStoreImage)이름만 저장.
-			    String originalFileName = sellerMainImage.getOriginalFilename();//업로드 된 파일명.
-				
-				//임시 저장소에 저장된 업로드 된 파일을 최종 저장소로 이동.
-				//최종 저장소 디렉토리 조회.
-				//new File(디렉토리, 파일)
-				String path = "C:\\Users\\kosta\\git\\HwangDangFleamarket\\HwangDangFleamarket\\WebContent\\image_storage";
-				File image = new File(path, originalFileName);
-				
-			    //file중복체크
-			    if (image.exists())
-			    {
-					originalFileName = System.currentTimeMillis() + originalFileName;
-					image = new File(path, originalFileName);
-			    }
-			    // /는 application의 루트경로 => 파일경로로 알려준다.
-			    try
-				{
-			    	//톰캣 경로의 image_storage로 파일복사.
-			    	String imageStorage = request.getServletContext().getRealPath("/image_storage");
-			    	FileCopyUtils.copy(sellerMainImage.getInputStream(), new FileOutputStream(imageStorage+"/"+originalFileName));
-			    	
-			    	//gits경로로 이미지 이동.
-		 			sellerMainImage.transferTo(image);
-				} catch (IllegalStateException | IOException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			    
-			    
-			    seller.setSellerStoreImage(originalFileName);
-			    int result = sellerService.setSeller(seller);
+			@RequestParam(value="sellerMainImage",required=false) MultipartFile sellerMainImage ,
+			@RequestParam(value="sellerIndustry",required=false) String sellerIndustry ,
+			@RequestParam(value="sellerStoreNo",defaultValue="0") int sellerStoreNo ){
 		
-		String url = "/";
+		System.out.println(sellerMainImage);
+		String url = "/";  
 		String memberPhone = hp1+"-"+hp2+"-"+hp3;
 		//System.out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n",memberName ,oldPassword ,newPassword1 ,newPassword2, hp1,hp2,hp3,memberZipcode , memberAddress, memberSubAddress);
 		Member oldMember = (Member) session.getAttribute("login_info");
@@ -401,6 +370,93 @@ public class MemberController {
 			url = "/";
 		}  
 		
+		//판매자 정보수정이 있을경우 실행
+		if(sellerStoreNo != 0){
+			//셀러 등록 신청.
+			Seller seller = sellerService.getSellerBySellerStoreNo(sellerStoreNo);
+		
+			if(sellerIndustry != null && !sellerIndustry.isEmpty() ){
+				seller.setSellerIndustry(sellerIndustry);
+			}
+			if(sellerSubIndustry != null && !sellerSubIndustry.isEmpty() ){
+				seller.setSellerSubIndustry(sellerSubIndustry);
+			}
+			if(sellerStoreName != null && !sellerStoreName.isEmpty() ){
+				seller.setSellerStoreName(sellerStoreName);
+			}
+			if(sellerTaxId != null && !sellerTaxId.isEmpty() ){
+				seller.setSellerTaxId(sellerTaxId);
+			}
+			if(sellerSubAddress != null && !sellerSubAddress.isEmpty() ){
+				seller.setSellerSubAddress(sellerSubAddress);
+			}
+			if(sellerAddress != null && !sellerAddress.isEmpty() ){
+				seller.setSellerAddress(sellerAddress);
+			}
+			if(sellerZipcode != null && !sellerZipcode.isEmpty() ){
+				seller.setSellerZipcode(sellerZipcode);
+			}
+			if(sellerIntroduction != null && !sellerIntroduction.isEmpty() ){
+				seller.setSellerIntroduction(sellerIntroduction);
+			}
+			if(sellerProduct3 != null && !sellerProduct3.isEmpty() ){
+				seller.setSellerProduct3(sellerProduct3);
+			}
+			if(sellerProduct2 != null && !sellerProduct2.isEmpty() ){
+				seller.setSellerProduct2(sellerProduct2);
+			}
+			if(sellerProduct1 != null && !sellerProduct1.isEmpty() ){
+				seller.setSellerProduct1(sellerProduct1);
+			}
+			
+			if(sellerMainImage != null && !sellerMainImage.isEmpty()){
+				//대표이미지 저장처리.(sellerMainImage -> setSellerStoreImage)이름만 저장.
+				String originalFileName = "";
+				if(sellerMainImage != null && !sellerMainImage.isEmpty()){
+					 originalFileName = sellerMainImage.getOriginalFilename();//업로드 된 파일명.
+						
+						//임시 저장소에 저장된 업로드 된 파일을 최종 저장소로 이동.
+						//최종 저장소 디렉토리 조회.
+						//new File(디렉토리, 파일)
+						String path = "C:\\Users\\kosta\\git\\HwangDangFleamarket\\HwangDangFleamarket\\WebContent\\image_storage";
+						File image = new File(path, originalFileName);
+						
+					    //file중복체크
+					    if (image.exists())
+					    {
+							originalFileName = System.currentTimeMillis() + originalFileName;
+							image = new File(path, originalFileName);
+					    }
+					    // /는 application의 루트경로 => 파일경로로 알려준다.
+					    try
+						{
+					    	//톰캣 경로의 image_storage로 파일복사.
+					    	String imageStorage = request.getServletContext().getRealPath("/image_storage");
+					    	FileCopyUtils.copy(sellerMainImage.getInputStream(), new FileOutputStream(imageStorage+"/"+originalFileName));
+					    	
+					    	//gits경로로 이미지 이동.
+				 			sellerMainImage.transferTo(image);
+						} catch (IllegalStateException | IOException e)
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				}
+			    seller.setSellerStoreImage(originalFileName);
+			}
+		
+		    int result = sellerService.setSeller(seller);
+		    if(result == 1){
+		    	//System.out.println("셀러 수정 성공");
+		    	url = "member/updateSuccess.tiles";
+		    	model.addAttribute("seller", seller);
+		    }else {
+		    	//System.out.println("셀러수정 실패");
+		    	 url = "/error.tiles";
+		    	 model.addAttribute("errorMsg", "판매자 정보수정을 실패하였습니다. 관리자에게 문의해주세요.");
+		    }
+		    
+		}
 		return url;
 	}
 	

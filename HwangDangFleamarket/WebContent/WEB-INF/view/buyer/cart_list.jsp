@@ -57,6 +57,9 @@ ul li{
 	left: 14%;
 	color: gray;
 }
+
+<%-- <%int deriveryCnt = 0; %>
+<%deriveryCnt++; %> --%>
 </style>
 <script type="text/javascript" src="/HwangDangFleamarket/scripts/jquery.js"></script>
 <script type="text/javascript">
@@ -67,8 +70,12 @@ $( document ).ready( function() {
             var sum = 0;
             $('tbody td:nth-child(4)').each(function(){
             	sum = sum + parseInt($(this).text().split("+")[0]) + parseInt($(this).text().split("+")[1]);
+            	if( parseInt($(this).text().split("+")[0]) + parseInt($(this).text().split("+")[1]) < 30000){
+            		sum = sum + 2500;
+            	}
             });
             $('#checkedEstimatedPrice').html(sum);
+           
         }else{
             $("input[name=checkBasket]").prop("checked",false);
             $('#checkedEstimatedPrice').html(0);
@@ -81,9 +88,15 @@ $( document ).ready( function() {
  		var price = addPrice.split("+");
     	if(this.checked){
     		totalPrice = totalPrice + parseInt(price[0]) + parseInt(price[1]);
+    		if( parseInt(price[0]) + parseInt(price[1]) < 30000){
+    			totalPrice = totalPrice + 2500;
+        	}
     		$('#checkedEstimatedPrice').append(totalPrice);
     	}else{
     		totalPrice = totalPrice - parseInt(price[0]) - parseInt(price[1]);
+    		 if( parseInt(price[0]) + parseInt(price[1]) < 30000){
+    			totalPrice = totalPrice - 2500;
+        	}
     		$('#checkedEstimatedPrice').append(totalPrice);
     	}
     });
@@ -140,6 +153,7 @@ function error(xhr, status, err)
 	alert(status+", "+xhr.readyState+" "+err);
 }
 </script>
+
 <h2 class="page-header store_look_around">황당 플리마켓 장바구니</h2>
 <div class="cartListSection">
 	<div class="cartTable">
@@ -210,7 +224,7 @@ function error(xhr, status, err)
 										</c:otherwise>
 									</c:choose>
 								</td>
-								<td id="delivery"><c:choose>
+								<td id="delivery" class="deliveryPrice"><c:choose>
 										<c:when
 											test="${((product.productPrice*list.cartProductAmount)+(list.cartProductAmount*product.productOption.optionAddPrice))>= 30000}">
 												무료배송
@@ -228,7 +242,7 @@ function error(xhr, status, err)
 		</table>
 			<p>
 		<div class="estimatedPrice" style="border: 2px solid lightgray;">
-			결제 예상 금액 - 배송비&nbsp;&nbsp;
+			결제 예상 금액 + 배송비&nbsp;&nbsp;
 			<hr style="border: 1px solid lightgray;">
 			<span id="checkedEstimatedPrice">${requestScope.sum}원&nbsp;&nbsp;</span> 
 		</div>
@@ -239,4 +253,3 @@ function error(xhr, status, err)
 		</span>
 		</div>
 </div>
-

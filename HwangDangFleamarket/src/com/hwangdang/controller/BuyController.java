@@ -189,7 +189,7 @@ public class BuyController {
 			@RequestParam(value="card" ,required=false) String card , @RequestParam(value="quota" ,required=false) String quota ,
 			@RequestParam(value="fare" ,defaultValue="0") int fare ) throws Exception{
 		
-		String url = "";
+		String url = "/";
 		//전처리메소드 호출
 		boolean flag = buyBeforeLogic(ordersTotalPrice, bank, card, quota, request, memberId, usedMileage, session);
 		if(flag){
@@ -210,6 +210,7 @@ public class BuyController {
 			//orders TB , orders product TB INSERT 
 			int cnt = service.addProductOne(orders ,op);
 			if(cnt == 1){
+				System.out.println("cnt ==1 OK");
 				//1.개별상품/전체상품 구매한 갯수만큼 재고량 Minus
 				Map<String,Object> param = new HashMap<String,Object>();
 				param.put("buyStock", orderAmount);
@@ -218,16 +219,11 @@ public class BuyController {
 				service.setOptionStockByOptionId(param);
 				service.setProductStockByProductId(param);
 				session.setAttribute("orders", orders);
-				
 				//뒤로가기이슈 해결 
 				response.setHeader("Cache-Control","no-store");   
-				response.setHeader("Pragma","no-cache");   
-				response.setDateHeader("Expires",0);   
-				if (request.getProtocol().equals("HTTP/1.1")) {
-				        response.setHeader("Cache-Control", "no-cache"); 
-				}
 				url = "redirect:/buy/addProductSuccessPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&productId="+productId;
 			}
+		//검증실패 else 
 		}else{
 			request.setAttribute("errorMsg","검증을 실패하였습니다. 관리자에게 문의해주세요.");
 			url ="error.tiles";
@@ -311,12 +307,7 @@ public class BuyController {
 					service.setProductStockByProductId(param);
 				}
 				//뒤로가기이슈 해결 
-				response.setHeader("Cache-Control","no-store");   
-				response.setHeader("Pragma","no-cache");   
-				response.setDateHeader("Expires",0);   
-				if (request.getProtocol().equals("HTTP/1.1")) {
-				        response.setHeader("Cache-Control", "no-cache"); 
-				}
+				response.setHeader("Cache-Control","no-store");      
 				session.setAttribute("orders", orders);
 				url = "redirect:/buy/addProductSuccessPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&orderProductList="+orderProductList;
 			} //if 
@@ -371,7 +362,11 @@ public class BuyController {
 	@ResponseBody
 	public int getMemberMileageAjax(String memberId){
 		Member member = memberService.findById(memberId);
-		return member.getMemberMileage();
+		int mileage = 0;
+		if(member != null){
+			mileage =  member.getMemberMileage();
+		}
+		return mileage;
 	}
 	
 	

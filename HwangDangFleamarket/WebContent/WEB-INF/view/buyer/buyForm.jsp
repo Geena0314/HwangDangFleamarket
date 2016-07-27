@@ -372,9 +372,9 @@ function getMemberMileage(){
 				
 				var memberMileage = $("#memberMileage").text().trim();
 				var productPrice = $("#productPrice").html().trim();
-				 
-				productPrice = parseInt(productPrice);
+				
 				memberMileage = parseInt(memberMileage);
+				productPrice = parseInt(productPrice);
 				
 				//화면 사용할 마일리지에 적용  
 				$("#useMileage").text(memberMileage);
@@ -391,6 +391,13 @@ function getMemberMileage(){
 				
 				//기존마일리값을 0으로 변경 
 				$("#memberMileage").text(0);
+				
+				//마일리지 금액으로 모두 결제인경우 라디오버튼 :마일리지로 결제 선택
+				var ordersTotalPrice =  $("#ordersTotalPrice").html().trim();
+				ordersTotalPrice = parseInt(ordersTotalPrice);
+				if(ordersTotalPrice <= 0 ){
+					$("input:radio[value=4]").prop("checked" ,true);
+				}
 			
 			}else{ 
 				//체크해재되면 마일리지 지움 
@@ -399,6 +406,7 @@ function getMemberMileage(){
 				$("#useMileageBtn").prop("disabled",false);
 				//기존마일리지값을 원복   -temp 이용
 				$("#memberMileage").text(memberMileageTemp); 
+				$("input:radio[value=4]").prop("checked" ,false);
 			}
 			
 		});
@@ -453,6 +461,14 @@ function getMemberMileage(){
 				
 				/* productPriceTemp =   productPrice;
 				memberMileageTemp  = memberMileage; */
+				
+				//4.마일리지 금액으로 모두 결제인경우!
+				var ordersTotalPrice =  $("#ordersTotalPrice").html().trim();
+				ordersTotalPrice = parseInt(ordersTotalPrice);
+				if(ordersTotalPrice == 0 ){
+					$("input:radio[value=4]").prop("checked" ,true);
+				}
+				
 			}
 			
 		});
@@ -516,11 +532,6 @@ function getMemberMileage(){
 				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="btn btn-default"><br> 
 				<input type="text" name="address1"  id="sample6_address" placeholder="주소" class="form-control" size="65"><br/>
 				<input type="text" name="address2" id="sample6_address2" placeholder="상세주소" class="form-control"size="65" >
-							
-				<!-- <input type="button" value="주소찾기"  id="findAddress" />
-				<input type="text" name="zipcode" id="zipcode" disabled="disabled" size="10" class="form-control"/><br/>
-				<input type="text" name="address1" id="address1" disabled="disabled"  size="45" class="form-control"/><br/>
-				<input type="text" name="address2"  size="45" class="form-control"/> -->
 			 </span><br/>
 		  	
 		  	<select name="requestOption" id="requestOption" class="form-control">
@@ -554,6 +565,7 @@ function getMemberMileage(){
 			<input type="radio" name="payment" value="1" id="card">카드결제
 			<input type="radio" name="payment" value="2">자동이체
 			<input type="radio" name="payment" value="3">간편결제
+			<input type="radio" name="payment" value="4">마일리지로 모두 결제
 			<hr>
 				 <!-- 현금결제 요소들 -->
 				<div align="center" hidden="true" id="pay_bank">

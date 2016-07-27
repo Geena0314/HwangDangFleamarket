@@ -101,7 +101,7 @@
 	
 	<update id="updateSeller" parameterType="seller">
 		UPDATE seller
-		SET  seller_store_name = seller_#{sellerStoreName}, 
+		SET  seller_store_name = #{sellerStoreName}, 
 			 seller_tax_id = #{sellerTaxId}, 
 			 seller_industry=  #{sellerIndustry},
 			 seller_sub_industry= #{sellerSubIndustry}, 
@@ -112,7 +112,7 @@
 			 seller_product1 = #{sellerProduct1}, 
 			 seller_product2 =  #{sellerProduct2}, 
 		 	 seller_product3 = #{sellerProduct3}, 
-		 	 seller_introduction =  #{sellerIntroduction}, 
+		 	 seller_introduction =  #{sellerIntroduction}
 		WHERE member_id = #{memberId}
 		
 	</update> 

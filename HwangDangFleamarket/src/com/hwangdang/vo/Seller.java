@@ -72,6 +72,26 @@ public class Seller implements Serializable
 		this.memberId = memberId;
 		this.member = member;
 	}
+	
+	public Seller(String sellerStoreName, String sellerTaxId, String sellerIndustry, String sellerSubIndustry,
+			String sellerZipcode, String sellerAddress, String sellerSubAddress, String sellerStoreImage,
+			String sellerProduct1, String sellerProduct2, String sellerProduct3, String sellerIntroduction,
+			String memberId) {
+		super();
+		this.sellerStoreName = sellerStoreName;
+		this.sellerTaxId = sellerTaxId;
+		this.sellerIndustry = sellerIndustry;
+		this.sellerSubIndustry = sellerSubIndustry;
+		this.sellerZipcode = sellerZipcode;
+		this.sellerAddress = sellerAddress;
+		this.sellerSubAddress = sellerSubAddress;
+		this.sellerStoreImage = sellerStoreImage;
+		this.sellerProduct1 = sellerProduct1;
+		this.sellerProduct2 = sellerProduct2;
+		this.sellerProduct3 = sellerProduct3;
+		this.sellerIntroduction = sellerIntroduction;
+		this.memberId = memberId;
+	}
 
 	public int getSellerStoreNo() {
 		return sellerStoreNo;

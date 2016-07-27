@@ -64,7 +64,8 @@ img {
 			<c:when test="${sessionScope.orders.ordersPayment  == 0 }">무통장입금</c:when>
 			<c:when test="${sessionScope.orders.ordersPayment  == 1 }">카드</c:when>
 			<c:when test="${sessionScope.orders.ordersPayment  == 2 }">자동이체</c:when>
-			<c:otherwise>간편결제</c:otherwise>
+			<c:when test="${sessionScope.orders.ordersPayment  == 3 }">간편결제</c:when>
+			<c:otherwise>마일리지 결제</c:otherwise>
 		</c:choose>
 		/결제여부 : 
 		<c:choose>
@@ -84,7 +85,7 @@ img {
 			</c:when>
 		</c:choose>
 		<br/>
-		<%--  <!-- 사용한 마일리지가 있다면 사용한 마일리지금액 및 남은 금액 화면에 출력-->--%>
+	 <!-- 사용한 마일리지가 있다면 사용한 마일리지금액 및 남은 금액 화면에 출력-->
 		사용한 마일리지 금액 :
 		<c:choose>
 			<c:when test="${sessionScope.orders.usedMileage > 0  }">

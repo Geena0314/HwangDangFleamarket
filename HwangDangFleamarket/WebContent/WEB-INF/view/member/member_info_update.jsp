@@ -245,13 +245,12 @@ function sample6_execDaumPostcode() {
 	
 	
 </script>
-<h2 class="page-header store_look_around">황당 플리마켓 회원정보 수정</h2>
 <form method="post" enctype="multipart/form-data" action="/HwangDangFleamarket/member/setMember.go" name="register" id="registerForm">
 <div class="table-responsive" >
 	<table width='600' class="table table-striped">
 		<tr class="trInput">
-		
-			<td width='150' class='tdName'>I&nbsp&nbsp&nbsp&nbsp&nbspD</td>
+			
+			<td width='150' class='tdName'>I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D</td>
 			<td>
 				 ${sessionScope.login_info.memberId }
 				  <input type="hidden" name="memberId" value="${sessionScope.login_info.memberId }" />
@@ -262,9 +261,9 @@ function sample6_execDaumPostcode() {
 			<td>
 				<input type="button"  id="updatePasswordBtn" value="수정"/><br/>
 				<span hidden="true" id="hiddenPasswordSpan">
-					현재비밀번호 : <input type="password" name="oldPassword" size="20" id="oldPassword"><font color="blue" id="currentPasswordMsg">현재 비밀번호를 입력해 주세요</font><br/>
-					새 비밀번호 : <input type="password" name="newPassword1" size="20" id="newPassword1"> 8~15자의 영문 대/소문자, 숫자 조합<br/>
-					새 비밀번호 확인 :<input type="password" name="newPassword2" size="20" id="newPassword2"><br/>
+					현재비밀번호 : <input type="password" name="oldPassword" size="30" id="oldPassword"><font color="blue" id="currentPasswordMsg">현재 비밀번호를 입력해 주세요</font><br/>
+					새 비밀번호 : <input type="password" name="newPassword1" size="30" id="newPassword1"> 8~15자의 영문 대/소문자, 숫자 조합<br/>
+					새 비밀번호 확인 :<input type="password" name="newPassword2" size="30" id="newPassword2"><br/>
 				</span>
 			</td>
 		</tr>
@@ -318,7 +317,7 @@ function sample6_execDaumPostcode() {
 					<td class='tdName'>상호 명</td>
 					<td>${requestScope.seller.sellerStoreName } <input type="button" value="수정" id="sellerStoreNameUpdateBtn"/><br/>
 					<span id="hiddenSellerStoreName" hidden="hidden">	
-						<input type="text" name="sellerStoreName" />
+						<input type="text" name="sellerStoreName" size="27" />
 					</span>
 					</td>
 			</tr>
@@ -327,7 +326,7 @@ function sample6_execDaumPostcode() {
 				<td class='tdName'>사업자 번호</td>
 				<td>${requestScope.seller.sellerTaxId }<input type="button" value="수정" id="sellerTaxIdUpdateBtn"/><br/>
 					<span id="hiddenSellerTaxId" hidden="true">  
-						<input type="text" name="sellerTaxId">
+						<input type="text" name="sellerTaxId" size="27">
 					</span>
 					
 				</td>
@@ -337,7 +336,7 @@ function sample6_execDaumPostcode() {
 				<td class='tdName'>업종대분류</td>
 				<td>${requestScope.seller.sellerIndustry }<input type="button" value="수정" onclick="showSpan('hiddenSellerIndustry')" /><br/>
 					<span hidden="true" id="hiddenSellerIndustry">
-						<input type="text" name="sellerIndustry">
+						<input type="text" name="sellerIndustry" size="27">
 					</span>
 				</td>
 			</tr>	
@@ -346,7 +345,7 @@ function sample6_execDaumPostcode() {
 				<td class='tdName'>업종소분류</td>
 				<td>${requestScope.seller.sellerSubIndustry }<input type="button" value="수정" id="sellerSubIndustryUpdateBtn"/><br/>
 					<span hidden="true" id="hiddenSellerSubIndustry">
-						<input type="text" name="sellerSubIndustry">
+						<input type="text" name="sellerSubIndustry" size="27">
 					</span>
 				</td>
 			</tr>
@@ -367,7 +366,7 @@ function sample6_execDaumPostcode() {
 			<tr class="trInput">
 				<td class='tdName'>스토어사진</td>
 				<td><img src="../image_storage/${requestScope.seller.sellerStoreImage }" />
-					<input type="file" alt="이미지등록" value="이미지등록"  name="sellerStoreImage" />
+					<input type="file" alt="이미지등록" value="이미지등록"  name="sellerMainImage" size="27" />
 				</td>
 			</tr>
 			
@@ -376,7 +375,7 @@ function sample6_execDaumPostcode() {
 				<td>${requestScope.seller.sellerProduct1 }
 				<input type="button" value="수정"  onclick="showSpan('hiddenSellerProduct1')" /><br/>
 					<span hidden="true" id="hiddenSellerProduct1">
-						<input type="text" name="sellerProduct1">
+						<input type="text" name="sellerProduct1" size="27">     
 					</span>
 				</td>
 			</tr>
@@ -386,7 +385,7 @@ function sample6_execDaumPostcode() {
 				<td>${requestScope.seller.sellerProduct2 } 
 					<input type="button" value="수정" onclick="showSpan('hiddensellerProduct2')"/><br/>
 					<span hidden="true" id="hiddensellerProduct2">
-						<input type="text" name="sellerProduct2" />
+						<input type="text" name="sellerProduct2" size="27"/>
 					</span>
 				</td>
 			</tr>
@@ -396,7 +395,7 @@ function sample6_execDaumPostcode() {
 				<td>${requestScope.seller.sellerProduct3 }
 					<input type="button" value="수정" onclick="showSpan('hiddenSellerProduct3')" /><br/>
 					<span hidden="true" id="hiddenSellerProduct3">
-						<input type="text" name="sellerProduct3"/>
+						<input type="text" name="sellerProduct3" size="27"/>
 					</span>
 				</td>
 			</tr>
@@ -406,7 +405,7 @@ function sample6_execDaumPostcode() {
 				<td>${requestScope.seller.sellerIntroduction }
 					<input type="button" value="수정"  onclick="showSpan('hiddenSellerIntroduction')" /><br/>
 					<span hidden="true" id="hiddenSellerIntroduction">
-					  	<textarea name="sellerIntroduction"></textarea>
+					  	<textarea name="sellerIntroduction" class="form-control" rows="3"></textarea>
 					</span>
 				</td>
 			</tr>
@@ -425,4 +424,5 @@ function sample6_execDaumPostcode() {
 		</tr>
 	</table> 
 </div>
+	<input type="hidden" value="${requestScope.seller.sellerStoreNo }" name="sellerStoreNo"/>
 </form>
