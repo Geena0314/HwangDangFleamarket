@@ -45,38 +45,44 @@ create sequence option_id_seq nocache;
 
 select * FROM member;
 
-INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목3'  ,'임시글내용ABC123' ,'scott123','2015-02-04',0 , 'f');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목4'  ,'임시글내용ABC1234' ,'scott124','2015-02-02',0 , 't');
-INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목3'  ,'임시글내용ABC123' ,'scott123','2015-02-04',0 , 'f');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목4'  ,'임시글내용ABC1234' ,'scott124','2015-02-02',0 , 't');
-INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목3'  ,'임시글내용ABC123' ,'scott123','2015-02-04',0 , 'f');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목4'  ,'임시글내용ABC1234' ,'scott124','2015-02-02',0 , 't');
-INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목3'  ,'임시글내용ABC123' ,'scott123','2015-02-04',0 , 'f');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목4'  ,'임시글내용ABC1234' ,'scott124','2015-02-02',0 , 't');
-INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목3'  ,'임시글내용ABC123' ,'scott123','2015-02-04',0 , 'f');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목4'  ,'임시글내용ABC1234' ,'scott124','2015-02-02',0 , 't');
-INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목3'  ,'임시글내용ABC123' ,'scott123','2015-02-04',0 , 'f');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목4'  ,'임시글내용ABC1234' ,'scott124','2015-02-02',0 , 't');
-INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목3'  ,'임시글내용ABC123' ,'scott123','2015-02-04',0 , 'f');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목4'  ,'임시글내용ABC1234' ,'scott124','2015-02-02',0 , 't');
-INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목3'  ,'임시글내용ABC123' ,'scott123','2015-02-04',0 , 'f');
-INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목4'  ,'임시글내용ABC1234' ,'scott124','2015-02-02',0 , 't');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+INSERT INTO ADMIN_QNA  VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목1'  ,'임시글내용ABC1' ,'scott12','2015-02-12' ,0 , 'f' ,'1234' ,'f');
+INSERT INTO ADMIN_QNA VALUES(  admin_qna_no_seq.nextval ,'임시QnA제목2'  ,'임시글내용ABC12' ,'scott12','2015-02-11',0 , 't' , null , 'f');
+
+
+
+
+
 
 /*테이블 스키마 수정 */
 ALTER TABLE admin_QnA ADD admin_qna_reply number;
@@ -905,4 +911,13 @@ select * FROM code
 				
 	FROM 		product_option
 	WHERE 		option_sub_name = '250g/딸기'
+	
+	
+SELECT * FROM col WHERE tname='admin_qna'; 	
+--QnA게시판 컬럼명 변경
+--ALTER TABLE table_name
+-- MODIFY column_name datatype
+ALTER TABLE admin_qna MODIFY  admin_qna_title varchar2(90)
 
+ALTER TABLE admin_qna
+DROP COLUMN admin_qna_reply

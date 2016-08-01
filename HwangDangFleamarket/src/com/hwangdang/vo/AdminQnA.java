@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class AdminQnA implements Serializable{
-
-	private int adminQnaNo;
+ 
+	private int adminQnaNo;       //글번호 시퀀스 
 	private String adminQnaTitle;  //제목
 	private String adminQnaContent; //글내용
 	private String adminQnaWriter;  //작성자
 	private Date adminQnaDate;  //작성일 
 	private int adminQnaHit;  //조회수 
 	private String adminQnaPublished;  // 공개여부 
-	private AdminQnAReply reply; 
-	private String adminQnaPassword;
-	private String adminQnaReplyExist;
+	private AdminQnAReply reply;        //답글 객체 
+	private String adminQnaPassword;   //글비밀번호
+	private String adminQnaReplyExist;  //글존재여부
 	
 public AdminQnA(){};
 

@@ -651,8 +651,9 @@ function getMemberMileage(){
 			<input type="hidden" id="optionId"  class="optionId" value="${op.productOption.optionId }"/>
 			<input type="hidden"  class="sellerStoreNo" value="${op.sellerStoreNo }"/>
 			<input type="hidden"  class="productId" value="${op.product.productId }"/>
+			<a href="/HwangDangFleamarket/product/detail.go?page=1&productId=${op.productId }&sellerStoreNo=${op.sellerStoreNo }&sellerStoreImage=${op.seller.sellerStoreImage}">
 			<img alt="상품메인이미지" src="../image_storage/${op.product.productMainImage }">
-			<span id="sellerStoreName" >${op.seller.sellerStoreName }</span> - <span id="productName">${op.product.productName  } </span><br/>
+			<span id="sellerStoreName" >${op.seller.sellerStoreName }</span> - <span id="productName">${op.product.productName  } </span></a><br/>
 			<span id="productPricePer"><fmt:formatNumber type="currency">${op.product.productPrice } </fmt:formatNumber></span>
 			<span>
 				<font color="lightgray">+<fmt:formatNumber type="currency">${op.productOption.optionAddPrice } </fmt:formatNumber></font>

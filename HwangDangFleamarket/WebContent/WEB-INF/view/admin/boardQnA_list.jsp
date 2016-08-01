@@ -33,11 +33,6 @@ b {
 			location.href="/HwangDangFleamarket/boardQnA_register_form.go";		
 		});	
 		
-	/* 	$("#moveDetail").on("click",function(){
-			alert("gg");
-			return false;
-		});	 */
-		
 	});//ready
 </script>
 
@@ -70,7 +65,7 @@ b {
 						</c:choose>
 						
 					</td>  
-					<td><a  id="moveDetail" href="/HwangDangFleamarket/admin/boardQnADetailBefore.go?page=${requestScope.pasingBean.page }&no=${list.adminQnaNo }">${list.adminQnaTitle }</a></td>
+					<td><a id="moveDetail" href="/HwangDangFleamarket/admin/boardQnADetailBefore.go?page=${requestScope.pasingBean.page }&no=${list.adminQnaNo }">${list.adminQnaTitle }</a></td>
 					<td>${list.adminQnaWriter }</td>
 					<td><fmt:formatDate value="${list.adminQnaDate }" pattern="yyyy-MM-dd"/></td>
 					<td>${list.adminQnaHit }</td>
@@ -87,7 +82,7 @@ b {
 		</tbody>
 	</table>
 	<p class="text-center">
-		<c:if test="${sessionScope.login_info.memberId != null }">
+		<c:if test="${sessionScope.login_info.memberId != null && sessionScope.login_info.memberId != 'admin@admin.com'}">
 		<input type="button" id="addBtn" value="문의하기" class="btn btn-default" />
 	</c:if>
 	</p>

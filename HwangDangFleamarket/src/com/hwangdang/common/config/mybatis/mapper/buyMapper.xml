@@ -46,7 +46,6 @@
 
 
 
-
 <!-- 주문 기본 리절트맵 -->
 	<resultMap type="orders" id="orders-basic-resultmap">
 		<id column="orders_no" property="ordersNo"/>
@@ -212,7 +211,7 @@
 	WHERE    product_id = #{productId}
 </update>
 
-<!-- 키워드로 상품,또는 스토어 조회 
+<!-- 상품으로 검색 기능 
 	OR seller_store_name LIKE '%' || #{keyword } || '%'  
 	OR seller_product1 LIKE '%' || #{keyword } || '%'  
 	OR seller_product2 LIKE '%' || #{keyword } || '%'  
@@ -245,12 +244,12 @@ FROM (
 		FROM   
 		(
 			SELECT     product_id , product_name ,product_price ,product_stock ,
-			     	   product_main_image  , product_info , product_like , p.seller_store_no ,rownum
+			     	   product_main_image  , product_info , product_like , p.seller_store_no , rownum
 			FROM 	   product p  
 			ORDER BY   product_like DESC	
 		) p , seller s
 		WHERE     p.seller_store_no = s.seller_store_no 
-		AND        product_name LIKE '%' || #{keyword } || '%'  
+		AND       product_name LIKE '%' || #{keyword } || '%'  
 )
 
 ) WHERE page = #{page}

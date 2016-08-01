@@ -148,8 +148,8 @@
 section{
 	width:700px;
 	border:1px solid gray;
-	min-height: 300px;
-	max-height: 500px;
+	min-height: 550px;
+	max-height: 1000px;
 }
 #title{
 font-weight: bold;
@@ -221,15 +221,12 @@ padding: 10px;
 				<p id="response" class="text-center">관리자가 답변전 입니다.</p>
 			</c:otherwise>
 		</c:choose>
-		
-		<br/><br/><br/><br/>
-				  
+		<br/><br/><br/>
 				  
 		<p class="text-center">  
 		<!-- 관리자일경우만 댓글달기 가능 버튼및 TA 보이기 -->
-		<%--<c:if test="${sessionScope.login_info.memberId == 'admin@admin.com' }"> 	 --%>
- 		 <c:if test="${sessionScope.login_info.memberId == 'kinghwang@gmail.com' }">	
- 				<textarea class="form-control" rows="3" name="replyTa" id="replyTa"></textarea><br/>
+ 		 <c:if test="${sessionScope.login_info.memberId == 'admin@admin.com' }">	
+ 				<textarea class="form-control" rows="3" name="replyTa" id="replyTa"></textarea>  <br/>
 			
 				<!-- 댓글달려있는지 유무 -->
 			<c:choose>			
@@ -237,10 +234,12 @@ padding: 10px;
 					<input type="button" class="btn btn-default" value="답변수정" id="setReplyBtn"  />
 					<input type="button" class="btn btn-default" value="답변삭제" id="removeReplyBtn"  />
 					<a class="btn btn-default"role="button" href="/HwangDangFleamarket/admin/boardQnAList.go?page=${param.page }">목록</a>
+					<br>
 				</c:when>
 				<c:otherwise>
 					<input type="button" class="btn btn-default" value="답변등록" id="addReplyBtn" />
 					<a class="btn btn-default"role="button" href="/HwangDangFleamarket/admin/boardQnAList.go?page=${param.page }">목록</a>
+					<br>
 				</c:otherwise>
 			</c:choose>			
 		</c:if>  
@@ -248,6 +247,7 @@ padding: 10px;
 		<!-- 비로그인상태에 글목록 버튼보이기 -->
 		<c:if test="${sessionScope.login_info == null }">
 			<a class="btn btn-default"role="button" href="/HwangDangFleamarket/admin/boardQnAList.go?page=${param.page }">목록</a>
+			<br>
 		</c:if>
 		
 	 </p>

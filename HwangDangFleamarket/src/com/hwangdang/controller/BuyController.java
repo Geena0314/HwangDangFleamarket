@@ -136,8 +136,9 @@ public class BuyController {
 	 */
 	public boolean buyBeforeLogic( int ordersTotalPrice,String bank,String card,String quota, HttpServletRequest request,
 										String memberId,int usedMileage,HttpSession session ){
+		
 		//1.검증 결제예정금액이 마이너스인경우  : 즉 사용한마일리지 > 결제예정금액 인경우!
-			boolean flag =false;
+			boolean flag = false;
 			if(ordersTotalPrice < 0) {
 				flag = false;
 			}else{
@@ -154,7 +155,8 @@ public class BuyController {
 					vitualBankNo  = vitualBankNo + "" + randomNumber4 ;
 					session.setAttribute("vitualBankNo" ,vitualBankNo);
 					session.setAttribute("bank",bank);
-					}else if(card != null && quota != null){
+					}
+				if(card != null && quota != null){
 					//카드결제
 					session.setAttribute("card" ,card);
 					session.setAttribute("quota" ,quota); //할부
@@ -210,7 +212,6 @@ public class BuyController {
 			//orders TB , orders product TB INSERT 
 			int cnt = service.addProductOne(orders ,op);
 			if(cnt == 1){
-				System.out.println("cnt ==1 OK");
 				//1.개별상품/전체상품 구매한 갯수만큼 재고량 Minus
 				Map<String,Object> param = new HashMap<String,Object>();
 				param.put("buyStock", orderAmount);

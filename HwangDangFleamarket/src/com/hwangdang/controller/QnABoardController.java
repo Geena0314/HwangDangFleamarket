@@ -12,12 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.SessionScope;
 
 import com.hwangdang.common.util.PagingBean;
 import com.hwangdang.serviceimpl.BoardQnAServiceImpl;
-import com.hwangdang.serviceimpl.MemberServiceImpl;
 import com.hwangdang.vo.AdminQnA;
 import com.hwangdang.vo.AdminQnAReply;
 import com.hwangdang.vo.Member;
@@ -28,8 +25,6 @@ public class QnABoardController {
 
 	@Autowired
 	private BoardQnAServiceImpl service;
-	@Autowired
-	private MemberServiceImpl memberService;
 	
 	/**
 	 * QnA게시판 글등록 
@@ -41,7 +36,6 @@ public class QnABoardController {
 		String url = "/";
 		//System.out.println("로그인아이디 :" + loginId +" ,제목 : "+title+", 작성자 :" + published + "글내용: " + content);
 		int seq = service.getQnABoardSeq();
-		//Member member = memberService.selectById(loginId);															//조회수 ,작성자 , 비밀번호 
 		AdminQnA newQnA = new AdminQnA(seq , title, content, loginId , new Date(), 1, published, password);
 		int flag = service.registerNewQnA(newQnA);
 		if(flag == 1){
@@ -78,7 +72,7 @@ public class QnABoardController {
 		}else{
 			//문의글의 비공개
 			Member member = (Member) session.getAttribute("login_info");
-			if(member != null && member.getMemberId().equals("kinghwang@gmail.com")){
+			if(member != null && member.getMemberId().trim().equals("admin@admin.com")){
 				//스토어관리자이면 :프리패쓰 
 				url ="/admin/boardQnADetail.go?password="+findQnA.getAdminQnaPassword();
 				model.addAttribute("password" , findQnA.getAdminQnaPassword());
@@ -99,21 +93,21 @@ public class QnABoardController {
 	public String boardQnADetail(int page , int no , Model model , HttpSession session ,
 					@RequestParam(value="password" , required=false) String password ){
 	
-		System.out.println("디테일메소드:" + "페이지 :"+page +",NO: " +no + "password :" + password); 
-		String url = "";
+		//System.out.println("디테일메소드:" + "페이지 :"+page +",NO: " +no + "password :" + password); 
+		String url = "/";
 		AdminQnA findQnA = service.getAdminQnAByNo(no);
-		//System.out.println("파람패스워드:"+password +" , 객체패스워드:" + findQnA.getAdminQnaPassword());
+		convertor(findQnA);
 		Member member =(Member) session.getAttribute("login_info");
 		
 		if(findQnA != null && findQnA.getAdminQnaPublished().equals("f")){
-			if( (password != null && password.equals(findQnA.getAdminQnaPassword())) ||  member.getMemberId().equals("kinghwang@gmail.com")   ){
-				//비공개에 비밀번호가 일치하면 
+			if( (password != null && password.equals(findQnA.getAdminQnaPassword())) || member.getMemberId().trim().equals("admin@admin.com")  ){
+				//비공개이지만 비밀번호가 일치하거나 관리자일 경우! 
 				model.addAttribute("findQnA",findQnA);
 				model.addAttribute("page",page);
 				url = "admin/boardQnA_detail.tiles";
 			}else{
 				//비공개에 비밀번호가 불일치
-				//System.out.println("비밀번호가 틀렸습니다.");
+				System.out.println("비밀번호가 틀렸습니다.");
 				url="admin/boardQnA_detail_before.tiles";
 				model.addAttribute("errorMsg","비밀번호가 틀렸습니다.");
 			}
@@ -146,8 +140,6 @@ public class QnABoardController {
 			@RequestParam(value="password",required=false) String password ,
 			@RequestParam(value="privated",required=false) String privated ,Model model){
 		   
-		//System.out.println(no +", " + page +", " + title +" ," +content);
-		//System.out.println("privated : " + privated + ",pass: "+password);
 		String url ="/";
 		HashMap<String,Object> param = new HashMap<>();
 		param.put("no", no);
@@ -182,7 +174,7 @@ public class QnABoardController {
 	}
 	
 	/**
-	 *  QnA게시판 댓글달기 add - 관리자만가능  
+	 *  QnA게시판 관리자 답글달기 add - 관리자만가능  
 	 */			
 	@RequestMapping("/addBoardQnAReply.go")
 	public String addBoardQnAReply( int contentNo , int contentPage ,
@@ -203,7 +195,7 @@ public class QnABoardController {
 	return url;
 	}
 	  /**
-	   * QnA게시판 관리자 댓글삭제
+	   * QnA게시판 관리자 답글 삭제
 	   */
 	@RequestMapping("/removeBoardQnAReply.go")
 	public String removeBoardQnAReply( @RequestParam(value="contentNo", defaultValue="0") int contentNo ,
@@ -243,6 +235,19 @@ public class QnABoardController {
 	return "/admin/boardQnADetail.go?page="+contentPage +"&no="+contentNo+"&password="+adminQnA.getAdminQnaPassword();
 	}
 	
-
+	// 게시판 엔터 이슈 관련 컨버터
+	public AdminQnA convertor(AdminQnA adminQnA){
+		adminQnA.setAdminQnaTitle(adminQnA.getAdminQnaTitle().replace(">", "&gt;"));
+		adminQnA.setAdminQnaTitle(adminQnA.getAdminQnaTitle().replace("<", "&lt;"));
+		adminQnA.setAdminQnaTitle(adminQnA.getAdminQnaTitle().replace("\n", "<br>"));
+		adminQnA.setAdminQnaTitle(adminQnA.getAdminQnaTitle().replace(" ", "&nbsp;"));
+			
+		adminQnA.setAdminQnaContent(adminQnA.getAdminQnaContent().replace(">", "&gt;"));
+		adminQnA.setAdminQnaContent(adminQnA.getAdminQnaContent().replace("<", "&lt;"));
+		adminQnA.setAdminQnaContent(adminQnA.getAdminQnaContent().replace("\n", "<br>"));
+		adminQnA.setAdminQnaContent(adminQnA.getAdminQnaContent().replace(" ", "&nbsp;"));
+		return adminQnA;
+	}
+	  
 	
 }

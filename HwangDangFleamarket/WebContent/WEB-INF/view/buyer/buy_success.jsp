@@ -74,15 +74,18 @@ img {
 		</c:choose>
 		<br/>		
 		<c:choose>
-			<c:when test="${sessionScope.bank != null }">
+			<c:when test="${not empty sessionScope.bank }">
 				 은행명 : ${sessionScope.bank }
 				 계좌번호 : ${sessionScope.vitualBankNo }
 		
 			</c:when>
-			<c:when test="${sessionScope.card != null }">
+			<c:when test="${not empty sessionScope.card }">
 				 카드회사 : ${sessionScope.card }
 				 할부 : ${sessionScope.quota }
 			</c:when>
+			<c:otherwise>
+				  -  
+			</c:otherwise>
 		</c:choose>
 		<br/>
 	 <!-- 사용한 마일리지가 있다면 사용한 마일리지금액 및 남은 금액 화면에 출력-->
