@@ -115,19 +115,18 @@ public class MemberController {
 	
 	//로그인 이후 상품 디테일페이지로 이동 
 	@RequestMapping("/loginAfterProductDetailPage.go") //로그인 후 화면
-	public String loginAfterProductDetailPage(String memberId ,String domain, String memberPassword, HttpSession session , @RequestParam(value="page" ,defaultValue="1") int page  ,
-		 String productId , String sellerStoreNo   , String sellerStoreImage , String amount , String option , Model model){
+	public String loginAfterProductDetailPage(String memberId ,String domain, String memberPassword,
+												@RequestParam(value="page" ,defaultValue="1") int page,
+												String productId ,String sellerStoreNo ,String sellerStoreImage ,
+												String amount , String option , Model model ,HttpSession session){
 		memberId = memberId +"@" + domain;
-		//System.out.println(productId + ","  + sellerStoreNo + ", " + amount + ", " + option);
-		
 		Member member = service.findById(memberId);
 		String url ="";   
 		if(member!=null){
+			//아이디와 패스워드가 일치 : 로그인상태 
 			if(memberPassword.equals(member.getMemberPassword())){ 
-				//아이디와 패스워드가 일치 : 로그인상태 
-				session.setAttribute("login_info", member);
 				//바로구매 상품 조회  컨트롤러 메소드에게 요청 
-				//url = "/buy/moveBuyPage.go?sellerStoreNo="+sellerStoreNo +"&sellerStoreImage="+sellerStoreImage +"&amount="+amount+"&memberId="+memberId;
+				session.setAttribute("login_info", member);
 				url = "/buy/moveBuyPage.go";
 			}else{
 				url ="member/login_form.tiles";
@@ -138,10 +137,9 @@ public class MemberController {
 			url ="member/login_form.tiles";
 			model.addAttribute("errorMsg" ,"아이디를 잘못입력하였습니다!");
 		}
-		 
-		// 구매페이지로 이동 
 		return url;
 	}
+	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session)
 	{
@@ -299,29 +297,29 @@ public class MemberController {
 	//회원정보수정
 	@RequestMapping("/setMember.go")
 	public String setMember(String memberId ,@RequestParam(value="memberName",required=false) String memberName ,
-			@RequestParam(value="oldPassword",required=false) String oldPassword,
-			@RequestParam(value="newPassword1",required=false) String newPassword1,
-			@RequestParam(value="newPassword2",required=false) String newPassword2 , 
-			@RequestParam(value="hp1",required=false) String hp1 ,
-			@RequestParam(value="hp2",required=false) String hp2 , 
-			@RequestParam(value="hp3",required=false) String hp3 , 
-			@RequestParam(value="memberZipcode",required=false) String memberZipcode ,
-			@RequestParam(value="memberAddress",required=false) String memberAddress ,  Model model ,
-			@RequestParam(value="memberSubAddress",required=false) String memberSubAddress ,
-			HttpSession session , HttpServletRequest request ,
-			@RequestParam(value="sellerSubIndustry",required=false) String sellerSubIndustry ,
-			@RequestParam(value="sellerProduct1",required=false) String sellerProduct1 ,
-			@RequestParam(value="sellerProduct2",required=false) String sellerProduct2 ,
-			@RequestParam(value="sellerProduct3",required=false) String sellerProduct3 ,
-			@RequestParam(value="sellerIntroduction",required=false) String sellerIntroduction ,
-			@RequestParam(value="sellerZipcode",required=false) String sellerZipcode ,
-			@RequestParam(value="sellerAddress",required=false) String sellerAddress ,
-			@RequestParam(value="sellerSubAddress",required=false) String sellerSubAddress ,
-			@RequestParam(value="sellerTaxId",required=false) String sellerTaxId ,
-			@RequestParam(value="sellerStoreName",required=false) String sellerStoreName , 
-			@RequestParam(value="sellerMainImage",required=false) MultipartFile sellerMainImage ,
-			@RequestParam(value="sellerIndustry",required=false) String sellerIndustry ,
-			@RequestParam(value="sellerStoreNo",defaultValue="0") int sellerStoreNo ){
+							@RequestParam(value="oldPassword",required=false) String oldPassword,
+							@RequestParam(value="newPassword1",required=false) String newPassword1,
+							@RequestParam(value="newPassword2",required=false) String newPassword2 , 
+							@RequestParam(value="hp1",required=false) String hp1 ,
+							@RequestParam(value="hp2",required=false) String hp2 , 
+							@RequestParam(value="hp3",required=false) String hp3 , 
+							@RequestParam(value="memberZipcode",required=false) String memberZipcode ,
+							@RequestParam(value="memberAddress",required=false) String memberAddress ,  Model model ,
+							@RequestParam(value="memberSubAddress",required=false) String memberSubAddress ,
+							HttpSession session , HttpServletRequest request ,
+							@RequestParam(value="sellerSubIndustry",required=false) String sellerSubIndustry ,
+							@RequestParam(value="sellerProduct1",required=false) String sellerProduct1 ,
+							@RequestParam(value="sellerProduct2",required=false) String sellerProduct2 ,
+							@RequestParam(value="sellerProduct3",required=false) String sellerProduct3 ,
+							@RequestParam(value="sellerIntroduction",required=false) String sellerIntroduction ,
+							@RequestParam(value="sellerZipcode",required=false) String sellerZipcode ,
+							@RequestParam(value="sellerAddress",required=false) String sellerAddress ,
+							@RequestParam(value="sellerSubAddress",required=false) String sellerSubAddress ,
+							@RequestParam(value="sellerTaxId",required=false) String sellerTaxId ,
+							@RequestParam(value="sellerStoreName",required=false) String sellerStoreName , 
+							@RequestParam(value="sellerMainImage",required=false) MultipartFile sellerMainImage ,
+							@RequestParam(value="sellerIndustry",required=false) String sellerIndustry ,
+							@RequestParam(value="sellerStoreNo",defaultValue="0") int sellerStoreNo ){
 		
 		System.out.println(sellerMainImage);
 		String url = "/";  

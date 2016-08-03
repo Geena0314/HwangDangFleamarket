@@ -125,10 +125,8 @@ $( document ).ready( function() {
     });
     
     
-    //구입하기 버튼 : 체그된 productId , productOptionId , sellerStoreNO 
-    //stock  , 
-    $("#buyBtn").on("click",function(){
-    	console.log(getRemoveCartList());
+    //구입하기 버튼 
+    $("#buyBtn").on("click",function(){   
     	var url = "/HwangDangFleamarket/buy/buyCarts.go?cartNoList="+getRemoveCartList();
 		$("form").prop("action" , url);    	
 		$("form").submit();
@@ -141,7 +139,6 @@ function getRemoveCartList(){
 	$("input:checkbox[name=checkBasket]:checked").each(function(idx){
 		if(idx==$("input:checkbox[name=checkBasket]:checked").length-1){
 			queryString = queryString+this.value;
-			
 		}else{
 			queryString = queryString+this.value+",";
 		}

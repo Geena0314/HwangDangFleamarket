@@ -111,10 +111,9 @@
 	</selectKey>
 	INSERT INTO order_product
 	VALUES ( 
-	 #{orderSeqNo },#{orderAmount }, #{ordersNo }, #{productId },
-	 #{optionId }, #{sellerStoreNo },#{orderProductStatus } ,#{fare }
-	 
-	)
+			 #{orderSeqNo },#{orderAmount }, #{ordersNo }, #{productId },
+			 #{optionId }, #{sellerStoreNo },#{orderProductStatus } ,#{fare }
+		   )
 </insert>
 
 <select id="select-product-by-productId" parameterType="string" resultMap="basic-productmap">

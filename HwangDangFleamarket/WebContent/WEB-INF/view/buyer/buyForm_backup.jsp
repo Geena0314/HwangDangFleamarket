@@ -188,7 +188,6 @@ function getMemberMileage(){
 		
 		//결제버튼 클릭
 		$("#submitBtn").on("click",function(){
-			
 			//검증1. 결제수단 반드시 체크확인 !
 			if($('input:radio[name=payment]').is(':checked') == false){
 				alert("결제방법을 확인하세요.");
@@ -201,22 +200,24 @@ function getMemberMileage(){
 				return false;
 			}
 			
-			//비지니스로직 : 0.파라미터 세팅
+			//0. 파라미터 
 			var ordersReceiver = "";
 			var ordersZipcode = "";
 			var ordersAddress = "";
 			var ordersSubAddress = "";
 			var ordersPhone ="";
-			
+
 			//1.새로운 배송지 선택시 검증 로직 
 			if( $("#newAddress").is(":checked") ){
 				ordersReceiver = $("#name").val();
 				var phone1 = $("#phone1").val().trim();
 				var phone2 = $("input[name=phone2]").val().trim();
 				var phone3 = $("#phone3").val().trim();
+				    
 				 ordersZipcode = $("#sample6_postcode").val().trim();
 				 ordersAddress = $("#sample6_address").val().trim();
 				 ordersSubAddress = $("#sample6_address2").val().trim();
+				
 				if(ordersReceiver.length == 0){
 					alert("받는분을 입력해주세요.");
 					return false;
@@ -237,6 +238,7 @@ function getMemberMileage(){
 					return false;
 				}
 				ordersPhone = ordersPhone+phone1+"-"+phone2+"-"+phone3;
+				
 			}else{
 				//기존주소로 구매하였다면 히든요소 삭제 
 				$("#newAddress").empty();
@@ -246,9 +248,13 @@ function getMemberMileage(){
 				 ordersAddress = $("#memberAddress").html().trim();
 				 ordersSubAddress = $("#memberSubAddress").html().trim();
 			}
+			
+			
 			var ordersTotalPrice = $("#ordersTotalPrice").html().trim();
 			//결제방식 0:현금결제 ,1 카드결제등등 		
 			var ordersPayment = $(":radio[name=payment]:checked").val();
+			
+			
 			var bank = "";
 			var card  = "";
 			var quota = "";
@@ -262,35 +268,64 @@ function getMemberMileage(){
 			}
 			//주문요청사항
 			var ordersRequest = $("#requestInfo").val();
-			var memberId = $("#hiddenMemberId").val();
-			var ordersPayment = $(":radio[name=payment]:checked").val();
 			
-			var paymentStatus = 0;        
+			//결제상태 결제완료 :1 /결제대기중 :0 .. 
+			var paymentStatus = 1;
+			
+			
+			/* var ordersDate = new Date().format("yyyy-MM-dd"); */
+			var memberId = $("#hiddenMemberId").val();
+			
+			var ordersPayment = $(":radio[name=payment]:checked").val();
+			var orderProductStatus = 0;
+			
+		
 			if(ordersPayment == 0){
-				 paymentStatus = 0;    //미결재    
+				orderProductStatus = 0; //미결재 
 			}else if (ordersPayment == 1 || ordersPayment == 2 || ordersPayment == 3 ) {
-				 paymentStatus = 1;  //결제완료       
+				orderProductStatus =1;  //결제완료 
 			}
 			
-			var queryString = "";
-			queryString ="?ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+
-			"&ordersZipcode="+ordersZipcode+"&ordersAddress="+ordersAddress+"&ordersSubAddress="
-			 +ordersSubAddress+"&ordersTotalPrice="+ordersTotalPrice+"&ordersPayment="+ordersPayment
-			 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId
-			 +"&usedMileage="+$("#useMileage").html().trim()+"&bank="+bank+"&card="+card+"&quota="+quota;
-			 
+			 var queryString = "";
 			 if($("#hiddenFlag").val() != 'ok'){
 				 	//바로 구매(1개 구매)  
-				 	queryString = queryString + "&fare="+$(".deriveryCharge").html().trim();	
-				 	$("form").prop("action", "/HwangDangFleamarket/buy/buyProductOne.go"+queryString);
+				 	 queryString ="?ordersNo=${requestScope.ordersNo}&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
+					 +ordersZipcode+"&ordersAddress="+ordersAddress+"&ordersSubAddress="+ordersSubAddress
+					 +"&ordersTotalPrice="+ordersTotalPrice+"&ordersPayment="+ordersPayment
+					 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId+
+					 "&orderAmount=${param.amount }&productId=${param.productId  }&sellerStoreNo=${param.sellerStoreNo }&orderProductStatus="
+					 +orderProductStatus+"&optionId="+$("#optionId").val().trim() +"&usedMileage="+$("#useMileage").html()+"&bank="+bank
+					 +"&card="+card+"&quota="+quota+"&fare="+$(".deriveryCharge").html().trim();	
+					$("form").prop("action", "/HwangDangFleamarket/buy/buyProductOne.go"+queryString);
 			 }else{
 				 	//장바구누 구매 (N개구매)
-				 	var fareList = ""; //배송비   
+				 	var optionIdList = "";
+				 	var sellerStoreNoList ="";
+				 	var productIdList = "";
+				 	var amountList = "";
+				 	var fareList = "";
+				 	$(".optionId").each( function(index){
+				 		optionIdList = optionIdList + this.value + ",";
+				 	});
+				 	$(".sellerStoreNo").each( function(index){
+				 		sellerStoreNoList = sellerStoreNoList + this.value + ",";
+				 	});
+					$(".productId").each( function(index){
+						productIdList = productIdList + this.value + ",";
+				 	});
+					$(".amount").each( function(index){
+						amountList = amountList + $(this).html().trim() + ",";
+				 	});
 					$(".deriveryCharge").each( function(index){
 						fareList = fareList + $(this).html().trim() + ",";
 				 	});
-				 	 queryString = queryString+"&fareList="+fareList+"&cartNoList=${requestScope.cartNoList}";
-				 	 $("form").prop("action", "/HwangDangFleamarket/buy/buyProducts.go"+queryString);
+				 	  queryString = "?ordersNo=${requestScope.ordersNo}&ordersReceiver="+ordersReceiver+"&ordersPhone="+ordersPhone+"&ordersZipcode="
+					 +ordersZipcode+"&ordersAddress="+ordersAddress+"&ordersSubAddress="+ordersSubAddress
+					 +"&ordersTotalPrice="+ordersTotalPrice+"&ordersPayment="+ordersPayment
+					 +"&ordersRequest="+ordersRequest+"&paymentStatus="+paymentStatus+"&memberId="+memberId+
+					 "&amountList="+ amountList + "&productIdList=" +productIdList+ "&sellerStoreNoList="+sellerStoreNoList +"&orderProductStatus="+orderProductStatus+
+					 "&optionIdList="+optionIdList+"&fareList=" + fareList +"&usedMileage="+$("#useMileage").html().trim()+"&cartNoList=${requestScope.cartNoList }&bank="+bank+"&card="+card+"&quota="+quota;	
+					$("form").prop("action", "/HwangDangFleamarket/buy/buyProducts.go"+queryString);
 			 }
 			$("form").submit(); 
 		}); //결제버튼
@@ -564,7 +599,7 @@ function getMemberMileage(){
 		<td>
 		<h2>주문상품 정보</h2>
 		<div style="border: 3px solid lightgray; padding: 15px; margin: 10px;">
-		<c:forEach  items="${sessionScope.orderProductList }" var="op">
+		<c:forEach  items="${requestScope.orderProductList }" var="op">
 			<input type="hidden" id="optionId"  class="optionId" value="${op.productOption.optionId }"/>
 			<input type="hidden"  class="sellerStoreNo" value="${op.sellerStoreNo }"/>
 			<input type="hidden"  class="productId" value="${op.product.productId }"/>
@@ -594,7 +629,7 @@ function getMemberMileage(){
 			<br/><hr/>	
 		</c:forEach>
 		<br/>
-			<p class="text-center">총 <font color="blue"><span id="oneOrN">${fn:length(sessionScope.orderProductList) }</font> 건
+			<p class="text-center">총 <font color="blue"><span id="oneOrN">${fn:length(requestScope.orderProductList) }</font> 건
 			</span></p><br/>
 		</div>
 		<br/>

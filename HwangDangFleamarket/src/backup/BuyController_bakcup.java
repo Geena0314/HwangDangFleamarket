@@ -1,4 +1,4 @@
-package com.hwangdang.controller;
+package backup;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.buf.UEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +35,7 @@ import com.hwangdang.vo.Seller;
 
 @Controller
 @RequestMapping("/buy")
-public class BuyController {
+public class BuyController_bakcup {
 
 	
 	@Autowired
@@ -52,7 +54,7 @@ public class BuyController {
 	@RequestMapping("/moveBuyPage.go") 
 	public String moveBuyPage(@RequestParam(value="page" ,defaultValue="1") int page , 
 								String productId ,int sellerStoreNo ,String sellerStoreImage ,
-								int amount ,String memberId ,String option ,Model model , HttpSession session){
+								int amount ,String memberId ,String option ,Model model){
 		String url = "";
 		if(memberId == null || memberId.isEmpty()){ 
 			//로그인이 안된상태 로그인페이지로 이동 !! 
@@ -76,7 +78,8 @@ public class BuyController {
 										productOption.getOptionId()  ,product.getSellerStoreNo(), 
 										0 , product, productOption, seller);
 			orderProductList.add(orderProduct);
-			session.setAttribute("orderProductList",orderProductList);
+			model.addAttribute("orderProductList",orderProductList);
+			model.addAttribute("ordersNo",ordersNo);
 		}
 		return url;
 	}  
@@ -115,8 +118,9 @@ public class BuyController {
 		}
 		url ="buyer/buyForm.tiles";	
 		model.addAttribute("flag" , "ok");  // flag를 통해 바로구매/장바구니구매 구분 
+		model.addAttribute("ordersNo",ordersNo );
+		model.addAttribute("orderProductList",orderProductList);
 		model.addAttribute("cartNoList",cartNoList);
-		session.setAttribute("orderProductList", orderProductList);
 		return url;
 	}  
 	
@@ -171,46 +175,48 @@ public class BuyController {
 	 * 	상품구매 로직  1개 : 실제구매로직
 	 */
 	@RequestMapping("/buyProductOne.go")
-	public String buyProductOne(String ordersReceiver , String ordersPhone, String ordersZipcode , 
-								String ordersAddress , String ordersSubAddress , int ordersTotalPrice , 
-								String ordersPayment ,String ordersRequest ,int paymentStatus ,
-								String memberId ,String bank ,String card , String quota ,
-								@RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage , 
-								@RequestParam(value="fare" ,defaultValue="0") int fare ,
-								HttpServletRequest request , HttpServletResponse response ,Model model , 
-																	HttpSession session) throws Exception{
+	public String buyProductOne(String ordersNo ,String ordersReceiver , String ordersPhone, String ordersZipcode , 
+							String ordersAddress , String ordersSubAddress , int ordersTotalPrice , String ordersPayment ,
+							@RequestParam(value="ordersRequest" ,required=false) String ordersRequest ,Model model ,
+							int paymentStatus , String memberId , int orderAmount , String productId , 
+							int optionId , int sellerStoreNo , int orderProductStatus , HttpServletResponse response ,
+							@RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage , HttpServletRequest request ,
+							@RequestParam(value="bank" ,required=false) String bank ,
+							@RequestParam(value="card" ,required=false) String card , 
+							@RequestParam(value="quota" ,required=false) String quota ,
+					        @RequestParam(value="fare" ,defaultValue="0") int fare ,HttpSession session ) throws Exception{
 		String url = "/";
 		//전처리메소드 호출
 		boolean flag = buyBeforeLogic(ordersTotalPrice, bank, card, quota,  memberId, usedMileage, session);
 		if(flag){
-			//비지니스 로직 시작   : orders객체생성및  DB INSERT
-			try{
-				ArrayList<OrderProduct> opList = (ArrayList<OrderProduct>) session.getAttribute("orderProductList");
-				opList.get(0).setOrderProductStatus(paymentStatus);
-				Orders orders = new Orders(opList.get(0).getOrdersNo(), ordersReceiver, ordersPhone, ordersZipcode, 
-						ordersAddress, ordersSubAddress, ordersTotalPrice, ordersPayment, ordersRequest, paymentStatus, 
-						new Date(), memberId  ,usedMileage);
-				orders.setOrderProductList(opList);
-				//****************************************
-				//orders TB , orders product TB INSERT 
-				int cnt = service.addProductOne(orders ,opList.get(0));
-				if(cnt == 1){
-					//1.개별상품/전체상품 구매한 갯수만큼 재고량 Minus
-					Map<String,Object> param = new HashMap<String,Object>();
-					param.put("buyStock", opList.get(0).getOrderAmount());
-					param.put("optionId", opList.get(0).getOptionId());
-					param.put("productId", opList.get(0).getProductId());
-					service.setOptionStockByOptionId(param);
-					service.setProductStockByProductId(param);
-					session.setAttribute("orders", orders);
-					session.removeAttribute("orderProductList");
-					response.setHeader("Cache-Control","no-store");   
-					url = "redirect:/buy/addProductSuccessPage.go";
-				}
-			}catch(Exception e){
-				e.printStackTrace();
-				request.setAttribute("errorMsg","1개 상품 결제실패! 관리자에게 문의해주세요.");
-				url ="error.tiles";
+			//비지니스 로직  : orders객체 / ordersProduct객체 생성 
+			Orders orders = new Orders(ordersNo, ordersReceiver, ordersPhone, ordersZipcode, ordersAddress, ordersSubAddress, ordersTotalPrice, ordersPayment, ordersRequest, paymentStatus, new Date(), memberId  ,usedMileage);
+			OrderProduct op = new OrderProduct(orderAmount, ordersNo, productId, optionId, sellerStoreNo, orderProductStatus , fare);
+			Product product = service.getProductInfo(productId);
+			Seller seller = service.getSellerByNo(sellerStoreNo);
+			ProductOption po = service.getProductOptionInfoByoptionNo(optionId);
+			op.setProduct(product);
+			op.setSeller(seller);
+			op.setProductOption(po);
+			ArrayList<OrderProduct> orderProductList = new ArrayList<>();
+			orderProductList.add(op);
+			orders.setOrderProductList(orderProductList);
+			
+			//****************************************
+			//orders TB , orders product TB INSERT 
+			int cnt = service.addProductOne(orders ,op);
+			if(cnt == 1){
+				//1.개별상품/전체상품 구매한 갯수만큼 재고량 Minus
+				Map<String,Object> param = new HashMap<String,Object>();
+				param.put("buyStock", orderAmount);
+				param.put("optionId", optionId);
+				param.put("productId",productId );
+				service.setOptionStockByOptionId(param);
+				service.setProductStockByProductId(param);
+				session.setAttribute("orders", orders);
+				//뒤로가기이슈 해결 
+				response.setHeader("Cache-Control","no-store");   
+				url = "redirect:/buy/addProductSuccessPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&productId="+productId;
 			}
 		//검증실패 else 
 		}else{
@@ -225,80 +231,83 @@ public class BuyController {
 	 * 	상품구매 로직   N개 : 
 	 */
 	@RequestMapping("/buyProducts.go")
-	public String buyProducts(String ordersReceiver , String ordersPhone, String ordersZipcode ,
-							  String ordersAddress , String ordersSubAddress , int ordersTotalPrice ,
-							  String ordersPayment , int paymentStatus , String memberId ,String fareList , 
-							  String bank , String card , String quota , String cartNoList , String ordersRequest, 
-							  @RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage  ,  
-							  HttpServletRequest request, HttpServletResponse response, HttpSession session) 
-									  																throws Exception{
+	public String buyProducts(String ordersNo , String ordersReceiver , String ordersPhone, String ordersZipcode ,
+			String ordersAddress , String ordersSubAddress , int ordersTotalPrice ,
+			String ordersPayment , @RequestParam(value="ordersRequest" ,required=false) String ordersRequest , int paymentStatus , String memberId ,
+			String amountList , String productIdList , String optionIdList , String sellerStoreNoList , int orderProductStatus ,
+			@RequestParam(value="usedMileage" ,defaultValue= "0") int usedMileage  ,   @RequestParam(value="fareList" ,required=false) String fareList , HttpSession session , 
+			HttpServletResponse response , HttpServletRequest request ,String cartNoList, 
+			@RequestParam(value="bank" ,required=false) String bank , @RequestParam(value="card" ,required=false) String card , 
+			@RequestParam(value="quota" ,required=false) String quota) throws Exception{ // 0 결재대기 , 1 결재완료  
+		
 		String url = "";
-		//1. 검증작업 
 		boolean flag = buyBeforeLogic(ordersTotalPrice, bank, card, quota, memberId, usedMileage, session);
 		if(flag){
-			// 2. 비지니스 로직  시작
-			try{
-				ArrayList<OrderProduct> opList = (ArrayList<OrderProduct>)session.getAttribute("orderProductList");
-				Orders orders = new Orders(opList.get(0).getOrdersNo(), ordersReceiver, ordersPhone, ordersZipcode, 
-						ordersAddress, ordersSubAddress, ordersTotalPrice, ordersPayment, ordersRequest, paymentStatus,
-						new Date(), memberId , usedMileage);
-				ArrayList<String> fareListSplitList =  listSplit(fareList);
-				// 배송비 세팅및 상품별 결제상태 set 
-				for(int i=0; i < fareListSplitList.size(); i++){
-					OrderProduct op = opList.get(i);
-					op.setFare(Integer.parseInt(fareListSplitList.get(i)));
-					opList.get(i).setOrderProductStatus(paymentStatus);
+			//전처리 성공 
+			//1. 매개변수 split
+			ArrayList<String> amountSplitList =  listSplit(amountList);
+			ArrayList<String> productIdSplitList =  listSplit(productIdList);
+			ArrayList<String> optoinIdSplitList =  listSplit(optionIdList);
+			ArrayList<String> sellerStoreNoSplitList =  listSplit(sellerStoreNoList);
+			ArrayList<String> fareListSplitList =  listSplit(fareList);
+			
+			// 2. 비지니스 로직  : orders / orderProduct 객체생성
+			ArrayList<OrderProduct> orderProductList = new ArrayList<>();
+			Orders orders = new Orders(ordersNo, ordersReceiver, ordersPhone, ordersZipcode, ordersAddress, ordersSubAddress, ordersTotalPrice, ordersPayment, ordersRequest, paymentStatus, new Date(), memberId , usedMileage);
+			
+			for(int i=0; i < amountSplitList.size(); i++){
+				Product product = service.getProductInfo(productIdSplitList.get(i));
+				Seller seller = service.getSellerByNo(Integer.parseInt(sellerStoreNoSplitList.get(i)));
+				ProductOption productOption = service.getProductOptionInfoByoptionNo(Integer.parseInt(optoinIdSplitList.get(i)));
+				OrderProduct op = new OrderProduct(Integer.parseInt(amountSplitList.get(i)), 
+						ordersNo, productIdSplitList.get(i) , Integer.parseInt(optoinIdSplitList.get(i)), Integer.parseInt(sellerStoreNoSplitList.get(i)), orderProductStatus ,product ,productOption , seller );
+				op.setFare(Integer.parseInt(fareListSplitList.get(i)));
+				orderProductList.add(op); //List에 add()
+			}
+			orders.setOrderProductList(orderProductList);
+			
+			//****************************************
+			// 5.orders TB , orders product TB INSERT 
+			int cnt = service.addProductN(orders);
+			for(OrderProduct op : orderProductList ){
+				//DB에 INSERT
+				cnt = service.addProductN(op);
+				if(cnt == 0){
+					//구매실패시 에러페이지로 이동!
+					session.setAttribute("errorMsg","구매가 실패하였습니다. 관리자에게문의해주세요!");
+					return "redirect:/error.tiles"; 
 				}
-				orders.setOrderProductList(opList);
-				//****************************************
-				// 5.orders TB , orders product TB INSERT 
-				int cnt = service.addProductN(orders);
-				for(OrderProduct op : opList ){
-					//DB에 INSERT
-					cnt = service.addProductN(op);
-					if(cnt == 0){
-						//구매실패시 에러페이지로 이동!
-						session.setAttribute("errorMsg","구매가 실패하였습니다. 관리자에게문의해주세요!");
-						return "redirect:/error.tiles"; 
-					}
+			}
+			
+			//6-1. DB에 INSERT  : 결재완료라면 Cart에서 삭제
+			if(cnt == 1){
+				ArrayList<String> cartList = null;
+				cartList = listSplit(cartNoList);
+				for(String temp : cartList){
+					int cartNo = Integer.parseInt(temp);
+					cartService.removeCart(cartNo);
 				}
 				
-				//6-1. DB에 INSERT  : 결재완료라면 Cart에서 삭제
-				if(cnt == 1){
-					ArrayList<String> cartList = null;
-					cartList = listSplit(cartNoList);
-					for(String temp : cartList){
-						int cartNo = Integer.parseInt(temp);
-						cartService.removeCart(cartNo);
-					}
-					
-					// 6-2결재완료라면  구매한 상품 수량 마이너스 
-					Map<String,Object> param = new HashMap<String,Object>();
-					for(int i=0; i < opList.size(); i++){
-						int optionStock = opList.get(i).getOrderAmount();
-						param.put("buyStock", optionStock);
-						param.put("optionId",orders.getOrderProductList().get(i).getProductOption().getOptionId() );
-						param.put("productId", opList.get(i).getProductId());
-						//1.해당옵션의상품수량 Minus
-						service.setOptionStockByOptionId(param);
-						//2.해당상품의 총수량 Minus
-						service.setProductStockByProductId(param);
-					}
-					//뒤로가기이슈 해결 
-					response.setHeader("Cache-Control","no-store");      
-					session.setAttribute("orders", orders);
-					session.removeAttribute("orderProductList");
-					url = "redirect:/buy/addProductSuccessPage.go";
-				} //if 
-				
-			}catch(Exception e){
-				e.printStackTrace();
-				request.setAttribute("errorMsg","장바구니 상품 결제실패! 관리자에게 문의해주세요.");
-				url ="error.tiles";
-			}	
+				// 6-2결재완료라면  구매한 상품 수량 마이너스 
+				Map<String,Object> param = new HashMap<String,Object>();
+				for(int i=0; i < amountSplitList.size(); i++){
+					int optionStock = Integer.parseInt(amountSplitList.get(i));
+					param.put("buyStock", optionStock);
+					param.put("optionId",orders.getOrderProductList().get(i).getProductOption().getOptionId() );
+					param.put("productId", productIdSplitList.get(i));
+					//1.해당옵션의상품수량 Minus
+					service.setOptionStockByOptionId(param);
+					//2.해당상품의 총수량 Minus
+					service.setProductStockByProductId(param);
+				}
+				//뒤로가기이슈 해결 
+				response.setHeader("Cache-Control","no-store");      
+				session.setAttribute("orders", orders);
+				url = "redirect:/buy/addProductSuccessPage.go?cnt="+cnt+"&ordersNo="+ordersNo+"&orderProductList="+orderProductList;
+			} //if 
 		
-		//전처리실패
 		}else{
+			//전처리실패
 			request.setAttribute("errorMsg","검증을 실패하였습니다. 관리자에게 문의해주세요.");
 			url ="error.tiles";
 		}
@@ -311,7 +320,12 @@ public class BuyController {
 	 * 	구매성공 : 결제성공 페이지 이동 
 	 */
 	@RequestMapping("/addProductSuccessPage.go")
-	public String addProductPage(){
+	public String addProductPage(String ordersNo ,@RequestParam(value="productId" ,required=false ) String productId 
+					,@RequestParam(value="orderProductList" ,required=false ) List orderProductList ,Model model ){
+			Orders orders = service.getOrdersByOrdersNo(ordersNo);
+			model.addAttribute("orders" ,orders);
+			model.addAttribute("product",productId);
+			model.addAttribute("orderProductList",orderProductList);
 		return "buyer/buy_success.tiles";
 	}
 	/**

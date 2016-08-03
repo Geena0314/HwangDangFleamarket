@@ -15,7 +15,6 @@ public class OrderProduct implements Serializable
 	
 	private Product product;
 	private ProductOption productOption;
-	  
 	private Seller seller;
 	
 	public OrderProduct()
@@ -280,11 +279,12 @@ public class OrderProduct implements Serializable
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "OrderProduct [orderSeqNo=" + orderSeqNo + ", orderAmount=" + orderAmount + ", ordersNo=" + ordersNo
 				+ ", productId=" + productId + ", optionId=" + optionId + ", sellerStoreNo=" + sellerStoreNo
-				+ ", orderProductStatus=" + orderProductStatus + ", product=" + product + ", productOption="
-				+ productOption + ", seller=" + seller + "]";
+				+ ", orderProductStatus=" + orderProductStatus + ", fare=" + fare + ", product=" + product
+				+ ", productOption=" + productOption + ", seller=" + seller + "]";
 	}
+
+	
 }

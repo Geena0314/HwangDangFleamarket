@@ -35,6 +35,17 @@ img {
 
 </script>   
     
+<%
+    //[뒤로가기]버튼으로 보지 못하도록, no-cache로 설정
+	 response.setDateHeader("Expires", 0);
+	 response.setHeader("Pragma", "no-cache");
+	 if (request.getProtocol().equals("HTTP/1.1")) {
+	  response.setHeader("Cache-Control", "no-cache");
+	 }else {
+		 response.setHeader("Cache-Control","no-store");  
+	 }
+ %>
+    
 <div class="container">
 	<div class="center-block">
 	<div style="border: 6px solid lightgray; padding: 25px; margin: 20px; width: 500px; float: left">
@@ -103,7 +114,6 @@ img {
 		 </fmt:formatNumber>원</font><br/>
 		
 		</div>
-		
 		<%  
 			// 세션정보 삭제!
 			if(session.getAttribute("bank") != null){

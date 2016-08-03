@@ -40,7 +40,6 @@
 		
 		
 				$("#login").on("click",function() {
-					
 					if ($("#id").val() == null|| ($("#id").val() + $("#email").val()).length > 29|| $("#id").val().trim().length == 0) {
 						//id가 비었거나, 30글자보다 크거나, id값에 공백만 있는경우.
 						if ($("#password").val() == null || $("#password").val().trim().length < 8 || $("#password").val().length > 20) {
@@ -63,7 +62,9 @@
 					//구매중 로그인페이지로 온경우 이동 
 					if ($("#flag").val() == 'true') {
 						// 로그인후 상품디테일페이지로 이동 
-						var url = "/HwangDangFleamarket/member/loginAfterProductDetailPage.go?page=${param.page}&productId=${param.productId}&sellerStoreNo=${param.sellerStoreNo}&amount=${param.amount}&option=${param.option}";
+						var url = "/HwangDangFleamarket/member/loginAfterProductDetailPage.go?"
+								+"page=${param.page}&productId=${param.productId}&sellerStoreNo=${param.sellerStoreNo}"
+								+"&amount=${param.amount}&option=${param.option}";
 						$("form").prop("action", url);
 						$("form").submit();
 					} else {

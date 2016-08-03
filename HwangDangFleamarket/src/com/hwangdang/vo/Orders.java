@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestParam;
+
 public class Orders implements Serializable
 {
 	private String ordersNo;    //주문번호
@@ -19,7 +21,7 @@ public class Orders implements Serializable
 	private Date orders_date;   //주문날짜 
 	private String memberId;  //구매자 ID
 	private int usedMileage;
-	
+
 	
 	private List<OrderProduct> orderProductList;  // 주문한 제품에대한 세부정보  , 주문수량 , 상품ID
 	
