@@ -247,11 +247,12 @@ public class BuyController {
 				for(int i=0; i < fareListSplitList.size(); i++){
 					OrderProduct op = opList.get(i);
 					op.setFare(Integer.parseInt(fareListSplitList.get(i)));
-					opList.get(i).setOrderProductStatus(paymentStatus);
+					op.setOrderProductStatus(paymentStatus);
 				}
 				orders.setOrderProductList(opList);
+				
 				//****************************************
-				// 5.orders TB , orders product TB INSERT 
+				// 3.orders TB , orders product TB INSERT 
 				int cnt = service.addProductN(orders);
 				for(OrderProduct op : opList ){
 					//DB에 INSERT
@@ -262,42 +263,36 @@ public class BuyController {
 						return "redirect:/error.tiles"; 
 					}
 				}
-				
-				//6-1. DB에 INSERT  : 결재완료라면 Cart에서 삭제
+				//4. DB에 INSERT 성공이면 Cart에서 삭제
 				if(cnt == 1){
-					ArrayList<String> cartList = null;
-					cartList = listSplit(cartNoList);
+					ArrayList<String> cartList= listSplit(cartNoList); 
 					for(String temp : cartList){
 						int cartNo = Integer.parseInt(temp);
 						cartService.removeCart(cartNo);
 					}
-					
-					// 6-2결재완료라면  구매한 상품 수량 마이너스 
+					// 5.구매한 상품 수량 마이너스 
 					Map<String,Object> param = new HashMap<String,Object>();
 					for(int i=0; i < opList.size(); i++){
 						int optionStock = opList.get(i).getOrderAmount();
 						param.put("buyStock", optionStock);
 						param.put("optionId",orders.getOrderProductList().get(i).getProductOption().getOptionId() );
 						param.put("productId", opList.get(i).getProductId());
-						//1.해당옵션의상품수량 Minus
+						//5-1.해당옵션의상품수량 Minus
 						service.setOptionStockByOptionId(param);
-						//2.해당상품의 총수량 Minus
+						//5-2.해당상품의 총수량 Minus
 						service.setProductStockByProductId(param);
 					}
-					//뒤로가기이슈 해결 
 					response.setHeader("Cache-Control","no-store");      
 					session.setAttribute("orders", orders);
 					session.removeAttribute("orderProductList");
 					url = "redirect:/buy/addProductSuccessPage.go";
 				} //if 
-				
 			}catch(Exception e){
 				e.printStackTrace();
 				request.setAttribute("errorMsg","장바구니 상품 결제실패! 관리자에게 문의해주세요.");
 				url ="error.tiles";
 			}	
-		
-		//전처리실패
+		//전처리실패 시 에러페이지 이동 
 		}else{
 			request.setAttribute("errorMsg","검증을 실패하였습니다. 관리자에게 문의해주세요.");
 			url ="error.tiles";
@@ -357,19 +352,14 @@ public class BuyController {
 	public String findProductByKeyword(Model model,
 					@RequestParam(value="keyword" ,required=false) String keyword , 
 					@RequestParam(value="page" , defaultValue="1") int page){
-		//System.out.println("키워드:"+keyword);
 		if(!keyword.isEmpty()){
 			Map<String ,Object> param = new HashMap<String,Object>();
 			param.put("keyword", keyword);
 			param.put("itemPerPage", Constants.ITEMS_PER_PAGE);
 			param.put("page" , page);
 			List<Product> productList = service.getProductByLikeKeyword(param);
-			/*for(Product p : productList){
-				System.out.println(p);
-			}*/
 			int totalItems = service.getProductTotalByLikeKeyword(keyword);
 			PagingBean pagingBean = new PagingBean(totalItems, page);
-			
 			model.addAttribute("pagingBean", pagingBean);
 			model.addAttribute("productList", productList);
 			model.addAttribute("keyword" ,keyword);
