@@ -20,25 +20,19 @@
 	    <script src="/HwangDangFleamarket/js/vendor/holder.js"></script>
 		<title>교환 신청</title>
 		<script type="text/javascript">
-			$(document).ready(function()
-			{
-				$("#submit").on("click", function()
-				{
+			$(document).ready(function(){
+				$("#submit").on("click", function(){
 					$("#refundTitleError").empty();
 					$("#refundContentError").empty();
-					if($("#refundTitle").val().trim().length < 5 || $("#refundTitle").val().trim().length > 20)
-					{
+					if($("#refundTitle").val().trim().length < 5 || $("#refundTitle").val().trim().length > 20){
 						$("#refundTitleError").append("제목은 5자 ~ 20자 사이로 입력해주세요.");
 						$("#refundTitle").focus();
 						return false;
-					}
-					else if($("#refundContent").val().trim().length < 10)
-					{
+					}else if($("#refundContent").val().trim().length < 10){
 						$("#refundContentError").append("내용은 10글자 이상으로 입력해주세요.");
 						$("#refundContent").focus();
 						return false;
-					}
-					else
+					}else
 						return true;
 				});
 			});
@@ -51,7 +45,7 @@
 		</style>
 	</head>
 	<body>
-		<form method="POST" action="/HwangDangFleamarket/myorder/exchangeRequest.go?orderSeqNo=${ param.orderSeqNo }">
+		<form method="POST" action="/HwangDangFleamarket/myorder/exchangeRequest.go?orderSeqNo=${param.orderSeqNo }">
 			<div align="center" class="refund-div">
 				<h2 class="page-header">교 환 신 청</h2>
 				<table class="table table-striped refundTB">

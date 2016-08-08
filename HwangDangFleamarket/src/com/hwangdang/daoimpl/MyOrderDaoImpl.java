@@ -23,13 +23,9 @@ public class MyOrderDaoImpl implements MyOrderDao {
 	
 	public MyOrderDaoImpl() { }
 	
-	//배송현황조회 - 0:입금대기중 ,1:결제완료 , 2:배송준비중 , 3:배송중  
+	//배송현황조회 - 0:입금대기중 ,1:결제완료 , 2:배송준비중 , 3:배송중 ,4: 배송완료   
 	@Transactional
-	public List<Orders> selectOrdersMain(String buyer , int page ){
-		HashMap<String ,Object> map = new HashMap();
-		map.put("page", page);
-		map.put("itemPerPage", Constants.ITEMS_PER_PAGE);
-		map.put("buyer", buyer);
+	public List<Orders> selectOrdersMain(HashMap<String ,Object> map){
 		return session.selectList("myorder.select-diliver-status" , map);
 	}
 	
@@ -55,7 +51,7 @@ public class MyOrderDaoImpl implements MyOrderDao {
 	}
 	
 	
-	//배송중 3: 배송완료4: 를 환불신청 :6으로 변경 
+	//상품개별상태를 변경 담당 
 	@Transactional
 	public int updateOrdersStatus(HashMap<String,Object> map ){
 		return session.update("myorder.update-by-orderNo" , map);

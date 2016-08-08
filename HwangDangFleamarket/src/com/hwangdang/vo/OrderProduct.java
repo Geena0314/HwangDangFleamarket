@@ -12,7 +12,6 @@ public class OrderProduct implements Serializable
 	private int sellerStoreNo;   // 셀러 스토어NO
 	private int orderProductStatus;  //상품에대한 상태  0~10
 	private int fare;  //배송비 
-	
 	private Product product;
 	private ProductOption productOption;
 	private Seller seller;

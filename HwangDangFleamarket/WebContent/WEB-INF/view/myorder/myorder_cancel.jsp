@@ -93,7 +93,9 @@ div .child  {
 					<c:when test="${orderProduct.orderProductStatus  == 6 }">환불신청  </c:when>
 					<c:when test="${orderProduct.orderProductStatus  == 7 }">구매취소 완료 </c:when>
 					<c:when test="${orderProduct.orderProductStatus  == 8 }">교환완료</c:when>
-					<c:when test="${orderProduct.orderProductStatus  == 6 }">환불완료</c:when>
+					<c:when test="${orderProduct.orderProductStatus  == 9 }">환불완료</c:when>
+					<c:when test="${orderProduct.orderProductStatus  == 11}">교환신청거절</c:when>
+					<c:when test="${orderProduct.orderProductStatus  == 12 }">환불신청거절</c:when>
 				</c:choose> 
 
 			</strong>  

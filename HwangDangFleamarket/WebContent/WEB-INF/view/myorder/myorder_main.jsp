@@ -1,6 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fmt"   uri="http://java.sun.com/jsp/jstl/fmt"%> 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <style> 
 
@@ -18,8 +18,7 @@ img {
 	min-width:  500px;
 }   
 
-#orderSeqNo
-{
+#orderSeqNo{
 	display: none;
 }
 
@@ -36,31 +35,24 @@ var loginId = $("#loginId").val();
 function sendForm(url){
 	if(flag){ 
 		flag = false;
-		orderCancelList = orderCancelList.substring( 0 ,orderCancelList.length-1);
-		//console.log("split실행후:" +orderCancelList);
-		//alert("split실행후:" +orderCancelList);
+		orderCancelList = orderCancelList.substring( 0 , orderCancelList.length-1);
 		$("#f2").prop("action" , url);
 		$("#f2").submit();
 	}
 }  
 //체크박스검증 및 orderList 검증  함수 
-function checkboxValidation(num1 , num2 , num3 , msg ){
+function checkboxValidation(num1 , num2 , num3 , msg){
 	if( !$("input:checkbox").is(":checked") ){  //true,false
 		alert("체크박스를선택해주세요.");
 	}else{
 		// 체크박스선택하였고 주문취소가 가능한 상태인지 검증 
 		orderCancelList = "";
 		$("input:checkbox:checked").each(function(){
-			//console.log(this);
-			var orderNo = $(this).val()
-			//alert("ordersSeqNo: " +orderNo);
-			if(orderNo != 'on'){
+			var ordersSeqNo = $(this).val()
+			if(ordersSeqNo != 'on'){
 				var tr = $(this).parent().parent();
-				//console.log($(tr).children().eq(3).text());
 				var orderStatusText =$(tr).children().eq(3).text().trim();
-				//alert("상태:" +orderStatusText);
 				var orderStatus =  0;
-				
 				if(orderStatusText == "입금대기중" ){
 					orderStatus = 0;
 				}if(orderStatusText == "결제완료" ){
@@ -72,104 +64,87 @@ function checkboxValidation(num1 , num2 , num3 , msg ){
 				}if(orderStatusText == "배송완료" ){
 					orderStatus = 4;
 				}
-				//alert("orderStatus 숫자:"+orderStatus);  //orderStatus 숫자로변경 
-				
 				if(orderStatus == num1 || orderStatus ==num2 || orderStatus ==num3 ){
 					//취소할 주문번호 배열에 누적 
-					orderCancelList = orderCancelList + orderNo +","
+					orderCancelList = orderCancelList + ordersSeqNo +","
 					flag = true;
 				}else{
 					alert(msg);
-					flag = false;
 				}
 			}
-			
 		
 		}); //orderList 누적 for문
 	} //else 
 		
 }
-		//제목의 체크박스 선택하면 현재주문 모두 체크하기
-		function allCheck(evt){
+//제목의 체크박스 선택하면 현재주문 모두 체크하기
+function allCheck(evt){
+	var targetNameProp = $(evt).prop("name");
+	var flag = $("."+targetNameProp).prop("checked");
+		if(flag){
+		//true 즉 체크되어있으면 현재그룹의 체크받스들도 모두 체크시킴!
+		 $("."+targetNameProp).prop("checked" ,"checked");	
+	 }else{
+		 $("."+targetNameProp).prop("checked" , false);	
+	} 
 			
-			var targetNameProp = $(evt).prop("name");
-			var flag = $("."+targetNameProp).prop("checked");
-			//alert("상태:" + flag);
-			 if(flag){
-				//true 즉 체크되어있으면 다른것들도 체크시킴!
-				 $("."+targetNameProp).prop("checked" ,"checked");	
-			 }else{
-				 $("."+targetNameProp).prop("checked" , false);	
-			} 
-			
+}
+	  
+$(document).ready(function(){
+	// 주문취소버튼 클릭시 이벤트핸들러 
+	$("#btnRequestCancel").on("click",function(){
+		var yesNO = confirm("정말취소하시겠습니까?");
+		if(yesNO){
+			url = "";
+			var page =  $("#currentPage").text().trim();
+			checkboxValidation(0 , 1 , 2 ,  "상품 발송후에는 주문취소를 할수없습니다.");
+			url	="/HwangDangFleamarket/myorder/orderCancelList.go?orderCancelList="
+					+orderCancelList+"&loginId=${sessionScope.login_info.memberId }&status="+7;
+			sendForm(url);
 		}
-
-	
-	$(document).ready(function(){
-		// 주문취소
-		$("#btnRequestCancel").on("click",function(){
-			var yesNO = confirm("정말취소하시겠습니까?");
-			if(yesNO){
-				var page =  $("#currentPage").text().trim();
-				checkboxValidation(0 , 1 , 2 ,  "상품 발송후에는 주문취소를 할수없습니다.");
-				//alert(orderCancelList);
-				url	="/HwangDangFleamarket/myorder/orderCancelList.go?orderCancelList="+orderCancelList+"&loginId=${sessionScope.login_info.memberId }&status="+7+"&page="+page;
-				sendForm(url);
-			}
-		}); //btn 
+	}); //btn 
 		
+	// 환불신청 
+	$("#btnRequestRefund").on("click",function(){
+		if($(":checkbox:checked").length == 0){
+			alert("환불할 상품을 1개 선택해 주세요.")
+			return false;
+		}
+		if($(":checkbox:checked").length != 1){
+			alert("한번에 하나의 상품만 환불 가능합니다.");
+			$(":checkbox:checked").removeAttr("checked");
+			return false;
+		}
+		else{
+			window.open('/HwangDangFleamarket/myorder/refundForm.go?orderSeqNo='+$(":checkbox:checked").val(), '환불신청', 'resizable=no scrollbars=yes width=463 height=648 left=500 top=200')
+		}	
+	});
 		
-		// 환불신청 
-		$("#btnRequestRefund").on("click",function(){
-			if($(":checkbox:checked").length == 0)
-			{
-				alert("환불할 상품을 1개 선택해 주세요.")
-				return false;
+	// 교환신청 버튼 이벤트핸들러 
+	$("#btnRequestChange").on("click",function(){
+		var yesNO = confirm("정말 교환 신청을 하시겠습니까?");
+		if(yesNO){
+			//1.교환신청시 검증 수행 
+				checkboxValidation(4,4,4, "배송완료상품만 교환을 신청할수 있습니다.");
+			//2. 검증통과 되었을 경우에만 폼오픈!
+			if(flag){
+				falg = false;
+				orderCancelList = orderCancelList.substring( 0 , orderCancelList.length-1);
+				var option ='resizable=no scrollbars=yes width=513 height=660 left=500 top=200';
+				window.open("/HwangDangFleamarket/myorder/exchangeRequestFormMove.go?orderSeqNo="
+															+orderCancelList, "교환신청", option);
 			}
-			if($(":checkbox:checked").length != 1)
-			{
-				alert("한번에 하나의 상품만 환불 가능합니다.");
-				$(":checkbox:checked").removeAttr("checked");
-				return false;
-			}
-			else
-			{
-				window.open('/HwangDangFleamarket/myorder/refundForm.go?orderSeqNo='+$(":checkbox:checked").val(), '환불신청', 'resizable=no scrollbars=yes width=463 height=648 left=500 top=200')
-			}	
-		});
-		
-		// 교환신청 
-		$("#btnRequestChange").on("click",function(){
-			var yesNO = confirm("정말 교환 신청을 하시겠습니까?");
-			if(yesNO){
-				//1.교환신청시 검증 수행 
-				checkboxValidation(4,4, 4, "배송완료상품만 교환을 신청할수 있습니다.");
-				
-				//2. 검증통과 되었을 경우에만 폼오픈!
-				if(flag){
-					var option ='resizable=no scrollbars=yes width=513 height=660 left=500 top=200';
-					window.open("/HwangDangFleamarket/myorder/exchangeRequestFormMove.go?orderSeqNo="+$(":checkbox:checked").val(), "교환신청", option);
-				}
-				//3. 교환로직, 입력폼 입력 끝나면 이동
-				/* url	="/HwangDangFleamarket/myorder/cancel.go?loginId=${sessionScope.login_info.memberId}";
-				$("#f2").prop("action" , url);
-				$("#f2").submit(); */
-			}
-			
-		});//교환신청
+		}
+	});//교환신청
 		
 		//구매확정 
 		$("button").on("click",function(){
 			var yes_no = confirm("정말 구매확정하시겠습니다. 구매확정하시면 되돌릴수 없습니다.");
 			if(yes_no){
-				//alert(this.value);
-				var ordersNo = this.value;
-				//alert(ordersNo);
+				var orderSeqNo = this.value;
 				var page =  $("#currentPage").text().trim();
-				//alert(page);
-				
-				url	="/HwangDangFleamarket/myorder/orderStatusChange.go?orderList="+ordersNo+"&loginId="+loginId+"&status="+10+"&page="+page;  
-				//alert(url);
+				url	="/HwangDangFleamarket/myorder/orderStatusChange.go?orderSeqNo="+orderSeqNo
+						+"&loginId="+loginId+"&status="+10+"&page="+page;  
 				$("#f2").prop("action" , url);
 				$("#f2").submit();
 			}else{
@@ -212,25 +187,28 @@ function checkboxValidation(num1 , num2 , num3 , msg ){
 	<c:forEach items="${requestScope.orderList }"  var="order" > 
 	<div class="parent">
 	
-	<!-- 주문날짜 -->              
+	<!-- 전체체크박스 , 주문날짜 , 주문번호  -->              
 	<h4>&nbsp;<input type="checkbox" name='items<%=cnt%>' class='items<%=cnt %>' onclick="allCheck(this);" /> 
-	<fmt:formatDate value="${order.orders_date }" pattern="yyyy-MM-dd" /> / orderno : ${order.ordersNo }</h4>
+	<fmt:formatDate value="${order.orders_date }" pattern="yyyy-MM-dd" /> / 주문번호 : ${order.ordersNo }</h4>
 		<c:forEach items="${order.orderProductList }" var="orderProduct">		
 			<table class="table">
 			<tbody>
 				<tr>
 					<td>
 						<!--  체크박스   -->
-						<input type="checkbox" name="items<%=cnt %>"  class="items<%=cnt %>"    value="${orderProduct.orderSeqNo}" />
-						<img class="main-image" src="/HwangDangFleamarket/image_storage/${orderProduct.product.productMainImage }" />
+						<input type="checkbox" name="items<%=cnt %>"  class="items<%=cnt %>" value="${orderProduct.orderSeqNo}" />
+						<a href="/HwangDangFleamarket/product/detail.go?page=1&productId=${orderProduct.product.productId}&sellerStoreNo=${orderProduct.seller.sellerStoreNo }&sellerStoreImage=${orderProduct.seller.sellerStoreImage }">
+							<img class="main-image" src="/HwangDangFleamarket/image_storage/${orderProduct.product.productMainImage }" />
+						</a>
 					</td>
 						
 					<td>  
-						상품명(옵션)/수량 : ${orderProduct.product.productName}(${orderProduct.productOption.optionSubName})/
-						${orderProduct.orderAmount}개 <br/>
-						결제예정금액/배송비 : <fmt:formatNumber value="${(orderProduct.product.productPrice +orderProduct.productOption.optionAddPrice) * orderProduct.orderAmount  }" pattern="#,###원"/> /
-						<fmt:formatNumber pattern="#,###">${orderProduct.fare}</fmt:formatNumber>원
-						
+						<a href="/HwangDangFleamarket/product/detail.go?page=1&productId=${orderProduct.product.productId}&sellerStoreNo=${orderProduct.seller.sellerStoreNo }&sellerStoreImage=${orderProduct.seller.sellerStoreImage }">
+							상품명(옵션)/수량 : ${orderProduct.product.productName}(${orderProduct.productOption.optionSubName})/
+							${orderProduct.orderAmount}개 <br/>
+							결제예정금액/배송비 : <fmt:formatNumber value="${(orderProduct.product.productPrice +orderProduct.productOption.optionAddPrice) * orderProduct.orderAmount  }" pattern="#,###원"/> /
+							<fmt:formatNumber pattern="#,###">${orderProduct.fare}</fmt:formatNumber>원
+						</a>
 					</td>
 					
 					<td>
@@ -279,15 +257,23 @@ function checkboxValidation(num1 , num2 , num3 , msg ){
 </div>     
 </c:forEach>
 </form>
+<br/>
+
 
 <!-- ***************페이징처리************************************** -->
-	<!-- 페이징 ◀버튼처리 -->  
+	
+	<!-- 페이징 ◀버튼 처리 -->  
 	<p class="text-center">
 	<c:choose>
 		<c:when test="${requestScope.pagingBean.previousPageGroup }">
-			<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }&page=${requestScope.pagingBean.beginPage-1}">◀</a>
+			<a href="/HwangDangFleamarket/myorder/main.go?loginId=${sessionScope.login_info.memberId }
+																&page=${requestScope.pagingBean.beginPage-1}">
+				◀
+			</a>
 		</c:when>
 		<c:otherwise>◁</c:otherwise>
+		
+		
 	</c:choose>
 		<!-- 페이지 번호 처리 -->  
 		<c:forEach begin="${requestScope.pagingBean.beginPage }" end="${requestScope.pagingBean.endPage }" var="page">
@@ -308,7 +294,8 @@ function checkboxValidation(num1 , num2 , num3 , msg ){
 		</c:when>
 		<c:otherwise>▷</c:otherwise>
 	</c:choose>
-	<br/>  
+	<br/><br/> 
+	
 	<!-- 버튼 -->
 	<input type="button" value="주문취소" id="btnRequestCancel" class="btn btn-default"/>
 	<input type="button" value="환불신청" id="btnRequestRefund" class="btn btn-default"/>

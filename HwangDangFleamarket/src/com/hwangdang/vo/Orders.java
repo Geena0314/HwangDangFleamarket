@@ -21,9 +21,9 @@ public class Orders implements Serializable
 	private Date orders_date;   //주문날짜 
 	private String memberId;  //구매자 ID
 	private int usedMileage;
-
-	
 	private List<OrderProduct> orderProductList;  // 주문한 제품에대한 세부정보  , 주문수량 , 상품ID
+	
+	
 	
 	public Orders(){ }
 

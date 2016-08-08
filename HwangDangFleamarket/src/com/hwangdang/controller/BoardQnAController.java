@@ -21,7 +21,7 @@ import com.hwangdang.vo.Member;
 
 @Controller
 @RequestMapping("/admin")
-public class QnABoardController {
+public class BoardQnAController {
 
 	@Autowired
 	private BoardQnAServiceImpl service;
